@@ -1,0 +1,51 @@
+{
+  "template_name": "Installation Douche Extérieure Piscine",
+  "template_type": "quote",
+  "category": "Garden",
+  "line_items": [
+    {
+      "description": "Colonne de douche extérieure inox",
+      "quantity": 1,
+      "unit_price": 280.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Mitigeur thermostatique antigel",
+      "quantity": 1,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Tranchée et pose tuyau entéré (8m)",
+      "quantity": 8,
+      "unit_price": 35.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Raccordement eau chaude/froide",
+      "quantity": 1,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Évacuation vers réseau",
+      "quantity": 1,
+      "unit_price": 150.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Scellement sur dalle béton",
+      "quantity": 1,
+      "unit_price": 120.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Inox anti-corrosion. Système antigel recommandé. Garantie 2 ans. TVA 10%.",
+  "is_system_template": true
+}

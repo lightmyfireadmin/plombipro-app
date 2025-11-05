@@ -1,0 +1,44 @@
+{
+  "template_name": "Installation Têtes Thermostatiques",
+  "template_type": "quote",
+  "category": "Heating",
+  "line_items": [
+    {
+      "description": "Têtes thermostatiques programmables (x8)",
+      "quantity": 8,
+      "unit_price": 45.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Dépose anciennes têtes manuelles",
+      "quantity": 8,
+      "unit_price": 15.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Installation têtes thermostatiques",
+      "quantity": 8,
+      "unit_price": 25.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Programmation et réglage température",
+      "quantity": 1,
+      "unit_price": 120.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Formation utilisation",
+      "quantity": 1,
+      "unit_price": 60.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Économies d'énergie jusqu'à 20%. Garantie 2 ans. TVA réduite 10% si logement > 2 ans.",
+  "is_system_template": true
+}

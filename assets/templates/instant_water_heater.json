@@ -1,0 +1,51 @@
+{
+  "template_name": "Installation Chauffe-Eau Instantané",
+  "template_type": "quote",
+  "category": "Heating",
+  "line_items": [
+    {
+      "description": "Chauffe-eau instantané électrique 7kW",
+      "quantity": 1,
+      "unit_price": 380.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Ligne électrique dédiée 32A",
+      "quantity": 1,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Disjoncteur différentiel 30mA",
+      "quantity": 1,
+      "unit_price": 65.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Raccordements hydrauliques",
+      "quantity": 1,
+      "unit_price": 120.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Installation et fixation murale",
+      "quantity": 1,
+      "unit_price": 220.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Mise en service et réglage",
+      "quantity": 1,
+      "unit_price": 95.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Eau chaude illimitée. Idéal point d'eau isolé. Garantie 2 ans. TVA 10%.",
+  "is_system_template": true
+}

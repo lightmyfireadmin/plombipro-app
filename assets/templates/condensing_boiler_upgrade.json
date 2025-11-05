@@ -1,0 +1,65 @@
+{
+  "template_name": "Remplacement Chaudière par Condensation",
+  "template_type": "quote",
+  "category": "Heating",
+  "line_items": [
+    {
+      "description": "Dépose ancienne chaudière et évacuation",
+      "quantity": 1,
+      "unit_price": 380.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Chaudière gaz condensation murale 28kW",
+      "quantity": 1,
+      "unit_price": 2800.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Kit ventouse concentrique Ø60/100",
+      "quantity": 1,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Évacuation condensats avec siphon",
+      "quantity": 1,
+      "unit_price": 120.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Thermostat d'ambiance programmable",
+      "quantity": 1,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Installation et raccordements complets",
+      "quantity": 1,
+      "unit_price": 950.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Mise en service et réglage optimal",
+      "quantity": 1,
+      "unit_price": 220.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Formation utilisateur et notice",
+      "quantity": 1,
+      "unit_price": 0.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Économies 15-20% vs ancienne chaudière. Éligible MaPrimeRénov'. Garantie 2 ans. TVA 10%.",
+  "is_system_template": true
+}

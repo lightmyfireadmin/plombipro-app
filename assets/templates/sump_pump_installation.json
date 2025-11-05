@@ -1,0 +1,58 @@
+{
+  "template_name": "Installation Pompe de Relevage",
+  "template_type": "quote",
+  "category": "Drainage",
+  "line_items": [
+    {
+      "description": "Pompe de relevage eaux usées 0.75kW",
+      "quantity": 1,
+      "unit_price": 380.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Cuve de relevage 100L avec couvercle",
+      "quantity": 1,
+      "unit_price": 220.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Tuyauterie refoulement PVC Ø50mm (8m)",
+      "quantity": 8,
+      "unit_price": 12.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Clapet anti-retour et raccords",
+      "quantity": 1,
+      "unit_price": 85.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Installation pompe et cuve",
+      "quantity": 1,
+      "unit_price": 420.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Raccordement électrique avec protection",
+      "quantity": 1,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Test et mise en service",
+      "quantity": 1,
+      "unit_price": 120.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Installation conforme NF DTU 64.1. Pompe garantie 2 ans. Notice d'utilisation et d'entretien fournie.",
+  "is_system_template": true
+}

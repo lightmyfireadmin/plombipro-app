@@ -1,0 +1,65 @@
+{
+  "template_name": "Plomberie Cuisine Complète",
+  "template_type": "quote",
+  "category": "Kitchen",
+  "line_items": [
+    {
+      "description": "Arrivées d'eau chaude/froide pour évier",
+      "quantity": 1,
+      "unit_price": 280.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Évacuation évier avec siphon",
+      "quantity": 1,
+      "unit_price": 150.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Arrivée d'eau pour lave-vaisselle",
+      "quantity": 1,
+      "unit_price": 120.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Arrivée d'eau pour lave-linge",
+      "quantity": 1,
+      "unit_price": 120.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Évacuation commune électroménager",
+      "quantity": 1,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Robinet d'arrêt pour chaque appareil",
+      "quantity": 4,
+      "unit_price": 25.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Mitigeur évier avec douchette extractible",
+      "quantity": 1,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Tests et mise en service",
+      "quantity": 1,
+      "unit_price": 150.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Installation conforme DTU 60.11. Garantie 2 ans. TVA réduite 10% si logement > 2 ans.",
+  "is_system_template": true
+}

@@ -1,0 +1,44 @@
+{
+  "template_name": "Recherche de Fuite Non Destructive",
+  "template_type": "quote",
+  "category": "Maintenance",
+  "line_items": [
+    {
+      "description": "Diagnostic préliminaire et analyse compteur",
+      "quantity": 1,
+      "unit_price": 95.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Détection électro-acoustique",
+      "quantity": 1,
+      "unit_price": 220.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Test de fumée colorée",
+      "quantity": 1,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Caméra thermique infrarouge",
+      "quantity": 1,
+      "unit_price": 280.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Rapport avec photos et localisation précise",
+      "quantity": 1,
+      "unit_price": 120.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    }
+  ],
+  "terms_conditions": "Détection sans casse. Rapport pour assurance. Devis réparation séparé. TVA 20%.",
+  "is_system_template": true
+}

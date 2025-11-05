@@ -1,0 +1,58 @@
+{
+  "template_name": "Installation Chauffe-Eau Électrique 200L",
+  "template_type": "quote",
+  "category": "Heating",
+  "line_items": [
+    {
+      "description": "Chauffe-eau électrique 200L vertical",
+      "quantity": 1,
+      "unit_price": 380.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Groupe de sécurité NF",
+      "quantity": 1,
+      "unit_price": 35.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Réducteur de pression si nécessaire",
+      "quantity": 1,
+      "unit_price": 65.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Support mural renforcé",
+      "quantity": 1,
+      "unit_price": 45.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Installation et raccordements",
+      "quantity": 1,
+      "unit_price": 320.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Raccordement électrique heures creuses",
+      "quantity": 1,
+      "unit_price": 150.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Mise en service",
+      "quantity": 1,
+      "unit_price": 85.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Garantie cuve 5 ans, pièces 2 ans. Contrat entretien disponible. TVA 10%.",
+  "is_system_template": true
+}

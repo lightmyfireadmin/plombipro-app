@@ -1,0 +1,58 @@
+{
+  "template_name": "Installation Chauffe-Eau Solaire",
+  "template_type": "quote",
+  "category": "Heating",
+  "line_items": [
+    {
+      "description": "Kit chauffe-eau solaire 300L avec 2 capteurs",
+      "quantity": 1,
+      "unit_price": 3200.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Support et fixations toiture",
+      "quantity": 1,
+      "unit_price": 380.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Régulation solaire électronique",
+      "quantity": 1,
+      "unit_price": 450.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Ballon de stockage 300L avec échangeur",
+      "quantity": 1,
+      "unit_price": 1200.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Tuyauterie et fluide caloporteur",
+      "quantity": 1,
+      "unit_price": 420.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Installation complète capteurs et ballon",
+      "quantity": 1,
+      "unit_price": 2400.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Mise en service et paramétrage",
+      "quantity": 1,
+      "unit_price": 350.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Installation éligible MaPrimeRénov'. Conforme DTU 65.12. Garantie 5 ans capteurs, 2 ans ballon. TVA 10%.",
+  "is_system_template": true
+}
