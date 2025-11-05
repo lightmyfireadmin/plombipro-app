@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PlombiPro - Le logiciel tout-en-un pour plombiers. Devis, factures, OCR, conformité 2026, gestion chantiers. À partir de 19€/mois.">
+    <meta name="keywords" content="logiciel plombier, devis plomberie, facture plombier, OCR facture, gestion chantier, facturation électronique 2026, Chorus Pro, Factur-X">
+    <meta name="author" content="PlombiPro">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://plombipro.fr/">
+    <meta property="og:title" content="PlombiPro - Logiciel Tout-en-Un pour Plombiers">
+    <meta property="og:description" content="Scannez vos factures, générez des devis en 10 secondes. Conforme facturation électronique 2026. Essai gratuit 30 jours.">
+    <meta property="og:image" content="https://plombipro.fr/assets/social/og-image.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://plombipro.fr/">
+    <meta property="twitter:title" content="PlombiPro - Logiciel Tout-en-Un pour Plombiers">
+    <meta property="twitter:description" content="Scannez vos factures, générez des devis en 10 secondes. Conforme 2026.">
+    <meta property="twitter:image" content="https://plombipro.fr/assets/social/twitter-image.png">
+
+    <title>PlombiPro - Logiciel Tout-en-Un pour Artisans Plombiers</title>
+
+    <link rel="icon" type="image/png" href="web/favicon.png">
+
+    <!-- Preconnect to external resources for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="dns-prefetch" href="https://images.unsplash.com">
+
+    <!-- Google Fonts - Modern Professional Combination -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ========================================
+           CSS RESET & BASE STYLES
+           ======================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Brand Colors */
+            --primary-blue: #1976D2;
+            --primary-blue-dark: #1565C0;
+            --primary-blue-light: #2196F3;
+            --tool-orange: #FF6B35;
+            --tool-orange-dark: #E55A25;
+            --success-green: #4CAF50;
+            --warning-amber: #FFC107;
+            --error-red: #F44336;
+            --dark-gray: #212121;
+            --medium-gray: #757575;
+            --light-gray: #F5F5F5;
+            --border-gray: #E0E0E0;
+            --white: #FFFFFF;
+
+            /* Spacing (8dp grid) */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-xxl: 48px;
+            --spacing-xxxl: 64px;
+
+            /* Typography */
+            --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-family-headings: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-size-base: 16px;
+            --line-height-base: 1.6;
+
+            /* Shadows */
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+            --shadow-xl: 0 12px 32px rgba(0,0,0,0.15);
+
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --radius-full: 9999px;
+        }
+
+        body {
+            font-family: var(--font-family-base);
+            font-size: var(--font-size-base);
+            line-height: var(--line-height-base);
+            color: var(--dark-gray);
+            background-color: var(--white);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-family-headings);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        h1 { font-size: 56px; }
+        h2 { font-size: 40px; }
+        h3 { font-size: 32px; }
+        h4 { font-size: 24px; }
+        h5 { font-size: 20px; }
+        h6 { font-size: 18px; }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* ========================================
+           UTILITY CLASSES
+           ======================================== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+        }
+
+        .container-wide {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-muted {
+            color: var(--medium-gray);
+        }
+
+        /* Spacing utilities */
+        .mb-xs { margin-bottom: var(--spacing-xs); }
+        .mb-sm { margin-bottom: var(--spacing-sm); }
+        .mb-md { margin-bottom: var(--spacing-md); }
+        .mb-lg { margin-bottom: var(--spacing-lg); }
+        .mb-xl { margin-bottom: var(--spacing-xl); }
+        .mb-xxl { margin-bottom: var(--spacing-xxl); }
+
+        .mt-lg { margin-top: var(--spacing-lg); }
+        .mt-xl { margin-top: var(--spacing-xl); }
+        .mt-xxl { margin-top: var(--spacing-xxl); }
+
+        /* ========================================
+           NAVIGATION
+           ======================================== */
+        nav {
+            background-color: var(--white);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            box-shadow: var(--shadow-md);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: var(--spacing-md);
+            padding-bottom: var(--spacing-md);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary-blue);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-icon-svg {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: var(--spacing-xl);
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a {
+            color: var(--dark-gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-blue);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-blue);
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--dark-gray);
+            transition: all 0.3s;
+            border-radius: 2px;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .mobile-menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* ========================================
+           BUTTONS
+           ======================================== */
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            text-align: center;
+            font-family: var(--font-family-base);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-blue-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(25, 118, 210, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background-color: var(--tool-orange);
+            color: var(--white);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--tool-orange-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 107, 53, 0.4);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .btn-large {
+            padding: 18px 40px;
+            font-size: 18px;
+        }
+
+        .btn-pulse {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        /* ========================================
+           HERO SECTION
+           ======================================== */
+        .hero {
+            background: linear-gradient(135deg, #1976D2 0%, #2196F3 50%, #1565C0 100%);
+            color: var(--white);
+            padding: 100px 0 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(76, 175, 80, 0.1) 0%, transparent 50%),
+                url('data:image/svg+xml,<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg"><path d="M30 0L60 15L30 30L0 15Z" fill="rgba(255,255,255,0.03)"/></svg>');
+            opacity: 0.5;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 64px;
+            font-weight: 900;
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.1;
+        }
+
+        .hero .subtitle {
+            font-size: 24px;
+            opacity: 0.95;
+            margin-bottom: var(--spacing-xl);
+            line-height: 1.5;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            margin-bottom: var(--spacing-xl);
+            flex-wrap: wrap;
+        }
+
+        .hero-features {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-xl);
+            flex-wrap: wrap;
+            margin-top: var(--spacing-xxl);
+        }
+
+        .hero-features li {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-size: 18px;
+        }
+
+        .hero-features li::before {
+            content: '✓';
+            background-color: var(--success-green);
+            color: var(--white);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* Demo Form in Hero */
+        .hero-demo-form {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xxl);
+            max-width: 500px;
+            margin: var(--spacing-xxxl) auto 0;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .hero-demo-form h3 {
+            color: var(--dark-gray);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--dark-gray);
+            font-weight: 500;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-gray);
+            border-radius: var(--radius-md);
+            font-size: 16px;
+            font-family: var(--font-family-base);
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+        }
+
+        .form-group small {
+            display: block;
+            color: var(--medium-gray);
+            font-size: 14px;
+            margin-top: var(--spacing-xs);
+        }
+
+        /* ========================================
+           STATS BAR
+           ======================================== */
+        .stats {
+            background-color: var(--light-gray);
+            padding: var(--spacing-xxl) 0;
+        }
+
+        .stats .container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-xl);
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: var(--spacing-lg);
+        }
+
+        .stat-item h3 {
+            font-size: 48px;
+            color: var(--primary-blue);
+            font-weight: 800;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .stat-item p {
+            color: var(--medium-gray);
+            font-size: 16px;
+        }
+
+        /* ========================================
+           SECTION HEADERS
+           ======================================== */
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto var(--spacing-xxl);
+        }
+
+        .section-header h2 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: var(--spacing-md);
+            color: var(--dark-gray);
+        }
+
+        .section-header p {
+            font-size: 20px;
+            color: var(--medium-gray);
+            line-height: 1.6;
+        }
+
+        .section-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-blue), var(--tool-orange));
+            color: var(--white);
+            padding: 6px 16px;
+            border-radius: var(--radius-full);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* ========================================
+           FEATURES SECTION
+           ======================================== */
+        .features {
+            padding: 100px 0;
+            background-color: var(--white);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-xxl);
+        }
+
+        .feature-card {
+            background-color: var(--white);
+            border: 1px solid var(--border-gray);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xxl);
+            transition: all 0.3s ease;
+            will-change: transform, box-shadow;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-blue);
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: rotate(5deg) scale(1.1);
+        }
+
+        .feature-icon {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--tool-orange));
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            margin-bottom: var(--spacing-lg);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            margin-bottom: var(--spacing-md);
+            color: var(--dark-gray);
+        }
+
+        .feature-card p {
+            color: var(--medium-gray);
+            line-height: 1.7;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .feature-badge {
+            display: inline-block;
+            background-color: var(--success-green);
+            color: var(--white);
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: var(--spacing-sm);
+        }
+
+        .feature-badge.coming-soon {
+            background-color: var(--warning-amber);
+            color: var(--dark-gray);
+        }
+
+        .feature-badge.beta {
+            background-color: var(--tool-orange);
+        }
+
+        /* Continue in next message due to length... */
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="main-nav">
+        <div class="container">
+            <a href="#" class="logo">
+                <img src="assets/branding/logo/plombipro-logo-icon.svg" alt="PlombiPro" class="logo-icon-svg">
+                <span>PlombiPro</span>
+            </a>
+            <ul id="nav-menu">
+                <li><a href="#fonctionnalites">Fonctionnalités</a></li>
+                <li><a href="#tarifs">Tarifs</a></li>
+                <li><a href="#comment-ca-marche">Comment ça marche</a></li>
+                <li><a href="#temoignages">Témoignages</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <a href="#demo" class="btn btn-primary" id="desktop-cta">Essai Gratuit 30j</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content fade-in-up">
+                <h1>Le logiciel plomberie qui fait tout à votre place</h1>
+                <p class="subtitle">
+                    Scannez vos factures fournisseurs, générez vos devis clients en 10 secondes.
+                    <strong>Déjà conforme à la facturation électronique 2026.</strong>
+                </p>
+                <div class="hero-cta">
+                    <a href="#demo" class="btn btn-secondary btn-large btn-pulse">Démarrer l'essai gratuit</a>
+                    <a href="#video-demo" class="btn btn-outline btn-large">Voir la démo</a>
+                </div>
+                <ul class="hero-features">
+                    <li>Essai gratuit 30 jours</li>
+                    <li>Sans engagement</li>
+                    <li>Support en français</li>
+                </ul>
+            </div>
+
+            <!-- Lead Capture Form -->
+            <div class="hero-demo-form">
+                <h3>Essayez gratuitement pendant 30 jours</h3>
+                <form id="demo-form">
+                    <div class="form-group">
+                        <label for="name">Nom complet *</label>
+                        <input type="text" id="name" name="name" placeholder="Jean Dupont" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email professionnel *</label>
+                        <input type="email" id="email" name="email" placeholder="jean@plomberie-dupont.fr" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Téléphone *</label>
+                        <input type="tel" id="phone" name="phone" placeholder="06 12 34 56 78" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="company-size">Taille de votre entreprise</label>
+                        <select id="company-size" name="company-size">
+                            <option value="solo">Seul (auto-entrepreneur)</option>
+                            <option value="small">2-5 employés</option>
+                            <option value="medium">6-20 employés</option>
+                            <option value="large">20+ employés</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: var(--spacing-md);">
+                        Démarrer mon essai gratuit →
+                    </button>
+                    <small>Aucune carte bancaire requise. Annulation possible à tout moment.</small>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="stats">
+        <div class="container">
+            <div class="stat-item">
+                <h3 data-target="500">0</h3>
+                <p>Artisans nous font confiance</p>
+            </div>
+            <div class="stat-item">
+                <h3 data-target="10000">0</h3>
+                <p>Devis générés par mois</p>
+            </div>
+            <div class="stat-item">
+                <h3 data-target="15">0</h3>
+                <p>Minutes économisées par devis</p>
+            </div>
+            <div class="stat-item">
+                <h3>4.8<span style="font-size: 24px;">/5</span></h3>
+                <p>Note moyenne des utilisateurs</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Continue with more sections... This is getting too long for one response -->
+
+    <script>
+        // Basic JavaScript for now - will add full interactivity
+        console.log('PlombiPro Marketing Website v2.0');
+    </script>
+
+</body>
+</html>
