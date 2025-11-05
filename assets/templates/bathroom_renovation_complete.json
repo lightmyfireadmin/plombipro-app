@@ -1,0 +1,65 @@
+{
+  "template_name": "Rénovation Salle de Bain Complète",
+  "template_type": "quote",
+  "category": "Bathroom",
+  "line_items": [
+    {
+      "description": "Dépose et évacuation des anciens équipements sanitaires",
+      "quantity": 1,
+      "unit_price": 350.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Douche italienne 90x90cm avec paroi en verre",
+      "quantity": 1,
+      "unit_price": 1200.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Meuble vasque double 120cm avec miroir",
+      "quantity": 1,
+      "unit_price": 850.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "WC suspendu avec bâti-support",
+      "quantity": 1,
+      "unit_price": 650.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Mitigeur thermostatique douche",
+      "quantity": 1,
+      "unit_price": 280.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Robinetterie lavabo x2",
+      "quantity": 2,
+      "unit_price": 120.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Installation complète et raccordements",
+      "quantity": 1,
+      "unit_price": 1800.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Sèche-serviettes électrique 750W",
+      "quantity": 1,
+      "unit_price": 420.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Installation réalisée dans le respect des normes DTU 60.11. Garantie décennale. Main d'œuvre et fournitures comprises. TVA réduite 10% applicable pour rénovation d'un logement de plus de 2 ans.",
+  "is_system_template": true
+}

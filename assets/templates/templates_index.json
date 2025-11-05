@@ -1,0 +1,99 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2025-11-05",
+  "total_templates": 10,
+  "categories": {
+    "Bathroom": [
+      "bathroom_renovation_complete.json",
+      "bathroom_shower_installation.json",
+      "toilet_replacement.json"
+    ],
+    "Kitchen": [
+      "kitchen_sink_installation.json"
+    ],
+    "Heating": [
+      "boiler_installation.json",
+      "water_heater_installation.json",
+      "radiator_replacement.json"
+    ],
+    "Emergency": [
+      "emergency_leak_repair.json"
+    ],
+    "Maintenance": [
+      "drain_cleaning.json",
+      "faucet_replacement.json"
+    ]
+  },
+  "templates": [
+    {
+      "file": "bathroom_renovation_complete.json",
+      "name": "Rénovation Salle de Bain Complète",
+      "category": "Bathroom",
+      "estimated_price_range": "5000-7000",
+      "items_count": 8
+    },
+    {
+      "file": "bathroom_shower_installation.json",
+      "name": "Installation Douche Italienne",
+      "category": "Bathroom",
+      "estimated_price_range": "2500-3500",
+      "items_count": 6
+    },
+    {
+      "file": "toilet_replacement.json",
+      "name": "Remplacement WC",
+      "category": "Bathroom",
+      "estimated_price_range": "600-900",
+      "items_count": 7
+    },
+    {
+      "file": "kitchen_sink_installation.json",
+      "name": "Installation Évier de Cuisine",
+      "category": "Kitchen",
+      "estimated_price_range": "800-1200",
+      "items_count": 5
+    },
+    {
+      "file": "boiler_installation.json",
+      "name": "Installation Chaudière Gaz Murale",
+      "category": "Heating",
+      "estimated_price_range": "4000-5500",
+      "items_count": 8
+    },
+    {
+      "file": "water_heater_installation.json",
+      "name": "Installation Chauffe-Eau Électrique",
+      "category": "Heating",
+      "estimated_price_range": "1400-2000",
+      "items_count": 7
+    },
+    {
+      "file": "radiator_replacement.json",
+      "name": "Remplacement Radiateur",
+      "category": "Heating",
+      "estimated_price_range": "750-1000",
+      "items_count": 6
+    },
+    {
+      "file": "emergency_leak_repair.json",
+      "name": "Dépannage d'Urgence - Fuite d'Eau",
+      "category": "Emergency",
+      "estimated_price_range": "450-700",
+      "items_count": 6
+    },
+    {
+      "file": "drain_cleaning.json",
+      "name": "Débouchage Canalisation",
+      "category": "Maintenance",
+      "estimated_price_range": "350-550",
+      "items_count": 5
+    },
+    {
+      "file": "faucet_replacement.json",
+      "name": "Remplacement Robinetterie",
+      "category": "Maintenance",
+      "estimated_price_range": "300-450",
+      "items_count": 6
+    }
+  ]
+}

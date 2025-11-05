@@ -1,0 +1,51 @@
+{
+  "template_name": "Remplacement Robinetterie",
+  "template_type": "quote",
+  "category": "Maintenance",
+  "line_items": [
+    {
+      "description": "Déplacement",
+      "quantity": 1,
+      "unit_price": 50.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Dépose ancienne robinetterie",
+      "quantity": 1,
+      "unit_price": 40.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Mitigeur lavabo chromé",
+      "quantity": 1,
+      "unit_price": 120.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Flexibles d'alimentation x2",
+      "quantity": 1,
+      "unit_price": 20.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Pose et raccordement",
+      "quantity": 1,
+      "unit_price": 95.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Test d'étanchéité et réglages",
+      "quantity": 1,
+      "unit_price": 30.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Installation conforme aux normes. Garantie constructeur selon modèle. TVA réduite 10% applicable pour logement > 2 ans.",
+  "is_system_template": true
+}

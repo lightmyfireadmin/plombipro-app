@@ -41,7 +41,10 @@ class _QuoteFormPageState extends State<QuoteFormPage> {
   double _totalHT = 0;
   double _totalTVA = 0;
   double _totalTTC = 0;
-  final double _tvaRate = 20.0; // 20%
+  double _tvaRate = 20.0; // Default to 20% (standard rate)
+
+  // French VAT rates
+  static const List<double> _availableVatRates = [20.0, 10.0, 5.5, 2.1];
 
   // Section 5: Options
   final TextEditingController _notesController = TextEditingController();
@@ -365,7 +368,35 @@ class _QuoteFormPageState extends State<QuoteFormPage> {
         child: Column(
           children: [
             _buildTotalRow('Total HT', InvoiceCalculator.formatCurrency(_totalHT)),
-            _buildTotalRow('TVA (${_tvaRate.toStringAsFixed(0)}%)', InvoiceCalculator.formatCurrency(_totalTVA)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('TVA', style: Theme.of(context).textTheme.titleMedium),
+                Row(
+                  children: [
+                    DropdownButton<double>(
+                      value: _tvaRate,
+                      items: _availableVatRates.map((rate) {
+                        return DropdownMenuItem<double>(
+                          value: rate,
+                          child: Text('${rate.toStringAsFixed(rate == rate.roundToDouble() ? 0 : 1)}%'),
+                        );
+                      }).toList(),
+                      onChanged: (double? newRate) {
+                        if (newRate != null) {
+                          setState(() {
+                            _tvaRate = newRate;
+                            _calculateTotals();
+                          });
+                        }
+                      },
+                    ),
+                    const SizedBox(width: 16),
+                    Text(InvoiceCalculator.formatCurrency(_totalTVA), style: Theme.of(context).textTheme.titleMedium),
+                  ],
+                ),
+              ],
+            ),
             const Divider(),
             _buildTotalRow('Total TTC', InvoiceCalculator.formatCurrency(_totalTTC), isBold: true),
             const Divider(),

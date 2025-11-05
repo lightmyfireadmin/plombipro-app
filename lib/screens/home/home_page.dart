@@ -6,6 +6,7 @@ import '../../models/appointment.dart';
 import '../../models/invoice.dart';
 import '../../models/job_site.dart';
 import '../../models/payment.dart';
+import '../../models/profile.dart';
 import '../../models/quote.dart';
 import '../../services/invoice_calculator.dart';
 import '../../services/supabase_service.dart';
@@ -24,6 +25,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool _isLoading = true;
+  Profile? _profile;
   List<Quote> _quotes = [];
   List<Invoice> _invoices = [];
   List<JobSite> _jobSites = [];
@@ -50,6 +52,7 @@ class _HomePageState extends State<HomePage> {
     });
 
     try {
+      final profile = await SupabaseService.fetchUserProfile();
       final quotes = await SupabaseService.fetchQuotes();
       final invoices = await SupabaseService.fetchInvoices();
       final jobSites = await SupabaseService.getJobSites();
@@ -57,6 +60,7 @@ class _HomePageState extends State<HomePage> {
       final appointments = await SupabaseService.fetchUpcomingAppointments();
       if (mounted) {
         setState(() {
+          _profile = profile;
           _quotes = quotes;
           _invoices = invoices;
           _jobSites = jobSites;
@@ -222,7 +226,9 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Bonjour, Utilisateur!', // Placeholder for user name
+              _profile != null && _profile!.firstName != null
+                  ? 'Bonjour, ${_profile!.firstName}!'
+                  : 'Bonjour!',
               style: Theme.of(context).textTheme.titleLarge,
             ),
             Text(

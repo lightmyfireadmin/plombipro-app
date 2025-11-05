@@ -36,8 +36,11 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
   double _totalHT = 0;
   double _totalTVA = 0;
   double _totalTTC = 0;
-  final double _tvaRate = 20.0; // 20%
+  double _tvaRate = 20.0; // Default to 20% (standard rate)
   final TextEditingController _notesController = TextEditingController();
+
+  // French VAT rates
+  static const List<double> _availableVatRates = [20.0, 10.0, 5.5, 2.1];
 
   // Invoice specific fields
   String _paymentStatus = 'Brouillon';
@@ -431,7 +434,29 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Total TVA:', style: TextStyle(fontWeight: FontWeight.bold)),
+                Row(
+                  children: [
+                    const Text('TVA', style: TextStyle(fontWeight: FontWeight.bold)),
+                    const SizedBox(width: 8),
+                    DropdownButton<double>(
+                      value: _tvaRate,
+                      items: _availableVatRates.map((rate) {
+                        return DropdownMenuItem<double>(
+                          value: rate,
+                          child: Text('${rate.toStringAsFixed(rate == rate.roundToDouble() ? 0 : 1)}%'),
+                        );
+                      }).toList(),
+                      onChanged: (double? newRate) {
+                        if (newRate != null) {
+                          setState(() {
+                            _tvaRate = newRate;
+                            _calculateTotals();
+                          });
+                        }
+                      },
+                    ),
+                  ],
+                ),
                 Text(InvoiceCalculator.formatCurrency(_totalTVA)),
               ],
             ),
