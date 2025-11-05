@@ -102,7 +102,7 @@
 ### 4. Priority #7: Web Scraping (Point P & Cedeo) (COMPLETED)
 
 **Status:** ✅ Fully Implemented
-**Commits:** (pending)
+**Commits:** a4ee6a4
 
 **What was done:**
 - Completely rewrote Point P scraper with production-ready features
@@ -207,6 +207,99 @@ Cedeo:
 
 ---
 
+### 5. Priority #9: Professional PDF Generation (COMPLETED)
+
+**Status:** ✅ Fully Implemented
+**Commits:** (pending)
+
+**What was done:**
+- Complete rewrite of invoice/quote PDF generator
+- Added French legal compliance features
+- Implemented professional layout with company logo
+- Added VAT breakdown by rate
+- Added payment instructions section
+- Added legal mentions footer
+- Enhanced Flutter service with cloud function integration
+
+**Cloud Function Features (`FrenchInvoicePDFGenerator`):**
+- **Professional Layout:** A4 format with proper margins, clean design
+- **Company Logo Support:** Auto-downloads and embeds logo from URL
+- **Header Section:** Company info (left) + Invoice title (right)
+- **Info Boxes:** Client details and invoice metadata with borders
+- **Line Items Table:**
+  - Blue header (#0066CC) with white text
+  - Columns: Description | Qty | P.U. HT | TVA | Total HT
+  - Alternating row backgrounds (white / #F5F5F5)
+  - Right-aligned prices, center-aligned quantities
+- **VAT Breakdown:** Separate table grouping VAT by rate
+- **Totals Section:** Shows Total HT, Total VAT, **TOTAL TTC** (bold, blue)
+- **Payment Instructions:** IBAN, BIC, bank name, payment method
+- **Legal Mentions Footer:**
+  - SIRET, VAT number, RCS, share capital, insurance
+  - Late payment penalties (3x legal interest rate)
+  - Recovery costs (40€ forfait)
+- **French Formatting:**
+  - Currency: 1 234,56 € (space thousands, comma decimals)
+  - Dates: DD/MM/YYYY format
+  - Proper French labels and terminology
+
+**Flutter Service Enhancements:**
+- `generateQuotePdfSimple()` - Client-side preview (simple layout)
+- `generateProfessionalPdf()` - Calls cloud function for full PDF
+- `prepareInvoiceData()` - Helper to format data structure
+- Comprehensive example code in documentation
+
+**French Legal Compliance:**
+- ✅ All mandatory invoice fields included
+- ✅ Sequential numbering support (from previous work)
+- ✅ SIRET, VAT number, RCS display
+- ✅ Late payment penalties clause
+- ✅ Recovery costs (40€) clause
+- ✅ VAT breakdown by rate
+- ✅ Payment terms display
+
+**Files Changed:**
+- `cloud_functions/invoice_generator/main.py` (509 lines, complete rewrite)
+- `cloud_functions/invoice_generator/requirements.txt` (updated dependencies)
+- `lib/services/pdf_generator.dart` (193 lines, enhanced)
+- `cloud_functions/PDF_GENERATOR_README.md` (NEW, 700+ lines comprehensive docs)
+
+**Technical Highlights:**
+- Uses ReportLab with Table, Paragraph, Image, Spacer components
+- Automatic total calculations from line items
+- Smart VAT grouping by rate
+- Logo download with timeout and error handling
+- Supabase Storage integration
+- Returns public URL for generated PDF
+- Proper CORS headers for web access
+- Comprehensive error logging
+
+**Layout Structure:**
+1. Header (logo + company info | invoice title)
+2. Info boxes (client | invoice metadata)
+3. Line items table (professional styling)
+4. VAT breakdown table
+5. Totals (right-aligned, bold final total)
+6. Payment instructions (if provided)
+7. Legal mentions footer (grey, small text)
+
+**Customization Options:**
+- Logo size: 3cm x 2cm (proportional)
+- Colors: Primary blue #0066CC, light grey #F5F5F5
+- Fonts: Helvetica (supports French characters)
+- Margins: 2cm all around
+- Page format: A4
+
+**Expected Results:**
+- 1-2 second generation time for simple invoices
+- 3-5 seconds for complex invoices with logos
+- ~50-200KB PDF file size
+- Professional, print-ready output
+
+**Cost:** ~$0.50-2.00/month (Cloud Functions execution)
+
+---
+
 ## 📋 Summary of Changes
 
 ### Commits Pushed:
@@ -284,13 +377,13 @@ RETURNING quote_number;
 | #6 | Database Triggers | 20% | 95% | ✅ DONE (previous) |
 | #7 | Web Scraping (Point P & Cedeo) | 10% | 90% | ✅ DONE (this session) |
 | #8 | Job Sites Module | 45% | 45% | ⚠️ TODO |
-| #9 | PDF Generation Polish | 50% | 50% | ⚠️ TODO |
+| #9 | PDF Generation Polish | 50% | 95% | ✅ DONE (this session) |
 | #10 | Chorus Pro Integration | 0% | 0% | ❌ TODO |
 
 ### Completion Estimate:
 - **Before this session:** ~82%
-- **After this session:** ~86%
-- **Estimated time to MVP:** 3-4 weeks remaining
+- **After this session:** ~90%
+- **Estimated time to MVP:** 2-3 weeks remaining
 
 ---
 
@@ -397,5 +490,5 @@ https://github.com/anthropics/claude-code/issues
 ---
 
 **End of Report**
-**Status:** 7/10 Critical Priorities Completed ✅
-**Next Session:** Continue with Priority #8 (Job Sites) or Priority #9 (PDF Polish)
+**Status:** 8/10 Critical Priorities Completed ✅
+**Next Session:** Continue with Priority #10 (Chorus Pro) or Priority #8 (Job Sites)
