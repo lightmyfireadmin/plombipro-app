@@ -144,7 +144,8 @@ class _QuoteFormPageState extends State<QuoteFormPage> {
 
   Future<void> _applyTemplate(TemplateInfo templateInfo) async {
     try {
-      final template = await TemplateService.loadTemplate(templateInfo.file);
+      // Load template by ID from database
+      final template = await TemplateService.loadTemplate(templateInfo.id);
       if (template == null) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -165,7 +166,7 @@ class _QuoteFormPageState extends State<QuoteFormPage> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Modèle "${templateInfo.name}" appliqué avec succès!')),
+          SnackBar(content: Text('Modèle "${templateInfo.name}" appliqué avec succès! (${template.lineItems.length} articles)')),
         );
       }
     } catch (e) {
