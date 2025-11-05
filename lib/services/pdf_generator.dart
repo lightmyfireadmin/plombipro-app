@@ -10,42 +10,357 @@ import 'dart:convert';
 /// 1. Client-side generation (simple PDFs, for previews)
 /// 2. Server-side generation (professional PDFs with cloud function)
 class PdfGenerator {
-  /// Generate simple quote PDF (client-side, for quick previews)
-  static Future<Uint8List> generateQuotePdfSimple({
+  /// Generate quote PDF with line items
+  static Future<Uint8List> generateQuotePdf({
     required String quoteNumber,
     required String clientName,
     required double totalTtc,
+    String? companyName,
+    String? companyAddress,
+    List<Map<String, dynamic>>? lineItems,
+    String? notes,
+    double? subtotalHt,
+    double? totalVat,
   }) async {
     final pdf = pw.Document();
 
     pdf.addPage(
-      pw.Page(
+      pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
+        margin: const pw.EdgeInsets.all(40),
         build: (pw.Context context) {
-          return pw.Center(
-            child: pw.Column(
-              mainAxisAlignment: pw.MainAxisAlignment.center,
+          return [
+            // Header
+            pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
-                pw.Text('Devis N°: $quoteNumber',
-                    style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold)),
-                pw.SizedBox(height: 20),
-                pw.Text('Client: $clientName', style: pw.TextStyle(fontSize: 18)),
-                pw.SizedBox(height: 10),
-                pw.Text('Montant Total TTC: ${totalTtc.toStringAsFixed(2)}€',
-                    style: pw.TextStyle(fontSize: 18)),
-                pw.SizedBox(height: 30),
-                pw.Text('Ceci est un aperçu simplifié de votre devis.',
-                    style: pw.TextStyle(fontSize: 12)),
-                pw.Text('Utilisez "Générer PDF complet" pour la version professionnelle.',
-                    style: pw.TextStyle(fontSize: 10, color: PdfColors.grey)),
+                pw.Column(
+                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+                  children: [
+                    pw.Text(companyName ?? 'PlombiPro',
+                        style: pw.TextStyle(fontSize: 20, fontWeight: pw.FontWeight.bold)),
+                    if (companyAddress != null)
+                      pw.Text(companyAddress, style: const pw.TextStyle(fontSize: 10)),
+                  ],
+                ),
+                pw.Column(
+                  crossAxisAlignment: pw.CrossAxisAlignment.end,
+                  children: [
+                    pw.Text('DEVIS',
+                        style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold, color: PdfColors.blue800)),
+                    pw.Text(quoteNumber, style: pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold)),
+                  ],
+                ),
               ],
             ),
-          );
+            pw.SizedBox(height: 30),
+
+            // Client info
+            pw.Container(
+              padding: const pw.EdgeInsets.all(10),
+              decoration: pw.BoxDecoration(
+                border: pw.Border.all(color: PdfColors.grey400),
+                borderRadius: const pw.BorderRadius.all(pw.Radius.circular(5)),
+              ),
+              child: pw.Column(
+                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                children: [
+                  pw.Text('Client:', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                  pw.SizedBox(height: 5),
+                  pw.Text(clientName, style: const pw.TextStyle(fontSize: 12)),
+                ],
+              ),
+            ),
+            pw.SizedBox(height: 20),
+
+            // Line items table
+            if (lineItems != null && lineItems.isNotEmpty) ...[
+              pw.Table(
+                border: pw.TableBorder.all(color: PdfColors.grey400),
+                children: [
+                  // Header
+                  pw.TableRow(
+                    decoration: const pw.BoxDecoration(color: PdfColors.grey300),
+                    children: [
+                      _buildTableCell('Description', isHeader: true),
+                      _buildTableCell('Qté', isHeader: true, align: pw.TextAlign.center),
+                      _buildTableCell('P.U. HT', isHeader: true, align: pw.TextAlign.right),
+                      _buildTableCell('Total HT', isHeader: true, align: pw.TextAlign.right),
+                    ],
+                  ),
+                  // Items
+                  ...lineItems.map((item) {
+                    final quantity = item['quantity']?.toDouble() ?? 1.0;
+                    final unitPrice = item['unit_price']?.toDouble() ?? 0.0;
+                    final total = quantity * unitPrice;
+                    return pw.TableRow(
+                      children: [
+                        _buildTableCell(item['description'] ?? ''),
+                        _buildTableCell(quantity.toStringAsFixed(0), align: pw.TextAlign.center),
+                        _buildTableCell('${unitPrice.toStringAsFixed(2)} €', align: pw.TextAlign.right),
+                        _buildTableCell('${total.toStringAsFixed(2)} €', align: pw.TextAlign.right),
+                      ],
+                    );
+                  }).toList(),
+                ],
+              ),
+              pw.SizedBox(height: 20),
+            ],
+
+            // Totals
+            pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.end,
+              children: [
+                pw.Container(
+                  width: 200,
+                  child: pw.Column(
+                    children: [
+                      if (subtotalHt != null) ...[
+                        _buildTotalRow('Sous-total HT', '${subtotalHt.toStringAsFixed(2)} €'),
+                        pw.SizedBox(height: 5),
+                      ],
+                      if (totalVat != null) ...[
+                        _buildTotalRow('TVA', '${totalVat.toStringAsFixed(2)} €'),
+                        pw.SizedBox(height: 5),
+                      ],
+                      pw.Divider(thickness: 2),
+                      pw.SizedBox(height: 5),
+                      _buildTotalRow('Total TTC', '${totalTtc.toStringAsFixed(2)} €', isBold: true),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+
+            // Notes
+            if (notes != null && notes.isNotEmpty) ...[
+              pw.SizedBox(height: 30),
+              pw.Text('Conditions:', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+              pw.SizedBox(height: 5),
+              pw.Text(notes, style: const pw.TextStyle(fontSize: 9)),
+            ],
+
+            pw.SizedBox(height: 20),
+            pw.Divider(),
+            pw.Text('Document généré par PlombiPro',
+                style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey)),
+          ];
         },
       ),
     );
 
     return pdf.save();
+  }
+
+  /// Generate invoice PDF with line items
+  static Future<Uint8List> generateInvoicePdf({
+    required String invoiceNumber,
+    required String clientName,
+    required double totalTtc,
+    String? companyName,
+    String? companyAddress,
+    String? iban,
+    String? bic,
+    List<Map<String, dynamic>>? lineItems,
+    String? notes,
+    String? legalMentions,
+    double? subtotalHt,
+    double? totalVat,
+    String? dueDate,
+    String? paymentMethod,
+  }) async {
+    final pdf = pw.Document();
+
+    pdf.addPage(
+      pw.MultiPage(
+        pageFormat: PdfPageFormat.a4,
+        margin: const pw.EdgeInsets.all(40),
+        build: (pw.Context context) {
+          return [
+            // Header
+            pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+              children: [
+                pw.Column(
+                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+                  children: [
+                    pw.Text(companyName ?? 'PlombiPro',
+                        style: pw.TextStyle(fontSize: 20, fontWeight: pw.FontWeight.bold)),
+                    if (companyAddress != null)
+                      pw.Text(companyAddress, style: const pw.TextStyle(fontSize: 10)),
+                  ],
+                ),
+                pw.Column(
+                  crossAxisAlignment: pw.CrossAxisAlignment.end,
+                  children: [
+                    pw.Text('FACTURE',
+                        style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold, color: PdfColors.red800)),
+                    pw.Text(invoiceNumber, style: pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold)),
+                    if (dueDate != null) ...[
+                      pw.SizedBox(height: 5),
+                      pw.Text('Échéance: $dueDate', style: const pw.TextStyle(fontSize: 10)),
+                    ],
+                  ],
+                ),
+              ],
+            ),
+            pw.SizedBox(height: 30),
+
+            // Client info
+            pw.Container(
+              padding: const pw.EdgeInsets.all(10),
+              decoration: pw.BoxDecoration(
+                border: pw.Border.all(color: PdfColors.grey400),
+                borderRadius: const pw.BorderRadius.all(pw.Radius.circular(5)),
+              ),
+              child: pw.Column(
+                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                children: [
+                  pw.Text('Facturé à:', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                  pw.SizedBox(height: 5),
+                  pw.Text(clientName, style: const pw.TextStyle(fontSize: 12)),
+                ],
+              ),
+            ),
+            pw.SizedBox(height: 20),
+
+            // Line items table
+            if (lineItems != null && lineItems.isNotEmpty) ...[
+              pw.Table(
+                border: pw.TableBorder.all(color: PdfColors.grey400),
+                children: [
+                  // Header
+                  pw.TableRow(
+                    decoration: const pw.BoxDecoration(color: PdfColors.grey300),
+                    children: [
+                      _buildTableCell('Description', isHeader: true),
+                      _buildTableCell('Qté', isHeader: true, align: pw.TextAlign.center),
+                      _buildTableCell('P.U. HT', isHeader: true, align: pw.TextAlign.right),
+                      _buildTableCell('Total HT', isHeader: true, align: pw.TextAlign.right),
+                    ],
+                  ),
+                  // Items
+                  ...lineItems.map((item) {
+                    final quantity = item['quantity']?.toDouble() ?? 1.0;
+                    final unitPrice = item['unit_price']?.toDouble() ?? 0.0;
+                    final total = quantity * unitPrice;
+                    return pw.TableRow(
+                      children: [
+                        _buildTableCell(item['description'] ?? ''),
+                        _buildTableCell(quantity.toStringAsFixed(0), align: pw.TextAlign.center),
+                        _buildTableCell('${unitPrice.toStringAsFixed(2)} €', align: pw.TextAlign.right),
+                        _buildTableCell('${total.toStringAsFixed(2)} €', align: pw.TextAlign.right),
+                      ],
+                    );
+                  }).toList(),
+                ],
+              ),
+              pw.SizedBox(height: 20),
+            ],
+
+            // Totals
+            pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.end,
+              children: [
+                pw.Container(
+                  width: 200,
+                  child: pw.Column(
+                    children: [
+                      if (subtotalHt != null) ...[
+                        _buildTotalRow('Sous-total HT', '${subtotalHt.toStringAsFixed(2)} €'),
+                        pw.SizedBox(height: 5),
+                      ],
+                      if (totalVat != null) ...[
+                        _buildTotalRow('TVA', '${totalVat.toStringAsFixed(2)} €'),
+                        pw.SizedBox(height: 5),
+                      ],
+                      pw.Divider(thickness: 2),
+                      pw.SizedBox(height: 5),
+                      _buildTotalRow('Total TTC', '${totalTtc.toStringAsFixed(2)} €', isBold: true, fontSize: 16),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+
+            // Payment instructions
+            if (iban != null || bic != null || paymentMethod != null) ...[
+              pw.SizedBox(height: 30),
+              pw.Container(
+                padding: const pw.EdgeInsets.all(10),
+                decoration: pw.BoxDecoration(
+                  color: PdfColors.blue50,
+                  border: pw.Border.all(color: PdfColors.blue200),
+                  borderRadius: const pw.BorderRadius.all(pw.Radius.circular(5)),
+                ),
+                child: pw.Column(
+                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+                  children: [
+                    pw.Text('Modalités de paiement:', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                    pw.SizedBox(height: 5),
+                    if (paymentMethod != null)
+                      pw.Text('Méthode: $paymentMethod', style: const pw.TextStyle(fontSize: 10)),
+                    if (iban != null)
+                      pw.Text('IBAN: $iban', style: const pw.TextStyle(fontSize: 10)),
+                    if (bic != null)
+                      pw.Text('BIC: $bic', style: const pw.TextStyle(fontSize: 10)),
+                  ],
+                ),
+              ),
+            ],
+
+            // Notes
+            if (notes != null && notes.isNotEmpty) ...[
+              pw.SizedBox(height: 20),
+              pw.Text('Conditions:', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+              pw.SizedBox(height: 5),
+              pw.Text(notes, style: const pw.TextStyle(fontSize: 9)),
+            ],
+
+            // Legal mentions
+            if (legalMentions != null && legalMentions.isNotEmpty) ...[
+              pw.SizedBox(height: 20),
+              pw.Divider(),
+              pw.Text('Mentions légales:', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8)),
+              pw.SizedBox(height: 5),
+              pw.Text(legalMentions, style: const pw.TextStyle(fontSize: 7, color: PdfColors.grey700)),
+            ],
+
+            pw.SizedBox(height: 10),
+            pw.Divider(),
+            pw.Text('Document généré par PlombiPro',
+                style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey)),
+          ];
+        },
+      ),
+    );
+
+    return pdf.save();
+  }
+
+  // Helper widgets
+  static pw.Widget _buildTableCell(String text, {bool isHeader = false, pw.TextAlign align = pw.TextAlign.left}) {
+    return pw.Padding(
+      padding: const pw.EdgeInsets.all(5),
+      child: pw.Text(
+        text,
+        style: pw.TextStyle(
+          fontSize: isHeader ? 10 : 9,
+          fontWeight: isHeader ? pw.FontWeight.bold : pw.FontWeight.normal,
+        ),
+        textAlign: align,
+      ),
+    );
+  }
+
+  static pw.Widget _buildTotalRow(String label, String value, {bool isBold = false, double fontSize = 12}) {
+    return pw.Row(
+      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+      children: [
+        pw.Text(label, style: pw.TextStyle(fontSize: fontSize, fontWeight: isBold ? pw.FontWeight.bold : pw.FontWeight.normal)),
+        pw.Text(value, style: pw.TextStyle(fontSize: fontSize, fontWeight: isBold ? pw.FontWeight.bold : pw.FontWeight.normal)),
+      ],
+    );
   }
 
   /// Generate professional PDF using cloud function

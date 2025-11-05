@@ -277,6 +277,8 @@ class _InvoicesListPageState extends State<InvoicesListPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isSmallScreen = MediaQuery.of(context).size.width < 600;
+
     return Scaffold(
       appBar: AppBar(
         title: _isSelectionMode
@@ -288,7 +290,7 @@ class _InvoicesListPageState extends State<InvoicesListPage> {
                 onPressed: _toggleSelectionMode,
               )
             : null,
-        actions: _isSelectionMode
+        actions: _isSelectionMode && !isSmallScreen
             ? [
                 IconButton(
                   icon: const Icon(Icons.select_all),
@@ -309,6 +311,14 @@ class _InvoicesListPageState extends State<InvoicesListPage> {
                   icon: const Icon(Icons.delete),
                   onPressed: _selectedInvoiceIds.isEmpty ? null : _batchDelete,
                   tooltip: 'Supprimer',
+                ),
+              ]
+            : _isSelectionMode && isSmallScreen
+            ? [
+                IconButton(
+                  icon: const Icon(Icons.more_vert),
+                  onPressed: _showBatchActionsSheet,
+                  tooltip: 'Actions',
                 ),
               ]
             : [
@@ -348,7 +358,7 @@ class _InvoicesListPageState extends State<InvoicesListPage> {
                     child: _filteredInvoices.isEmpty
                         ? const Center(child: Text('Aucune facture trouvée.'))
                         : ListView.builder(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: EdgeInsets.all(isSmallScreen ? 4.0 : 8.0),
                             itemCount: _filteredInvoices.length,
                             itemBuilder: (context, index) {
                               final invoice = _filteredInvoices[index];
@@ -365,10 +375,58 @@ class _InvoicesListPageState extends State<InvoicesListPage> {
                 ),
               ],
             ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: _isSelectionMode ? null : FloatingActionButton(
         onPressed: () => context.push('/invoices/new'),
         tooltip: 'Nouvelle facture',
         child: const Icon(Icons.add),
+      ),
+    );
+  }
+
+  void _showBatchActionsSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.select_all),
+              title: const Text('Tout sélectionner'),
+              onTap: () {
+                Navigator.pop(context);
+                _selectAll();
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.check_circle, color: Colors.green),
+              title: const Text('Marquer comme payées'),
+              enabled: _selectedInvoiceIds.isNotEmpty,
+              onTap: _selectedInvoiceIds.isEmpty ? null : () {
+                Navigator.pop(context);
+                _batchMarkAsPaid();
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.picture_as_pdf),
+              title: const Text('Exporter en PDF'),
+              enabled: _selectedInvoiceIds.isNotEmpty,
+              onTap: _selectedInvoiceIds.isEmpty ? null : () {
+                Navigator.pop(context);
+                _batchExportPdf();
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.delete, color: Colors.red),
+              title: const Text('Supprimer', style: TextStyle(color: Colors.red)),
+              enabled: _selectedInvoiceIds.isNotEmpty,
+              onTap: _selectedInvoiceIds.isEmpty ? null : () {
+                Navigator.pop(context);
+                _batchDelete();
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -525,52 +583,73 @@ class InvoiceCard extends StatelessWidget {
     final statusColor = _getStatusColor(invoice.paymentStatus);
 
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 6.0),
+      margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 2.0),
       color: isSelectionMode && isSelected ? Colors.blue.shade50 : null,
       child: InkWell(
         onTap: isSelectionMode ? onSelectionToggle : null,
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
           child: Column(
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   if (isSelectionMode)
-                    Checkbox(
-                      value: isSelected,
-                      onChanged: (_) => onSelectionToggle?.call(),
+                    Container(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Transform.scale(
+                        scale: 1.2,
+                        child: Checkbox(
+                          value: isSelected,
+                          onChanged: (_) => onSelectionToggle?.call(),
+                          materialTapTargetSize: MaterialTapTargetSize.padded,
+                        ),
+                      ),
                     ),
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text(invoice.number, style: Theme.of(context).textTheme.titleMedium),
-                            const SizedBox(width: 8),
-                            Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                              decoration: BoxDecoration(
-                                color: statusColor.withOpacity(0.2),
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(color: statusColor),
+                    child: Padding(
+                      padding: EdgeInsets.only(left: isSelectionMode ? 8.0 : 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Flexible(
+                                child: Text(invoice.number,
+                                  style: Theme.of(context).textTheme.titleMedium,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
-                              child: Text(
-                                invoice.paymentStatus.toUpperCase(),
-                                style: TextStyle(color: statusColor, fontSize: 11, fontWeight: FontWeight.bold),
+                              const SizedBox(width: 8),
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                decoration: BoxDecoration(
+                                  color: statusColor.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(color: statusColor),
+                                ),
+                                child: Text(
+                                  invoice.paymentStatus.toUpperCase(),
+                                  style: TextStyle(color: statusColor, fontSize: 11, fontWeight: FontWeight.bold),
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 4),
-                        Text(invoice.client?.name ?? 'Client non trouvé', style: Theme.of(context).textTheme.bodyLarge),
-                      ],
+                            ],
+                          ),
+                          const SizedBox(height: 4),
+                          Text(invoice.client?.name ?? 'Client non trouvé',
+                            style: Theme.of(context).textTheme.bodyLarge,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   if (!isSelectionMode)
                     PopupMenuButton<String>(
                       onSelected: (value) => _handleMenuSelection(value, context),
+                      padding: const EdgeInsets.all(8.0),
                       itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
                         const PopupMenuItem<String>(value: 'view', child: Text('Voir')),
                         const PopupMenuItem<String>(value: 'edit', child: Text('Éditer')),
@@ -584,19 +663,25 @@ class InvoiceCard extends StatelessWidget {
                     ),
                 ],
               ),
-              const Divider(height: 20),
+              const Divider(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(InvoiceCalculator.formatCurrency(invoice.totalTtc),
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-                      if (invoice.dueDate != null)
-                        Text('Échéance: ${InvoiceCalculator.formatDate(invoice.dueDate!)}',
-                          style: Theme.of(context).textTheme.bodySmall),
-                    ],
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(InvoiceCalculator.formatCurrency(invoice.totalTtc),
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        if (invoice.dueDate != null)
+                          Text('Échéance: ${InvoiceCalculator.formatDate(invoice.dueDate!)}',
+                            style: Theme.of(context).textTheme.bodySmall,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                      ],
+                    ),
                   ),
                   Text(InvoiceCalculator.formatDate(invoice.date),
                     style: Theme.of(context).textTheme.bodySmall),

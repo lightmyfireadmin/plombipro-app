@@ -227,6 +227,8 @@ class _QuotesListPageState extends State<QuotesListPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isSmallScreen = MediaQuery.of(context).size.width < 600;
+
     return Scaffold(
       appBar: AppBar(
         title: _isSelectionMode
@@ -238,7 +240,7 @@ class _QuotesListPageState extends State<QuotesListPage> {
                 onPressed: _toggleSelectionMode,
               )
             : null,
-        actions: _isSelectionMode
+        actions: _isSelectionMode && !isSmallScreen
             ? [
                 IconButton(
                   icon: const Icon(Icons.select_all),
@@ -254,6 +256,14 @@ class _QuotesListPageState extends State<QuotesListPage> {
                   icon: const Icon(Icons.delete),
                   onPressed: _selectedQuoteIds.isEmpty ? null : _batchDelete,
                   tooltip: 'Supprimer',
+                ),
+              ]
+            : _isSelectionMode && isSmallScreen
+            ? [
+                IconButton(
+                  icon: const Icon(Icons.more_vert),
+                  onPressed: _showBatchActionsSheet,
+                  tooltip: 'Actions',
                 ),
               ]
             : [
@@ -292,7 +302,7 @@ class _QuotesListPageState extends State<QuotesListPage> {
                     child: _filteredQuotes.isEmpty
                         ? const Center(child: Text('Aucun devis trouvé.'))
                         : ListView.builder(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: EdgeInsets.all(isSmallScreen ? 4.0 : 8.0),
                             itemCount: _filteredQuotes.length,
                             itemBuilder: (context, index) {
                               final quote = _filteredQuotes[index];
@@ -309,10 +319,49 @@ class _QuotesListPageState extends State<QuotesListPage> {
                 ),
               ],
             ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => context.push('/quotes/new'), // Use go_router
+      floatingActionButton: _isSelectionMode ? null : FloatingActionButton(
+        onPressed: () => context.push('/quotes/new'),
         tooltip: 'Nouveau devis',
         child: const Icon(Icons.add),
+      ),
+    );
+  }
+
+  void _showBatchActionsSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.select_all),
+              title: const Text('Tout sélectionner'),
+              onTap: () {
+                Navigator.pop(context);
+                _selectAll();
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.picture_as_pdf),
+              title: const Text('Exporter en PDF'),
+              enabled: _selectedQuoteIds.isNotEmpty,
+              onTap: _selectedQuoteIds.isEmpty ? null : () {
+                Navigator.pop(context);
+                _batchExportPdf();
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.delete, color: Colors.red),
+              title: const Text('Supprimer', style: TextStyle(color: Colors.red)),
+              enabled: _selectedQuoteIds.isNotEmpty,
+              onTap: _selectedQuoteIds.isEmpty ? null : () {
+                Navigator.pop(context);
+                _batchDelete();
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -469,35 +518,54 @@ class QuoteCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 6.0),
+      margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 2.0),
       color: isSelectionMode && isSelected ? Colors.blue.shade50 : null,
       child: InkWell(
         onTap: isSelectionMode ? onSelectionToggle : null,
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
           child: Column(
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   if (isSelectionMode)
-                    Checkbox(
-                      value: isSelected,
-                      onChanged: (_) => onSelectionToggle?.call(),
+                    Container(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Transform.scale(
+                        scale: 1.2,
+                        child: Checkbox(
+                          value: isSelected,
+                          onChanged: (_) => onSelectionToggle?.call(),
+                          materialTapTargetSize: MaterialTapTargetSize.padded,
+                        ),
+                      ),
                     ),
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('${quote.quoteNumber} - ${quote.status.toUpperCase()}', style: Theme.of(context).textTheme.titleMedium),
-                        const SizedBox(height: 4),
-                        Text(quote.client?.name ?? 'Client non trouvé', style: Theme.of(context).textTheme.bodyLarge),
-                      ],
+                    child: Padding(
+                      padding: EdgeInsets.only(left: isSelectionMode ? 8.0 : 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('${quote.quoteNumber} - ${quote.status.toUpperCase()}',
+                            style: Theme.of(context).textTheme.titleMedium,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: 4),
+                          Text(quote.client?.name ?? 'Client non trouvé',
+                            style: Theme.of(context).textTheme.bodyLarge,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   if (!isSelectionMode)
                     PopupMenuButton<String>(
                       onSelected: (value) => _handleMenuSelection(value, context),
+                      padding: const EdgeInsets.all(8.0),
                       itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
                         const PopupMenuItem<String>(value: 'view', child: Text('Voir')),
                         const PopupMenuItem<String>(value: 'edit', child: Text('Éditer')),
@@ -510,12 +578,18 @@ class QuoteCard extends StatelessWidget {
                     ),
                 ],
               ),
-              const Divider(height: 20),
+              const Divider(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(InvoiceCalculator.formatCurrency(quote.totalTtc), style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-                  Text(InvoiceCalculator.formatDate(quote.date), style: Theme.of(context).textTheme.bodySmall),
+                  Flexible(
+                    child: Text(InvoiceCalculator.formatCurrency(quote.totalTtc),
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  Text(InvoiceCalculator.formatDate(quote.date),
+                    style: Theme.of(context).textTheme.bodySmall),
                 ],
               ),
             ],

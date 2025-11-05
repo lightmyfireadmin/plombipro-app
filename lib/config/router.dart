@@ -36,6 +36,7 @@ import '../screens/clients/import_clients_page.dart';
 
 import '../screens/job_sites/job_sites_list_page.dart';
 import '../screens/job_sites/job_site_form_page.dart';
+import '../screens/analytics/analytics_dashboard_page.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
@@ -281,6 +282,12 @@ class AppRouter {
             },
           ),
         ],
+      ),
+      GoRoute(
+        path: '/analytics',
+        builder: (BuildContext context, GoRouterState state) {
+          return const AnalyticsDashboardPage();
+        },
       ),
     ],
     redirect: (BuildContext context, GoRouterState state) {
