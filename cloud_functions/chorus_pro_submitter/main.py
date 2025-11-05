@@ -1,6 +1,9 @@
 import functions_framework
 from supabase import create_client, Client
 import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from shared.auth_utils import require_auth
 import requests
 
 # Initialize Supabase client
@@ -14,6 +17,7 @@ CHORUS_PRO_CLIENT_ID = os.environ.get("CHORUS_PRO_CLIENT_ID")
 CHORUS_PRO_CLIENT_SECRET = os.environ.get("CHORUS_PRO_CLIENT_SECRET")
 
 @functions_framework.http
+@require_auth
 def submit_to_chorus_pro(request):
     request_json = request.get_json(silent=True)
     invoice_id = request_json.get('invoice_id')
@@ -22,10 +26,17 @@ def submit_to_chorus_pro(request):
         return {'success': False, 'error': 'Missing invoice_id'}, 400
 
     try:
-        # 1. Fetch invoice data from Supabase
-        invoice_response = supabase.table('invoices').select('facturx_xml_url').eq('id', invoice_id).single().execute()
-        if not invoice_response.data or not invoice_response.data.get('facturx_xml_url'):
-            raise Exception('Invoice or Factur-X XML URL not found.')
+        # 1. Fetch invoice data from Supabase and verify ownership
+        invoice_response = supabase.table('invoices').select('user_id, facturx_xml_url').eq('id', invoice_id).single().execute()
+        if not invoice_response.data:
+            return {'success': False, 'error': 'Invoice not found'}, 404
+
+        if invoice_response.data['user_id'] != request.user_id:
+            return {'success': False, 'error': 'Unauthorized access to invoice'}, 403
+
+        if not invoice_response.data.get('facturx_xml_url'):
+            return {'success': False, 'error': 'Factur-X XML not generated yet'}, 400
+
         xml_url = invoice_response.data['facturx_xml_url']
 
         # 2. Get Factur-X XML from Supabase Storage

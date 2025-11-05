@@ -3,6 +3,9 @@ from supabase import create_client, Client
 import os
 from google.cloud import vision
 import re
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from shared.auth_utils import require_auth
 
 # Initialize Supabase client
 url: str = os.environ.get("SUPABASE_URL")
@@ -13,6 +16,7 @@ supabase: Client = create_client(url, key)
 vision_client = vision.ImageAnnotatorClient()
 
 @functions_framework.http
+@require_auth
 def process_ocr(request):
     request_json = request.get_json(silent=True)
     image_url = request_json.get('image_url')
@@ -20,6 +24,18 @@ def process_ocr(request):
 
     if not image_url or not scan_id:
         return {'success': False, 'error': 'Missing image_url or scan_id'}, 400
+
+    # Verify user owns this scan
+    try:
+        scan_response = supabase.table('scans').select('user_id').eq('id', scan_id).execute()
+        if not scan_response.data:
+            return {'success': False, 'error': 'Scan not found'}, 404
+
+        scan_user_id = scan_response.data[0]['user_id']
+        if scan_user_id != request.user_id:
+            return {'success': False, 'error': 'Unauthorized access to scan'}, 403
+    except Exception as e:
+        return {'success': False, 'error': f'Failed to verify scan ownership: {str(e)}'}, 500
 
     try:
         # 1. Download image from Supabase Storage

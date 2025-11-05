@@ -5,6 +5,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 // import 'package:flutter_stripe/flutter_stripe.dart'; // Uncomment if Stripe UI is used
 
 import 'config/router.dart';
+import 'config/env_config.dart';
+import 'utils/rate_limiter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,15 +14,24 @@ void main() async {
   // Initialize flutter_dotenv to load our .env file
   await dotenv.load(fileName: 'lib/.env');
 
-  // Initialize supabase_flutter
+  // Validate environment configuration
+  EnvConfig.validate();
+
+  // Initialize rate limiter
+  initializeRateLimiter(
+    maxRequestsPerMinute: EnvConfig.rateLimitPerMinute,
+    maxRequestsPerHour: EnvConfig.rateLimitPerHour,
+  );
+
+  // Initialize supabase_flutter using EnvConfig
   await Supabase.initialize(
-    url: dotenv.env['SUPABASE_URL']!,
-    anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
+    url: EnvConfig.supabaseUrl,
+    anonKey: EnvConfig.supabaseAnonKey,
   );
 
   // Initialize Stripe publishable key (as per guide page 33)
   // Uncomment and ensure flutter_stripe is correctly configured if you intend to use Stripe UI components.
-  // Stripe.publishableKey = dotenv.env['STRIPE_PUBLISHABLE_KEY'] ?? '';
+  // Stripe.publishableKey = EnvConfig.stripePublishableKey;
 
   runApp(const MyApp());
 }
