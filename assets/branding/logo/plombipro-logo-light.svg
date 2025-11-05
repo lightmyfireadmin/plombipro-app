@@ -1,0 +1,42 @@
+<svg width="280" height="80" viewBox="0 0 280 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Light version for dark backgrounds -->
+  <!-- Icon on left (scaled down) -->
+  <g transform="translate(0, 8) scale(0.5)">
+    <!-- Background circle (lighter blue) -->
+    <circle cx="64" cy="64" r="64" fill="#42A5F5"/>
+
+    <!-- Document/Invoice shape (white) -->
+    <rect x="40" y="35" width="48" height="58" rx="4" fill="white" opacity="0.98"/>
+
+    <!-- Invoice lines -->
+    <line x1="48" y1="45" x2="72" y2="45" stroke="#42A5F5" stroke-width="2" stroke-linecap="round"/>
+    <line x1="48" y1="53" x2="80" y2="53" stroke="#42A5F5" stroke-width="2" stroke-linecap="round"/>
+    <line x1="48" y1="61" x2="75" y2="61" stroke="#42A5F5" stroke-width="2" stroke-linecap="round"/>
+    <line x1="48" y1="69" x2="80" y2="69" stroke="#E3F2FD" stroke-width="2" stroke-linecap="round"/>
+    <line x1="48" y1="77" x2="70" y2="77" stroke="#E3F2FD" stroke-width="2" stroke-linecap="round"/>
+
+    <!-- Wrench (orange overlay) -->
+    <g transform="translate(70, 60) rotate(45)">
+      <!-- Wrench handle -->
+      <rect x="0" y="0" width="6" height="28" rx="3" fill="#FF8A65"/>
+
+      <!-- Wrench head -->
+      <circle cx="3" cy="32" r="5" fill="#FF8A65"/>
+      <rect x="-2" y="32" width="10" height="4" fill="#FF8A65"/>
+    </g>
+
+    <!-- Accent circle (orange) -->
+    <circle cx="84" cy="44" r="8" fill="#FF8A65"/>
+    <path d="M 81 44 L 83 46 L 87 42" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+
+  <!-- Wordmark to the right (white for dark backgrounds) -->
+  <text x="80" y="45" font-family="Roboto, Arial, sans-serif" font-size="28" font-weight="700" fill="#FFFFFF">
+    PlombiPro
+  </text>
+
+  <!-- Tagline below wordmark -->
+  <text x="80" y="62" font-family="Roboto, Arial, sans-serif" font-size="11" font-weight="400" fill="#E0E0E0">
+    Devis &amp; Facturation pour Plombiers
+  </text>
+</svg>

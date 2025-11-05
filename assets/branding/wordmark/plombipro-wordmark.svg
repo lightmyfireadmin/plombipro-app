@@ -1,0 +1,11 @@
+<svg width="240" height="60" viewBox="0 0 240 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Wordmark only - no icon -->
+  <text x="120" y="35" font-family="Roboto, Arial, sans-serif" font-size="32" font-weight="700" fill="#1976D2" text-anchor="middle">
+    PlombiPro
+  </text>
+
+  <!-- Tagline -->
+  <text x="120" y="52" font-family="Roboto, Arial, sans-serif" font-size="12" font-weight="400" fill="#757575" text-anchor="middle">
+    Devis &amp; Facturation pour Plombiers
+  </text>
+</svg>
