@@ -6,6 +6,7 @@ import '../../models/product.dart';
 import '../../models/quote.dart';
 import '../../services/invoice_calculator.dart';
 import '../../services/supabase_service.dart';
+import '../../services/template_service.dart';
 import '../../widgets/section_header.dart';
 
 import '../templates/document_templates_page.dart';
@@ -33,11 +34,15 @@ class _QuoteFormPageState extends State<QuoteFormPage> {
   DateTime _date = DateTime.now();
   DateTime _expiryDate = DateTime.now().add(const Duration(days: 30));
 
-  // Section 3: Line Items
+  // Section 3: Templates
+  List<TemplateInfo> _availableTemplates = [];
+  TemplateInfo? _selectedTemplate;
+
+  // Section 4: Line Items
   List<LineItem> _lineItems = [];
   List<Product> _products = [];
 
-  // Section 4: Calculations
+  // Section 5: Calculations
   double _totalHT = 0;
   double _totalTVA = 0;
   double _totalTTC = 0;
@@ -46,7 +51,7 @@ class _QuoteFormPageState extends State<QuoteFormPage> {
   // French VAT rates
   static const List<double> _availableVatRates = [20.0, 10.0, 5.5, 2.1];
 
-  // Section 5: Options
+  // Section 6: Options
   final TextEditingController _notesController = TextEditingController();
   bool _requiresSignature = false;
   bool _sendAfterCreation = false;
@@ -71,11 +76,13 @@ class _QuoteFormPageState extends State<QuoteFormPage> {
 
       final clientsFuture = SupabaseService.fetchClients();
       final productsFuture = SupabaseService.fetchProducts();
-      final results = await Future.wait([clientsFuture, productsFuture]);
+      final templatesFuture = TemplateService.getTemplatesList();
+      final results = await Future.wait([clientsFuture, productsFuture, templatesFuture]);
 
       setState(() {
         _clients = results[0] as List<Client>;
         _products = results[1] as List<Product>;
+        _availableTemplates = results[2] as List<TemplateInfo>;
         if (_isEditing && _quote != null) {
           // Populate form with existing quote data
           final quote = _quote!;
@@ -133,6 +140,96 @@ class _QuoteFormPageState extends State<QuoteFormPage> {
       _lineItems[index] = item;
       _calculateTotals();
     });
+  }
+
+  Future<void> _applyTemplate(TemplateInfo templateInfo) async {
+    try {
+      final template = await TemplateService.loadTemplate(templateInfo.file);
+      if (template == null) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Erreur lors du chargement du modèle')),
+          );
+        }
+        return;
+      }
+
+      setState(() {
+        _selectedTemplate = templateInfo;
+        _lineItems = List<LineItem>.from(template.lineItems);
+        if (template.termsConditions != null && template.termsConditions!.isNotEmpty) {
+          _notesController.text = template.termsConditions!;
+        }
+        _calculateTotals();
+      });
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Modèle "${templateInfo.name}" appliqué avec succès!')),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erreur: ${e.toString()}')),
+        );
+      }
+    }
+  }
+
+  void _showTemplateSelector() {
+    final grouped = TemplateService.groupByCategory(_availableTemplates);
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Choisir un modèle'),
+          content: SizedBox(
+            width: double.maxFinite,
+            child: ListView(
+              shrinkWrap: true,
+              children: grouped.entries.map((entry) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Text(
+                        entry.key,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    ...entry.value.map((template) {
+                      return ListTile(
+                        title: Text(template.name),
+                        subtitle: Text(
+                          '${template.itemsCount} articles • ${template.estimatedPriceRange}€',
+                        ),
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          _applyTemplate(template);
+                        },
+                      );
+                    }),
+                    const Divider(),
+                  ],
+                );
+              }).toList(),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Annuler'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<void> _saveQuote() async {
@@ -224,22 +321,27 @@ class _QuoteFormPageState extends State<QuoteFormPage> {
                   _buildDatePickers(),
                   const SizedBox(height: 16),
 
-                  // Section 3: Line Items
+                  // Section 3: Template
+                  const SectionHeader(title: 'Modèle'),
+                  _buildTemplateSelector(),
+                  const SizedBox(height: 16),
+
+                  // Section 4: Line Items
                   const SectionHeader(title: 'Lignes'),
                   _buildLineItemsEditor(),
                   const SizedBox(height: 16),
 
-                  // Section 4: Calculations
+                  // Section 5: Calculations
                   const SectionHeader(title: 'Calculs'),
                   _buildTotalsCard(),
                   const SizedBox(height: 16),
 
-                  // Section 5: Options
+                  // Section 6: Options
                   const SectionHeader(title: 'Options'),
                   _buildOptions(),
                   const SizedBox(height: 16),
 
-                  // Section 6: Actions
+                  // Section 7: Actions
                   _buildActionButtons(),
                 ],
               ),
@@ -340,6 +442,66 @@ class _QuoteFormPageState extends State<QuoteFormPage> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildTemplateSelector() {
+    return Card(
+      child: InkWell(
+        onTap: _showTemplateSelector,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _selectedTemplate != null
+                          ? _selectedTemplate!.name
+                          : 'Aucun modèle sélectionné',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    if (_selectedTemplate != null)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 4.0),
+                        child: Text(
+                          '${_selectedTemplate!.itemsCount} articles • ${_selectedTemplate!.estimatedPriceRange}€',
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              Row(
+                children: [
+                  if (_selectedTemplate != null)
+                    IconButton(
+                      icon: const Icon(Icons.clear, color: Colors.red),
+                      onPressed: () {
+                        setState(() {
+                          _selectedTemplate = null;
+                          _lineItems.clear();
+                          _notesController.clear();
+                          _calculateTotals();
+                        });
+                      },
+                      tooltip: 'Effacer le modèle',
+                    ),
+                  Icon(
+                    Icons.description_outlined,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  const SizedBox(width: 8),
+                  const Icon(Icons.chevron_right),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
