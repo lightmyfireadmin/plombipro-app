@@ -6,12 +6,17 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'config/router.dart';
 import 'config/app_theme.dart';
+import 'services/error_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize flutter_dotenv to load our .env file
   await dotenv.load(fileName: 'lib/.env');
+
+  // Initialize Sentry for error tracking
+  final sentryDsn = dotenv.env['SENTRY_DSN'];
+  await ErrorService.initialize(sentryDsn: sentryDsn);
 
   // Initialize supabase_flutter
   await Supabase.initialize(

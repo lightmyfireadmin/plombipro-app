@@ -63,6 +63,14 @@ class _AppDrawerState extends State<AppDrawer> {
             },
           ),
           ListTile(
+            leading: const Icon(Icons.assessment),
+            title: const Text('Rapports Avancés'),
+            onTap: () {
+              context.go('/advanced-reports');
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.request_quote),
             title: const Text('Devis'),
             onTap: () {
