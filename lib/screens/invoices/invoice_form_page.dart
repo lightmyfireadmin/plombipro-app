@@ -43,6 +43,7 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
   static const List<double> _availableVatRates = [20.0, 10.0, 5.5, 2.1];
 
   // Invoice specific fields
+  String _invoiceType = 'standard'; // standard, deposit, progress, credit_note
   String _paymentStatus = 'Brouillon';
   String _paymentMethod = 'Virement bancaire';
   bool _generateFacturX = false;
@@ -216,6 +217,11 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
                   _buildClientSelector(),
                   const SizedBox(height: 16),
 
+                  // Section 1.5: Invoice Type
+                  const SectionHeader(title: 'Type de Facture'),
+                  _buildInvoiceTypeSelector(),
+                  const SizedBox(height: 16),
+
                   // Section 2: Dates (Issue Date only for Invoice)
                   const SectionHeader(title: 'Date'),
                   _buildDatePicker(context, 'Date de Facture', _invoiceDate, (date) {
@@ -281,6 +287,30 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
           return 'Veuillez sélectionner un client';
         }
         return null;
+      },
+    );
+  }
+
+  Widget _buildInvoiceTypeSelector() {
+    return DropdownButtonFormField<String>(
+      value: _invoiceType,
+      decoration: const InputDecoration(
+        labelText: 'Type de Facture',
+        border: OutlineInputBorder(),
+        helperText: 'Sélectionnez le type de facture approprié',
+      ),
+      items: const [
+        DropdownMenuItem(value: 'standard', child: Text('Facture standard')),
+        DropdownMenuItem(value: 'deposit', child: Text('Facture d\'acompte')),
+        DropdownMenuItem(value: 'progress', child: Text('Facture de situation')),
+        DropdownMenuItem(value: 'credit_note', child: Text('Avoir (crédit)')),
+      ],
+      onChanged: (String? newValue) {
+        if (newValue != null) {
+          setState(() {
+            _invoiceType = newValue;
+          });
+        }
       },
     );
   }
@@ -480,9 +510,19 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
       children: [
         DropdownButtonFormField<String>(
           initialValue: _paymentMethod,
-          decoration: const InputDecoration(labelText: 'Méthode de Paiement'),
-          items: <String>['Virement bancaire', 'Chèque', 'Espèces', 'Stripe']
-              .map<DropdownMenuItem<String>>((String value) {
+          decoration: const InputDecoration(
+            labelText: 'Méthode de Paiement',
+            border: OutlineInputBorder(),
+          ),
+          items: <String>[
+            'Virement bancaire',
+            'Chèque',
+            'Espèces',
+            'Carte bancaire',
+            'Prélèvement SEPA',
+            'Stripe',
+            'Autre'
+          ].map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
               child: Text(value),
