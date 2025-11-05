@@ -1,0 +1,4 @@
+supabase
+lxml
+reportlab
+functions-framework

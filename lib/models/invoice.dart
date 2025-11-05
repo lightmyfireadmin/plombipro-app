@@ -1,0 +1,128 @@
+import 'client.dart';
+import 'line_item.dart';
+
+class Invoice {
+  final String? id;
+  final String number;
+  final String clientId;
+  final DateTime date;
+  final DateTime? dueDate;
+  final String status;
+  final String paymentStatus;
+  final double totalHt;
+  final double totalTva;
+  final double totalTtc;
+  final double amountPaid;
+  final double balanceDue;
+  final String? notes;
+  final String? paymentMethod;
+  final bool? isElectronic;
+  final String? xmlUrl;
+  final Client? client;
+  final List<LineItem> items;
+
+  Invoice({
+    this.id,
+    required this.number,
+    required this.clientId,
+    required this.date,
+    this.dueDate,
+    this.status = 'draft',
+    this.paymentStatus = 'unpaid',
+    this.totalHt = 0,
+    this.totalTva = 0,
+    this.totalTtc = 0,
+    this.amountPaid = 0,
+    this.balanceDue = 0,
+    this.items = const [],
+    this.notes,
+    this.client,
+    this.paymentMethod,
+    this.isElectronic,
+    this.xmlUrl,
+  });
+
+  factory Invoice.fromJson(Map<String, dynamic> json) {
+    return Invoice(
+      id: json['id'],
+      number: json['number'] ?? '',
+      clientId: json['client_id'] ?? '',
+      date: DateTime.parse(json['date'] ?? DateTime.now().toIso8601String()),
+      dueDate: json['due_date'] != null ? DateTime.parse(json['due_date']) : null,
+      status: json['status'] ?? 'draft',
+      paymentStatus: json['payment_status'] ?? 'unpaid',
+      totalHt: (json['total_ht'] as num?)?.toDouble() ?? 0,
+      totalTva: (json['tva_amount'] as num?)?.toDouble() ?? 0, // Note: schema uses tva_amount
+      totalTtc: (json['total_ttc'] as num?)?.toDouble() ?? 0,
+      amountPaid: (json['amount_paid'] as num?)?.toDouble() ?? 0,
+      balanceDue: (json['balance_due'] as num?)?.toDouble() ?? 0,
+      items: json['invoice_items'] != null
+          ? (json['invoice_items'] as List).map((i) => LineItem.fromJson(i)).toList()
+          : [],
+      notes: json['notes'],
+      paymentMethod: json['payment_method'],
+      isElectronic: json['is_electronic'],
+      xmlUrl: json['xml_url'],
+      client: json['clients'] != null ? Client.fromJson(json['clients']) : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'number': number,
+        'client_id': clientId,
+        'date': date.toIso8601String(),
+        'due_date': dueDate?.toIso8601String(),
+        'total_ht': totalHt,
+        'total_tva': totalTva,
+        'total_ttc': totalTtc,
+        'amount_paid': amountPaid,
+        'balance_due': balanceDue,
+        'payment_status': paymentStatus,
+        'notes': notes,
+        'payment_method': paymentMethod,
+        'is_electronic': isElectronic,
+        'xml_url': xmlUrl,
+        // client and items are handled separately or not directly in invoice table
+      };
+
+  Invoice copyWith({
+    String? id,
+    String? number,
+    String? clientId,
+    DateTime? date,
+    DateTime? dueDate,
+    double? totalHt,
+    double? totalTva,
+    double? totalTtc,
+    double? amountPaid,
+    double? balanceDue,
+    String? paymentStatus,
+    String? notes,
+    String? paymentMethod,
+    bool? isElectronic,
+    String? xmlUrl,
+    Client? client,
+    List<LineItem>? items,
+  }) {
+    return Invoice(
+      id: id ?? this.id,
+      number: number ?? this.number,
+      clientId: clientId ?? this.clientId,
+      date: date ?? this.date,
+      dueDate: dueDate ?? this.dueDate,
+      totalHt: totalHt ?? this.totalHt,
+      totalTva: totalTva ?? this.totalTva,
+      totalTtc: totalTtc ?? this.totalTtc,
+      amountPaid: amountPaid ?? this.amountPaid,
+      balanceDue: balanceDue ?? this.balanceDue,
+      paymentStatus: paymentStatus ?? this.paymentStatus,
+      notes: notes ?? this.notes,
+      paymentMethod: paymentMethod ?? this.paymentMethod,
+      isElectronic: isElectronic ?? this.isElectronic,
+      xmlUrl: xmlUrl ?? this.xmlUrl,
+      client: client ?? this.client,
+      items: items ?? this.items,
+    );
+  }
+}
