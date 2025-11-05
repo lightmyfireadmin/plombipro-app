@@ -285,6 +285,65 @@ class _QuoteFormPageState extends State<QuoteFormPage> {
     }
   }
 
+  Future<void> _convertToInvoice() async {
+    if (_quote == null) return;
+
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Convertir en facture'),
+        content: const Text('Voulez-vous convertir ce devis en facture ?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Annuler'),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Convertir'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true || !mounted) return;
+
+    try {
+      // Navigate to invoice form with quote data pre-filled
+      Navigator.of(context).pushNamed(
+        '/invoice/new',
+        arguments: {'quoteId': _quote!.id},
+      );
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erreur: ${e.toString()}')),
+        );
+      }
+    }
+  }
+
+  Future<void> _previewPdf() async {
+    if (_quote == null) return;
+
+    try {
+      // TODO: Implement PDF preview
+      // This would call the PDF generator and display the result
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Fonctionnalité d\'aperçu PDF à venir...'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erreur: ${e.toString()}')),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -296,12 +355,50 @@ class _QuoteFormPageState extends State<QuoteFormPage> {
               padding: EdgeInsets.only(right: 16.0),
               child: SizedBox(width: 24, height: 24, child: CircularProgressIndicator()),
             )
-          else
+          else ...[
+            if (_isEditing)
+              PopupMenuButton<String>(
+                icon: const Icon(Icons.more_vert),
+                tooltip: 'Plus d\'actions',
+                onSelected: (value) {
+                  switch (value) {
+                    case 'convert':
+                      _convertToInvoice();
+                      break;
+                    case 'preview':
+                      _previewPdf();
+                      break;
+                  }
+                },
+                itemBuilder: (context) => [
+                  const PopupMenuItem(
+                    value: 'convert',
+                    child: Row(
+                      children: [
+                        Icon(Icons.receipt_long, size: 20),
+                        SizedBox(width: 8),
+                        Text('Convertir en facture'),
+                      ],
+                    ),
+                  ),
+                  const PopupMenuItem(
+                    value: 'preview',
+                    child: Row(
+                      children: [
+                        Icon(Icons.picture_as_pdf, size: 20),
+                        SizedBox(width: 8),
+                        Text('Aperçu PDF'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             IconButton(
               icon: const Icon(Icons.save),
               onPressed: _saveQuote,
               tooltip: 'Enregistrer',
             ),
+          ],
         ],
       ),
       body: _isLoading
@@ -508,11 +605,31 @@ class _QuoteFormPageState extends State<QuoteFormPage> {
   Widget _buildLineItemsEditor() {
     return Column(
       children: [
-        ..._lineItems.asMap().entries.map((entry) {
-          int idx = entry.key;
-          LineItem item = entry.value;
-          return _LineItemEditor(key: ValueKey(item), item: item, onUpdate: (updated) => _updateLineItem(idx, updated), onRemove: () => _removeLineItem(idx), products: _products);
-        }),
+        if (_lineItems.isNotEmpty)
+          ReorderableListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: _lineItems.length,
+            onReorder: (oldIndex, newIndex) {
+              setState(() {
+                if (newIndex > oldIndex) {
+                  newIndex -= 1;
+                }
+                final item = _lineItems.removeAt(oldIndex);
+                _lineItems.insert(newIndex, item);
+              });
+            },
+            itemBuilder: (context, idx) {
+              final item = _lineItems[idx];
+              return _LineItemEditor(
+                key: ValueKey('${item.description}_$idx'),
+                item: item,
+                onUpdate: (updated) => _updateLineItem(idx, updated),
+                onRemove: () => _removeLineItem(idx),
+                products: _products,
+              );
+            },
+          ),
         const SizedBox(height: 8),
         OutlinedButton.icon(
           icon: const Icon(Icons.add),
