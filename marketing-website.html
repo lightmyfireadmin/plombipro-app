@@ -25,6 +25,15 @@
 
     <link rel="icon" type="image/png" href="web/favicon.png">
 
+    <!-- Preconnect to external resources for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="dns-prefetch" href="https://images.unsplash.com">
+
+    <!-- Google Fonts - Modern Professional Combination -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
     <style>
         /* ========================================
            CSS RESET & BASE STYLES
@@ -56,18 +65,24 @@
             --spacing-xxl: 48px;
 
             /* Typography */
-            --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-family-headings: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             --font-size-base: 16px;
             --line-height-base: 1.6;
         }
 
         body {
-            font-family: var(--font-family);
+            font-family: var(--font-family-base);
             font-size: var(--font-size-base);
             line-height: var(--line-height-base);
             color: var(--dark-gray);
             background-color: var(--white);
             overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-family-headings);
+            font-weight: 700;
         }
 
         /* ========================================
@@ -146,6 +161,7 @@
             list-style: none;
             display: flex;
             gap: var(--spacing-xl);
+            transition: all 0.3s ease;
         }
 
         nav ul li a {
@@ -157,6 +173,45 @@
 
         nav ul li a:hover {
             color: var(--primary-blue);
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                position: fixed;
+                top: 72px;
+                left: 0;
+                right: 0;
+                background-color: var(--white);
+                flex-direction: column;
+                gap: 0;
+                padding: var(--spacing-lg) 0;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                transform: translateY(-100%);
+                opacity: 0;
+                pointer-events: none;
+                z-index: 999;
+            }
+
+            nav ul.active {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: all;
+            }
+
+            nav ul li {
+                width: 100%;
+                text-align: center;
+                padding: var(--spacing-md) 0;
+                border-bottom: 1px solid var(--light-gray);
+            }
+
+            nav ul li:last-child {
+                border-bottom: none;
+            }
+
+            #desktop-cta {
+                display: none;
+            }
         }
 
         .btn {
@@ -179,7 +234,11 @@
         .btn-primary:hover {
             background-color: #1565C0;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+            box-shadow: 0 8px 24px rgba(25, 118, 210, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
         }
 
         .btn-secondary {
@@ -206,9 +265,9 @@
            HERO SECTION
            ======================================== */
         .hero {
-            background: linear-gradient(135deg, #1976D2 0%, #1565C0 100%);
+            background: linear-gradient(135deg, #1976D2 0%, #2196F3 50%, #1565C0 100%);
             color: var(--white);
-            padding: 80px 0;
+            padding: 100px 0 80px 0;
             position: relative;
             overflow: hidden;
         }
@@ -220,8 +279,22 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg"><path d="M30 0L60 15L30 30L0 15Z" fill="rgba(255,255,255,0.05)"/></svg>');
-            opacity: 0.3;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(76, 175, 80, 0.1) 0%, transparent 50%),
+                url('data:image/svg+xml,<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg"><path d="M30 0L60 15L30 30L0 15Z" fill="rgba(255,255,255,0.03)"/></svg>');
+            opacity: 0.5;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
         }
 
         .hero .container {
@@ -288,12 +361,25 @@
             align-items: center;
             justify-content: center;
             position: relative;
+            overflow: hidden;
         }
 
-        .hero-image::after {
-            content: '📱 Mockup de l\'app ici';
-            color: rgba(255,255,255,0.7);
-            font-size: 18px;
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+            will-change: transform;
+        }
+
+        .hero-image:hover img {
+            transform: scale(1.02);
+        }
+
+        /* Performance optimization for animated elements */
+        .feature-card, .pricing-card, .testimonial-card {
+            will-change: transform, box-shadow;
         }
 
         /* ========================================
@@ -364,7 +450,11 @@
 
         .feature-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: rotate(5deg) scale(1.1);
         }
 
         .feature-icon {
@@ -377,6 +467,7 @@
             justify-content: center;
             font-size: 32px;
             margin-bottom: var(--spacing-md);
+            transition: transform 0.3s ease;
         }
 
         .feature-card h3 {
@@ -601,13 +692,79 @@
         }
 
         /* ========================================
+           TRUST BADGES SECTION
+           ======================================== */
+        .trust-section {
+            background-color: var(--white);
+            padding: 60px 0;
+            border-top: 1px solid var(--light-gray);
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: var(--spacing-xxl);
+            flex-wrap: wrap;
+        }
+
+        .trust-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md);
+            transition: transform 0.3s;
+        }
+
+        .trust-badge:hover {
+            transform: translateY(-5px);
+        }
+
+        .trust-badge-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--success-green));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: var(--white);
+            box-shadow: 0 4px 12px rgba(25, 118, 210, 0.2);
+        }
+
+        .trust-badge-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark-gray);
+            text-align: center;
+        }
+
+        /* ========================================
            CTA SECTION
            ======================================== */
         .cta {
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--tool-orange) 100%);
+            background: linear-gradient(135deg, #1976D2 0%, #FF6B35 50%, #E91E63 100%);
+            background-size: 200% 200%;
+            animation: gradient 5s ease infinite;
             color: var(--white);
             padding: 80px 0;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.05)"/></svg>');
+            opacity: 0.3;
         }
 
         .cta h2 {
@@ -694,9 +851,113 @@
         }
 
         /* ========================================
+           MOBILE MENU & STICKY CTA
+           ======================================== */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--dark-gray);
+            transition: all 0.3s;
+            border-radius: 2px;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .mobile-menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        .sticky-mobile-cta {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: var(--spacing-md);
+            background: var(--white);
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
+            z-index: 999;
+            transform: translateY(100%);
+            transition: transform 0.3s ease-out;
+        }
+
+        .sticky-mobile-cta.visible {
+            transform: translateY(0);
+        }
+
+        .sticky-mobile-cta .btn {
+            width: 100%;
+        }
+
+        /* Scroll to top button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 80px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--tool-orange));
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 0.3s ease;
+            z-index: 998;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .scroll-to-top {
+                bottom: 90px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+        /* ========================================
            RESPONSIVE DESIGN
            ======================================== */
         @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .sticky-mobile-cta {
+                display: block;
+            }
             .hero .container {
                 grid-template-columns: 1fr;
             }
@@ -752,8 +1013,111 @@
             }
         }
 
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
         .fade-in-up {
-            animation: fadeInUp 0.6s ease-out;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .fade-in-left {
+            animation: fadeInLeft 0.8s ease-out;
+        }
+
+        .fade-in-right {
+            animation: fadeInRight 0.8s ease-out;
+        }
+
+        .scale-in {
+            animation: scaleIn 0.6s ease-out;
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Gradient text effect */
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary-blue), var(--tool-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: gradient 3s ease infinite;
+        }
+
+        /* Pulse effect for important CTAs */
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+            }
+            50% {
+                box-shadow: 0 4px 24px rgba(255, 107, 53, 0.6);
+            }
+        }
+
+        .btn-pulse {
+            animation: pulse-glow 2s ease-in-out infinite;
         }
     </style>
 </head>
@@ -768,13 +1132,18 @@
                 <img src="assets/branding/logo/plombipro-logo-icon.svg" alt="PlombiPro" class="logo-icon-svg">
                 <span>PlombiPro</span>
             </a>
-            <ul>
+            <ul id="nav-menu">
                 <li><a href="#fonctionnalites">Fonctionnalités</a></li>
                 <li><a href="#tarifs">Tarifs</a></li>
                 <li><a href="#temoignages">Témoignages</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-            <a href="#" class="btn btn-primary">Essai Gratuit</a>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <a href="#tarifs" class="btn btn-primary" id="desktop-cta">Essai Gratuit</a>
         </div>
     </nav>
 
@@ -790,8 +1159,8 @@
                     <strong>En développement actif - Accès anticipé disponible.</strong>
                 </p>
                 <div class="hero-cta">
-                    <a href="#" class="btn btn-secondary">Rejoindre la Bêta</a>
-                    <a href="#" class="btn btn-outline">Voir les Fonctionnalités</a>
+                    <a href="#tarifs" class="btn btn-secondary btn-pulse">Rejoindre la Bêta</a>
+                    <a href="#fonctionnalites" class="btn btn-outline">Voir les Fonctionnalités</a>
                 </div>
                 <ul class="hero-features">
                     <li>Accès bêta gratuit (pas encore de paiement)</li>
@@ -800,8 +1169,8 @@
                     <li>Suivi de chantiers et paiements</li>
                 </ul>
             </div>
-            <div class="hero-image fade-in-up">
-                <!-- Placeholder for app mockup image -->
+            <div class="hero-image fade-in-right animate-float">
+                <img src="https://images.unsplash.com/photo-1621905251918-48416bd8575a?q=80&w=800&auto=format&fit=crop" alt="Plombier professionnel au travail" loading="lazy">
             </div>
         </div>
     </section>
@@ -1090,6 +1459,36 @@
     </section>
 
     <!-- ========================================
+         TRUST & SECURITY BADGES
+         ======================================== -->
+    <section class="trust-section">
+        <div class="container">
+            <div class="trust-badges">
+                <div class="trust-badge">
+                    <div class="trust-badge-icon">🔒</div>
+                    <div class="trust-badge-text">Données<br>Sécurisées</div>
+                </div>
+                <div class="trust-badge">
+                    <div class="trust-badge-icon">🇫🇷</div>
+                    <div class="trust-badge-text">Conforme<br>2026</div>
+                </div>
+                <div class="trust-badge">
+                    <div class="trust-badge-icon">✓</div>
+                    <div class="trust-badge-text">RGPD<br>Compliant</div>
+                </div>
+                <div class="trust-badge">
+                    <div class="trust-badge-icon">💳</div>
+                    <div class="trust-badge-text">Paiements<br>Sécurisés</div>
+                </div>
+                <div class="trust-badge">
+                    <div class="trust-badge-icon">📱</div>
+                    <div class="trust-badge-text">Mobile<br>First</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
          CTA SECTION
          ======================================== -->
     <section class="cta">
@@ -1166,11 +1565,36 @@
         </div>
     </footer>
 
+    <!-- Sticky Mobile CTA -->
+    <div class="sticky-mobile-cta" id="sticky-mobile-cta">
+        <a href="#tarifs" class="btn btn-primary">Rejoindre la Bêta Gratuite</a>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scroll-to-top" aria-label="Scroll to top">
+        ↑
+    </button>
+
     <!-- ========================================
-         JAVASCRIPT (Optional for now)
+         JAVASCRIPT
          ======================================== -->
     <script>
-        // Smooth scrolling for anchor links
+        // ============================================
+        // MOBILE MENU TOGGLE
+        // ============================================
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+
+        if (mobileMenuToggle) {
+            mobileMenuToggle.addEventListener('click', () => {
+                mobileMenuToggle.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+        }
+
+        // ============================================
+        // SMOOTH SCROLLING
+        // ============================================
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1180,28 +1604,142 @@
                         behavior: 'smooth',
                         block: 'start'
                     });
+                    // Close mobile menu if open
+                    if (navMenu.classList.contains('active')) {
+                        mobileMenuToggle.classList.remove('active');
+                        navMenu.classList.remove('active');
+                    }
                 }
             });
         });
 
-        // Add fade-in animation on scroll (simple implementation)
-        const observerOptions = {
+        // ============================================
+        // STICKY MOBILE CTA & SCROLL TO TOP
+        // ============================================
+        const stickyCTA = document.getElementById('sticky-mobile-cta');
+        const scrollToTopBtn = document.getElementById('scroll-to-top');
+        const heroSection = document.querySelector('.hero');
+
+        if (stickyCTA && heroSection) {
+            window.addEventListener('scroll', () => {
+                const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+                const scrolled = window.scrollY;
+
+                // Sticky CTA
+                if (scrolled > heroBottom) {
+                    stickyCTA.classList.add('visible');
+                } else {
+                    stickyCTA.classList.remove('visible');
+                }
+
+                // Scroll to top button
+                if (scrolled > 500) {
+                    scrollToTopBtn.classList.add('visible');
+                } else {
+                    scrollToTopBtn.classList.remove('visible');
+                }
+            });
+        }
+
+        // Scroll to top functionality
+        if (scrollToTopBtn) {
+            scrollToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+
+        // ============================================
+        // ANIMATED COUNTERS
+        // ============================================
+        function animateCounter(element, target, suffix = '') {
+            let current = 0;
+            const increment = target / 50;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target + suffix;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current) + suffix;
+                }
+            }, 30);
+        }
+
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.dataset.counted) {
+                    entry.target.dataset.counted = 'true';
+                    const text = entry.target.textContent;
+                    if (text.includes('%')) {
+                        animateCounter(entry.target, parseInt(text), '%');
+                    } else if (!isNaN(parseInt(text))) {
+                        animateCounter(entry.target, parseInt(text));
+                    }
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.stat-item h3').forEach(el => {
+            counterObserver.observe(el);
+        });
+
+        // ============================================
+        // SCROLL ANIMATIONS
+        // ============================================
+        const scrollObserverOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
         };
 
-        const observer = new IntersectionObserver((entries) => {
+        const scrollObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in-up');
+                    // Add appropriate animation based on element
+                    if (entry.target.classList.contains('feature-card')) {
+                        entry.target.classList.add('scale-in');
+                    } else if (entry.target.classList.contains('testimonial-card')) {
+                        entry.target.classList.add('fade-in-up');
+                    } else if (entry.target.classList.contains('pricing-card')) {
+                        entry.target.classList.add('fade-in-up');
+                    }
                 }
             });
-        }, observerOptions);
+        }, scrollObserverOptions);
 
-        // Observe all feature cards, pricing cards, etc.
+        // Observe all animatable elements
         document.querySelectorAll('.feature-card, .pricing-card, .testimonial-card').forEach(el => {
-            observer.observe(el);
+            scrollObserver.observe(el);
         });
+
+        // ============================================
+        // PARALLAX EFFECT ON HERO
+        // ============================================
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroContent = document.querySelector('.hero-content');
+            if (heroContent && scrolled < window.innerHeight) {
+                heroContent.style.transform = `translateY(${scrolled * 0.5}px)`;
+                heroContent.style.opacity = 1 - (scrolled / 600);
+            }
+        });
+
+        // ============================================
+        // PERFORMANCE: Lazy load images
+        // ============================================
+        if ('loading' in HTMLImageElement.prototype) {
+            const images = document.querySelectorAll('img[loading="lazy"]');
+            images.forEach(img => {
+                img.src = img.src;
+            });
+        } else {
+            // Fallback for browsers that don't support lazy loading
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js';
+            document.body.appendChild(script);
+        }
     </script>
 
 </body>
