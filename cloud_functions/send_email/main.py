@@ -1,5 +1,8 @@
 import functions_framework
 import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from shared.auth_utils import require_auth
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
@@ -7,6 +10,7 @@ from sendgrid.helpers.mail import Mail
 SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
 
 @functions_framework.http
+@require_auth
 def send_email(request):
     request_json = request.get_json(silent=True)
     to_email = request_json.get('to_email')

@@ -1,6 +1,9 @@
 import functions_framework
 from supabase import create_client, Client
 import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from shared.auth_utils import require_auth
 from lxml import etree
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
@@ -11,6 +14,7 @@ key: str = os.environ.get("SUPABASE_KEY")
 supabase: Client = create_client(url, key)
 
 @functions_framework.http
+@require_auth
 def generate_facturx(request):
     request_json = request.get_json(silent=True)
     invoice_id = request_json.get('invoice_id')
@@ -19,10 +23,16 @@ def generate_facturx(request):
         return {'success': False, 'error': 'Missing invoice_id'}, 400
 
     try:
-        # 1. Fetch invoice data from Supabase
-        invoice_response = supabase.table('invoices').select('*').eq('id', invoice_id).single().execute()
+        # 1. Fetch invoice data from Supabase and verify ownership
+        invoice_response = supabase.table('invoices').select('user_id').eq('id', invoice_id).single().execute()
         if not invoice_response.data:
-            raise Exception('Invoice not found.')
+            return {'success': False, 'error': 'Invoice not found'}, 404
+
+        if invoice_response.data['user_id'] != request.user_id:
+            return {'success': False, 'error': 'Unauthorized access to invoice'}, 403
+
+        # Fetch full invoice data after ownership verification
+        invoice_response = supabase.table('invoices').select('*').eq('id', invoice_id).single().execute()
         invoice_data = invoice_response.data
 
         # 2. Generate Factur-X XML (simplified example)

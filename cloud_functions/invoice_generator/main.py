@@ -1,4 +1,7 @@
 import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from shared.auth_utils import require_auth
 import functions_framework
 from flask import Request, jsonify
 from reportlab.lib.pagesizes import letter
@@ -11,6 +14,7 @@ SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 @functions_framework.http
+@require_auth
 def invoice_generator(request: Request):
     """
     HTTP Cloud Function that generates a PDF invoice from provided data,
@@ -39,7 +43,13 @@ def invoice_generator(request: Request):
     if not invoice_data:
         return jsonify({"error": "Missing 'invoice_data' in payload"}), 400, headers
 
+    # Verify invoice ownership
     invoice_id = invoice_data.get('invoice_id', 'INV-0000')
+    user_id = invoice_data.get('user_id')
+
+    if not user_id or user_id != request.user_id:
+        return jsonify({"error": "Unauthorized: user_id mismatch"}), 403, headers
+
     client_name = invoice_data.get('client_name', 'Client Name')
     items = invoice_data.get('items', [])
     total_amount = invoice_data.get('total_amount', 0.0)
