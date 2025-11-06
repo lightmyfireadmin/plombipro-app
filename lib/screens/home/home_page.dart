@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../notifications/notifications_page.dart';
 
 import '../../models/activity.dart';
@@ -11,6 +12,7 @@ import '../../models/quote.dart';
 import '../../services/invoice_calculator.dart';
 import '../../services/supabase_service.dart';
 import '../../widgets/section_header.dart';
+import '../../widgets/app_drawer.dart';
 import '../clients/client_form_page.dart';
 import '../quotes/quote_form_page.dart';
 import '../quotes/quotes_list_page.dart';
@@ -152,10 +154,15 @@ class _HomePageState extends State<HomePage> {
             },
             icon: const Icon(Icons.notifications_none),
           ),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.settings)),
+          IconButton(
+            onPressed: () {
+              context.go('/settings');
+            },
+            icon: const Icon(Icons.settings),
+          ),
         ],
       ),
-      drawer: _buildAppDrawer(),
+      drawer: const AppDrawer(),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : RefreshIndicator(
@@ -193,25 +200,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildAppDrawer() {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(color: Colors.blue),
-            child: Text('PlombiPro Menu', style: TextStyle(color: Colors.white, fontSize: 24)),
-          ),
-          ListTile(leading: const Icon(Icons.dashboard), title: const Text('Tableau de bord'), onTap: () => Navigator.of(context).pop()),
-          ListTile(leading: const Icon(Icons.request_quote), title: const Text('Devis'), onTap: () {
-            Navigator.of(context).pop(); // Close drawer
-            Navigator.of(context).push(MaterialPageRoute(builder: (_) => const QuotesListPage()));
-          }),
-          // Add other navigation items here
-        ],
-      ),
-    );
-  }
 
   Widget _buildHeader() {
     return SliverAppBar(
@@ -311,12 +299,20 @@ class _HomePageState extends State<HomePage> {
         _ActionButton(title: '+ Nouveau Devis', icon: Icons.add, onTap: () {
            Navigator.of(context).push(MaterialPageRoute(builder: (_) => const QuoteFormPage()));
         }),
-        _ActionButton(title: '+ Nv. Facture', icon: Icons.receipt_long, onTap: () {}), // Placeholder
+        _ActionButton(title: '+ Nv. Facture', icon: Icons.receipt_long, onTap: () {
+          context.go('/invoices/new');
+        }),
         _ActionButton(title: '+ Nouveau Client', icon: Icons.person_add, onTap: () {
           Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ClientFormPage()));
         }),
-        _ActionButton(title: 'Scanner', icon: Icons.qr_code_scanner, onTap: () {}), // Placeholder
-        _ActionButton(title: 'Contacter', icon: Icons.call, onTap: () {}), // Placeholder
+        _ActionButton(title: 'Scanner', icon: Icons.qr_code_scanner, onTap: () {
+          context.go('/scan-invoice');
+        }),
+        _ActionButton(title: 'Contacter', icon: Icons.call, onTap: () {
+          // Open phone dialer - this would typically use url_launcher
+          // For now, navigate to client list to select who to contact
+          context.go('/clients');
+        }),
       ],
     );
   }

@@ -130,7 +130,8 @@ class _AppDrawerState extends State<AppDrawer> {
             leading: const Icon(Icons.build),
             title: const Text('Outils'),
             onTap: () {
-              // TODO: Create a tools page that links to the different tools
+              context.go('/tools');
+              Navigator.pop(context);
             },
           ),
           ListTile(
