@@ -14,7 +14,7 @@ export default function Pricing() {
         "Application mobile iOS/Android",
         "Support par email",
       ],
-      cta: "Commencer gratuitement",
+      cta: "Essayer gratuitement",
       popular: false,
       gradient: "from-gray-700 to-gray-900",
     },
@@ -52,8 +52,14 @@ export default function Pricing() {
             Tarifs simples et transparents
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Commencez gratuitement. Passez en Pro quand vous êtes prêt.
+            Commencez gratuitement. Passez en Pro quand vous êtes prêt. <strong>Aucun engagement.</strong>
           </p>
+          <div className="mt-6 inline-flex items-center bg-blue-50 rounded-full px-6 py-3">
+            <svg className="w-5 h-5 text-[#4CAF50] mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            <span className="text-gray-700 font-medium">Annulez quand vous voulez • Résiliez en 2 clics</span>
+          </div>
         </div>
 
         {/* Pricing Cards */}
