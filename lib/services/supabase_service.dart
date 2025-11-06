@@ -218,8 +218,9 @@ class SupabaseService {
           .from('quotes')
           .select('*,line_items(*)')
           .eq('id', quoteId)
-          .single();
+          .maybeSingle();
 
+      if (response == null) return null;
       return Quote.fromJson(response);
     } catch (e) {
       return null;
@@ -345,8 +346,9 @@ class SupabaseService {
           .from('invoices')
           .select('*,line_items(*)')
           .eq('id', invoiceId)
-          .single();
+          .maybeSingle();
 
+      if (response == null) return null;
       return Invoice.fromJson(response);
     } catch (e) {
       return null;
@@ -447,7 +449,9 @@ class SupabaseService {
           .from('clients')
           .select('*')
           .eq('id', clientId)
-          .single();
+          .maybeSingle();
+
+      if (response == null) return null;
       return Client.fromJson(response);
     } catch (e) {
       return null;

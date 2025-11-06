@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+import 'package:open_filex/open_filex.dart';
 import '../../models/client.dart';
 import '../../models/line_item.dart';
 import '../../models/product.dart';
@@ -7,6 +10,7 @@ import '../../models/quote.dart';
 import '../../services/invoice_calculator.dart';
 import '../../services/supabase_service.dart';
 import '../../services/template_service.dart';
+import '../../services/pdf_generator.dart';
 import '../../widgets/section_header.dart';
 
 import '../templates/document_templates_page.dart';
@@ -325,21 +329,123 @@ class _QuoteFormPageState extends State<QuoteFormPage> {
   }
 
   Future<void> _previewPdf() async {
-    if (_quote == null) return;
+    if (_quote == null || _selectedClient == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Veuillez sauvegarder le devis avant de prévisualiser')),
+      );
+      return;
+    }
 
     try {
-      // TODO: Implement PDF preview
-      // This would call the PDF generator and display the result
+      // Show loading indicator
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Fonctionnalité d\'aperçu PDF à venir...'),
-          duration: Duration(seconds: 2),
+          content: Row(
+            children: [
+              SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+              ),
+              SizedBox(width: 16),
+              Text('Génération du PDF en cours...'),
+            ],
+          ),
+          duration: Duration(seconds: 3),
         ),
       );
+
+      // Load company profile data
+      final supabase = Supabase.instance.client;
+      final userId = supabase.auth.currentUser?.id;
+      String? companyName;
+      String? companyAddress;
+
+      if (userId != null) {
+        try {
+          final profileResponse = await supabase
+              .from('profiles')
+              .select('company_name, address, postal_code, city')
+              .eq('id', userId)
+              .maybeSingle();
+
+          if (profileResponse != null) {
+            companyName = profileResponse['company_name'] as String?;
+            final address = profileResponse['address'] as String?;
+            final postalCode = profileResponse['postal_code'] as String?;
+            final city = profileResponse['city'] as String?;
+
+            if (address != null && postalCode != null && city != null) {
+              companyAddress = '$address\n$postalCode $city';
+            }
+          }
+        } catch (e) {
+          // Continue with default values if profile loading fails
+          debugPrint('Error loading company profile: $e');
+        }
+      }
+
+      // Prepare line items for PDF
+      final lineItemsForPdf = _lineItems.map((item) => {
+        'description': item.description,
+        'quantity': item.quantity,
+        'unit_price': item.unitPrice,
+      }).toList();
+
+      // Generate PDF
+      final pdfBytes = await PdfGenerator.generateQuotePdf(
+        quoteNumber: _quote!.number,
+        clientName: _selectedClient!.name,
+        totalTtc: _totalTTC,
+        companyName: companyName,
+        companyAddress: companyAddress,
+        lineItems: lineItemsForPdf,
+        notes: _notesController.text.isNotEmpty ? _notesController.text : null,
+        subtotalHt: _totalHT,
+        totalVat: _totalTVA,
+      );
+
+      // Save to temporary file
+      final tempDir = await getTemporaryDirectory();
+      final fileName = 'devis_${_quote!.number}_${DateTime.now().millisecondsSinceEpoch}.pdf';
+      final file = File('${tempDir.path}/$fileName');
+      await file.writeAsBytes(pdfBytes);
+
+      // Open the PDF with system default viewer
+      final result = await OpenFilex.open(file.path);
+
+      if (mounted) {
+        if (result.type == ResultType.done) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('PDF ouvert avec succès'),
+              backgroundColor: Colors.green,
+            ),
+          );
+        } else if (result.type == ResultType.noAppToOpen) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Aucune application pour ouvrir le PDF.\nFichier sauvegardé: ${file.path}'),
+              duration: const Duration(seconds: 5),
+            ),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Erreur: ${result.message}'),
+              backgroundColor: Colors.orange,
+            ),
+          );
+        }
+      }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erreur: ${e.toString()}')),
+          SnackBar(
+            content: Text('Erreur lors de la génération du PDF: ${e.toString()}'),
+            backgroundColor: Colors.red,
+            duration: const Duration(seconds: 5),
+          ),
         );
       }
     }
