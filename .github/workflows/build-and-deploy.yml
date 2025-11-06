@@ -138,6 +138,7 @@ jobs:
           firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
             --app 1:268663350911:android:d84cfcc42f6b4b9a66014a \
             --release-notes "Build from ${{ github.sha }} - ${{ github.event.head_commit.message }}" \
+            --testers "editionsrevel@gmail.com" \
             --token $FIREBASE_TOKEN
 
   build-ios:

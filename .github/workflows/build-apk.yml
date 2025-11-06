@@ -35,6 +35,7 @@ jobs:
           appId: ${{ secrets.FIREBASE_APP_ID }}
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_CREDENTIALS }}
           file: build/app/outputs/flutter-apk/app-release.apk
+          testers: editionsrevel@gmail.com
           releaseNotes: |
             Build from branch: ${{ github.ref_name }}
             Commit: ${{ github.sha }}
