@@ -23,8 +23,8 @@ class _AppDrawerState extends State<AppDrawer> {
     final userProfile = await SupabaseService.fetchUserProfile();
     if (userProfile != null && mounted) {
       setState(() {
-        _userName = userProfile['first_name'] ?? userProfile['email'] ?? 'Utilisateur';
-        _userEmail = userProfile['email'] ?? 'email@example.com';
+        _userName = userProfile.firstName ?? userProfile.email ?? 'Utilisateur';
+        _userEmail = userProfile.email ?? 'email@example.com';
       });
     }
   }
