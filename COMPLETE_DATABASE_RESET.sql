@@ -54,6 +54,7 @@ DROP FUNCTION IF EXISTS update_modified_column() CASCADE;
 DROP FUNCTION IF EXISTS update_product_usage() CASCADE;
 
 -- Drop all tables in correct order (respecting foreign keys)
+-- Note: Using IF EXISTS to prevent errors on first run
 DROP TABLE IF EXISTS job_site_documents CASCADE;
 DROP TABLE IF EXISTS job_site_notes CASCADE;
 DROP TABLE IF EXISTS job_site_time_logs CASCADE;
@@ -73,6 +74,13 @@ DROP TABLE IF EXISTS quotes CASCADE;
 DROP TABLE IF EXISTS products CASCADE;
 DROP TABLE IF EXISTS clients CASCADE;
 DROP TABLE IF EXISTS profiles CASCADE;
+
+-- Also drop any policies that might exist
+DROP POLICY IF EXISTS "Users can only see their own clients" ON clients;
+DROP POLICY IF EXISTS "Users can insert their own clients" ON clients;
+DROP POLICY IF EXISTS "Users can update their own clients" ON clients;
+DROP POLICY IF EXISTS "Users can delete their own clients" ON clients;
+-- (All other policies will cascade with table drops)
 
 -- ============================================================================
 -- STEP 2: CREATE ALL TABLES
