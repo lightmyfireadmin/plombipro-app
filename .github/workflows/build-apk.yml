@@ -22,13 +22,24 @@ jobs:
           channel: 'stable'
       
       - run: flutter pub get
-      - run: flutter build apk --release
-      
-      - uses: actions/upload-artifact@v3
+      - run: |
+          flutter build apk --release \
+            --dart-define=SUPABASE_URL=${{ secrets.SUPABASE_URL }} \
+            --dart-define=SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}
+
+      - uses: actions/upload-artifact@v4
         with:
           name: release-apk
           path: build/app/outputs/flutter-apk/app-release.apk
+
+      - name: Upload to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID }}
+          serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_CREDENTIALS }}
+          file: build/app/outputs/flutter-apk/app-release.apk
           testers: editionsrevel@gmail.com
-
-
-
+          releaseNotes: |
+            Build from branch: ${{ github.ref_name }}
+            Commit: ${{ github.sha }}
+            Changes: ${{ github.event.head_commit.message }}

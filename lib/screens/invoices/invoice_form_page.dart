@@ -7,6 +7,9 @@ import '../../models/invoice.dart';
 import '../../services/invoice_calculator.dart';
 import '../../services/supabase_service.dart';
 import '../../services/stripe_service.dart';
+import '../../services/facturx_service.dart';
+import '../../services/chorus_pro_service.dart';
+import '../../config/env_config.dart';
 import '../../widgets/section_header.dart';
 
 import '../templates/document_templates_page.dart';
@@ -48,6 +51,7 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
   String _paymentMethod = 'Virement bancaire';
   bool _generateFacturX = false;
   String? _xmlUrl;
+  bool _submitToChorusPro = false;
 
   // Legal mentions and terms
   final TextEditingController _termsConditionsController = TextEditingController();
@@ -100,15 +104,15 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
               .from('profiles')
               .select('company_name, siret, vat_number, iban, bic, address, postal_code, city')
               .eq('id', userId)
-              .single();
+              .maybeSingle();
 
           userSettings = await supabase
               .from('settings')
               .select('default_invoice_footer, default_payment_terms_days')
               .eq('user_id', userId)
-              .single();
+              .maybeSingle();
         } catch (e) {
-          print('Error loading company profile: $e');
+          debugPrint('Error loading company profile: $e');
         }
       }
 
@@ -242,33 +246,154 @@ Garantie décennale et responsabilité civile professionnelle''';
 
     setState(() { _isSaving = true; });
 
-          try {
-            final invoice = Invoice(
-              id: _invoice?.id,
-              number: _invoiceNumberController.text,
-              clientId: _selectedClient!.id!,
-              date: _invoiceDate,
-              dueDate: _dueDate,
-              totalHt: _totalHT,
-              totalTva: _totalTVA,
-              totalTtc: _totalTTC,
-              paymentStatus: _paymentStatus,
-              notes: _notesController.text,
-              paymentMethod: _paymentMethod,
-              isElectronic: _generateFacturX,
-              xmlUrl: _xmlUrl,
-              client: _selectedClient,
-              items: _lineItems,
-            );
-    
-            if (_isEditing) {
-              await SupabaseService.updateInvoice(invoice.id!, invoice);
-            } else {
-              final newInvoiceId = await SupabaseService.createInvoice(invoice);
-              await SupabaseService.createInvoiceLineItems(newInvoiceId, _lineItems);
-            }    
+    try {
+      final invoice = Invoice(
+        id: _invoice?.id,
+        number: _invoiceNumberController.text,
+        clientId: _selectedClient!.id!,
+        date: _invoiceDate,
+        dueDate: _dueDate,
+        totalHt: _totalHT,
+        totalTva: _totalTVA,
+        totalTtc: _totalTTC,
+        paymentStatus: _paymentStatus,
+        notes: _notesController.text,
+        paymentMethod: _paymentMethod,
+        isElectronic: _generateFacturX,
+        xmlUrl: _xmlUrl,
+        client: _selectedClient,
+        items: _lineItems,
+      );
+
+      String invoiceId;
+      if (_isEditing) {
+        await SupabaseService.updateInvoice(invoice.id!, invoice);
+        invoiceId = invoice.id!;
+      } else {
+        invoiceId = await SupabaseService.createInvoice(invoice);
+        await SupabaseService.createInvoiceLineItems(invoiceId, _lineItems);
+      }
+
+      // Generate Factur-X if requested
       if (_generateFacturX) {
-        // TODO: Call the generate-factur-x edge function
+        try {
+          // First validate that all required fields are present
+          final validation = await FacturXService.validateForFacturX(invoiceId);
+
+          if (!validation.isValid) {
+            // Show validation errors
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    'Impossible de générer Factur-X:\n${validation.errors.join("\n")}',
+                  ),
+                  duration: const Duration(seconds: 5),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
+          } else {
+            // Show warnings if any
+            if (validation.hasWarnings && mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    'Avertissements Factur-X:\n${validation.warnings.join("\n")}',
+                  ),
+                  duration: const Duration(seconds: 3),
+                  backgroundColor: Colors.orange,
+                ),
+              );
+            }
+
+            // Proceed with generation
+            final result = await FacturXService.generateFacturX(invoiceId);
+
+            if (result != null && mounted) {
+              setState(() {
+                _xmlUrl = result['xml_url'];
+              });
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    'Factur-X généré avec succès!\nNiveau: ${result['level']}',
+                  ),
+                  backgroundColor: Colors.green,
+                ),
+              );
+
+              // Submit to Chorus Pro if requested
+              if (_submitToChorusPro) {
+                try {
+                  final chorusProUrl = EnvConfig.chorusProSubmitterUrl;
+                  if (chorusProUrl.isEmpty) {
+                    if (mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('URL Chorus Pro non configurée dans les paramètres'),
+                          backgroundColor: Colors.orange,
+                        ),
+                      );
+                    }
+                  } else {
+                    final chorusProService = ChorusProService(
+                      cloudFunctionUrl: chorusProUrl,
+                      testMode: EnvConfig.environment != 'production',
+                    );
+
+                    final chorusResult = await chorusProService.submitInvoice(invoiceId);
+
+                    if (mounted) {
+                      if (chorusResult['success'] == true) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Facture soumise à Chorus Pro!\nID Chorus: ${chorusResult['chorus_invoice_id']}\nStatut: ${ChorusProService.getStatusText(chorusResult['status'])}',
+                            ),
+                            backgroundColor: Colors.green,
+                            duration: const Duration(seconds: 5),
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Erreur Chorus Pro: ${chorusResult['error']}',
+                            ),
+                            backgroundColor: Colors.red,
+                            duration: const Duration(seconds: 5),
+                          ),
+                        );
+                      }
+                    }
+                  }
+                } catch (e) {
+                  if (mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Erreur lors de la soumission à Chorus Pro: ${e.toString()}'),
+                        backgroundColor: Colors.red,
+                        duration: const Duration(seconds: 5),
+                      ),
+                    );
+                  }
+                }
+              }
+            }
+          }
+        } catch (e) {
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Erreur lors de la génération Factur-X: ${e.toString()}'),
+                backgroundColor: Colors.red,
+                duration: const Duration(seconds: 5),
+              ),
+            );
+          }
+        }
       }
 
       if (mounted) {
@@ -760,6 +885,7 @@ Garantie décennale et responsabilité civile professionnelle''';
       children: [
         SwitchListTile(
           title: const Text('Générer Factur-X'),
+          subtitle: const Text('Génère un PDF conforme Factur-X (obligatoire pour B2B en 2026)'),
           value: _generateFacturX,
           onChanged: (bool value) {
             setState(() {
@@ -774,9 +900,22 @@ Garantie décennale et responsabilité civile professionnelle''';
           ),
         SwitchListTile(
           title: const Text('Soumettre à Chorus Pro'),
-          value: false, // Placeholder
+          subtitle: const Text('Soumet automatiquement la facture au portail gouvernemental Chorus Pro'),
+          value: _submitToChorusPro,
           onChanged: (bool value) {
-            // TODO: Implement Chorus Pro submission
+            setState(() {
+              _submitToChorusPro = value;
+              // If Chorus Pro is enabled, Factur-X must also be enabled
+              if (value && !_generateFacturX) {
+                _generateFacturX = true;
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Factur-X a été activé automatiquement (requis pour Chorus Pro)'),
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+              }
+            });
           },
         ),
       ],

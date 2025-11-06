@@ -39,6 +39,7 @@ import '../screens/job_sites/job_site_form_page.dart';
 import '../screens/analytics/analytics_dashboard_page.dart';
 import '../screens/onboarding/onboarding_wizard_page.dart';
 import '../screens/reports/advanced_reports_page.dart';
+import '../screens/tools/tools_page.dart';
 import '../services/onboarding_service.dart';
 
 class AppRouter {
@@ -302,6 +303,12 @@ class AppRouter {
         path: '/advanced-reports',
         builder: (BuildContext context, GoRouterState state) {
           return const AdvancedReportsPage();
+        },
+      ),
+      GoRoute(
+        path: '/tools',
+        builder: (BuildContext context, GoRouterState state) {
+          return const ToolsPage();
         },
       ),
     ],

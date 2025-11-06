@@ -1,7 +1,8 @@
 import functions_framework
 from supabase import create_client, Client
 import os
-from google.cloud import vision
+import requests
+import base64
 import re
 from datetime import datetime
 from typing import Dict, List, Optional, Tuple
@@ -11,8 +12,9 @@ url: str = os.environ.get("SUPABASE_URL")
 key: str = os.environ.get("SUPABASE_KEY")
 supabase: Client = create_client(url, key)
 
-# Initialize Google Vision client
-vision_client = vision.ImageAnnotatorClient()
+# OCR.space API configuration
+OCR_SPACE_API_KEY = os.environ.get("OCR_SPACE_API_KEY", "K89208385288957")
+OCR_SPACE_URL = "https://api.ocr.space/parse/image"
 
 class OCRParser:
     """Enhanced OCR parser for French supplier invoices"""
@@ -227,28 +229,59 @@ class OCRParser:
         return None, 0.0
 
 
+def call_ocr_space_api(image_url: str = None, image_base64: str = None) -> str:
+    """
+    Call OCR.space API to extract text from image
+    Supports both image URL and base64 encoded image
+    """
+    payload = {
+        'apikey': OCR_SPACE_API_KEY,
+        'language': 'fre',  # French language
+        'isOverlayRequired': False,
+        'detectOrientation': True,
+        'scale': True,
+        'OCREngine': 2,  # Engine 2 for better French text recognition
+    }
+
+    if image_url:
+        payload['url'] = image_url
+    elif image_base64:
+        payload['base64Image'] = f'data:image/jpeg;base64,{image_base64}'
+    else:
+        raise ValueError('Either image_url or image_base64 must be provided')
+
+    response = requests.post(
+        OCR_SPACE_URL,
+        data=payload,
+        timeout=60
+    )
+
+    result = response.json()
+
+    if not result.get('IsErroredOnProcessing', True):
+        if result.get('ParsedResults') and len(result['ParsedResults']) > 0:
+            return result['ParsedResults'][0]['ParsedText']
+        else:
+            raise Exception('No text extracted from image')
+    else:
+        error_msg = result.get('ErrorMessage', ['Unknown OCR error'])[0]
+        raise Exception(f'OCR.space API error: {error_msg}')
+
+
 @functions_framework.http
 def process_ocr(request):
-    """Enhanced OCR processing with line items and confidence scores"""
+    """Enhanced OCR processing with line items and confidence scores using OCR.space API"""
     request_json = request.get_json(silent=True)
     image_url = request_json.get('image_url')
+    image_base64 = request_json.get('image_base64')
     scan_id = request_json.get('scan_id')
 
-    if not image_url or not scan_id:
-        return {'success': False, 'error': 'Missing image_url or scan_id'}, 400
+    if not (image_url or image_base64) or not scan_id:
+        return {'success': False, 'error': 'Missing image_url/image_base64 or scan_id'}, 400
 
     try:
-        # 1. Call Vision API for text detection
-        image = vision.Image()
-        image.source.image_uri = image_url
-
-        # Get both text annotations and full text
-        response = vision_client.document_text_detection(image=image)
-
-        if response.error.message:
-            raise Exception(f'Vision API error: {response.error.message}')
-
-        full_text = response.full_text_annotation.text
+        # 1. Call OCR.space API for text detection
+        full_text = call_ocr_space_api(image_url=image_url, image_base64=image_base64)
 
         if not full_text:
             raise Exception('No text found in image.')
@@ -261,7 +294,7 @@ def process_ocr(request):
         supplier_info = parser.extract_supplier_info(full_text)
         total_ttc, total_conf = parser.extract_total_amount(full_text)
         vat_amount, vat_conf = parser.extract_vat_amount(full_text)
-        line_items, line_items_conf = parser.extract_line_items(full_text, response.full_text_annotation.pages)
+        line_items, line_items_conf = parser.extract_line_items(full_text, [])
 
         # Calculate subtotal if we have total and VAT
         subtotal_ht = None

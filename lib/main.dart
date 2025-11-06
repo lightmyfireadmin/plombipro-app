@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 // import 'package:flutter_stripe/flutter_stripe.dart'; // Uncomment if Stripe UI is used
 
@@ -11,22 +10,28 @@ import 'services/error_service.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize flutter_dotenv to load our .env file
-  await dotenv.load(fileName: 'lib/.env');
+  // Read environment variables from dart-define
+  const supabaseUrl = String.fromEnvironment('SUPABASE_URL');
+  const supabaseAnonKey = String.fromEnvironment('SUPABASE_ANON_KEY');
+  const sentryDsn = String.fromEnvironment('SENTRY_DSN', defaultValue: '');
 
-  // Initialize Sentry for error tracking
-  final sentryDsn = dotenv.env['SENTRY_DSN'];
-  await ErrorService.initialize(sentryDsn: sentryDsn);
+  // Initialize Sentry for error tracking (optional)
+  if (sentryDsn.isNotEmpty) {
+    await ErrorService.initialize(sentryDsn: sentryDsn);
+  }
 
   // Initialize supabase_flutter
   await Supabase.initialize(
-    url: dotenv.env['SUPABASE_URL']!,
-    anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
+    url: supabaseUrl,
+    anonKey: supabaseAnonKey,
   );
 
   // Initialize Stripe publishable key (as per guide page 33)
   // Uncomment and ensure flutter_stripe is correctly configured if you intend to use Stripe UI components.
-  // Stripe.publishableKey = dotenv.env['STRIPE_PUBLISHABLE_KEY'] ?? '';
+  // const stripePublishableKey = String.fromEnvironment('STRIPE_PUBLISHABLE_KEY', defaultValue: '');
+  // if (stripePublishableKey.isNotEmpty) {
+  //   Stripe.publishableKey = stripePublishableKey;
+  // }
 
   runApp(const MyApp());
 }

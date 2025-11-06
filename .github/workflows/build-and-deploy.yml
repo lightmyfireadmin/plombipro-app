@@ -78,10 +78,16 @@ jobs:
         run: flutter pub get
 
       - name: Build APK
-        run: flutter build apk --release
+        run: |
+          flutter build apk --release \
+            --dart-define=SUPABASE_URL=${{ secrets.SUPABASE_URL }} \
+            --dart-define=SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}
 
       - name: Build App Bundle
-        run: flutter build appbundle --release
+        run: |
+          flutter build appbundle --release \
+            --dart-define=SUPABASE_URL=${{ secrets.SUPABASE_URL }} \
+            --dart-define=SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
@@ -137,8 +143,8 @@ jobs:
         run: |
           firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
             --app 1:268663350911:android:d84cfcc42f6b4b9a66014a \
-            --groups testers \
             --release-notes "Build from ${{ github.sha }} - ${{ github.event.head_commit.message }}" \
+            --testers "editionsrevel@gmail.com" \
             --token $FIREBASE_TOKEN
 
   build-ios:

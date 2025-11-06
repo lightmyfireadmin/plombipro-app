@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// Service for generating Factur-X compliant electronic invoices
@@ -31,7 +32,7 @@ class FacturXService {
         throw Exception(data['error'] ?? 'Failed to generate Factur-X');
       }
     } catch (e) {
-      print('Error generating Factur-X: $e');
+      debugPrint('Error generating Factur-X: $e');
       rethrow;
     }
   }
@@ -50,7 +51,7 @@ class FacturXService {
       return response['is_electronic_invoice'] == true &&
           response['facturx_xml_url'] != null;
     } catch (e) {
-      print('Error checking Factur-X status: $e');
+      debugPrint('Error checking Factur-X status: $e');
       return false;
     }
   }
@@ -68,7 +69,7 @@ class FacturXService {
 
       return response['facturx_xml_url'] as String?;
     } catch (e) {
-      print('Error getting Factur-X XML: $e');
+      debugPrint('Error getting Factur-X XML: $e');
       return null;
     }
   }
@@ -86,7 +87,15 @@ class FacturXService {
           .from('invoices')
           .select('*, clients(*)')
           .eq('id', invoiceId)
-          .single();
+          .maybeSingle();
+
+      if (invoiceResponse == null) {
+        return FacturXValidation(
+          isValid: false,
+          errors: ['Facture introuvable'],
+          warnings: [],
+        );
+      }
 
       final invoice = invoiceResponse;
 
@@ -121,7 +130,16 @@ class FacturXService {
       // Check seller (user profile)
       final userId = invoice['user_id'];
       final profileResponse =
-          await _supabase.from('profiles').select().eq('id', userId).single();
+          await _supabase.from('profiles').select().eq('id', userId).maybeSingle();
+
+      if (profileResponse == null) {
+        errors.add('Profil utilisateur introuvable');
+        return FacturXValidation(
+          isValid: false,
+          errors: errors,
+          warnings: warnings,
+        );
+      }
 
       final profile = profileResponse;
 

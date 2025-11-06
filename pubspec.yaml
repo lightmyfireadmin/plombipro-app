@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.9.2
+  sdk: ^3.3.0
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -62,6 +62,7 @@ dependencies:
   json_annotation: ^4.9.0
   sentry_flutter: ^8.11.1
   excel: ^4.0.6
+  csv: ^6.0.0
   introduction_screen: ^3.1.14
   shared_preferences: ^2.3.3
 
@@ -78,8 +79,8 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^6.0.0
-  json_serializable: ^6.11.1
+  flutter_lints: ^4.0.0
+  json_serializable: ^6.8.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -94,7 +95,6 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - lib/.env
     - assets/templates/
 
   # An image asset can refer to one or more resolution-specific "variants", see
