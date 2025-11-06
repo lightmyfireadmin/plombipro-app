@@ -23,8 +23,20 @@ jobs:
       
       - run: flutter pub get
       - run: flutter build apk --release
-      
+
       - uses: actions/upload-artifact@v3
         with:
           name: release-apk
           path: build/app/outputs/flutter-apk/app-release.apk
+
+      - name: Upload to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID }}
+          serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_CREDENTIALS }}
+          groups: testers
+          file: build/app/outputs/flutter-apk/app-release.apk
+          releaseNotes: |
+            Build from branch: ${{ github.ref_name }}
+            Commit: ${{ github.sha }}
+            Changes: ${{ github.event.head_commit.message }}
