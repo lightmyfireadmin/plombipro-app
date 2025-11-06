@@ -133,6 +133,7 @@ class SupabaseService {
     String? postalCode,
     String? city,
     String? phone,
+    String? email,
     String? fullName,
   }) async {
     try {
@@ -147,6 +148,7 @@ class SupabaseService {
       if (postalCode != null) updateData['postal_code'] = postalCode;
       if (city != null) updateData['city'] = city;
       if (phone != null) updateData['phone'] = phone;
+      if (email != null) updateData['email'] = email;
       if (fullName != null) updateData['full_name'] = fullName;
 
       if (updateData.isNotEmpty) {
@@ -216,8 +218,9 @@ class SupabaseService {
           .from('quotes')
           .select('*,line_items(*)')
           .eq('id', quoteId)
-          .single();
+          .maybeSingle();
 
+      if (response == null) return null;
       return Quote.fromJson(response);
     } catch (e) {
       return null;
@@ -343,8 +346,9 @@ class SupabaseService {
           .from('invoices')
           .select('*,line_items(*)')
           .eq('id', invoiceId)
-          .single();
+          .maybeSingle();
 
+      if (response == null) return null;
       return Invoice.fromJson(response);
     } catch (e) {
       return null;
@@ -445,7 +449,9 @@ class SupabaseService {
           .from('clients')
           .select('*')
           .eq('id', clientId)
-          .single();
+          .maybeSingle();
+
+      if (response == null) return null;
       return Client.fromJson(response);
     } catch (e) {
       return null;

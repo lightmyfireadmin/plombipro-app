@@ -148,14 +148,24 @@ class _InvoiceSettingsPageState extends State<InvoiceSettingsPage> {
                           initialValue: _defaultPaymentTerms.toString(),
                           decoration: const InputDecoration(labelText: 'Termes de paiement par défaut (jours)'),
                           keyboardType: TextInputType.number,
-                          onSaved: (value) => _defaultPaymentTerms = int.parse(value!),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) return 'Requis';
+                            if (int.tryParse(value) == null) return 'Nombre invalide';
+                            return null;
+                          },
+                          onSaved: (value) => _defaultPaymentTerms = int.tryParse(value!) ?? 30,
                         ),
                         const SizedBox(height: 16),
                         TextFormField(
                           initialValue: _defaultQuoteValidity.toString(),
                           decoration: const InputDecoration(labelText: 'Validité de devis par défaut (jours)'),
                           keyboardType: TextInputType.number,
-                          onSaved: (value) => _defaultQuoteValidity = int.parse(value!),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) return 'Requis';
+                            if (int.tryParse(value) == null) return 'Nombre invalide';
+                            return null;
+                          },
+                          onSaved: (value) => _defaultQuoteValidity = int.tryParse(value!) ?? 30,
                         ),
                         const SizedBox(height: 16),
                         SwitchListTile(
