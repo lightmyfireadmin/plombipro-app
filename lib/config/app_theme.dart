@@ -65,7 +65,7 @@ class AppTheme {
     ),
 
     // Card
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -227,7 +227,7 @@ class AppTheme {
     ),
 
     // Dialog
-    dialogTheme: DialogTheme(
+    dialogTheme: DialogThemeData(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
@@ -282,7 +282,7 @@ class AppTheme {
     ),
 
     // Tab Bar
-    tabBarTheme: TabBarTheme(
+    tabBarTheme: TabBarThemeData(
       labelColor: primaryBlue,
       unselectedLabelColor: textSecondary,
       indicator: const UnderlineTabIndicator(
@@ -411,7 +411,7 @@ class AppTheme {
     ),
 
     // Card
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       elevation: 4,
       color: const Color(0xFF1E1E1E),
       shape: RoundedRectangleBorder(

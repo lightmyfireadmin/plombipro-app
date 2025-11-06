@@ -294,9 +294,9 @@ class _HomePageState extends State<HomePage> {
         return Card(
           child: ListTile(
             leading: const Icon(Icons.calendar_today),
-            title: Text(appointment.clientName),
-            subtitle: Text(InvoiceCalculator.formatDate(appointment.dateTime)),
-            trailing: Text(InvoiceCalculator.formatTime(appointment.dateTime)),
+            title: Text(appointment.title),
+            subtitle: Text(InvoiceCalculator.formatDate(appointment.appointmentDate)),
+            trailing: Text(appointment.appointmentTime),
           ),
         );
       },
