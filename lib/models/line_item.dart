@@ -7,6 +7,7 @@ class LineItem {
   final double unitPrice;
   final int discountPercent;
   final double taxRate;
+  final String unit;
 
   double get lineTotal => InvoiceCalculator.calculateLineTotal(quantity, unitPrice, discountPercent);
 
@@ -17,6 +18,7 @@ class LineItem {
     required this.unitPrice,
     this.discountPercent = 0,
     this.taxRate = 20.0, // Default TVA rate
+    this.unit = 'unité',
   });
 
   LineItem copyWith({
@@ -26,6 +28,7 @@ class LineItem {
     double? unitPrice,
     int? discountPercent,
     double? taxRate,
+    String? unit,
   }) {
     return LineItem(
       productId: productId ?? this.productId,
@@ -34,6 +37,7 @@ class LineItem {
       unitPrice: unitPrice ?? this.unitPrice,
       discountPercent: discountPercent ?? this.discountPercent,
       taxRate: taxRate ?? this.taxRate,
+      unit: unit ?? this.unit,
     );
   }
 
@@ -44,6 +48,7 @@ class LineItem {
     'unit_price': unitPrice,
     'discount_percent': discountPercent,
     'tax_rate': taxRate,
+    'unit': unit,
   };
 
   factory LineItem.fromJson(Map<String, dynamic> json) {
@@ -54,6 +59,7 @@ class LineItem {
       unitPrice: (json['unit_price'] as num).toDouble(),
       discountPercent: json['discount_percent'] as int? ?? 0,
       taxRate: (json['tax_rate'] as num?)?.toDouble() ?? 0.0,
+      unit: json['unit'] as String? ?? 'unité',
     );
   }
 }

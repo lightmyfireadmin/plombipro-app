@@ -29,10 +29,47 @@ class SupabaseService {
   static Future<List<Appointment>> fetchUpcomingAppointments() async {
     // Placeholder implementation
     return Future.delayed(const Duration(seconds: 1), () {
+      final now = DateTime.now();
       return [
-        Appointment(clientName: 'Client A', dateTime: DateTime.now().add(const Duration(days: 1))),
-        Appointment(clientName: 'Client B', dateTime: DateTime.now().add(const Duration(days: 2))),
-        Appointment(clientName: 'Client C', dateTime: DateTime.now().add(const Duration(days: 3))),
+        Appointment(
+          id: '1',
+          userId: 'user1',
+          title: 'Rendez-vous Client A',
+          appointmentDate: now.add(const Duration(days: 1)),
+          appointmentTime: '09:00:00',
+          addressLine1: '123 Rue Example',
+          postalCode: '75001',
+          city: 'Paris',
+          plannedEta: now.add(const Duration(days: 1, hours: 9)),
+          createdAt: now,
+          updatedAt: now,
+        ),
+        Appointment(
+          id: '2',
+          userId: 'user1',
+          title: 'Rendez-vous Client B',
+          appointmentDate: now.add(const Duration(days: 2)),
+          appointmentTime: '14:00:00',
+          addressLine1: '456 Avenue Test',
+          postalCode: '75002',
+          city: 'Paris',
+          plannedEta: now.add(const Duration(days: 2, hours: 14)),
+          createdAt: now,
+          updatedAt: now,
+        ),
+        Appointment(
+          id: '3',
+          userId: 'user1',
+          title: 'Rendez-vous Client C',
+          appointmentDate: now.add(const Duration(days: 3)),
+          appointmentTime: '11:00:00',
+          addressLine1: '789 Boulevard Demo',
+          postalCode: '75003',
+          city: 'Paris',
+          plannedEta: now.add(const Duration(days: 3, hours: 11)),
+          createdAt: now,
+          updatedAt: now,
+        ),
       ];
     });
   }
@@ -83,6 +120,45 @@ class SupabaseService {
 
   static Future<void> signOut() async {
     await _client.auth.signOut();
+  }
+
+  static Future<void> updateUserProfile({
+    required String userId,
+    String? companyName,
+    String? siret,
+    String? vatNumber,
+    String? iban,
+    String? bic,
+    String? address,
+    String? postalCode,
+    String? city,
+    String? phone,
+    String? fullName,
+  }) async {
+    try {
+      final updateData = <String, dynamic>{};
+
+      if (companyName != null) updateData['company_name'] = companyName;
+      if (siret != null) updateData['siret'] = siret;
+      if (vatNumber != null) updateData['vat_number'] = vatNumber;
+      if (iban != null) updateData['iban'] = iban;
+      if (bic != null) updateData['bic'] = bic;
+      if (address != null) updateData['address'] = address;
+      if (postalCode != null) updateData['postal_code'] = postalCode;
+      if (city != null) updateData['city'] = city;
+      if (phone != null) updateData['phone'] = phone;
+      if (fullName != null) updateData['full_name'] = fullName;
+
+      if (updateData.isNotEmpty) {
+        updateData['updated_at'] = DateTime.now().toIso8601String();
+        await _client
+            .from('profiles')
+            .update(updateData)
+            .eq('id', userId);
+      }
+    } catch (e) {
+      rethrow;
+    }
   }
 
   // ===== QUOTES CRUD =====
