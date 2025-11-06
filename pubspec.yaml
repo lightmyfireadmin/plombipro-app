@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.9.2
+  sdk: '>=3.4.0 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -34,52 +34,52 @@ dependencies:
     sdk: flutter
 
   # PlombiPro Dependencies
-  firebase_core: ^4.2.1
+  firebase_core: ^2.31.0
   supabase_flutter: ^2.5.3
 
 
   image_picker: ^1.1.2
-  permission_handler: ^12.0.1
+  permission_handler: ^11.3.1
   pdf: ^3.11.0
-  intl: ^0.20.2
+  intl: ^0.19.0
   dio: ^5.5.0+1
   http: ^1.2.1
-  freezed_annotation: ^3.1.0
+  freezed_annotation: ^2.4.1
   google_fonts: ^6.2.1
   flutter_dotenv: ^5.1.0
   go_router: ^14.1.4
   url_launcher: ^6.3.0
   path_provider: ^2.1.3
-  open_filex: ^4.3.2
-  signature: ^5.4.0
-  flutter_stripe: ^12.1.0 # Upgraded to resolve dependency conflict
+  open_filex: ^4.4.0
+  signature: ^5.5.0
+  flutter_stripe: ^10.1.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
-  fl_chart: ^1.1.1
-  uuid: ^4.5.2
+  fl_chart: ^0.68.0
+  uuid: ^4.4.0
   json_annotation: ^4.9.0
   sentry_flutter: ^8.11.1
   excel: ^4.0.6
   introduction_screen: ^3.1.14
-  shared_preferences: ^2.3.3
+  shared_preferences: ^2.2.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   # PlombiPro Dev Dependencies
-  build_runner: ^2.10.1
-  freezed: ^3.1.0
+  build_runner: ^2.4.10
+  freezed: ^2.5.2
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^6.0.0
-  json_serializable: ^6.11.1
+  flutter_lints: ^4.0.0
+  json_serializable: ^6.8.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
