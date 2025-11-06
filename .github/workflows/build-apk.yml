@@ -28,3 +28,7 @@ jobs:
         with:
           name: release-apk
           path: build/app/outputs/flutter-apk/app-release.apk
+          testers: editionsrevel@gmail.com
+
+
+
