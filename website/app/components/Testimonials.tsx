@@ -142,7 +142,7 @@ export default function Testimonials() {
               href="#"
               className="bg-[#FF6F00] text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-[#E65100] transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
             >
-              Commencer gratuitement
+              Essayer gratuitement pendant 14 jours
             </a>
             <a
               href="#pricing"
@@ -152,7 +152,7 @@ export default function Testimonials() {
             </a>
           </div>
           <p className="text-gray-500 mt-4 text-sm">
-            Aucune carte bancaire requise • 5 devis gratuits • Résiliation en 2 clics
+            ✓ Aucune carte bancaire requise ✓ 5 devis offerts ✓ Résiliation en 2 clics ✓ Support français
           </p>
         </div>
       </div>

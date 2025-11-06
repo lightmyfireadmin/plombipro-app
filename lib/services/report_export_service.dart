@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:excel/excel.dart';
+import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:pdf/pdf.dart';
@@ -71,7 +72,7 @@ class ReportExportService {
       cell.value = TextCellValue(headers[i]);
       cell.cellStyle = CellStyle(
         bold: true,
-        backgroundColorHex: ExcelColor.gray25,
+        backgroundColorHex: ExcelColor.fromHexString('#D3D3D3'),
       );
     }
     row++;
@@ -577,7 +578,7 @@ class ReportExportService {
     if (bold || backgroundColor != null) {
       labelCell.cellStyle = CellStyle(
         bold: bold,
-        backgroundColorHex: backgroundColor,
+        backgroundColorHex: backgroundColor ?? ExcelColor.fromHexString('#FFFFFF'),
       );
     }
 
@@ -587,7 +588,7 @@ class ReportExportService {
       if (bold || backgroundColor != null) {
         cell.cellStyle = CellStyle(
           bold: bold,
-          backgroundColorHex: backgroundColor,
+          backgroundColorHex: backgroundColor ?? ExcelColor.fromHexString('#FFFFFF'),
         );
       }
     }
@@ -598,7 +599,7 @@ class ReportExportService {
       if (bold || backgroundColor != null) {
         cell.cellStyle = CellStyle(
           bold: bold,
-          backgroundColorHex: backgroundColor,
+          backgroundColorHex: backgroundColor ?? ExcelColor.fromHexString('#FFFFFF'),
         );
       }
     }
@@ -609,7 +610,7 @@ class ReportExportService {
       if (bold || backgroundColor != null) {
         cell.cellStyle = CellStyle(
           bold: bold,
-          backgroundColorHex: backgroundColor,
+          backgroundColorHex: backgroundColor ?? ExcelColor.fromHexString('#FFFFFF'),
         );
       }
     }

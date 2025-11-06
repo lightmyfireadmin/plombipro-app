@@ -81,11 +81,11 @@ export default function Features() {
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Tout ce dont vous avez besoin
+            Tout ce dont un plombier a besoin
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Les seules fonctionnalités qui vous font vraiment gagner du temps.
-            Pas de superflu, que de l'essentiel.
+            Des fonctionnalités pensées <strong>spécialement pour les plombiers</strong>.
+            Pas de superflu, que de l'essentiel pour gagner du temps et de l'argent.
           </p>
         </div>
 
