@@ -4,13 +4,14 @@
 -keep interface com.stripe.android.** { *; }
 -keepclassmembers class com.stripe.android.** { *; }
 
-# Keep Stripe push provisioning classes specifically
--keep class com.stripe.android.pushProvisioning.** { *; }
--keep interface com.stripe.android.pushProvisioning.** { *; }
+# Dontwarn rules for Stripe push provisioning (not used in Flutter)
+-dontwarn com.stripe.android.pushProvisioning.**
 
-# Keep React Native Stripe SDK classes (if using)
--keep class com.reactnativestripesdk.** { *; }
--keep interface com.reactnativestripesdk.** { *; }
+# Dontwarn rules for React Native Stripe SDK (not applicable to Flutter apps)
+-dontwarn com.reactnativestripesdk.**
+
+# Keep Flutter Stripe plugin classes
+-keep class com.flutter.stripe.** { *; }
 
 # Keep all inner classes
 -keepattributes InnerClasses
