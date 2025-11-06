@@ -1,0 +1,1036 @@
+<!doctype html>
+<html lang="fr" class="h-full scroll-smooth bg-white antialiased [font-feature-settings:'ss01'] js-focus-visible">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>costructor — Logiciel de Devis Factures &amp; Gestion n°1 du BTP</title>
+<link crossorigin data-rocket-preconnect href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin data-rocket-preconnect href="https://cdn-cookieyes.com" rel="preconnect">
+<link crossorigin data-rocket-preconnect href="https://www.gstatic.com" rel="preconnect">
+<link crossorigin data-rocket-preconnect href="https://scripts.clarity.ms" rel="preconnect">
+<link crossorigin data-rocket-preconnect href="https://www.clarity.ms" rel="preconnect">
+<link crossorigin data-rocket-preconnect href="https://www.googletagmanager.com" rel="preconnect">
+<link crossorigin data-rocket-preconnect href="https://eu-assets.i.posthog.com" rel="preconnect">
+<link crossorigin data-rocket-preconnect href="https://kit.fontawesome.com" rel="preconnect">
+<link crossorigin data-rocket-preconnect href="https://unpkg.com" rel="preconnect">
+<link crossorigin data-rocket-preconnect href="https://appvizer.one" rel="preconnect">
+<link crossorigin data-rocket-preconnect href="https://client.crisp.chat" rel="preconnect">
+<link crossorigin data-rocket-preconnect href="https://www.google.com" rel="preconnect">
+<link data-rocket-preload as="style" href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&#038;display=swap" rel="preload">
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&#038;display=swap" media="print" onload="this.media=&#039;all&#039;" rel="stylesheet">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&#038;display=swap"></noscript><link rel="preload" data-rocket-preload as="image" href="https://costructor.co/wp-content/themes/costructor/img/logiciel-devis-facture-btp.webp" fetchpriority="high">
+    <script>
+        !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init be ws Ss me ys capture Ne calculateEventProperties xs register register_once register_for_session unregister unregister_for_session Rs getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey canRenderSurveyAsync identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty Is ks createPersonProfile Ps bs opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing $s debug Es getPageViewId captureTraceFeedback captureTraceMetric".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+        posthog.init('phc_OTyPhWeuqmWq150LrORb7E0z6ZnWiaA3SgiBiWYvGUG', {
+            api_host: 'https://eu.i.posthog.com',
+            autocapture: false,
+            defaults: '2025-05-24',
+            person_profiles: 'always',
+        })
+    </script>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-WL57R3S8');</script>
+    <!-- End Google Tag Manager -->
+    <script src="https://kit.fontawesome.com/d3f4d03015.js" crossorigin="anonymous" data-rocket-defer defer></script>
+    <script data-minify="1" src="https://costructor.co/wp-content/cache/min/1/npm/js-cookie@3.0.5/dist/js.cookie.min.js?ver=1760361482" data-rocket-defer defer></script>
+    <link data-minify="1" rel="stylesheet" href="https://costructor.co/wp-content/cache/min/1/inter/inter.css?ver=1760361482">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    
+    <link rel="icon" type="image/png" href="https://costructor.co/favicon.png"/>
+    <script>/** sourcebuster v1.1.1 **/
+        !function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var r;"undefined"!=typeof window?r=window:"undefined"!=typeof global?r=global:"undefined"!=typeof self&&(r=self),r.sbjs=e()}}(function(){return function e(r,t,s){function n(a,i){if(!t[a]){if(!r[a]){var c="function"==typeof require&&require;if(!i&&c)return c(a,!0);if(o)return o(a,!0);var u=new Error("Cannot find module '"+a+"'");throw u.code="MODULE_NOT_FOUND",u}var p=t[a]={exports:{}};r[a][0].call(p.exports,function(e){var t=r[a][1][e];return n(t?t:e)},p,p.exports,e,r,t,s)}return t[a].exports}for(var o="function"==typeof require&&require,a=0;a<s.length;a++)n(s[a]);return n}({1:[function(e,r,t){"use strict";var s=e("./init"),n={init:function(e){this.get=s(e),e&&e.callback&&"function"==typeof e.callback&&e.callback(this.get)}};r.exports=n},{"./init":6}],2:[function(e,r,t){"use strict";var s=e("./terms"),n=e("./helpers/utils"),o={containers:{current:"sbjs_current",current_extra:"sbjs_current_add",first:"sbjs_first",first_extra:"sbjs_first_add",session:"sbjs_session",udata:"sbjs_udata",promocode:"sbjs_promo"},service:{migrations:"sbjs_migrations"},delimiter:"|||",aliases:{main:{type:"typ",source:"src",medium:"mdm",campaign:"cmp",content:"cnt",term:"trm"},extra:{fire_date:"fd",entrance_point:"ep",referer:"rf"},session:{pages_seen:"pgs",current_page:"cpg"},udata:{visits:"vst",ip:"uip",agent:"uag"},promo:"code"},pack:{main:function(e){return o.aliases.main.type+"="+e.type+o.delimiter+o.aliases.main.source+"="+e.source+o.delimiter+o.aliases.main.medium+"="+e.medium+o.delimiter+o.aliases.main.campaign+"="+e.campaign+o.delimiter+o.aliases.main.content+"="+e.content+o.delimiter+o.aliases.main.term+"="+e.term},extra:function(e){return o.aliases.extra.fire_date+"="+n.setDate(new Date,e)+o.delimiter+o.aliases.extra.entrance_point+"="+document.location.href+o.delimiter+o.aliases.extra.referer+"="+(document.referrer||s.none)},user:function(e,r){return o.aliases.udata.visits+"="+e+o.delimiter+o.aliases.udata.ip+"="+r+o.delimiter+o.aliases.udata.agent+"="+navigator.userAgent},session:function(e){return o.aliases.session.pages_seen+"="+e+o.delimiter+o.aliases.session.current_page+"="+document.location.href},promo:function(e){return o.aliases.promo+"="+n.setLeadingZeroToInt(n.randomInt(e.min,e.max),e.max.toString().length)}}};r.exports=o},{"./helpers/utils":5,"./terms":9}],3:[function(e,r,t){"use strict";var s=e("../data").delimiter;r.exports={encodeData:function(e){return encodeURIComponent(e).replace(/\!/g,"%21").replace(/\~/g,"%7E").replace(/\*/g,"%2A").replace(/\'/g,"%27").replace(/\(/g,"%28").replace(/\)/g,"%29")},decodeData:function(e){try{return decodeURIComponent(e).replace(/\%21/g,"!").replace(/\%7E/g,"~").replace(/\%2A/g,"*").replace(/\%27/g,"'").replace(/\%28/g,"(").replace(/\%29/g,")")}catch(r){try{return unescape(e)}catch(t){return""}}},set:function(e,r,t,s,n){var o,a;if(t){var i=new Date;i.setTime(i.getTime()+60*t*1e3),o="; expires="+i.toGMTString()}else o="";a=s&&!n?";domain=."+s:"",document.cookie=this.encodeData(e)+"="+this.encodeData(r)+o+a+"; path=/"},get:function(e){for(var r=this.encodeData(e)+"=",t=document.cookie.split(";"),s=0;s<t.length;s++){for(var n=t[s];" "===n.charAt(0);)n=n.substring(1,n.length);if(0===n.indexOf(r))return this.decodeData(n.substring(r.length,n.length))}return null},destroy:function(e,r,t){this.set(e,"",-1,r,t)},parse:function(e){var r=[],t={};if("string"==typeof e)r.push(e);else for(var n in e)e.hasOwnProperty(n)&&r.push(e[n]);for(var o=0;o<r.length;o++){var a;t[this.unsbjs(r[o])]={},a=this.get(r[o])?this.get(r[o]).split(s):[];for(var i=0;i<a.length;i++){var c=a[i].split("="),u=c.splice(0,1);u.push(c.join("=")),t[this.unsbjs(r[o])][u[0]]=this.decodeData(u[1])}}return t},unsbjs:function(e){return e.replace("sbjs_","")}}},{"../data":2}],4:[function(e,r,t){"use strict";r.exports={parse:function(e){for(var r=this.parseOptions,t=r.parser[r.strictMode?"strict":"loose"].exec(e),s={},n=14;n--;)s[r.key[n]]=t[n]||"";return s[r.q.name]={},s[r.key[12]].replace(r.q.parser,function(e,t,n){t&&(s[r.q.name][t]=n)}),s},parseOptions:{strictMode:!1,key:["source","protocol","authority","userInfo","user","password","host","port","relative","path","directory","file","query","anchor"],q:{name:"queryKey",parser:/(?:^|&)([^&=]*)=?([^&]*)/g},parser:{strict:/^(?:([^:\/?#]+):)?(?:\/\/((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?))?((((?:[^?#\/]*\/)*)([^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,loose:/^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/}},getParam:function(e){for(var r={},t=e?e:window.location.search.substring(1),s=t.split("&"),n=0;n<s.length;n++){var o=s[n].split("=");if("undefined"==typeof r[o[0]])r[o[0]]=o[1];else if("string"==typeof r[o[0]]){var a=[r[o[0]],o[1]];r[o[0]]=a}else r[o[0]].push(o[1])}return r},getHost:function(e){return this.parse(e).host.replace("www.","")}}},{}],5:[function(e,r,t){"use strict";r.exports={escapeRegexp:function(e){return e.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g,"\\$&")},setDate:function(e,r){var t=e.getTimezoneOffset()/60,s=e.getHours(),n=r||0===r?r:-t;e.setHours(s+t+n);var o=e.getFullYear(),a=this.setLeadingZeroToInt(e.getMonth()+1,2),i=this.setLeadingZeroToInt(e.getDate(),2),c=this.setLeadingZeroToInt(e.getHours(),2),u=this.setLeadingZeroToInt(e.getMinutes(),2),p=this.setLeadingZeroToInt(e.getSeconds(),2);return o+"-"+a+"-"+i+" "+c+":"+u+":"+p},setLeadingZeroToInt:function(e,r){for(var t=e+"";t.length<r;)t="0"+t;return t},randomInt:function(e,r){return Math.floor(Math.random()*(r-e+1))+e}}},{}],6:[function(e,r,t){"use strict";var s=e("./data"),n=e("./terms"),o=e("./helpers/cookies"),a=e("./helpers/uri"),i=e("./helpers/utils"),c=e("./params"),u=e("./migrations");r.exports=function(e){function r(){var e;if("undefined"!=typeof y.utm_source||"undefined"!=typeof y.utm_medium||"undefined"!=typeof y.utm_campaign||"undefined"!=typeof y.utm_content||"undefined"!=typeof y.utm_term||"undefined"!=typeof y.gclid||"undefined"!=typeof y.yclid||"undefined"!=typeof y[h.campaign_param]||"undefined"!=typeof y[h.term_param]||"undefined"!=typeof y[h.content_param])g(),e=t(n.traffic.utm);else if(f(n.traffic.organic))g(),e=t(n.traffic.organic);else if(!o.get(s.containers.session)&&f(n.traffic.referral))g(),e=t(n.traffic.referral);else{if(o.get(s.containers.first)||o.get(s.containers.current))return o.get(s.containers.current);g(),e=t(n.traffic.typein)}return e}function t(e){switch(e){case n.traffic.utm:v=n.traffic.utm,x="undefined"!=typeof y.utm_source?y.utm_source:"undefined"!=typeof y.gclid?"google":"undefined"!=typeof y.yclid?"yandex":n.none,D="undefined"!=typeof y.utm_medium?y.utm_medium:"undefined"!=typeof y.gclid?"cpc":"undefined"!=typeof y.yclid?"cpc":n.none,k="undefined"!=typeof y.utm_campaign?y.utm_campaign:"undefined"!=typeof y[h.campaign_param]?y[h.campaign_param]:"undefined"!=typeof y.gclid?"google_cpc":"undefined"!=typeof y.yclid?"yandex_cpc":n.none,w="undefined"!=typeof y.utm_content?y.utm_content:"undefined"!=typeof y[h.content_param]?y[h.content_param]:n.none,C="undefined"!=typeof y.utm_term?y.utm_term:"undefined"!=typeof y[h.term_param]?y[h.term_param]:p()||n.none;break;case n.traffic.organic:v=n.traffic.organic,x=x||a.getHost(document.referrer),D=n.referer.organic,k=n.none,w=n.none,C=n.none;break;case n.traffic.referral:v=n.traffic.referral,x=x||a.getHost(document.referrer),D=D||n.referer.referral,k=n.none,w=a.parse(document.referrer).path,C=n.none;break;case n.traffic.typein:v=n.traffic.typein,x=h.typein_attributes.source,D=h.typein_attributes.medium,k=n.none,w=n.none,C=n.none;break;default:v=n.oops,x=n.oops,D=n.oops,k=n.oops,w=n.oops,C=n.oops}var r={type:v,source:x,medium:D,campaign:k,content:w,term:C};return s.pack.main(r)}function p(){var e=document.referrer;if(y.utm_term)return y.utm_term;if(!(e&&a.parse(e).host&&a.parse(e).host.match(/^(?:.*\.)?yandex\..{2,9}$/i)))return!1;try{return a.getParam(a.parse(document.referrer).query).text}catch(r){return!1}}function f(e){var r=document.referrer;switch(e){case n.traffic.organic:return!!r&&m(r)&&d(r);case n.traffic.referral:return!!r&&m(r)&&l(r);default:return!1}}function m(e){if(h.domain){if(_)return a.getHost(e)!==a.getHost(j);var r=new RegExp("^(?:.*\\.)?"+i.escapeRegexp(j)+"$","i");return!a.getHost(e).match(r)}return a.getHost(e)!==a.getHost(document.location.href)}function d(e){var r="yandex",t="text",s="google",n=new RegExp("^(?:.*\\.)?"+i.escapeRegexp(r)+"\\..{2,9}$"),o=new RegExp(".*"+i.escapeRegexp(t)+"=.*"),c=new RegExp("^(?:www\\.)?"+i.escapeRegexp(s)+"\\..{2,9}$");if(a.parse(e).query&&a.parse(e).host.match(n)&&a.parse(e).query.match(o))return x=r,!0;if(a.parse(e).host.match(c))return x=s,!0;if(!a.parse(e).query)return!1;for(var u=0;u<h.organics.length;u++){if(a.parse(e).host.match(new RegExp("^(?:.*\\.)?"+i.escapeRegexp(h.organics[u].host)+"$","i"))&&a.parse(e).query.match(new RegExp(".*"+i.escapeRegexp(h.organics[u].param)+"=.*","i")))return x=h.organics[u].display||h.organics[u].host,!0;if(u+1===h.organics.length)return!1}}function l(e){if(!(h.referrals.length>0))return x=a.getHost(e),!0;for(var r=0;r<h.referrals.length;r++){if(a.parse(e).host.match(new RegExp("^(?:.*\\.)?"+i.escapeRegexp(h.referrals[r].host)+"$","i")))return x=h.referrals[r].display||h.referrals[r].host,D=h.referrals[r].medium||n.referer.referral,!0;if(r+1===h.referrals.length)return x=a.getHost(e),!0}}function g(){o.set(s.containers.current_extra,s.pack.extra(h.timezone_offset),b,j,_),o.get(s.containers.first_extra)||o.set(s.containers.first_extra,s.pack.extra(h.timezone_offset),b,j,_)}var h=c.fetch(e),y=a.getParam(),j=h.domain.host,_=h.domain.isolate,b=h.lifetime;u.go(b,j,_);var v,x,D,k,w,C;return function(){o.set(s.containers.current,r(),b,j,_),o.get(s.containers.first)||o.set(s.containers.first,o.get(s.containers.current),b,j,_);var e,t;o.get(s.containers.udata)?(e=parseInt(o.parse(s.containers.udata)[o.unsbjs(s.containers.udata)][s.aliases.udata.visits])||1,e=o.get(s.containers.session)?e:e+1,t=s.pack.user(e,h.user_ip)):(e=1,t=s.pack.user(e,h.user_ip)),o.set(s.containers.udata,t,b,j,_);var n;o.get(s.containers.session)?(n=parseInt(o.parse(s.containers.session)[o.unsbjs(s.containers.session)][s.aliases.session.pages_seen])||1,n+=1):n=1,o.set(s.containers.session,s.pack.session(n),h.session_length,j,_),h.promocode&&!o.get(s.containers.promocode)&&o.set(s.containers.promocode,s.pack.promo(h.promocode),b,j,_)}(),o.parse(s.containers)}},{"./data":2,"./helpers/cookies":3,"./helpers/uri":4,"./helpers/utils":5,"./migrations":7,"./params":8,"./terms":9}],7:[function(e,r,t){"use strict";var s=e("./data"),n=e("./helpers/cookies");r.exports={go:function(e,r,t){var o,a=this.migrations,i={l:e,d:r,i:t};if(n.get(s.containers.first)||n.get(s.service.migrations)){if(!n.get(s.service.migrations))for(o=0;o<a.length;o++)a[o].go(a[o].id,i)}else{var c=[];for(o=0;o<a.length;o++)c.push(a[o].id);var u="";for(o=0;o<c.length;o++)u+=c[o]+"=1",o<c.length-1&&(u+=s.delimiter);n.set(s.service.migrations,u,i.l,i.d,i.i)}},migrations:[{id:"1418474375998",version:"1.0.0-beta",go:function(e,r){var t=e+"=1",o=e+"=0",a=function(e,r,t){return r||t?e:s.delimiter};try{var i=[];for(var c in s.containers)s.containers.hasOwnProperty(c)&&i.push(s.containers[c]);for(var u=0;u<i.length;u++)if(n.get(i[u])){var p=n.get(i[u]).replace(/(\|)?\|(\|)?/g,a);n.destroy(i[u],r.d,r.i),n.destroy(i[u],r.d,!r.i),n.set(i[u],p,r.l,r.d,r.i)}n.get(s.containers.session)&&n.set(s.containers.session,s.pack.session(0),r.l,r.d,r.i),n.set(s.service.migrations,t,r.l,r.d,r.i)}catch(f){n.set(s.service.migrations,o,r.l,r.d,r.i)}}}]}},{"./data":2,"./helpers/cookies":3}],8:[function(e,r,t){"use strict";var s=e("./terms"),n=e("./helpers/uri");r.exports={fetch:function(e){var r=e||{},t={};if(t.lifetime=this.validate.checkFloat(r.lifetime)||6,t.lifetime=parseInt(30*t.lifetime*24*60),t.session_length=this.validate.checkInt(r.session_length)||30,t.timezone_offset=this.validate.checkInt(r.timezone_offset),t.campaign_param=r.campaign_param||!1,t.term_param=r.term_param||!1,t.content_param=r.content_param||!1,t.user_ip=r.user_ip||s.none,r.promocode?(t.promocode={},t.promocode.min=parseInt(r.promocode.min)||1e5,t.promocode.max=parseInt(r.promocode.max)||999999):t.promocode=!1,r.typein_attributes&&r.typein_attributes.source&&r.typein_attributes.medium?(t.typein_attributes={},t.typein_attributes.source=r.typein_attributes.source,t.typein_attributes.medium=r.typein_attributes.medium):t.typein_attributes={source:"(direct)",medium:"(none)"},r.domain&&this.validate.isString(r.domain)?t.domain={host:r.domain,isolate:!1}:r.domain&&r.domain.host?t.domain=r.domain:t.domain={host:n.getHost(document.location.hostname),isolate:!1},t.referrals=[],r.referrals&&r.referrals.length>0)for(var o=0;o<r.referrals.length;o++)r.referrals[o].host&&t.referrals.push(r.referrals[o]);if(t.organics=[],r.organics&&r.organics.length>0)for(var a=0;a<r.organics.length;a++)r.organics[a].host&&r.organics[a].param&&t.organics.push(r.organics[a]);return t.organics.push({host:"bing.com",param:"q",display:"bing"}),t.organics.push({host:"yahoo.com",param:"p",display:"yahoo"}),t.organics.push({host:"about.com",param:"q",display:"about"}),t.organics.push({host:"aol.com",param:"q",display:"aol"}),t.organics.push({host:"ask.com",param:"q",display:"ask"}),t.organics.push({host:"globososo.com",param:"q",display:"globo"}),t.organics.push({host:"go.mail.ru",param:"q",display:"go.mail.ru"}),t.organics.push({host:"rambler.ru",param:"query",display:"rambler"}),t.organics.push({host:"tut.by",param:"query",display:"tut.by"}),t.referrals.push({host:"t.co",display:"twitter.com"}),t.referrals.push({host:"plus.url.google.com",display:"plus.google.com"}),t},validate:{checkFloat:function(e){return!(!e||!this.isNumeric(parseFloat(e)))&&parseFloat(e)},checkInt:function(e){return!(!e||!this.isNumeric(parseInt(e)))&&parseInt(e)},isNumeric:function(e){return!isNaN(e)},isString:function(e){return"[object String]"===Object.prototype.toString.call(e)}}}},{"./helpers/uri":4,"./terms":9}],9:[function(e,r,t){"use strict";r.exports={traffic:{utm:"utm",organic:"organic",referral:"referral",typein:"typein"},referer:{referral:"referral",organic:"organic",social:"social"},none:"(none)",oops:"(Houston, we have a problem)"}},{}]},{},[1])(1)});</script>
+    <script>
+        window.CRISP_READY_TRIGGER = function() {
+            document.querySelector('#request_demo').classList.remove('hidden');
+        };
+    </script>
+    <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+	<style>img:is([sizes="auto" i], [sizes^="auto," i]) { contain-intrinsic-size: 3000px 1500px }</style>
+	
+	<!-- This site is optimized with the Yoast SEO plugin v25.6 - https://yoast.com/wordpress/plugins/seo/ -->
+	<meta name="description" content="Essayez gratuitement le 1er logiciel simple et intelligent pour les artisans, TPE et PME du bâtiment. Devis, Factures, Planning... tout y est !" />
+	<link rel="canonical" href="https://costructor.co/" />
+	<meta property="og:locale" content="fr_FR" />
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="costructor — Logiciel de Devis Factures &amp; Gestion n°1 du BTP" />
+	<meta property="og:description" content="Essayez gratuitement le 1er logiciel simple et intelligent pour les artisans, TPE et PME du bâtiment. Devis, Factures, Planning... tout y est !" />
+	<meta property="og:url" content="https://costructor.co/" />
+	<meta property="og:site_name" content="Costructor" />
+	<meta property="article:modified_time" content="2023-04-28T07:29:47+00:00" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://costructor.co/","url":"https://costructor.co/","name":"costructor — Logiciel de Devis Factures & Gestion n°1 du BTP","isPartOf":{"@id":"https://costructor.co/#website"},"datePublished":"2022-07-06T15:14:55+00:00","dateModified":"2023-04-28T07:29:47+00:00","description":"Essayez gratuitement le 1er logiciel simple et intelligent pour les artisans, TPE et PME du bâtiment. Devis, Factures, Planning... tout y est !","breadcrumb":{"@id":"https://costructor.co/#breadcrumb"},"inLanguage":"fr-FR","potentialAction":[{"@type":"ReadAction","target":["https://costructor.co/"]}]},{"@type":"BreadcrumbList","@id":"https://costructor.co/#breadcrumb","itemListElement":[]},{"@type":"WebSite","@id":"https://costructor.co/#website","url":"https://costructor.co/","name":"Costructor","description":"Logiciel de gestion n°1 pour le BTP","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://costructor.co/?s={search_term_string}"},"query-input":{"@type":"PropertyValueSpecification","valueRequired":true,"valueName":"search_term_string"}}],"inLanguage":"fr-FR"}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link href='https://fonts.gstatic.com' crossorigin rel='preconnect' />
+<style id='wp-emoji-styles-inline-css' type='text/css'>
+
+	img.wp-smiley, img.emoji {
+		display: inline !important;
+		border: none !important;
+		box-shadow: none !important;
+		height: 1em !important;
+		width: 1em !important;
+		margin: 0 0.07em !important;
+		vertical-align: -0.1em !important;
+		background: none !important;
+		padding: 0 !important;
+	}
+</style>
+<style id='classic-theme-styles-inline-css' type='text/css'>
+/*! This file is auto-generated */
+.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+</style>
+<style id='global-styles-inline-css' type='text/css'>
+:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);}:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}
+:root :where(.wp-block-pullquote){font-size: 1.5em;line-height: 1.6;}
+</style>
+<link rel='stylesheet' id='sn-plugin-css' href='https://costructor.co/wp-content/plugins/sn-plugin/public/css/sn-plugin-public.css?ver=2.0.1' type='text/css' media='all' />
+<link data-minify="1" rel='stylesheet' id='style-css' href='https://costructor.co/wp-content/cache/min/1/wp-content/themes/costructor/style.css?ver=1760361482' type='text/css' media='all' />
+<script type="text/javascript" src="https://costructor.co/wp-includes/js/jquery/jquery.min.js?ver=3.7.1" id="jquery-core-js"></script>
+<script type="text/javascript" src="https://costructor.co/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" id="jquery-migrate-js" data-rocket-defer defer></script>
+<script data-minify="1" type="text/javascript" src="https://costructor.co/wp-content/cache/min/1/wp-content/plugins/sn-plugin/public/js/sn-plugin-public.js?ver=1760361482" id="sn-plugin-js" data-rocket-defer defer></script>
+<link rel="https://api.w.org/" href="https://costructor.co/wp-json/" /><link rel="alternate" title="JSON" type="application/json" href="https://costructor.co/wp-json/wp/v2/pages/6" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://costructor.co/xmlrpc.php?rsd" />
+<meta name="generator" content="WordPress 6.8.3" />
+<link rel='shortlink' href='https://costructor.co/' />
+<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="https://costructor.co/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fcostructor.co%2F" />
+<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="https://costructor.co/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fcostructor.co%2F&#038;format=xml" />
+    <script>sbjs.init();</script>
+    <script type="text/javascript">
+        (function (w, d, id) {
+            if(w.av) { return; }
+            var ts = new Date().getTime();
+            w.avURL = w.avURL || 'https://appvizer.one';
+            w.avPool = w.avPool || [];
+            w.avPool.push({start: ts, id: id});
+            w.av = function () { w.avPool.push(arguments) };
+            var e = document.createElement("script");
+            e.async = true;
+            e.src = w.avURL + '/ariadne/v1/ariadne.js?ts=' + ts;
+            d.getElementsByTagName("head")[0].appendChild(e);
+        })(window, document, 'AP-31518');
+        av("visit");
+    </script>
+    <script>
+        document.addEventListener("cookieyes_consent_update", function (eventData) {
+            const data = eventData.detail;
+            if (data.accepted.includes("analytics")) { sbjs.init(); }
+            if (data.accepted.includes('performance')) { av("visit"); }
+        });
+    </script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "g8x8oh3zub");
+    </script>
+<style id="rocket-lazyrender-inline-css">[data-wpr-lazyrender] {content-visibility: auto;}</style><meta name="generator" content="WP Rocket 3.19.3" data-wpr-features="wpr_defer_js wpr_minify_js wpr_preconnect_external_domains wpr_automatic_lazy_rendering wpr_oci wpr_minify_css wpr_preload_links wpr_desktop" /></head>
+
+<body class="w-full overflow-x-hidden pt-16 md:pt-[86px]">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WL57R3S8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<header  id="header" class="bg-white border-b border-gray-300/50 fixed max-md:h-16 top-0 left-0 w-full z-[998] py-4 md:py-6 ">
+    <div  class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <nav class="relative z-50 flex justify-between">
+            <div class="flex items-center md:gap-x-12">
+                <a aria-label="Home" href="https://costructor.co">
+                    <img class="w-48" src="https://costructor.co/wp-content/themes/costructor/img/costructor-logo.png"
+                         alt="Costructor logo"/>
+                </a>
+                <ul id="menu-menu-mobile" class="hidden md:flex md:gap-x-3"><li id="menu-item-55" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-55"><a href="https://costructor.co/#fonctionnalites" aria-current="page">Fonctionnalités</a></li>
+<li id="menu-item-56" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-56"><a href="https://costructor.co/tarifs/">Tarifs</a></li>
+<li id="menu-item-117" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-117"><a href="https://costructor.co/blog/">Blog</a></li>
+</ul>            </div>
+            <div class="flex items-center gap-x-2 md:gap-x-8">
+                <div class="hidden md:block">
+
+                    <a class="inline-block text-sm text-slate-700 hover:text-brand-500"
+                       href="https://app.costructor.co">Connexion</a>
+
+                    <a href="https://app.costructor.co/signup" class="ml-2 btn inline-flex items-center justify-center border border-transparent text-sm leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none p-2 px-3 text-sm btn-brand font-medium">
+                        Essayer maintenant
+                    </a>
+
+                </div>
+                                <div class="-mr-1 md:hidden">
+                    <div >
+                        <div id="mobileMenuContainer" data-open="false" class="relative z-50 hidden" role="dialog" aria-modal="true">
+                            <div class="fixed inset-0 bg-gray-300 bg-opacity-50 transition-opacity"></div>
+                            <div id="mobileMenu" class="fixed z-10 inset-0 overflow-y-auto hidden">
+                                <div class="flex items-start justify-center min-h-full p-4 pt-14 text-center">
+                                    <div class="relative w-full bg-white rounded-lg border border-gray-200 p-5 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-sm sm:w-full sm:p-6">
+                                        <div class="mobile-menu">
+                                            <ul id="menu-menu-mobile-1" class="menu"><li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-55"><a href="https://costructor.co/#fonctionnalites" aria-current="page">Fonctionnalités</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-56"><a href="https://costructor.co/tarifs/">Tarifs</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-117"><a href="https://costructor.co/blog/">Blog</a></li>
+</ul>                                        </div>
+                                        <div class="mt-5 sm:mt-6 w-5/6 mx-auto">
+                                            <a href="https://app.costructor.co" class="btn-outline w-full px-4 py-2 rounded-full justify-center text-center">Connexion</a>
+                                        </div>
+                                        
+
+                                        <div class="mt-2 w-5/6 mx-auto">
+                                            <a href="https://app.costructor.co/signup" class="btn-brand w-full px-4 py-2 rounded-full justify-center text-center">Inscription</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button id="toggleMenu" class="z-[999] flex h-8 text-xl text-slate-700 items-center justify-center [&:not(:focus-visible)]:focus:outline-none"
+                                aria-label="Ouvrir le menu" type="button" aria-expanded="false">
+                            <span class="text-sm mr-1">Menu</span>
+                            <span class="w-8 flex justify-center">
+                                <i class="far fa-bars"></i>
+                            </span>
+
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+<section  id="hero" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 sm:mt-6">
+
+    <div  class="flex flex-col md:flex-row items-center">
+        <div  class="space-y-6 text-center md:text-left">
+
+            <div >
+                <a href="https://costructor.co/site-internet/" class="transition-all duration-150 mb-4 inline-flex leading-5 items-center bg-brand-50 hover:bg-brand-100 rounded-full py-1 px-2 border border-brand-100 hover:border-brand-200/70">
+    <span class="inline-flex items-center bg-brand-500 text-white rounded-full text-xs font-medium px-1.5 py-0.5">NOUVEAU</span>
+    <span class="text-gray-600 ml-2">Créez votre site Internet gratuitement avec Costructor <i class="fa-solid fa-chevron-right text-xs"></i></span>
+</a>                <h1 class="pt-4 md:pt-0 md:pr-12 text-3xl font-display font-medium tracking-tight text-slate-800 sm:text-4xl md:text-[2.65rem] md:leading-[3rem]">Le 1er logiciel <span class="relative whitespace-nowrap !text-brand-600"><svg aria-hidden="true" viewBox="0 0 418 42" class="absolute top-2/3 left-0 h-[0.58em] w-full fill-brand-300/70" preserveAspectRatio="none"><path d="M203.371.916c-26.013-2.078-76.686 1.963-124.73 9.946L67.3 12.749C35.421 18.062 18.2 21.766 6.004 25.934 1.244 27.561.828 27.778.874 28.61c.07 1.214.828 1.121 9.595-1.176 9.072-2.377 17.15-3.92 39.246-7.496C123.565 7.986 157.869 4.492 195.942 5.046c7.461.108 19.25 1.696 19.17 2.582-.107 1.183-7.874 4.31-25.75 10.366-21.992 7.45-35.43 12.534-36.701 13.884-2.173 2.308-.202 4.407 4.442 4.734 2.654.187 3.263.157 15.593-.78 35.401-2.686 57.944-3.488 88.365-3.143 46.327.526 75.721 2.23 130.788 7.584 19.787 1.924 20.814 1.98 24.557 1.332l.066-.011c1.201-.203 1.53-1.825.399-2.335-2.911-1.31-4.893-1.604-22.048-3.261-57.509-5.556-87.871-7.36-132.059-7.842-23.239-.254-33.617-.116-50.627.674-11.629.54-42.371 2.494-46.696 2.967-2.359.259 8.133-3.625 26.504-9.81 23.239-7.825 27.934-10.149 28.304-14.005.417-4.348-3.529-6-16.878-7.066Z"></path></svg><span class="relative">simple et intelligent</span></span> pour les artisans, TPE et PME du bâtiment.</h1>
+            </div>
+
+            <ul class="md:pr-12 text-slate-600 md:text-lg md:tracking-tight">
+                <li><span class="text-brand-500 mr-1"><i class="fas fa-check"></i></span> Créez vos devis et factures</li>
+                <li><span class="text-brand-500 mr-1"><i class="fas fa-check"></i></span>  Gérez et planifiez vos chantiers & interventions</li>
+                <li><span class="text-brand-500 mr-1"><i class="fas fa-check"></i></span> Pilotez votre rentabilité</li>
+                <li><span class="text-brand-500 mr-1"><i class="fas fa-check"></i></span> Intuitif et 100 % compatible mobile 📱</li>
+            </ul>
+            <div class="max-w-lg mx-auto md:mx-0">
+                <div >
+                    <a href="https://app.costructor.co/signup" class="btn-brand rounded-full px-5 py-3 font-semibold shrink-0 justify-center md:justify-start text-lg inline-flex items-center">Essayez, c'est gratuit <i class="far fa-arrow-right ml-4"></i></a>
+                </div>
+
+                <a href="#avis" class="inline-flex items-center text-gray-600 text-sm mt-5">
+    <img src="https://costructor.co/wp-content/themes/costructor/img/Google_2015_logo.svg" class="w-16" alt="Logo Google" />
+    <span class="ml-1.5 mr-3">Avis 4.9/5</span>
+    <div class="relative z-50 flex text-yellow-400 text-lg -translate-y-px">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+    </div>
+</a>
+            </div>
+
+        </div>
+
+        <div  class="w-full md:max-w-[24rem] mt-12 md:mt-0 shrink-0 relative">
+            <div class="mx-auto md:mx-0 w-full sm:max-w-[28rem] md:w-[24rem]">
+                <div class="w-full h-[24rem] md:-translate-x-4 bg-slate-100 sm:rounded-full !rounded-tr-none bg-cover" style="background-image: url('https://costructor.co/wp-content/themes/costructor/img/logiciel-devis-facture-btp.webp'); background-position: 40% 40%;"></div>
+                <div class="w-3/4 mx-auto sm:w-64 sm:absolute sm:bottom-0 lg:right-0 -translate-y-24 -mb-12 sm:mb-0 sm:translate-y-8">
+    <figure class="relative rounded-2xl bg-white p-4 shadow-xl shadow-slate-900/10">
+        <svg aria-hidden="true" width="105" height="78" class="absolute top-6 left-6 fill-slate-100">
+            <path d="M25.086 77.292c-4.821 0-9.115-1.205-12.882-3.616-3.767-2.561-6.78-6.102-9.04-10.622C1.054 58.534 0 53.411 0 47.686c0-5.273.904-10.396 2.712-15.368 1.959-4.972 4.746-9.567 8.362-13.786a59.042 59.042 0 0 1 12.43-11.3C28.325 3.917 33.599 1.507 39.324 0l11.074 13.786c-6.479 2.561-11.677 5.951-15.594 10.17-3.767 4.219-5.65 7.835-5.65 10.848 0 1.356.377 2.863 1.13 4.52.904 1.507 2.637 3.089 5.198 4.746 3.767 2.41 6.328 4.972 7.684 7.684 1.507 2.561 2.26 5.5 2.26 8.814 0 5.123-1.959 9.19-5.876 12.204-3.767 3.013-8.588 4.52-14.464 4.52Zm54.24 0c-4.821 0-9.115-1.205-12.882-3.616-3.767-2.561-6.78-6.102-9.04-10.622-2.11-4.52-3.164-9.643-3.164-15.368 0-5.273.904-10.396 2.712-15.368 1.959-4.972 4.746-9.567 8.362-13.786a59.042 59.042 0 0 1 12.43-11.3C82.565 3.917 87.839 1.507 93.564 0l11.074 13.786c-6.479 2.561-11.677 5.951-15.594 10.17-3.767 4.219-5.65 7.835-5.65 10.848 0 1.356.377 2.863 1.13 4.52.904 1.507 2.637 3.089 5.198 4.746 3.767 2.41 6.328 4.972 7.684 7.684 1.507 2.561 2.26 5.5 2.26 8.814 0 5.123-1.959 9.19-5.876 12.204-3.767 3.013-8.588 4.52-14.464 4.52Z"></path>
+        </svg>
+        <blockquote class="relative"><p class=" tracking-tight text-slate-900">Logiciel disponible en ligne, depuis n'importe où et facile d'utilisation !</p></blockquote>
+
+        <figcaption class="relative mt-3 pt-3 flex items-center justify-between border-t border-slate-100 ">
+            <div>
+                <div class="font-display text-base text-slate-900">Ophelie L.</div>
+                <div class="mt-1 text-sm text-slate-500">ADCONCEPT 92</div>
+            </div>
+
+        </figcaption>
+    </figure>
+</div>            </div>
+        </div>
+
+    </div>
+
+    
+</section>
+
+<section  class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 sm:mt-12">
+    <div  class="bg-gray-100 rounded-xl p-4 flex max-xl:flex-col max-xl:justify-center items-center">
+    <div  class="pr-6 flex items-center">
+        <div class="shrink-0 text-2xl mr-4">
+            🚀
+        </div>
+        <div>
+            <h2 class="font-semibold text-xl text-gray-700">Soyez prêts pour la facturation électronique 2026</h2>
+            <p class="text-slate-700 leading-tight md:tracking-tight">Faites la transition en toute sérénité avec Costructor !</p>
+
+        </div>
+    </div>
+    <div  class="flex xl:ml-auto shrink-0 items-center max-xl:mt-4">
+        <div  class="min-w-0 h-12 mr-6">
+            <img src="https://costructor.co/wp-content/themes/costructor/img/fx/peppol.png" class="max-h-full" />
+
+        </div>
+        <div class="min-w-0 h-12 mr-4">
+            <img src="https://costructor.co/wp-content/themes/costructor/img/fx/facturx.png" class="max-h-full" />
+
+        </div>
+        <div class="min-w-0 h-9">
+            <img src="https://costructor.co/wp-content/themes/costructor/img/fx/finances-publiques.png" class="max-h-full" />
+        </div>
+    </div>
+</div>
+</section>
+
+<div  class="mt-10">
+    <section class="[&>div]:w-1/2 sm:[&>div]:w-1/3 md:[&>div]:w-[14.28%] flex flex-wrap items-center justify-center mx-auto px-10 opacity-70">
+    <div  class="px-2 py-4"><img class="w-40 mx-auto" src="https://costructor.co/wp-content/themes/costructor/img/partners/batiprix.png" decoding="async" alt="Batiprix" /></div>
+    <div  class="px-2 py-4"><img class="w-24 mx-auto" src="https://costructor.co/wp-content/themes/costructor/img/partners/bfm-business.png" decoding="async" alt="BFM Business" /></div>
+    <div  class="px-2 py-4"><img class="w-44 mx-auto" src="https://costructor.co/wp-content/themes/costructor/img/partners/mtpro.png" decoding="async" alt="Maison & Travaux" /></div>
+    <div  class="px-2 py-4"><img class="w-28 mx-auto" src="https://costructor.co/wp-content/themes/costructor/img/partners/francenum.png" decoding="async" alt="France num" /></div>
+    <div  class="px-2 py-4"><img class="w-32 mx-auto" src="https://costructor.co/wp-content/themes/costructor/img/partners/batiweb.png" decoding="async" alt="Batiweb" /></div>
+    <div  class="px-2 py-4"><img class="w-36 mx-auto" src="https://costructor.co/wp-content/themes/costructor/img/partners/batinews.png" decoding="async" alt="Batinews" /></div>
+    <div  class="px-2 py-4"><img class="w-28 mx-auto" src="https://costructor.co/wp-content/themes/costructor/img/partners/batinfo.png" decoding="async" alt="Batinfo" /></div>
+</section></div>
+
+<section  class="mt-4 sm:mt-8 bg-brand-500 overflow-hidden">
+    <div  class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16 pt-8">
+        <div  class="md:mx-auto text-center relative z-10">
+            <h2 id="fonctionnalites" class="pt-8 font-display font-medium text-3xl tracking-tight text-white md:text-4xl">
+                Gérer votre entreprise n'a jamais été aussi simple
+            </h2>
+            <div class="mt-6 text-lg tracking-tight text-brand-100 flex flex-col md:flex-row justify-center space-x-4 text-center">
+                <div><span class="mr-2"><i class="fas fa-check"></i></span>Accessible 100% en ligne</div>
+                <div><span class="mr-2"><i class="fas fa-check"></i></span>Disponible sur PC, Mac, Android et iOs</div>
+                <div><span class="mr-2"><i class="fas fa-check"></i></span>Support client gratuit</div>
+            </div>
+        </div>
+    </div>
+</section>
+<section  class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ">
+    <div  class="relative py-16 md:py-20">
+        <div class="absolute w-full h-full grid grid-cols-4 z-0 border-x border-gray-100 -translate-y-12 md:-translate-y-20" >
+    <div></div>
+    <div class="border-l border-dashed border-gray-200"></div>
+    <div class="border-l border-dashed border-gray-200"></div>
+    <div class="border-l border-dashed border-gray-200"></div>
+</div>        <div  class="z-10 relative space-y-20 md:space-y-48">
+            <div class="block md:flex items-center">
+    <div class="xl:translate-x-10 relative w-full md:w-1/2 lg:w-3/5 md:order-2 md:pl-8 mb-6 md:mb-0">
+        <img alt="Logiciel de devis pour le BTP" src="https://costructor.co/wp-content/themes/costructor/img/editeur-devis.png" decoding="async" class="w-full rounded-md border border-gray-200 shadow-xl shadow-gray-300/30" />
+        <div class="w-[24%] pt-1 pb-2 px-1 absolute left-0 bottom-0 translate-y-4 md:translate-y-12 translate-x-4 md:-translate-x-6 rounded-xl bg-gray-800 shadow-xl shadow-gray-300/50">
+            <img alt="Logiciel devis et factures BTP sur mobile" src="https://costructor.co/wp-content/themes/costructor/img/mobile.png" class="rounded-md" />
+        </div>
+    </div>
+    <div class="w-full md:w-1/2 lg:w-2/5 p-4 md:order-1 md:mr-10">
+        <h2 class="text-2xl md:text-3xl xl:text-4xl leading-tight font-display font-medium tracking-tight text-slate-800">Créez vos devis en 1 clic</h2>
+        <ul class="text-slate-600 leading-tight md:tracking-tight mt-5 space-y-3">
+            <li class="flex">
+                <span class="text-brand-500 mr-1.5"><i class="fas fa-check"></i></span>
+                Depuis votre PC, tablette ou mobile, éditez et personnalisez vos devis
+            </li>
+            <li class="flex">
+                <span class="text-brand-500 mr-1.5"><i class="fas fa-check"></i></span>
+                Transformez vos devis en factures automatiquement
+            </li>
+            <li class="flex">
+                <span class="text-brand-500 mr-1.5"><i class="fas fa-check"></i></span>
+                Générez vos attestations de TVA
+            </li>
+            <li class="flex">
+                <span class="text-brand-500 mr-1.5"><i class="fas fa-check"></i></span>
+                <p>Gagnez du temps avec les <a href="https://costructor.co/batiprix/" class="text-brand-500 hover:underline underline-offset-2">ouvrages Batiprix</a></p>
+            </li>
+        </ul>
+        <a href="https://app.costructor.co/signup" class="mt-6 btn-brand rounded-full px-4 py-2 font-semibold shrink-0 justify-center md:justify-start">Démarrer maintenant</a>
+    </div>
+</div>            <div class="block md:flex items-center">
+    <div class="relative w-full md:w-1/2 lg:w-3/5 md:order-1 md:mr-10 md:pr-8 mb-8 md:mb-0">
+        <img alt="Logiciel de facture pour le BTP" src="https://costructor.co/wp-content/themes/costructor/img/vue-factures.png" decoding="async" class="w-full rounded-md border border-gray-200" />
+        <img alt="Logiciel de facture de situation" src="https://costructor.co/wp-content/themes/costructor/img/facture-rapide.png" class="w-[50%] absolute left-[25%] bottom-0 translate-y-6 rounded-md border border-gray-300 shadow-xl shadow-gray-300/30" />
+    </div>
+    <div class="w-full md:w-1/2 lg:w-2/5 p-4 md:order-2">
+        <h2 class="text-2xl md:text-3xl xl:text-4xl leading-tight font-display font-medium tracking-tight text-slate-800">Optimisez votre facturation</h2>
+        <ul class="text-slate-600 leading-tight md:tracking-tight mt-5 space-y-3">
+            <li class="flex">
+                <span class="text-brand-500 mr-1.5"><i class="fas fa-check"></i></span>
+                Soyez prêt pour la facturation électronique 🚀
+            </li>
+            <li class="flex">
+                <span class="text-brand-500 mr-1.5"><i class="fas fa-check"></i></span>
+                Générez automatiquement les factures d'acomptes, situation et avoirs
+            </li>
+            <li class="flex">
+                <span class="text-brand-500 mr-1.5"><i class="fas fa-check"></i></span>
+                Automatisez l'envoi et la relance de vos factures
+            </li>
+            <li class="flex">
+                <span class="text-brand-500 mr-1.5"><i class="fas fa-check"></i></span>
+                Faites vous payer en 1 clic et offrez une expérience unique à vos clients
+            </li>
+        </ul>
+        <a href="https://app.costructor.co/signup" class="mt-6 btn-brand rounded-full px-4 py-2 font-semibold shrink-0 justify-center md:justify-start">Essayer gratuitement</a>
+    </div>
+</div>        </div>
+    </div>
+</section>
+<section  class="mt-4 md:mt-8 sm:mb-20 bg-gray-100">
+    <div  class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-8 md:pb-16">
+        <div  class="md:mx-auto text-center relative z-10">
+            <h2 class="py-8 md:py-16 font-display font-medium tracking-tight text-3xl md:text-4xl">
+                Gagnez du temps et de l'argent
+            </h2>
+            <div class="text-left grid lg:grid-cols-3 gap-8">
+                <div class="border border-gray-200 bg-white rounded-lg p-4 shadow-xl shadow-gray-300/30">
+                    <span class="block text-2xl md:text-4xl font-medium text-brand-500 leading-5">4h</span>
+                    <span class="text-sm text-gray-500">par semaine</span>
+                    <p class="mt-4 text-slate-600 leading-tight">Gagnées sur la gestion de votre entreprise grâce à nos outils simples et intuitifs.</p>
+                </div>
+                <div class="border border-gray-200 bg-white rounded-lg p-4 shadow-xl shadow-gray-300/30">
+                    <span class="block text-2xl md:text-4xl font-medium text-brand-500 leading-5">32%</span>
+                    <span class="text-sm text-gray-500">d'impayés en moins</span>
+                    <p class="mt-4 text-slate-600 leading-tight">Grâce aux relances de factures automatiques et aux données en temps réel.</p>
+                </div>
+                <div class="border border-gray-200 bg-white rounded-lg p-4 shadow-xl shadow-gray-300/30">
+                    <span class="block text-2xl md:text-4xl font-medium text-brand-500 leading-5">1m30</span>
+                    <span class="text-sm text-gray-500">par facture</span>
+                    <p class="mt-4 text-slate-600 leading-tight">Avec la conversion d'un devis en 1 clic, l'envoi par email et le paiement en ligne.</p>
+                </div>
+            </div>
+
+            <a href="https://app.costructor.co/signup" class="mt-8 md:mt-16 btn-brand rounded-full px-4 py-2 font-semibold shrink-0 justify-center md:justify-start">S'inscrire gratuitement</a>
+
+        </div>
+    </div>
+</section><section data-wpr-lazyrender="1" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ">
+    <div  class="relative py-16 md:py-20">
+        <div class="absolute w-full h-full grid grid-cols-4 z-0 border-x border-gray-100 -translate-y-12 md:-translate-y-20" >
+    <div></div>
+    <div class="border-l border-dashed border-gray-200"></div>
+    <div class="border-l border-dashed border-gray-200"></div>
+    <div class="border-l border-dashed border-gray-200"></div>
+</div>        <div  class="z-10 relative space-y-20 md:space-y-48">
+            <div class="block md:flex items-center">
+    <div class="relative w-full md:w-1/2 lg:w-3/5 md:order-2 md:pl-8 mb-10 md:mb-0">
+        <img alt="Gestion de chantier pour le BTP" src="https://costructor.co/wp-content/themes/costructor/img/chantiers.png" decoding="async" class="w-full rounded-md border border-gray-200 shadow-xl shadow-gray-300/30" />
+        <img alt="Résumé d'un chantier" src="https://costructor.co/wp-content/themes/costructor/img/carte-chantier.png" decoding="async" class="absolute left-[32%] top-[24%] w-[24%] rounded-md border border-gray-300 shadow-xl shadow-gray-300/30" />
+
+        <div class="bg-white/20 backdrop-blur-[2px] border border-gray-300/40 p-3 absolute left-0 right-0 translate-x-6 md:translate-x-0 translate-y-6 bottom-0 w-[65%] rounded-lg border border-gray-300 shadow-xl shadow-gray-300/30">
+            <img alt="Planning de chantier pour le bâtiment" src="https://costructor.co/wp-content/themes/costructor/img/planning.png" class="rounded-md border border-gray-200" decoding="async"  />
+        </div>
+
+
+    </div>
+    <div class="w-full md:w-1/2 lg:w-2/5 p-4 md:order-1 md:mr-10">
+        <h2 class="text-2xl md:text-3xl xl:text-4xl leading-tight font-display font-medium tracking-tight text-slate-800">Gérez et planifiez vos chantiers & interventions en temps réel</h2>
+        <ul class="text-slate-600 leading-tight md:tracking-tight mt-5 space-y-3">
+            <li class="flex">
+                <span class="text-brand-500 mr-1.5"><i class="fas fa-check"></i></span>
+                Planifiez vos tâches grâce au planning avancé (Gantt)
+            </li>
+            <li class="flex">
+                <span class="text-brand-500 mr-1.5"><i class="fas fa-check"></i></span>
+                Suivez et contrôlez facilement l'avancée des chantiers
+            </li>
+            <li class="flex">
+                <span class="text-brand-500 mr-1.5"><i class="fas fa-check"></i></span>
+                Maitrisez et optimisez votre marge et rentabilité
+            </li>
+            <li class="flex">
+                <span class="text-brand-500 mr-1.5"><i class="fas fa-check"></i></span>
+                Centralisez vos documents, photos, notes...
+            </li>
+        </ul>
+        <a href="https://app.costructor.co/signup" class="mt-6 btn-brand rounded-full px-4 py-2 font-semibold shrink-0 justify-center md:justify-start">Démarrer maintenant</a>
+    </div>
+</div>            <div class="block md:flex items-center">
+    <div class="relative w-full md:w-1/2 lg:w-3/5 md:mr-10 mb-16 md:mb-0">
+        <img alt="Logiciel de devis pour le BTP" src="https://costructor.co/wp-content/themes/costructor/img/logiciel-interventions.jpg" decoding="async" class="w-full rounded-md border border-gray-300/70 shadow-xl shadow-gray-300/30" />
+        <!--<div class="w-[24%] pt-1 pb-2 px-1 absolute left-0 bottom-0 translate-y-4 md:translate-y-12 translate-x-4 md:-translate-x-6 rounded-xl bg-gray-800 shadow-xl shadow-gray-300/50">
+            <img alt="Logiciel devis et factures BTP sur mobile" src="https://costructor.co/wp-content/themes/costructor/img/mobile.png" class="rounded-md" />
+        </div>-->
+
+
+        <div class="w-[60%] right-0 rounded-md absolute bottom-0 translate-x-6 translate-y-4 shadow-lg shadow-gray-200/30">
+            <img alt="Planning d'interventions BTP" class="rounded-md border border-gray-300/70" src="https://costructor.co/wp-content/themes/costructor/img/planning-interventions.jpg"  />
+        </div>
+
+        <div class="w-[30%] bg-white/20 backdrop-blur-[2px] rounded-md border border-gray-300/70 p-3 absolute bottom-0 translate-x-32 translate-y-10 md:translate-y-20">
+            <img alt="Signature bon d'interventions BTP" class="border border-gray-300/70 rounded-md shadow-xl shadow-gray-300/30" src="https://costructor.co/wp-content/themes/costructor/img/signature-intervention.jpg"  />
+        </div>
+
+    </div>
+    <div class="w-full md:w-1/2 lg:w-2/5 p-4 ">
+        <h2 class="text-2xl md:text-3xl xl:text-4xl leading-tight font-display font-medium tracking-tight text-slate-800">Suivez vos interventions</h2>
+        <ul class="text-slate-600 leading-tight md:tracking-tight mt-5 space-y-3">
+            <li class="flex">
+                <span class="text-brand-500 mr-1.5"><i class="fas fa-check"></i></span>
+                Planifiez et suivez vos interventions
+            </li>
+            <li class="flex">
+                <span class="text-brand-500 mr-1.5"><i class="fas fa-check"></i></span>
+                Facturez vos interventions ou transformez les en devis
+            </li>
+            <li class="flex">
+                <span class="text-brand-500 mr-1.5"><i class="fas fa-check"></i></span>
+                Générez votre rapport d'intervention
+            </li>
+            <li class="flex">
+                <span class="text-brand-500 mr-1.5"><i class="fas fa-check"></i></span>
+                Faites signer votre client, envoyez le bon par email
+            </li>
+        </ul>
+        <a href="https://app.costructor.co/signup" class="mt-6 btn-brand rounded-full px-4 py-2 font-semibold shrink-0 justify-center md:justify-start">Démarrer maintenant</a>
+    </div>
+</div>            <div class="block md:flex items-center">
+    <div class="relative w-full md:w-1/2 lg:w-3/5 md:pl-4 lg:pl-8 md:order-2 mb-20 md:mb-10 md:mb-0 md:px-2 lg:px-6">
+        <img alt="Calcul de la rentabilité d'un chantier du BTP" src="https://costructor.co/wp-content/themes/costructor/img/rentabilite-chantier-btp.jpg" decoding="async" class="w-full md:-translate-x-2 lg:-translate-x-6 rounded-md border border-gray-200 shadow-xl shadow-gray-300/30" />
+
+        <div class="bg-white/20 backdrop-blur-[2px] border border-gray-300/40 p-3 absolute right-0 translate-y-16 md:translate-y-6 -translate-x-12 lg:-translate-x-2 bottom-0 w-[75%] rounded-lg border border-gray-300 shadow-xl shadow-gray-300/30">
+            <img alt="Gestion des factures d'achats" src="https://costructor.co/wp-content/themes/costructor/img/factures-achat.jpg" class="rounded-md border border-gray-200" decoding="async"  />
+        </div>
+    </div>
+    <div class="w-full md:w-1/2 lg:w-2/5 p-4 md:order-1">
+        <h2 class="text-2xl md:text-3xl xl:text-4xl leading-tight font-display font-medium tracking-tight text-slate-800">Pilotez votre rentabilité et vos achats</h2>
+        <ul class="text-slate-600 leading-tight md:tracking-tight mt-5 space-y-3">
+            <li class="flex">
+                <span class="text-brand-500 mr-1.5"><i class="fas fa-check"></i></span>
+                Estimez la rentabilité de vos devis
+            </li>
+            <li class="flex">
+                <span class="text-brand-500 mr-1.5"><i class="fas fa-check"></i></span>
+                Optimisez la marge et le bénéfice de vos chantiers
+            </li>
+            <li class="flex">
+                <span class="text-brand-500 mr-1.5"><i class="fas fa-check"></i></span>
+                Suivez et maîtrisez vos dépenses
+            </li>
+            <li class="flex">
+                <span class="text-brand-500 mr-1.5"><i class="fas fa-check"></i></span>
+                Réglez vos fournisseurs en temps et en heures
+            </li>
+        </ul>
+        <a href="https://app.costructor.co/signup" class="mt-6 btn-brand rounded-full px-4 py-2 font-semibold shrink-0 justify-center md:justify-start">Essayer gratuitement</a>
+    </div>
+</div>            <div class="block md:flex items-center">
+    <div class="relative w-full md:w-1/2 lg:w-3/5 md:pr-4 lg:pr-8 mb-20 md:mb-10 md:mb-0 md:px-2 lg:px-6">
+        <img alt="Calcul de la rentabilité d'un chantier du BTP" src="https://costructor.co/wp-content/themes/costructor/img/logiciel-suivi-temps.jpg" decoding="async" class="w-full md:-translate-x-2 lg:-translate-x-6 rounded-md border border-gray-200 shadow-xl shadow-gray-300/30" />
+
+        <!--<div class="bg-white/20 backdrop-blur-[2px] border border-gray-300/40 p-3 absolute right-0 translate-y-16 md:translate-y-6 -translate-x-12 lg:-translate-x-2 bottom-0 w-[75%] rounded-lg border border-gray-300 shadow-xl shadow-gray-300/30">
+            <img alt="Gestion des factures d'achats" src="https://costructor.co/wp-content/themes/costructor/img/factures-achat.jpg" class="rounded-md border border-gray-200" decoding="async"  />
+        </div>-->
+    </div>
+    <div class="w-full md:w-1/2 lg:w-2/5 p-4">
+        <h2 class="text-2xl md:text-3xl xl:text-4xl leading-tight font-display font-medium tracking-tight text-slate-800">Ne perdez plus de temps à suivre le temps</h2>
+        <ul class="text-slate-600 leading-tight md:tracking-tight mt-5 space-y-3">
+            <li class="flex">
+                <span class="text-brand-500 mr-1.5"><i class="fas fa-check"></i></span>
+                Respectez votre obligation légale de contrôler les temps de travail
+            </li>
+            <li class="flex">
+                <span class="text-brand-500 mr-1.5"><i class="fas fa-check"></i></span>
+                Vos collaborateurs saisissent leurs temps en un clic
+            </li>
+            <li class="flex">
+                <span class="text-brand-500 mr-1.5"><i class="fas fa-check"></i></span>
+                Contrôlez, corrigez ou validez les heures saisies
+            </li>
+            <li class="flex">
+                <span class="text-brand-500 mr-1.5"><i class="fas fa-check"></i></span>
+                Prévisionnel vs réalisé : analysez la rentabilité de vos chantiers
+            </li>
+            <li class="flex">
+                <span class="text-brand-500 mr-1.5"><i class="fas fa-check"></i></span>
+                Maîtrisez le recours aux heures supplémentaires
+            </li>
+        </ul>
+        <a href="https://app.costructor.co/signup" class="mt-6 btn-brand rounded-full px-4 py-2 font-semibold shrink-0 justify-center md:justify-start">Essayer gratuitement</a>
+    </div>
+</div>        </div>
+            </div>
+</section>
+
+<section  id="signatureBackground" class="overflow-hidden relative bg-gradient-to-br from-brand-800 to-brand-500 py-12 md:py-20 text-white">
+    <div  class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 z-[20]">
+        <div  class="flex flex-col md:flex-row items-center">
+            <div class="w-full md:w-1/2 order-2 md:order-1">
+                <div class="relative w-full max-w-[340px] mx-auto md:-translate-x-10">
+                    <img alt="Signature électronique devis" src="https://costructor.co/wp-content/themes/costructor/img/devis.png" decoding="async" class="w-full rounded-md border border-gray-700/20 shadow-xl shadow-geen-900/50" />
+
+                    <div id="signatureGlass" class="max-h-[96px] max-w-[230px] transition-all duration-[250ms] ease-out-expo absolute max-md:mx-auto max-md:left-0 max-md:right-0 md:translate-x-8 -translate-y-10 right-0 bottom-0 bg-white/10 border border-gray-400/30 backdrop-blur-[2px] p-6 rounded-lg">
+
+                        <button type="button" id="signatureContainer" class="relative">
+                            <svg id="signature" class="translate-x-4 opacity-0 hidden autograph" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="250 100 200 150"
+                                 width="200"
+                                 height="150">
+                                <path class="autograph_path" d="M 272.000,208.406 C 273.000,199.906 272.869,199.888 274.000,191.406" stroke-width="5.081" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 274.000,191.406 C 274.869,184.888 274.576,184.813 276.000,178.406" stroke-width="3.499" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 276.000,178.406 C 277.576,171.313 278.681,171.528 280.000,164.406" stroke-width="3.157" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 280.000,164.406 C 281.181,158.028 280.500,157.906 281.000,151.406" stroke-width="3.175" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 281.000,151.406 C 281.500,144.906 281.729,144.915 282.000,138.406" stroke-width="3.122" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 282.000,138.406 C 282.229,132.915 282.000,132.906 282.000,127.406" stroke-width="3.322" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 282.000,127.406 C 282.000,123.406 282.000,123.406 282.000,119.406" stroke-width="3.659" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 282.000,119.406 C 282.000,115.406 282.265,115.387 282.000,111.406" stroke-width="3.774" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 282.000,111.406 C 281.765,107.887 281.000,102.251 281.000,104.406" stroke-width="3.862" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 281.000,104.406 C 281.000,113.251 281.420,118.910 282.000,133.406" stroke-width="4.292" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 282.000,133.406 C 282.420,143.910 282.214,143.928 283.000,154.406" stroke-width="2.872" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 283.000,154.406 C 283.714,163.928 283.473,163.992 285.000,173.406" stroke-width="2.712" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 285.000,173.406 C 286.473,182.492 286.472,182.558 289.000,191.406" stroke-width="2.642" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 289.000,191.406 C 291.472,200.058 291.277,200.283 295.000,208.406" stroke-width="2.703" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 295.000,208.406 C 296.777,212.283 296.830,212.813 300.000,215.406" stroke-width="3.351" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 300.000,215.406 C 302.330,217.313 304.302,218.915 306.000,217.406" stroke-width="4.205" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 306.000,217.406 C 308.802,214.915 307.871,212.485 309.000,207.406" stroke-width="4.273" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 309.000,207.406 C 309.871,203.485 309.777,203.423 310.000,199.406" stroke-width="3.886" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 310.000,199.406 C 310.277,194.423 310.000,194.406 310.000,189.406" stroke-width="3.638" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 310.000,189.406 C 310.000,183.406 310.566,183.344 310.000,177.406" stroke-width="3.331" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 310.000,177.406 C 309.566,172.844 309.298,172.818 308.000,168.406" stroke-width="3.546" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 308.000,168.406 C 306.798,164.318 306.437,164.429 305.000,160.406" stroke-width="3.682" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 305.000,160.406 C 303.937,157.429 303.579,153.634 303.000,154.406" stroke-width="3.965" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 303.000,154.406 C 302.079,155.634 301.710,159.477 302.000,164.406" stroke-width="4.577" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 302.000,164.406 C 302.210,167.977 303.183,167.865 304.000,171.406" stroke-width="4.055" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 304.000,171.406 C 304.683,174.365 303.409,175.285 305.000,177.406" stroke-width="4.069" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 305.000,177.406 C 306.409,179.285 308.552,180.674 310.000,179.406" stroke-width="4.727" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 310.000,179.406 C 312.552,177.174 310.027,172.569 313.000,170.406" stroke-width="4.470" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 313.000,170.406 C 315.527,168.569 317.501,169.773 321.000,171.406" stroke-width="4.726" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 321.000,171.406 C 325.001,173.273 324.914,174.040 328.000,177.406" stroke-width="3.915" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 328.000,177.406 C 330.414,180.040 329.512,180.918 332.000,183.406" stroke-width="3.889" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 332.000,183.406 C 334.012,185.418 335.224,187.393 337.000,186.406" stroke-width="4.094" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 337.000,186.406 C 339.724,184.893 339.512,182.573 341.000,178.406" stroke-width="4.665" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 341.000,178.406 C 342.012,175.573 340.538,172.893 342.000,172.406" stroke-width="4.724" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 342.000,172.406 C 343.538,171.893 344.284,174.777 347.000,176.406" stroke-width="4.715" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 347.000,176.406 C 349.284,177.777 350.459,179.177 352.000,178.406" stroke-width="4.813" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 352.000,178.406 C 353.459,177.677 351.404,174.318 353.000,173.406" stroke-width="5.173" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 353.000,173.406 C 354.904,172.318 356.043,173.710 359.000,174.406" stroke-width="4.852" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 359.000,174.406 C 364.543,175.710 364.401,176.643 370.000,177.406" stroke-width="4.472" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 370.000,177.406 C 375.401,178.143 375.518,177.695 381.000,177.406" stroke-width="3.676" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                                <path class="autograph_path" d="M 381.000,177.406 C 385.018,177.195 390.637,176.406 389.000,176.406" stroke-width="3.721" stroke="black"
+                                      fill="none" stroke-linecap="round"></path>
+                            </svg>
+                        </button>
+                        <button id="triggerSignatureBtn" onClick="triggerSignature()" class="shadow-xl shadow-green-800/20  inline-flex items-center justify-center border border-transparent text-base leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none py-3 px-4 text-sm bg-green-500 hover:bg-green-600 cursor-pointer font-medium">
+                            <i class="far fa-signature mr-2"></i> Signer le devis
+                        </button>
+
+                        <div id="signatureConfirm" class="transition ease-out-expo duration-200 opacity-0 w-12 h-12 -translate-x-4 translate-y-20 absolute bottom-0 right-0 rounded-full flex items-center justify-center bg-green-500 border border-green-600 text-white text-3xl shadow-lg shadow-green-800/20">
+                            <i class="far fa-check"></i>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="w-full md:w-1/2  order-1 md:order-2 relative mb-12 md:mb-0">
+                <h2 class="text-2xl md:text-3xl xl:text-4xl leading-tight font-display font-medium tracking-tight">Signature électronique 🌱</h2>
+                <p class="text-white font-medium text-lg mt-0.5">Envoyé en 1 clic, signé en 2 min</p>
+                <ul class="text-white leading-tight md:tracking-tight mt-5 space-y-3">
+                    <li class="flex">
+                        <span class="text-green-500 mr-1.5"><i class="fas fa-check"></i></span>
+                        Faites signer vos devis en toute simplicité
+                    </li>
+                    <li class="flex">
+                        <span class="text-green-500 mr-1.5"><i class="fas fa-check"></i></span>
+                        45 % de devis acceptés en plus
+                    </li>
+                    <li class="flex">
+                        <span class="text-green-500 mr-1.5"><i class="fas fa-check"></i></span>
+                        Réduisez votre impact sur l'environement
+                    </li>
+                    <li class="flex">
+                        <span class="text-green-500 mr-1.5"><i class="fas fa-check"></i></span>
+                        100 % conforme eIDAS et RGPD
+                    </li>
+                </ul>
+                <img src="https://costructor.co/wp-content/themes/costructor/img/line-arrow-spiral.svg" decoding="async" class="hidden md:block w-[200px] scale-y-[-1] -rotate-45 absolute origin-center bottom-[-150px] left-[-20%]" />
+
+            </div>
+        </div>
+
+    </div>
+    <div  id="signatureOverlay" class="z-[10] transition duration-300 ease-out-back opacity-0 absolute inset-0 w-full h-full bg-gradient-to-br from-green-800 to-green-600"></div>
+
+</section>
+<div data-wpr-lazyrender="1" class="md:max-w-6xl mx-auto mt-16 mb-8 px-6">
+    <div  class="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 pt-0 text-center">
+        <div>
+            <img class="w-32 mx-auto mb-2" src="https://costructor.co/wp-content/themes/costructor/img/made-in-france.svg" />
+            <p class="text-gray-700">Développé en France 🇫🇷</p>
+            <p class="text-gray-500 text-sm">Co-construit avec nos clients</p>
+        </div>
+        <div>
+            <img class="w-32 mx-auto mb-2" src="https://costructor.co/wp-content/themes/costructor/img/anti-fraude.svg" />
+            <p class="text-gray-700 ">Compatible loi anti-fraude à la TVA</p>
+            <p class="text-gray-500 text-sm">+ Facturation électronique 2024</p>
+        </div>
+        <div>
+            <img class="w-32 mx-auto mb-2" src="https://costructor.co/wp-content/themes/costructor/img/support.svg" />
+            <p class="text-gray-700 ">Assistance illimitée</p>
+            <p class="text-gray-500 text-sm">Chat / Email / Téléphone</p>
+        </div>
+    </div>
+</div>
+<section  id="avis" class="-mb-8 md:-mb-20">
+    <div  class="bg-slate-50 py-20 sm:py-32">
+
+        <div  class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="mx-auto max-w-3xl text-center"><h2 class="font-display text-3xl tracking-tight text-slate-900 sm:text-4xl">Ils gèrent leur entreprise avec Costructor</h2>
+                <p class="mt-4 text-lg tracking-tight text-slate-700">Découvrez pourquoi :</p></div>
+            <ul class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-6 sm:gap-8 lg:mt-20 lg:max-w-none lg:grid-cols-3">
+
+                <li>
+                        <ul class="flex flex-col gap-y-6 sm:gap-y-8">                    <li>
+                        <figure class="relative rounded-2xl bg-white p-6 shadow-xl shadow-slate-900/10">
+                            <svg aria-hidden="true" width="105" height="78"
+                                 class="absolute top-6 left-6 fill-slate-100">
+                                <path d="M25.086 77.292c-4.821 0-9.115-1.205-12.882-3.616-3.767-2.561-6.78-6.102-9.04-10.622C1.054 58.534 0 53.411 0 47.686c0-5.273.904-10.396 2.712-15.368 1.959-4.972 4.746-9.567 8.362-13.786a59.042 59.042 0 0 1 12.43-11.3C28.325 3.917 33.599 1.507 39.324 0l11.074 13.786c-6.479 2.561-11.677 5.951-15.594 10.17-3.767 4.219-5.65 7.835-5.65 10.848 0 1.356.377 2.863 1.13 4.52.904 1.507 2.637 3.089 5.198 4.746 3.767 2.41 6.328 4.972 7.684 7.684 1.507 2.561 2.26 5.5 2.26 8.814 0 5.123-1.959 9.19-5.876 12.204-3.767 3.013-8.588 4.52-14.464 4.52Zm54.24 0c-4.821 0-9.115-1.205-12.882-3.616-3.767-2.561-6.78-6.102-9.04-10.622-2.11-4.52-3.164-9.643-3.164-15.368 0-5.273.904-10.396 2.712-15.368 1.959-4.972 4.746-9.567 8.362-13.786a59.042 59.042 0 0 1 12.43-11.3C82.565 3.917 87.839 1.507 93.564 0l11.074 13.786c-6.479 2.561-11.677 5.951-15.594 10.17-3.767 4.219-5.65 7.835-5.65 10.848 0 1.356.377 2.863 1.13 4.52.904 1.507 2.637 3.089 5.198 4.746 3.767 2.41 6.328 4.972 7.684 7.684 1.507 2.561 2.26 5.5 2.26 8.814 0 5.123-1.959 9.19-5.876 12.204-3.767 3.013-8.588 4.52-14.464 4.52Z"></path>
+                            </svg>
+                            <blockquote class="relative"><p class=" tracking-tight text-slate-900">Très bon logiciel, complet, facile d'utilisation et rapide à prendre en main. Utilisation sur mon téléphone bien plus simple et complet que mon ancien logiciel iSuite ! Je recommande !</p></blockquote>
+                            <div class="relative z-50 flex text-yellow-400 mt-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <figcaption
+                                class="relative mt-6 flex items-center justify-between border-t border-slate-100 pt-6">
+                                <div>
+                                    <div class="font-display text-base text-slate-900">Steve FIEVET</div>
+                                    <div class="mt-1 text-sm text-slate-500">Fievet Sanitaire</div>
+                                </div>
+
+                            </figcaption>
+                        </figure>
+                    </li>
+
+                                        <li>
+                        <figure class="relative rounded-2xl bg-white p-6 shadow-xl shadow-slate-900/10">
+                            <svg aria-hidden="true" width="105" height="78"
+                                 class="absolute top-6 left-6 fill-slate-100">
+                                <path d="M25.086 77.292c-4.821 0-9.115-1.205-12.882-3.616-3.767-2.561-6.78-6.102-9.04-10.622C1.054 58.534 0 53.411 0 47.686c0-5.273.904-10.396 2.712-15.368 1.959-4.972 4.746-9.567 8.362-13.786a59.042 59.042 0 0 1 12.43-11.3C28.325 3.917 33.599 1.507 39.324 0l11.074 13.786c-6.479 2.561-11.677 5.951-15.594 10.17-3.767 4.219-5.65 7.835-5.65 10.848 0 1.356.377 2.863 1.13 4.52.904 1.507 2.637 3.089 5.198 4.746 3.767 2.41 6.328 4.972 7.684 7.684 1.507 2.561 2.26 5.5 2.26 8.814 0 5.123-1.959 9.19-5.876 12.204-3.767 3.013-8.588 4.52-14.464 4.52Zm54.24 0c-4.821 0-9.115-1.205-12.882-3.616-3.767-2.561-6.78-6.102-9.04-10.622-2.11-4.52-3.164-9.643-3.164-15.368 0-5.273.904-10.396 2.712-15.368 1.959-4.972 4.746-9.567 8.362-13.786a59.042 59.042 0 0 1 12.43-11.3C82.565 3.917 87.839 1.507 93.564 0l11.074 13.786c-6.479 2.561-11.677 5.951-15.594 10.17-3.767 4.219-5.65 7.835-5.65 10.848 0 1.356.377 2.863 1.13 4.52.904 1.507 2.637 3.089 5.198 4.746 3.767 2.41 6.328 4.972 7.684 7.684 1.507 2.561 2.26 5.5 2.26 8.814 0 5.123-1.959 9.19-5.876 12.204-3.767 3.013-8.588 4.52-14.464 4.52Z"></path>
+                            </svg>
+                            <blockquote class="relative"><p class=" tracking-tight text-slate-900">Je suis à mon compte et j’ai choisi Costructor pour établir mes devis.
+            Très satisfait il est simple d’utilisation et la version sur le téléphone est très pratique</p></blockquote>
+                            <div class="relative z-50 flex text-yellow-400 mt-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <figcaption
+                                class="relative mt-6 flex items-center justify-between border-t border-slate-100 pt-6">
+                                <div>
+                                    <div class="font-display text-base text-slate-900">Dorian DUBOIS</div>
+                                    <div class="mt-1 text-sm text-slate-500">Dubois Dorian Peinture</div>
+                                </div>
+
+                            </figcaption>
+                        </figure>
+                    </li>
+
+                    </ul></li><li>
+                        <ul class="flex flex-col gap-y-6 sm:gap-y-8">                    <li>
+                        <figure class="relative rounded-2xl bg-white p-6 shadow-xl shadow-slate-900/10">
+                            <svg aria-hidden="true" width="105" height="78"
+                                 class="absolute top-6 left-6 fill-slate-100">
+                                <path d="M25.086 77.292c-4.821 0-9.115-1.205-12.882-3.616-3.767-2.561-6.78-6.102-9.04-10.622C1.054 58.534 0 53.411 0 47.686c0-5.273.904-10.396 2.712-15.368 1.959-4.972 4.746-9.567 8.362-13.786a59.042 59.042 0 0 1 12.43-11.3C28.325 3.917 33.599 1.507 39.324 0l11.074 13.786c-6.479 2.561-11.677 5.951-15.594 10.17-3.767 4.219-5.65 7.835-5.65 10.848 0 1.356.377 2.863 1.13 4.52.904 1.507 2.637 3.089 5.198 4.746 3.767 2.41 6.328 4.972 7.684 7.684 1.507 2.561 2.26 5.5 2.26 8.814 0 5.123-1.959 9.19-5.876 12.204-3.767 3.013-8.588 4.52-14.464 4.52Zm54.24 0c-4.821 0-9.115-1.205-12.882-3.616-3.767-2.561-6.78-6.102-9.04-10.622-2.11-4.52-3.164-9.643-3.164-15.368 0-5.273.904-10.396 2.712-15.368 1.959-4.972 4.746-9.567 8.362-13.786a59.042 59.042 0 0 1 12.43-11.3C82.565 3.917 87.839 1.507 93.564 0l11.074 13.786c-6.479 2.561-11.677 5.951-15.594 10.17-3.767 4.219-5.65 7.835-5.65 10.848 0 1.356.377 2.863 1.13 4.52.904 1.507 2.637 3.089 5.198 4.746 3.767 2.41 6.328 4.972 7.684 7.684 1.507 2.561 2.26 5.5 2.26 8.814 0 5.123-1.959 9.19-5.876 12.204-3.767 3.013-8.588 4.52-14.464 4.52Z"></path>
+                            </svg>
+                            <blockquote class="relative"><p class=" tracking-tight text-slate-900">Un logiciel à la hauteur de mes besoins, et en constante évolution permanente,.
+            Une écoute à nos besoins.
+            et un support réactif même le week-end.
+            Bravo</p></blockquote>
+                            <div class="relative z-50 flex text-yellow-400 mt-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <figcaption
+                                class="relative mt-6 flex items-center justify-between border-t border-slate-100 pt-6">
+                                <div>
+                                    <div class="font-display text-base text-slate-900">Thierry</div>
+                                    <div class="mt-1 text-sm text-slate-500">SVTB TRAVAUX</div>
+                                </div>
+
+                            </figcaption>
+                        </figure>
+                    </li>
+
+                                        <li>
+                        <figure class="relative rounded-2xl bg-white p-6 shadow-xl shadow-slate-900/10">
+                            <svg aria-hidden="true" width="105" height="78"
+                                 class="absolute top-6 left-6 fill-slate-100">
+                                <path d="M25.086 77.292c-4.821 0-9.115-1.205-12.882-3.616-3.767-2.561-6.78-6.102-9.04-10.622C1.054 58.534 0 53.411 0 47.686c0-5.273.904-10.396 2.712-15.368 1.959-4.972 4.746-9.567 8.362-13.786a59.042 59.042 0 0 1 12.43-11.3C28.325 3.917 33.599 1.507 39.324 0l11.074 13.786c-6.479 2.561-11.677 5.951-15.594 10.17-3.767 4.219-5.65 7.835-5.65 10.848 0 1.356.377 2.863 1.13 4.52.904 1.507 2.637 3.089 5.198 4.746 3.767 2.41 6.328 4.972 7.684 7.684 1.507 2.561 2.26 5.5 2.26 8.814 0 5.123-1.959 9.19-5.876 12.204-3.767 3.013-8.588 4.52-14.464 4.52Zm54.24 0c-4.821 0-9.115-1.205-12.882-3.616-3.767-2.561-6.78-6.102-9.04-10.622-2.11-4.52-3.164-9.643-3.164-15.368 0-5.273.904-10.396 2.712-15.368 1.959-4.972 4.746-9.567 8.362-13.786a59.042 59.042 0 0 1 12.43-11.3C82.565 3.917 87.839 1.507 93.564 0l11.074 13.786c-6.479 2.561-11.677 5.951-15.594 10.17-3.767 4.219-5.65 7.835-5.65 10.848 0 1.356.377 2.863 1.13 4.52.904 1.507 2.637 3.089 5.198 4.746 3.767 2.41 6.328 4.972 7.684 7.684 1.507 2.561 2.26 5.5 2.26 8.814 0 5.123-1.959 9.19-5.876 12.204-3.767 3.013-8.588 4.52-14.464 4.52Z"></path>
+                            </svg>
+                            <blockquote class="relative"><p class=" tracking-tight text-slate-900">Super logiciel, j'en ai essayé pas mal, j'ai choisi celui-ci parce qu'il est intuitif, on peut tout faire sur l'appli mobile, et le prix est très compétitif.
+            Il reste en "co-construction" c'est à dire qu'ils sont à l'écoute de nos besoins afin d'améliorer sans cesse le logiciel.
+            Equipe dynamique et efficace, qui n'hésite à vous répondre le soir quand vous êtes bloqué et à tout faire pour vous aider.</p></blockquote>
+                            <div class="relative z-50 flex text-yellow-400 mt-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <figcaption
+                                class="relative mt-6 flex items-center justify-between border-t border-slate-100 pt-6">
+                                <div>
+                                    <div class="font-display text-base text-slate-900">Samuel CESARI</div>
+                                    <div class="mt-1 text-sm text-slate-500">Entrepreneur Individuel</div>
+                                </div>
+
+                            </figcaption>
+                        </figure>
+                    </li>
+
+                    </ul></li><li>
+                        <ul class="flex flex-col gap-y-6 sm:gap-y-8">                    <li>
+                        <figure class="relative rounded-2xl bg-white p-6 shadow-xl shadow-slate-900/10">
+                            <svg aria-hidden="true" width="105" height="78"
+                                 class="absolute top-6 left-6 fill-slate-100">
+                                <path d="M25.086 77.292c-4.821 0-9.115-1.205-12.882-3.616-3.767-2.561-6.78-6.102-9.04-10.622C1.054 58.534 0 53.411 0 47.686c0-5.273.904-10.396 2.712-15.368 1.959-4.972 4.746-9.567 8.362-13.786a59.042 59.042 0 0 1 12.43-11.3C28.325 3.917 33.599 1.507 39.324 0l11.074 13.786c-6.479 2.561-11.677 5.951-15.594 10.17-3.767 4.219-5.65 7.835-5.65 10.848 0 1.356.377 2.863 1.13 4.52.904 1.507 2.637 3.089 5.198 4.746 3.767 2.41 6.328 4.972 7.684 7.684 1.507 2.561 2.26 5.5 2.26 8.814 0 5.123-1.959 9.19-5.876 12.204-3.767 3.013-8.588 4.52-14.464 4.52Zm54.24 0c-4.821 0-9.115-1.205-12.882-3.616-3.767-2.561-6.78-6.102-9.04-10.622-2.11-4.52-3.164-9.643-3.164-15.368 0-5.273.904-10.396 2.712-15.368 1.959-4.972 4.746-9.567 8.362-13.786a59.042 59.042 0 0 1 12.43-11.3C82.565 3.917 87.839 1.507 93.564 0l11.074 13.786c-6.479 2.561-11.677 5.951-15.594 10.17-3.767 4.219-5.65 7.835-5.65 10.848 0 1.356.377 2.863 1.13 4.52.904 1.507 2.637 3.089 5.198 4.746 3.767 2.41 6.328 4.972 7.684 7.684 1.507 2.561 2.26 5.5 2.26 8.814 0 5.123-1.959 9.19-5.876 12.204-3.767 3.013-8.588 4.52-14.464 4.52Z"></path>
+                            </svg>
+                            <blockquote class="relative"><p class=" tracking-tight text-slate-900">Prise en main logiciel de devis facturation très bien pour mon auto entreprise du bâtiment</p></blockquote>
+                            <div class="relative z-50 flex text-yellow-400 mt-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <figcaption
+                                class="relative mt-6 flex items-center justify-between border-t border-slate-100 pt-6">
+                                <div>
+                                    <div class="font-display text-base text-slate-900">Jean-Marie OVIDE</div>
+                                    <div class="mt-1 text-sm text-slate-500">Auto Entrepreneur</div>
+                                </div>
+
+                            </figcaption>
+                        </figure>
+                    </li>
+
+                                        <li>
+                        <figure class="relative rounded-2xl bg-white p-6 shadow-xl shadow-slate-900/10">
+                            <svg aria-hidden="true" width="105" height="78"
+                                 class="absolute top-6 left-6 fill-slate-100">
+                                <path d="M25.086 77.292c-4.821 0-9.115-1.205-12.882-3.616-3.767-2.561-6.78-6.102-9.04-10.622C1.054 58.534 0 53.411 0 47.686c0-5.273.904-10.396 2.712-15.368 1.959-4.972 4.746-9.567 8.362-13.786a59.042 59.042 0 0 1 12.43-11.3C28.325 3.917 33.599 1.507 39.324 0l11.074 13.786c-6.479 2.561-11.677 5.951-15.594 10.17-3.767 4.219-5.65 7.835-5.65 10.848 0 1.356.377 2.863 1.13 4.52.904 1.507 2.637 3.089 5.198 4.746 3.767 2.41 6.328 4.972 7.684 7.684 1.507 2.561 2.26 5.5 2.26 8.814 0 5.123-1.959 9.19-5.876 12.204-3.767 3.013-8.588 4.52-14.464 4.52Zm54.24 0c-4.821 0-9.115-1.205-12.882-3.616-3.767-2.561-6.78-6.102-9.04-10.622-2.11-4.52-3.164-9.643-3.164-15.368 0-5.273.904-10.396 2.712-15.368 1.959-4.972 4.746-9.567 8.362-13.786a59.042 59.042 0 0 1 12.43-11.3C82.565 3.917 87.839 1.507 93.564 0l11.074 13.786c-6.479 2.561-11.677 5.951-15.594 10.17-3.767 4.219-5.65 7.835-5.65 10.848 0 1.356.377 2.863 1.13 4.52.904 1.507 2.637 3.089 5.198 4.746 3.767 2.41 6.328 4.972 7.684 7.684 1.507 2.561 2.26 5.5 2.26 8.814 0 5.123-1.959 9.19-5.876 12.204-3.767 3.013-8.588 4.52-14.464 4.52Z"></path>
+                            </svg>
+                            <blockquote class="relative"><p class=" tracking-tight text-slate-900">Top !!! Très facile d'utilisation, très intuitif.
+Un plus : période d'essai pour découvrir les différentes fonctionnalités avant de s'engager. Très bon contact avec les développeurs qui n'hésitent pas à améliorer les fonctionnalités si utilité, à intervenir en cas de couac ou de bug.
+Toujours à l'écoute, très réactif. Merci !</p></blockquote>
+                            <div class="relative z-50 flex text-yellow-400 mt-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <figcaption
+                                class="relative mt-6 flex items-center justify-between border-t border-slate-100 pt-6">
+                                <div>
+                                    <div class="font-display text-base text-slate-900">Joseph HARMAT</div>
+                                    <div class="mt-1 text-sm text-slate-500">Blanc Design</div>
+                                </div>
+
+                            </figcaption>
+                        </figure>
+                    </li>
+
+                    </ul></li>
+
+            </ul>
+
+            <div class="text-center mt-10">
+                <a href="https://www.google.com/search?q=costructor&nfpr=1&sa=X&ved=2ahUKEwjYv_jS3NH9AhWmVKQEHUPMA58QvgUoAXoECCEQAg&cshid=1678463734612001&biw=2560&bih=1238&dpr=1#lrd=0x4805edb10014a5eb:0x8d9e4263d32c228f,1" target="_blank" class="text-brand-500 hover:text-brand-600 underline-offset-2 hover:underline">→ Découvrir tous les avis clients sur Google</a>
+            </div>
+        </div>
+    </div>
+</section><section  class="relative overflow-hidden bg-brand-800 py-12 md:py-20 -mb-8 md:-mb-20">
+    <div  class="mx-auto px-4 sm:px-6 md:max-w-2xl md:px-4 lg:max-w-5xl lg:px-8 relative text-center">
+        <h2 class="font-display font-medium text-2xl md:text-3xl tracking-tight text-white lg:text-4xl">Prêt ? Rejoignez + 100 000 utilisateurs</h2>
+        <p class="text-lg tracking-tight text-white mt-4">Gagnez un temps précieux grâce à Costructor.</p>
+        <div  class="flex flex-wrap justify-center mt-2">
+            <a class="mt-4 inline-flex bg-brand-500 hover:bg-brand-600 text-white duration-150 focus:outline-none rounded-full px-5 py-3 font-semibold shrink-0 justify-center md:justify-start mx-1.5" href="https://app.costructor.co/signup?plan=business">Essayer Costructor gratuitement</a>
+            <button type="button" id="request_demo" class="hidden mt-4 inline-flex bg-white hover:bg-brand-100 text-gray-800 duration-150 focus:outline-none rounded-full px-5 py-3 font-semibold shrink-0 justify-center md:justify-start mx-1.5">Demander une démo</button>
+        </div>
+    </div>
+</section><footer data-wpr-lazyrender="1" class="relative z-50 mt-8 md:mt-20 bg-gray-900" aria-labelledby="footer-heading">
+    <div  class="max-w-7xl mx-auto py-6 sm:py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
+        <div  class="xl:grid xl:grid-cols-3 xl:gap-8">
+            <div class="xl:col-span-1">
+                <div class="flex space-x-4">
+                    <a href="https://twitter.com/Costructor_BTP" target="_blank" class="text-white hover:text-brand-200">
+                        <span class="sr-only">Twitter</span>
+                        <i class="fa-brands fa-twitter text-lg"></i>
+                    </a>
+                    <a href="https://www.facebook.com/CostructorBTP" target="_blank" class="text-white hover:text-brand-200">
+                        <span class="sr-only">Facebook</span>
+                        <i class="fa-brands fa-facebook text-lg"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/company/costructor/" target="_blank" class="text-white hover:text-brand-200">
+                        <span class="sr-only">Linkedin</span>
+                        <i class="fa-brands fa-linkedin text-lg"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-4 md:mt-8 lg:grid grid-cols-2 gap-8 xl:mt-0 xl:col-span-2">
+                <div class="footer-blocks md:grid md:grid-cols-4 md:col-span-3 md:gap-8 text-white text-sm">
+                    <div>
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-flow wp-block-group-is-layout-flow">
+<h2 class="wp-block-heading">À propos</h2>
+
+
+
+<ul class="wp-block-list"><li><a href="https://costructor.co/contact/" data-type="page" data-id="31">Contactez-nous</a></li><li><a href="https://costructor.co/mentions-legales/" data-type="page" data-id="15">Mentions légales</a></li><li><a href="https://costructor.co/cgu/" data-type="page" data-id="29">CGU</a></li><li><a href="https://costructor.co/donnees-personnelles/" data-type="page" data-id="22">Données personnelles</a></li><li><a href="https://costructor.co/cookies/" data-type="page" data-id="27">Cookies</a></li></ul>
+</div></div>
+</div><div class="mt-12 md:mt-0"><div>
+<h2 class="wp-block-heading">Ressources</h2>
+</div><div>
+<ul class="wp-block-list">
+<li><a href="https://costructor.co/devenir-artisan/" data-type="post" data-id="384">Comment devenir artisan ?</a></li>
+
+
+
+<li><a href="https://costructor.co/devis-batiment/" data-type="post" data-id="339">Comment faire un devis ?</a></li>
+
+
+
+<li><a href="https://costructor.co/modele-devis-gratuit/" data-type="post" data-id="153">Modèle de devis</a></li>
+</ul>
+</div></div><div class="mt-12 md:mt-0"><div>
+<h2 class="wp-block-heading">Métiers</h2>
+</div><div>
+<ul class="wp-block-list">
+<li><a href="https://costructor.co/devis-factures/carreleur/">Carreleur</a></li>
+
+
+
+<li><a href="https://costructor.co/devis-factures/chauffagiste/">Chauffagiste</a></li>
+
+
+
+<li><a href="https://costructor.co/devis-factures/electricien/">Electricien</a></li>
+
+
+
+<li><a href="https://costructor.co/devis-factures/macon/">Maçon</a></li>
+
+
+
+<li><a href="https://costructor.co/devis-factures/menuisier/">Menuisier</a></li>
+
+
+
+<li><a href="https://costructor.co/devis-factures/peintre/">Peintre</a></li>
+
+
+
+<li><a href="https://costructor.co/devis-factures/plombier/">Plombier</a></li>
+</ul>
+</div></div>
+                </div>
+            </div>
+        </div>
+        <div  class="border-t border-gray-500 pt-4 mt-4 md:pt-8 md:mt-6 text-sm text-gray-400">
+            &copy; 2025 costructor         </div>
+    </div>
+</footer>
+
+<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="87699562-8e89-4cda-8c4a-4797ec2324bd";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"\/*"},{"not":{"href_matches":["\/wp-*.php","\/wp-admin\/*","\/wp-content\/uploads\/*","\/wp-content\/*","\/wp-content\/plugins\/*","\/wp-content\/themes\/costructor\/*","\/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
+</script>
+<script type="text/javascript" id="rocket-browser-checker-js-after">
+/* <![CDATA[ */
+"use strict";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||!1,descriptor.configurable=!0,"value"in descriptor&&(descriptor.writable=!0),Object.defineProperty(target,descriptor.key,descriptor)}}return function(Constructor,protoProps,staticProps){return protoProps&&defineProperties(Constructor.prototype,protoProps),staticProps&&defineProperties(Constructor,staticProps),Constructor}}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor))throw new TypeError("Cannot call a class as a function")}var RocketBrowserCompatibilityChecker=function(){function RocketBrowserCompatibilityChecker(options){_classCallCheck(this,RocketBrowserCompatibilityChecker),this.passiveSupported=!1,this._checkPassiveOption(this),this.options=!!this.passiveSupported&&options}return _createClass(RocketBrowserCompatibilityChecker,[{key:"_checkPassiveOption",value:function(self){try{var options={get passive(){return!(self.passiveSupported=!0)}};window.addEventListener("test",null,options),window.removeEventListener("test",null,options)}catch(err){self.passiveSupported=!1}}},{key:"initRequestIdleCallback",value:function(){!1 in window&&(window.requestIdleCallback=function(cb){var start=Date.now();return setTimeout(function(){cb({didTimeout:!1,timeRemaining:function(){return Math.max(0,50-(Date.now()-start))}})},1)}),!1 in window&&(window.cancelIdleCallback=function(id){return clearTimeout(id)})}},{key:"isDataSaverModeOn",value:function(){return"connection"in navigator&&!0===navigator.connection.saveData}},{key:"supportsLinkPrefetch",value:function(){var elem=document.createElement("link");return elem.relList&&elem.relList.supports&&elem.relList.supports("prefetch")&&window.IntersectionObserver&&"isIntersecting"in IntersectionObserverEntry.prototype}},{key:"isSlowConnection",value:function(){return"connection"in navigator&&"effectiveType"in navigator.connection&&("2g"===navigator.connection.effectiveType||"slow-2g"===navigator.connection.effectiveType)}}]),RocketBrowserCompatibilityChecker}();
+/* ]]> */
+</script>
+<script type="text/javascript" id="rocket-preload-links-js-extra">
+/* <![CDATA[ */
+var RocketPreloadLinksConfig = {"excludeUris":"\/ref\/|\/(?:.+\/)?feed(?:\/(?:.+\/?)?)?$|\/(?:.+\/)?embed\/|\/(index.php\/)?(.*)wp-json(\/.*|$)|\/refer\/|\/go\/|\/recommend\/|\/recommends\/","usesTrailingSlash":"1","imageExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|pdf|doc|docx|xls|xlsx|php","fileExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|pdf|doc|docx|xls|xlsx|php|html|htm","siteUrl":"https:\/\/costructor.co","onHoverDelay":"100","rateThrottle":"3"};
+/* ]]> */
+</script>
+<script type="text/javascript" id="rocket-preload-links-js-after">
+/* <![CDATA[ */
+(function() {
+"use strict";var r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e=function(){function i(e,t){for(var n=0;n<t.length;n++){var i=t[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,i.key,i)}}return function(e,t,n){return t&&i(e.prototype,t),n&&i(e,n),e}}();function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}var t=function(){function n(e,t){i(this,n),this.browser=e,this.config=t,this.options=this.browser.options,this.prefetched=new Set,this.eventTime=null,this.threshold=1111,this.numOnHover=0}return e(n,[{key:"init",value:function(){!this.browser.supportsLinkPrefetch()||this.browser.isDataSaverModeOn()||this.browser.isSlowConnection()||(this.regex={excludeUris:RegExp(this.config.excludeUris,"i"),images:RegExp(".("+this.config.imageExt+")$","i"),fileExt:RegExp(".("+this.config.fileExt+")$","i")},this._initListeners(this))}},{key:"_initListeners",value:function(e){-1<this.config.onHoverDelay&&document.addEventListener("mouseover",e.listener.bind(e),e.listenerOptions),document.addEventListener("mousedown",e.listener.bind(e),e.listenerOptions),document.addEventListener("touchstart",e.listener.bind(e),e.listenerOptions)}},{key:"listener",value:function(e){var t=e.target.closest("a"),n=this._prepareUrl(t);if(null!==n)switch(e.type){case"mousedown":case"touchstart":this._addPrefetchLink(n);break;case"mouseover":this._earlyPrefetch(t,n,"mouseout")}}},{key:"_earlyPrefetch",value:function(t,e,n){var i=this,r=setTimeout(function(){if(r=null,0===i.numOnHover)setTimeout(function(){return i.numOnHover=0},1e3);else if(i.numOnHover>i.config.rateThrottle)return;i.numOnHover++,i._addPrefetchLink(e)},this.config.onHoverDelay);t.addEventListener(n,function e(){t.removeEventListener(n,e,{passive:!0}),null!==r&&(clearTimeout(r),r=null)},{passive:!0})}},{key:"_addPrefetchLink",value:function(i){return this.prefetched.add(i.href),new Promise(function(e,t){var n=document.createElement("link");n.rel="prefetch",n.href=i.href,n.onload=e,n.onerror=t,document.head.appendChild(n)}).catch(function(){})}},{key:"_prepareUrl",value:function(e){if(null===e||"object"!==(void 0===e?"undefined":r(e))||!1 in e||-1===["http:","https:"].indexOf(e.protocol))return null;var t=e.href.substring(0,this.config.siteUrl.length),n=this._getPathname(e.href,t),i={original:e.href,protocol:e.protocol,origin:t,pathname:n,href:t+n};return this._isLinkOk(i)?i:null}},{key:"_getPathname",value:function(e,t){var n=t?e.substring(this.config.siteUrl.length):e;return n.startsWith("/")||(n="/"+n),this._shouldAddTrailingSlash(n)?n+"/":n}},{key:"_shouldAddTrailingSlash",value:function(e){return this.config.usesTrailingSlash&&!e.endsWith("/")&&!this.regex.fileExt.test(e)}},{key:"_isLinkOk",value:function(e){return null!==e&&"object"===(void 0===e?"undefined":r(e))&&(!this.prefetched.has(e.href)&&e.origin===this.config.siteUrl&&-1===e.href.indexOf("?")&&-1===e.href.indexOf("#")&&!this.regex.excludeUris.test(e.href)&&!this.regex.images.test(e.href))}}],[{key:"run",value:function(){"undefined"!=typeof RocketPreloadLinksConfig&&new n(new RocketBrowserCompatibilityChecker({capture:!0,passive:!0}),RocketPreloadLinksConfig).init()}}]),n}();t.run();
+}());
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?render=6LeiisMoAAAAACaQS2TVJGbem1zxSTvQXXMTG6TT&amp;ver=3.0" id="google-recaptcha-js"></script>
+<script type="text/javascript" src="https://costructor.co/wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=3.15.0" id="wp-polyfill-js"></script>
+<script type="text/javascript" id="wpcf7-recaptcha-js-before">
+/* <![CDATA[ */
+var wpcf7_recaptcha = {
+    "sitekey": "6LeiisMoAAAAACaQS2TVJGbem1zxSTvQXXMTG6TT",
+    "actions": {
+        "homepage": "homepage",
+        "contactform": "contactform"
+    }
+};
+/* ]]> */
+</script>
+<script data-minify="1" type="text/javascript" src="https://costructor.co/wp-content/cache/min/1/wp-content/plugins/contact-form-7/modules/recaptcha/index.js?ver=1760361482" id="wpcf7-recaptcha-js" data-rocket-defer defer></script>
+<script type="text/javascript" id="main-js-extra">
+/* <![CDATA[ */
+var ajaxurl = "https:\/\/costructor.co\/wp-admin\/admin-ajax.php";
+/* ]]> */
+</script>
+<script data-minify="1" type="text/javascript" src="https://costructor.co/wp-content/cache/min/1/wp-content/themes/costructor/js/main.js?ver=1760361482" id="main-js" data-rocket-defer defer></script>
+<script type="text/javascript" src="https://costructor.co/wp-content/themes/costructor/js/confetti.min.js?ver=1.0" id="confetti-js" data-rocket-defer defer></script>
+</body>
+</html>
+<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me - Debug: cached@1762370574 -->
