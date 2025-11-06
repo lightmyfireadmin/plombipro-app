@@ -5,12 +5,18 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 // import 'package:flutter_stripe/flutter_stripe.dart'; // Uncomment if Stripe UI is used
 
 import 'config/router.dart';
+import 'config/app_theme.dart';
+import 'services/error_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize flutter_dotenv to load our .env file
   await dotenv.load(fileName: 'lib/.env');
+
+  // Initialize Sentry for error tracking
+  final sentryDsn = dotenv.env['SENTRY_DSN'];
+  await ErrorService.initialize(sentryDsn: sentryDsn);
 
   // Initialize supabase_flutter
   await Supabase.initialize(
@@ -32,14 +38,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'PlombiPro',
+      debugShowCheckedModeBanner: false,
+
       // Configure go_router
       routerConfig: AppRouter.router,
 
-      // Set up the theme with Material 3 and primary color
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF1976D2)), // French blue
-        useMaterial3: true,
-      ),
+      // Custom Material Design 3 theme
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.light, // Default to light theme
 
       // Set up localization for French
       localizationsDelegates: const [

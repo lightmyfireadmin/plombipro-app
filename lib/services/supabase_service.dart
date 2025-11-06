@@ -45,6 +45,7 @@ class SupabaseService {
     required String fullName,
     required String companyName,
     required String siret,
+    String? phone,
   }) async {
     try {
       final response = await _client.auth.signUp(
@@ -60,6 +61,7 @@ class SupabaseService {
           'full_name': fullName,
           'company_name': companyName,
           'siret': siret,
+          'phone': phone,
         });
       }
 

@@ -1,0 +1,58 @@
+{
+  "template_name": "Adaptation Salle de Bain PMR",
+  "template_type": "quote",
+  "category": "Bathroom",
+  "line_items": [
+    {
+      "description": "Douche italienne plain-pied 120x90cm",
+      "quantity": 1,
+      "unit_price": 1400.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Siège de douche rabattable",
+      "quantity": 1,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 5.5
+    },
+    {
+      "description": "Barres d'appui coudées x3",
+      "quantity": 3,
+      "unit_price": 65.00,
+      "discount_percent": 0,
+      "tax_rate": 5.5
+    },
+    {
+      "description": "Mitigeur thermostatique à poignées",
+      "quantity": 1,
+      "unit_price": 220.00,
+      "discount_percent": 0,
+      "tax_rate": 5.5
+    },
+    {
+      "description": "WC surélevé avec barre d'appui",
+      "quantity": 1,
+      "unit_price": 380.00,
+      "discount_percent": 0,
+      "tax_rate": 5.5
+    },
+    {
+      "description": "Meuble vasque PMR hauteur adaptée",
+      "quantity": 1,
+      "unit_price": 450.00,
+      "discount_percent": 0,
+      "tax_rate": 5.5
+    },
+    {
+      "description": "Installation complète conforme PMR",
+      "quantity": 1,
+      "unit_price": 1800.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Conforme normes PMR accessibilité. Éligible crédit d'impôt et MaPrimeAdapt'. TVA 5.5% sur équipements.",
+  "is_system_template": true
+}

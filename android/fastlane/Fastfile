@@ -1,0 +1,138 @@
+# Fastfile for Android Automation
+# This configuration handles building, signing, and deploying Android apps
+
+default_platform(:android)
+
+platform :android do
+  desc "Deploy a new version to Firebase App Distribution"
+  lane :beta do
+    # Clean build
+    gradle(
+      task: "clean"
+    )
+
+    # Build release APK
+    gradle(
+      task: "assemble",
+      build_type: "Release"
+    )
+
+    # Upload to Firebase App Distribution
+    firebase_app_distribution(
+      app: "1:268663350911:android:d84cfcc42f6b4b9a66014a",
+      groups: "testers",
+      release_notes: "Latest test build from #{Time.now.strftime('%Y-%m-%d %H:%M')}",
+      apk_path: "../build/app/outputs/flutter-apk/app-release.apk",
+      firebase_cli_path: "/usr/local/bin/firebase"
+    )
+
+    UI.success("Successfully deployed to Firebase App Distribution! 🎉")
+  end
+
+  desc "Deploy to Google Play Internal Testing"
+  lane :internal do
+    # Build App Bundle for Play Store
+    gradle(
+      task: "bundle",
+      build_type: "Release"
+    )
+
+    # Upload to Google Play Internal Testing track
+    upload_to_play_store(
+      track: "internal",
+      aab: "../build/app/outputs/bundle/release/app-release.aab",
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+
+    UI.success("Successfully uploaded to Google Play Internal Testing! 🎉")
+  end
+
+  desc "Promote from Internal to Alpha"
+  lane :promote_to_alpha do
+    upload_to_play_store(
+      track: "internal",
+      track_promote_to: "alpha",
+      skip_upload_apk: true,
+      skip_upload_aab: true,
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+
+  desc "Promote from Alpha to Beta"
+  lane :promote_to_beta do
+    upload_to_play_store(
+      track: "alpha",
+      track_promote_to: "beta",
+      skip_upload_apk: true,
+      skip_upload_aab: true,
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+
+  desc "Deploy to Google Play Production"
+  lane :production do
+    # Build App Bundle
+    gradle(
+      task: "bundle",
+      build_type: "Release"
+    )
+
+    # Upload to Google Play Production track
+    upload_to_play_store(
+      track: "production",
+      aab: "../build/app/outputs/bundle/release/app-release.aab",
+      skip_upload_metadata: false,
+      skip_upload_images: false,
+      skip_upload_screenshots: false
+    )
+
+    UI.success("Successfully uploaded to Google Play Production! 🎉")
+  end
+
+  desc "Build debug APK"
+  lane :build_debug do
+    gradle(
+      task: "assemble",
+      build_type: "Debug"
+    )
+  end
+
+  desc "Build release APK"
+  lane :build_release do
+    gradle(
+      task: "assemble",
+      build_type: "Release"
+    )
+  end
+
+  desc "Run tests"
+  lane :test do
+    gradle(
+      task: "test"
+    )
+  end
+
+  desc "Run instrumented tests"
+  lane :instrumented_test do
+    gradle(
+      task: "connectedAndroidTest"
+    )
+  end
+
+  desc "Take screenshots for Play Store"
+  lane :screenshots do
+    capture_android_screenshots
+  end
+
+  # Error handling
+  error do |lane, exception|
+    UI.error("Error in lane #{lane}: #{exception.message}")
+    # You can add Slack/Discord notifications here
+  end
+end

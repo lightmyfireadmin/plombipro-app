@@ -16,6 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
 
   bool _isLoading = false;
+  bool _rememberMe = false;
 
   Future<void> _signIn() async {
     if (!_formKey.currentState!.validate()) {
@@ -95,7 +96,32 @@ class _LoginPageState extends State<LoginPage> {
                     return null;
                   },
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: _rememberMe,
+                          onChanged: (value) {
+                            setState(() {
+                              _rememberMe = value ?? false;
+                            });
+                          },
+                        ),
+                        const Text('Se souvenir de moi'),
+                      ],
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        context.push('/forgot-password');
+                      },
+                      child: const Text('Mot de passe oublié?'),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
                 _isLoading
                     ? const CircularProgressIndicator()
                     : ElevatedButton(

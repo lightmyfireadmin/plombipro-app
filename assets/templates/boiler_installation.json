@@ -1,0 +1,65 @@
+{
+  "template_name": "Installation Chaudière Gaz Murale",
+  "template_type": "quote",
+  "category": "Heating",
+  "line_items": [
+    {
+      "description": "Dépose ancienne chaudière et évacuation",
+      "quantity": 1,
+      "unit_price": 450.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Chaudière gaz murale condensation 24kW",
+      "quantity": 1,
+      "unit_price": 2200.00,
+      "discount_percent": 0,
+      "tax_rate": 5.5
+    },
+    {
+      "description": "Ventouse horizontale Ø 60/100",
+      "quantity": 1,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 5.5
+    },
+    {
+      "description": "Vase d'expansion sanitaire 12L",
+      "quantity": 1,
+      "unit_price": 95.00,
+      "discount_percent": 0,
+      "tax_rate": 5.5
+    },
+    {
+      "description": "Raccordement gaz avec flexible inox",
+      "quantity": 1,
+      "unit_price": 120.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Raccordement hydraulique et électrique",
+      "quantity": 1,
+      "unit_price": 380.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Main d'œuvre installation complète",
+      "quantity": 1,
+      "unit_price": 1200.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Mise en service et réglages",
+      "quantity": 1,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Installation conforme aux normes NF DTU 61.1 et DTU 65.10. Certification gaz obligatoire. Garantie décennale sur installation. TVA réduite 5,5% pour équipements éligibles. Entretien annuel recommandé.",
+  "is_system_template": true
+}

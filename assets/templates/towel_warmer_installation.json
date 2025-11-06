@@ -1,0 +1,51 @@
+{
+  "template_name": "Installation Sèche-Serviettes Mixte",
+  "template_type": "quote",
+  "category": "Heating",
+  "line_items": [
+    {
+      "description": "Sèche-serviettes mixte eau/électrique 1000W",
+      "quantity": 1,
+      "unit_price": 450.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Robinets thermostatiques avec té de réglage",
+      "quantity": 1,
+      "unit_price": 85.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Résistance électrique 500W avec thermostat",
+      "quantity": 1,
+      "unit_price": 120.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Raccordement hydraulique au chauffage",
+      "quantity": 1,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Raccordement électrique avec protection",
+      "quantity": 1,
+      "unit_price": 120.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Fixation murale et mise en service",
+      "quantity": 1,
+      "unit_price": 150.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Fonctionne hors chauffage l'été. Garantie 2 ans. TVA 10%.",
+  "is_system_template": true
+}

@@ -1,0 +1,58 @@
+{
+  "template_name": "Dépannage Urgence - Fuite Gaz",
+  "template_type": "quote",
+  "category": "Emergency",
+  "line_items": [
+    {
+      "description": "Intervention urgence sécurité gaz",
+      "quantity": 1,
+      "unit_price": 150.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Détection fuite avec testeur gaz",
+      "quantity": 1,
+      "unit_price": 120.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Coupure générale et sécurisation",
+      "quantity": 1,
+      "unit_price": 80.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Réparation joint défectueux",
+      "quantity": 1,
+      "unit_price": 95.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Test d'étanchéité à l'azote",
+      "quantity": 1,
+      "unit_price": 120.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Remise en service sécurisée",
+      "quantity": 1,
+      "unit_price": 85.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Certificat de conformité",
+      "quantity": 1,
+      "unit_price": 60.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    }
+  ],
+  "terms_conditions": "Intervention urgence avec certification PGN. TVA 20%. Garantie 1 an. Signalement GRDF si nécessaire.",
+  "is_system_template": true
+}

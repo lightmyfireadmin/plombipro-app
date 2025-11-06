@@ -1,0 +1,58 @@
+{
+  "template_name": "Remplacement WC",
+  "template_type": "quote",
+  "category": "Bathroom",
+  "line_items": [
+    {
+      "description": "Dépose ancien WC et évacuation",
+      "quantity": 1,
+      "unit_price": 120.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "WC compact blanc à poser avec abattant",
+      "quantity": 1,
+      "unit_price": 280.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Mécanisme chasse d'eau double débit",
+      "quantity": 1,
+      "unit_price": 45.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Robinet d'arrêt équerre 3/8",
+      "quantity": 1,
+      "unit_price": 18.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Flexible d'alimentation inox",
+      "quantity": 1,
+      "unit_price": 12.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Pose et raccordement complet",
+      "quantity": 1,
+      "unit_price": 220.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Joint de sortie et silicone",
+      "quantity": 1,
+      "unit_price": 25.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    }
+  ],
+  "terms_conditions": "Installation conforme aux normes DTU. Garantie biennale. TVA réduite 10% applicable pour logement > 2 ans. Test d'étanchéité inclus.",
+  "is_system_template": true
+}

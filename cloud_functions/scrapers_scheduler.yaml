@@ -1,0 +1,143 @@
+# Cloud Scheduler Configuration for Web Scrapers
+# This file defines scheduled jobs for Point P and Cedeo scrapers
+
+# Point P Scraper - Runs every Sunday at 2:00 AM (Paris time)
+pointp_scraper:
+  name: "pointp-weekly-scrape"
+  description: "Weekly scraping of Point P plumbing products catalog"
+  schedule: "0 2 * * 0"  # Cron format: Every Sunday at 2:00 AM
+  timezone: "Europe/Paris"
+  target:
+    type: "cloud_function"
+    function_name: "scrape_point_p"
+    region: "europe-west1"
+  payload:
+    max_categories: null  # null = scrape all categories
+  retry_config:
+    retry_count: 3
+    max_retry_duration: "3600s"
+    min_backoff_duration: "5s"
+    max_backoff_duration: "600s"
+
+# Cedeo Scraper - Runs every Sunday at 4:00 AM (Paris time)
+cedeo_scraper:
+  name: "cedeo-weekly-scrape"
+  description: "Weekly scraping of Cedeo plumbing products catalog"
+  schedule: "0 4 * * 0"  # Cron format: Every Sunday at 4:00 AM
+  timezone: "Europe/Paris"
+  target:
+    type: "cloud_function"
+    function_name: "scrape_cedeo"
+    region: "europe-west1"
+  payload:
+    max_categories: null  # null = scrape all categories
+  retry_config:
+    retry_count: 3
+    max_retry_duration: "3600s"
+    min_backoff_duration: "5s"
+    max_backoff_duration: "600s"
+
+# Deployment Instructions:
+#
+# 1. Using gcloud CLI:
+#
+# For Point P:
+# gcloud scheduler jobs create http pointp-weekly-scrape \
+#   --location=europe-west1 \
+#   --schedule="0 2 * * 0" \
+#   --time-zone="Europe/Paris" \
+#   --uri="https://europe-west1-YOUR_PROJECT_ID.cloudfunctions.net/scrape_point_p" \
+#   --http-method=POST \
+#   --message-body='{"max_categories": null}' \
+#   --headers="Content-Type=application/json" \
+#   --attempt-deadline=1800s \
+#   --max-retry-attempts=3
+#
+# For Cedeo:
+# gcloud scheduler jobs create http cedeo-weekly-scrape \
+#   --location=europe-west1 \
+#   --schedule="0 4 * * 0" \
+#   --time-zone="Europe/Paris" \
+#   --uri="https://europe-west1-YOUR_PROJECT_ID.cloudfunctions.net/scrape_cedeo" \
+#   --http-method=POST \
+#   --message-body='{"max_categories": null}' \
+#   --headers="Content-Type=application/json" \
+#   --attempt-deadline=1800s \
+#   --max-retry-attempts=3
+#
+# 2. Using Google Cloud Console:
+#    - Go to Cloud Scheduler: https://console.cloud.google.com/cloudscheduler
+#    - Click "Create Job"
+#    - Fill in the details from above
+#    - Set HTTP target to your Cloud Function URL
+#    - Add JSON payload: {"max_categories": null}
+#
+# 3. Test manually:
+#    gcloud scheduler jobs run pointp-weekly-scrape --location=europe-west1
+#    gcloud scheduler jobs run cedeo-weekly-scrape --location=europe-west1
+#
+# 4. View logs:
+#    gcloud logging read "resource.type=cloud_function AND resource.labels.function_name=scrape_point_p" --limit 50
+#    gcloud logging read "resource.type=cloud_function AND resource.labels.function_name=scrape_cedeo" --limit 50
+
+---
+
+# Alternative: Terraform Configuration
+#
+# resource "google_cloud_scheduler_job" "pointp_scraper" {
+#   name             = "pointp-weekly-scrape"
+#   description      = "Weekly scraping of Point P plumbing products catalog"
+#   schedule         = "0 2 * * 0"
+#   time_zone        = "Europe/Paris"
+#   attempt_deadline = "1800s"
+#   region           = "europe-west1"
+#
+#   retry_config {
+#     retry_count          = 3
+#     max_retry_duration   = "3600s"
+#     min_backoff_duration = "5s"
+#     max_backoff_duration = "600s"
+#   }
+#
+#   http_target {
+#     http_method = "POST"
+#     uri         = "https://europe-west1-${var.project_id}.cloudfunctions.net/scrape_point_p"
+#
+#     headers = {
+#       "Content-Type" = "application/json"
+#     }
+#
+#     body = base64encode(jsonencode({
+#       max_categories = null
+#     }))
+#   }
+# }
+#
+# resource "google_cloud_scheduler_job" "cedeo_scraper" {
+#   name             = "cedeo-weekly-scrape"
+#   description      = "Weekly scraping of Cedeo plumbing products catalog"
+#   schedule         = "0 4 * * 0"
+#   time_zone        = "Europe/Paris"
+#   attempt_deadline = "1800s"
+#   region           = "europe-west1"
+#
+#   retry_config {
+#     retry_count          = 3
+#     max_retry_duration   = "3600s"
+#     min_backoff_duration = "5s"
+#     max_backoff_duration = "600s"
+#   }
+#
+#   http_target {
+#     http_method = "POST"
+#     uri         = "https://europe-west1-${var.project_id}.cloudfunctions.net/scrape_cedeo"
+#
+#     headers = {
+#       "Content-Type" = "application/json"
+#     }
+#
+#     body = base64encode(jsonencode({
+#       max_categories = null
+#     }))
+#   }
+# }

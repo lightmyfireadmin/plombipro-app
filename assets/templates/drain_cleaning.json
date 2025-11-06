@@ -1,0 +1,44 @@
+{
+  "template_name": "Débouchage Canalisation",
+  "template_type": "quote",
+  "category": "Maintenance",
+  "line_items": [
+    {
+      "description": "Déplacement",
+      "quantity": 1,
+      "unit_price": 60.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Diagnostic obstruction canalisation",
+      "quantity": 1,
+      "unit_price": 80.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Débouchage mécanique au furet électrique",
+      "quantity": 1,
+      "unit_price": 150.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Inspection caméra (si nécessaire)",
+      "quantity": 1,
+      "unit_price": 120.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Test d'écoulement et nettoyage",
+      "quantity": 1,
+      "unit_price": 40.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    }
+  ],
+  "terms_conditions": "Intervention rapide. Garantie 30 jours sur débouchage. Prix susceptible d'ajustement selon complexité. TVA 20% applicable.",
+  "is_system_template": true
+}

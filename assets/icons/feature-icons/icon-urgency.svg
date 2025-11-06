@@ -1,0 +1,22 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Urgency mode - lightning bolt with clock -->
+
+  <!-- Lightning bolt -->
+  <path d="M 34 8 L 22 34 L 30 34 L 28 56 L 42 28 L 34 28 Z" fill="#FF6B35"/>
+
+  <!-- Inner lightning highlight -->
+  <path d="M 32 12 L 26 32 L 30 32 L 29 48 L 38 30 L 34 30 Z" fill="#FF8A65"/>
+
+  <!-- Clock circle background -->
+  <circle cx="46" cy="48" r="10" fill="#1976D2"/>
+
+  <!-- Clock hands -->
+  <line x1="46" y1="48" x2="46" y2="44" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <line x1="46" y1="48" x2="49" y2="48" stroke="white" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Clock dots -->
+  <circle cx="46" cy="42" r="0.8" fill="white"/>
+  <circle cx="52" cy="48" r="0.8" fill="white"/>
+  <circle cx="46" cy="54" r="0.8" fill="white"/>
+  <circle cx="40" cy="48" r="0.8" fill="white"/>
+</svg>

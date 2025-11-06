@@ -1,0 +1,51 @@
+{
+  "template_name": "Dépannage d'Urgence - Fuite d'Eau",
+  "template_type": "quote",
+  "category": "Emergency",
+  "line_items": [
+    {
+      "description": "Déplacement d'urgence (jour/nuit/weekend)",
+      "quantity": 1,
+      "unit_price": 85.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Diagnostic et localisation de fuite",
+      "quantity": 1,
+      "unit_price": 120.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Réparation provisoire de fuite",
+      "quantity": 1,
+      "unit_price": 150.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Remplacement section de tuyauterie défaillante",
+      "quantity": 2,
+      "unit_price": 95.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Fournitures (raccords, joints, téflon)",
+      "quantity": 1,
+      "unit_price": 45.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Test d'étanchéité et remise en pression",
+      "quantity": 1,
+      "unit_price": 60.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    }
+  ],
+  "terms_conditions": "Intervention d'urgence sous 2h. Garantie 6 mois sur réparation. Prix indicatif susceptible d'être ajusté selon diagnostic. TVA 20% applicable.",
+  "is_system_template": true
+}
