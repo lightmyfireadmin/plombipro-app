@@ -1,0 +1,58 @@
+{
+  "template_name": "Entretien Annuel Chaudière Gaz",
+  "template_type": "quote",
+  "category": "Maintenance",
+  "line_items": [
+    {
+      "description": "Contrôle visuel général de la chaudière",
+      "quantity": 1,
+      "unit_price": 40.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Nettoyage brûleur et veilleuse",
+      "quantity": 1,
+      "unit_price": 55.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Nettoyage corps de chauffe",
+      "quantity": 1,
+      "unit_price": 45.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Contrôle des dispositifs de sécurité",
+      "quantity": 1,
+      "unit_price": 30.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Mesure de combustion et rendement",
+      "quantity": 1,
+      "unit_price": 35.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Contrôle pression circuit et vase expansion",
+      "quantity": 1,
+      "unit_price": 25.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Remise de l'attestation d'entretien",
+      "quantity": 1,
+      "unit_price": 0.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Entretien obligatoire annuel selon décret 2009-649. Attestation remise. TVA 10%. Garantie entretien 1 an.",
+  "is_system_template": true
+}

@@ -1,0 +1,14 @@
+# Cloudflare Pages Configuration for PlombiPro Flutter Web App
+# This project uses pre-built Flutter web assets
+
+name = "plombipro-app"
+compatibility_date = "2024-01-01"
+
+# Pages Configuration
+pages_build_output_dir = "build/web"
+
+# Since this is a Flutter web app that needs to be built locally,
+# we won't specify build commands here. Instead, deploy the pre-built output.
+
+[build]
+command = ""

@@ -1,0 +1,51 @@
+{
+  "template_name": "Raccordement Contre-Lavage Piscine",
+  "template_type": "quote",
+  "category": "Garden",
+  "line_items": [
+    {
+      "description": "Arrivée d'eau dédiée piscine",
+      "quantity": 1,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Disconnecteur BA type CA",
+      "quantity": 1,
+      "unit_price": 220.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Évacuation contre-lavage au réseau",
+      "quantity": 1,
+      "unit_price": 280.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Robinet de puisage extérieur",
+      "quantity": 1,
+      "unit_price": 95.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Installation et raccordements",
+      "quantity": 1,
+      "unit_price": 320.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Test de fonctionnement",
+      "quantity": 1,
+      "unit_price": 85.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Disconnecteur obligatoire pour piscine. Conforme réglementation ARS. Garantie 2 ans. TVA 10%.",
+  "is_system_template": true
+}

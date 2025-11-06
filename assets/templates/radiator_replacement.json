@@ -1,0 +1,51 @@
+{
+  "template_name": "Remplacement Radiateur",
+  "template_type": "quote",
+  "category": "Heating",
+  "line_items": [
+    {
+      "description": "Dépose ancien radiateur",
+      "quantity": 1,
+      "unit_price": 80.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Radiateur acier 1200x600mm",
+      "quantity": 1,
+      "unit_price": 320.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Kit de fixation mural",
+      "quantity": 1,
+      "unit_price": 25.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Robinets thermostatiques x2",
+      "quantity": 1,
+      "unit_price": 95.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Pose et raccordement au circuit",
+      "quantity": 1,
+      "unit_price": 280.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Purge et mise en pression du circuit",
+      "quantity": 1,
+      "unit_price": 60.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Installation conforme DTU 65.14. Garantie biennale. TVA réduite 10% applicable. Équilibrage hydraulique du circuit inclus.",
+  "is_system_template": true
+}
