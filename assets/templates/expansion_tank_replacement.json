@@ -1,0 +1,51 @@
+{
+  "template_name": "Remplacement Vase d'Expansion",
+  "template_type": "quote",
+  "category": "Heating",
+  "line_items": [
+    {
+      "description": "Diagnostic pression système chauffage",
+      "quantity": 1,
+      "unit_price": 65.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Vidange partielle circuit chauffage",
+      "quantity": 1,
+      "unit_price": 85.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Vase d'expansion 25L avec support",
+      "quantity": 1,
+      "unit_price": 120.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Dépose ancien vase",
+      "quantity": 1,
+      "unit_price": 80.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Installation nouveau vase",
+      "quantity": 1,
+      "unit_price": 150.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Remplissage et purge circuit",
+      "quantity": 1,
+      "unit_price": 95.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Garantie 2 ans. Contrôle pression 1.5 bars. TVA 10%.",
+  "is_system_template": true
+}

@@ -1,0 +1,51 @@
+{
+  "template_name": "Installation Réducteur de Pression",
+  "template_type": "quote",
+  "category": "Pipe Work",
+  "line_items": [
+    {
+      "description": "Réducteur de pression réglable avec manomètre",
+      "quantity": 1,
+      "unit_price": 95.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Filtre à tamis avant réducteur",
+      "quantity": 1,
+      "unit_price": 45.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Vannes d'isolement amont/aval",
+      "quantity": 2,
+      "unit_price": 28.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Installation sur réseau principal",
+      "quantity": 1,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Réglage pression à 3 bars",
+      "quantity": 1,
+      "unit_price": 65.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Test et vérification",
+      "quantity": 1,
+      "unit_price": 50.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Protège les installations contre surpression. Garantie 2 ans. Notice d'utilisation fournie.",
+  "is_system_template": true
+}

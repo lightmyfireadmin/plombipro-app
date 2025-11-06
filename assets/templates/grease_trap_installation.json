@@ -1,0 +1,51 @@
+{
+  "template_name": "Installation Bac à Graisse",
+  "template_type": "quote",
+  "category": "Commercial",
+  "line_items": [
+    {
+      "description": "Bac à graisse 200L conforme restaurant",
+      "quantity": 1,
+      "unit_price": 650.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Terrassement et préparation",
+      "quantity": 1,
+      "unit_price": 280.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Lit de pose et remblai",
+      "quantity": 1,
+      "unit_price": 150.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Raccordement évacuation cuisine",
+      "quantity": 1,
+      "unit_price": 220.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Sortie vers tout-à-l'égout",
+      "quantity": 1,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Test et mise en service",
+      "quantity": 1,
+      "unit_price": 120.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    }
+  ],
+  "terms_conditions": "Obligatoire pour restauration. Entretien tous les 6 mois. Notice fournie. Garantie 2 ans. TVA 20%.",
+  "is_system_template": true
+}

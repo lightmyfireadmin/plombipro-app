@@ -1,0 +1,44 @@
+{
+  "template_name": "Installation Lave-Linge",
+  "template_type": "quote",
+  "category": "Bathroom",
+  "line_items": [
+    {
+      "description": "Arrivée d'eau avec robinet autoperceur",
+      "quantity": 1,
+      "unit_price": 85.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Évacuation avec siphon dédié",
+      "quantity": 1,
+      "unit_price": 75.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Prise électrique dédiée 16A avec terre",
+      "quantity": 1,
+      "unit_price": 95.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Installation et mise à niveau",
+      "quantity": 1,
+      "unit_price": 110.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Test de fonctionnement cycle complet",
+      "quantity": 1,
+      "unit_price": 50.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Installation selon normes fabricant. Vérification anti-vibration. Garantie 1 an. TVA 10%.",
+  "is_system_template": true
+}

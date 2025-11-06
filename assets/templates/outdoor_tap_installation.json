@@ -1,0 +1,51 @@
+{
+  "template_name": "Installation Robinet Extérieur",
+  "template_type": "quote",
+  "category": "Garden",
+  "line_items": [
+    {
+      "description": "Perçage mur extérieur",
+      "quantity": 1,
+      "unit_price": 80.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Robinet extérieur antigel avec purge",
+      "quantity": 1,
+      "unit_price": 65.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Raccordement au réseau existant (4m)",
+      "quantity": 4,
+      "unit_price": 18.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Vanne d'arrêt intérieure",
+      "quantity": 1,
+      "unit_price": 35.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Installation et scellement",
+      "quantity": 1,
+      "unit_price": 120.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Test d'étanchéité",
+      "quantity": 1,
+      "unit_price": 40.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Robinet antigel conforme NF. Garantie 2 ans. TVA réduite 10% si logement > 2 ans.",
+  "is_system_template": true
+}

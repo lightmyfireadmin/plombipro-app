@@ -291,6 +291,18 @@ CREATE TABLE job_site_notes (
     updated_at timestamp
 );
 
+-- Create the "job_site_documents" table
+CREATE TABLE job_site_documents (
+    id uuid PRIMARY KEY,
+    job_site_id uuid REFERENCES job_sites(id) ON DELETE CASCADE,
+    document_name text NOT NULL,
+    document_url text NOT NULL,
+    document_type text,
+    file_size int,
+    uploaded_at timestamp,
+    created_at timestamp
+);
+
 -- Create the "categories" table
 CREATE TABLE categories (
     id uuid PRIMARY KEY,
@@ -432,6 +444,12 @@ CREATE POLICY "Users can only see their own job site notes." ON job_site_notes F
 CREATE POLICY "Users can insert their own job site notes." ON job_site_notes FOR INSERT WITH CHECK (auth.uid() = user_id);
 CREATE POLICY "Users can update their own job site notes." ON job_site_notes FOR UPDATE USING (auth.uid() = user_id);
 CREATE POLICY "Users can delete their own job site notes." ON job_site_notes FOR DELETE USING (auth.uid() = user_id);
+
+ALTER TABLE job_site_documents ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Users can only see documents from their job sites." ON job_site_documents FOR SELECT USING (auth.uid() = (SELECT user_id FROM job_sites WHERE id = job_site_id));
+CREATE POLICY "Users can insert documents to their job sites." ON job_site_documents FOR INSERT WITH CHECK (auth.uid() = (SELECT user_id FROM job_sites WHERE id = job_site_id));
+CREATE POLICY "Users can update their job site documents." ON job_site_documents FOR UPDATE USING (auth.uid() = (SELECT user_id FROM job_sites WHERE id = job_site_id));
+CREATE POLICY "Users can delete their job site documents." ON job_site_documents FOR DELETE USING (auth.uid() = (SELECT user_id FROM job_sites WHERE id = job_site_id));
 
 ALTER TABLE categories ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Users can only see their own categories." ON categories FOR SELECT USING (auth.uid() = user_id);

@@ -1,0 +1,51 @@
+{
+  "template_name": "Installation Bouclage Eau Chaude",
+  "template_type": "quote",
+  "category": "Pipe Work",
+  "line_items": [
+    {
+      "description": "Circulateur ECS classe A",
+      "quantity": 1,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Clapet anti-thermosiphon",
+      "quantity": 1,
+      "unit_price": 45.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Tuyau retour isolé (15m)",
+      "quantity": 15,
+      "unit_price": 12.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Raccords et accessoires",
+      "quantity": 1,
+      "unit_price": 95.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Installation et raccordement ballon",
+      "quantity": 1,
+      "unit_price": 380.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Programmation horloge",
+      "quantity": 1,
+      "unit_price": 65.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Eau chaude instantanée à tous les robinets. Économies avec programmation. Garantie 2 ans. TVA 10%.",
+  "is_system_template": true
+}

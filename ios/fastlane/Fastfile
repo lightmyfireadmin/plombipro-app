@@ -1,0 +1,128 @@
+# Fastfile for iOS Automation
+# This configuration handles building, signing, and deploying iOS apps
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Push a new beta build to TestFlight"
+  lane :beta do
+    # Ensure clean git status
+    ensure_git_status_clean unless ENV['CI']
+
+    # Increment build number
+    increment_build_number(
+      xcodeproj: "Runner.xcodeproj"
+    )
+
+    # Get certificates and provisioning profiles
+    # Using cert/sigh (manual approach) - replace with match for team automation
+    get_certificates(
+      development: false,
+      skip_install: ENV['CI'] ? true : false
+    )
+
+    get_provisioning_profile(
+      skip_install: ENV['CI'] ? true : false
+    )
+
+    # Build the app
+    build_app(
+      scheme: "Runner",
+      export_method: "app-store",
+      export_options: {
+        provisioningProfiles: {
+          "com.example.app" => "match AppStore com.example.app"
+        }
+      }
+    )
+
+    # Upload to TestFlight
+    upload_to_testflight(
+      skip_waiting_for_build_processing: true,
+      skip_submission: true,
+      notify_external_testers: false
+    )
+
+    # Commit version bump
+    commit_version_bump(
+      message: "Version bump by fastlane",
+      xcodeproj: "Runner.xcodeproj"
+    ) unless ENV['CI']
+
+    # Push to remote
+    push_to_git_remote unless ENV['CI']
+  end
+
+  desc "Deploy to Firebase App Distribution"
+  lane :firebase do
+    # Build the app for ad-hoc distribution
+    build_app(
+      scheme: "Runner",
+      export_method: "ad-hoc",
+      output_directory: "../build/ios/ipa"
+    )
+
+    # Upload to Firebase App Distribution
+    firebase_app_distribution(
+      app: "1:268663350911:ios:93817ef0f50de33b66014a",
+      groups: "testers",
+      release_notes: "Latest test build from #{Time.now.strftime('%Y-%m-%d %H:%M')}",
+      firebase_cli_path: "/usr/local/bin/firebase"
+    )
+  end
+
+  desc "Build app for local testing"
+  lane :build do
+    build_app(
+      scheme: "Runner",
+      export_method: "development"
+    )
+  end
+
+  desc "Run tests"
+  lane :test do
+    run_tests(
+      scheme: "Runner",
+      devices: ["iPhone 14 Pro"]
+    )
+  end
+
+  desc "Take screenshots for App Store"
+  lane :screenshots do
+    capture_screenshots(
+      scheme: "Runner"
+    )
+  end
+
+  desc "Setup code signing with Match"
+  lane :setup_signing do
+    match(
+      type: "development",
+      readonly: false
+    )
+
+    match(
+      type: "appstore",
+      readonly: false
+    )
+  end
+
+  desc "Refresh provisioning profiles"
+  lane :refresh_profiles do
+    match(
+      type: "development",
+      force_for_new_devices: true
+    )
+
+    match(
+      type: "appstore",
+      force_for_new_devices: true
+    )
+  end
+
+  # Error handling
+  error do |lane, exception|
+    UI.error("Error in lane #{lane}: #{exception.message}")
+    # You can add Slack/Discord notifications here
+  end
+end

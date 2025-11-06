@@ -1,0 +1,58 @@
+{
+  "template_name": "Installation Chauffe-Eau Électrique",
+  "template_type": "quote",
+  "category": "Heating",
+  "line_items": [
+    {
+      "description": "Dépose ancien chauffe-eau et évacuation",
+      "quantity": 1,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Chauffe-eau électrique 200L blindé",
+      "quantity": 1,
+      "unit_price": 520.00,
+      "discount_percent": 0,
+      "tax_rate": 5.5
+    },
+    {
+      "description": "Groupe de sécurité NF",
+      "quantity": 1,
+      "unit_price": 35.00,
+      "discount_percent": 0,
+      "tax_rate": 5.5
+    },
+    {
+      "description": "Réducteur de pression si nécessaire",
+      "quantity": 1,
+      "unit_price": 85.00,
+      "discount_percent": 0,
+      "tax_rate": 5.5
+    },
+    {
+      "description": "Raccordement hydraulique (eau froide/chaude)",
+      "quantity": 1,
+      "unit_price": 220.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Raccordement électrique",
+      "quantity": 1,
+      "unit_price": 150.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Main d'œuvre pose et mise en service",
+      "quantity": 1,
+      "unit_price": 380.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Installation conforme NF C 15-100 et DTU 60.1. Garantie constructeur 2 ans (cuve 5 ans). TVA réduite 5,5% sur équipements. Détartrage recommandé tous les 2 ans.",
+  "is_system_template": true
+}

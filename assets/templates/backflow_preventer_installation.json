@@ -1,0 +1,51 @@
+{
+  "template_name": "Installation Disconnecteur",
+  "template_type": "quote",
+  "category": "Pipe Work",
+  "line_items": [
+    {
+      "description": "Disconnecteur à zone de pression réduite",
+      "quantity": 1,
+      "unit_price": 220.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Vannes d'isolement amont/aval",
+      "quantity": 2,
+      "unit_price": 35.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Collecteur d'évacuation",
+      "quantity": 1,
+      "unit_price": 45.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Installation sur réseau",
+      "quantity": 1,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Raccordement évacuation",
+      "quantity": 1,
+      "unit_price": 95.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Test de fonctionnement et réglage",
+      "quantity": 1,
+      "unit_price": 85.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Protection contre retour d'eau. Contrôle annuel obligatoire. Garantie 2 ans. Notice fournie.",
+  "is_system_template": true
+}

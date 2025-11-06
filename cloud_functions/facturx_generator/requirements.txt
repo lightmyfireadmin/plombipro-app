@@ -2,3 +2,5 @@ supabase
 lxml
 reportlab
 functions-framework
+factur-x
+PyPDF2

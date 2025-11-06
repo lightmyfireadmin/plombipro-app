@@ -1,0 +1,437 @@
+{
+  "version": "2.0.0",
+  "last_updated": "2025-11-05",
+  "total_templates": 51,
+  "categories": {
+    "Bathroom": [
+      "bathroom_renovation_complete.json",
+      "bathroom_shower_installation.json",
+      "toilet_replacement.json",
+      "bathroom_bathtub_replacement.json",
+      "washing_machine_installation.json",
+      "bathroom_pmr_adaptation.json",
+      "bathroom_sink_installation.json",
+      "bathroom_ventilation_installation.json",
+      "bidet_installation.json",
+      "bathtub_to_shower_conversion.json"
+    ],
+    "Kitchen": [
+      "kitchen_sink_installation.json",
+      "kitchen_complete_plumbing.json",
+      "dishwasher_installation.json",
+      "garbage_disposal_installation.json",
+      "kitchen_water_filtration.json"
+    ],
+    "Heating": [
+      "boiler_installation.json",
+      "water_heater_installation.json",
+      "radiator_replacement.json",
+      "underfloor_heating_installation.json",
+      "solar_water_heater.json",
+      "thermostatic_valve_installation.json",
+      "heat_pump_water_heater.json",
+      "expansion_tank_replacement.json",
+      "towel_warmer_installation.json",
+      "condensing_boiler_upgrade.json",
+      "instant_water_heater.json",
+      "electric_water_heater_basic.json"
+    ],
+    "Emergency": [
+      "emergency_leak_repair.json",
+      "emergency_burst_pipe.json",
+      "gas_leak_repair.json",
+      "shower_leak_repair.json",
+      "clogged_toilet_emergency.json"
+    ],
+    "Maintenance": [
+      "drain_cleaning.json",
+      "faucet_replacement.json",
+      "annual_maintenance_heating.json",
+      "septic_tank_pumping.json",
+      "leaking_pipe_detection.json"
+    ],
+    "Pipe Work": [
+      "pipe_replacement_copper.json",
+      "pressure_reducer_installation.json",
+      "backflow_preventer_installation.json",
+      "pipe_insulation.json",
+      "hot_water_recirculation.json",
+      "water_meter_installation.json"
+    ],
+    "Garden": [
+      "outdoor_tap_installation.json",
+      "rainwater_harvesting.json",
+      "outdoor_shower_installation.json",
+      "pool_backwash_hookup.json"
+    ],
+    "Water Treatment": [
+      "water_softener_installation.json"
+    ],
+    "Drainage": [
+      "sump_pump_installation.json"
+    ],
+    "Commercial": [
+      "commercial_bathroom_renovation.json",
+      "grease_trap_installation.json"
+    ]
+  },
+  "templates": [
+    {
+      "file": "bathroom_renovation_complete.json",
+      "name": "Rénovation Salle de Bain Complète",
+      "category": "Bathroom",
+      "estimated_price_range": "5000-7000",
+      "items_count": 8
+    },
+    {
+      "file": "bathroom_shower_installation.json",
+      "name": "Installation Douche Italienne",
+      "category": "Bathroom",
+      "estimated_price_range": "2500-3500",
+      "items_count": 6
+    },
+    {
+      "file": "toilet_replacement.json",
+      "name": "Remplacement WC",
+      "category": "Bathroom",
+      "estimated_price_range": "600-900",
+      "items_count": 7
+    },
+    {
+      "file": "kitchen_sink_installation.json",
+      "name": "Installation Évier de Cuisine",
+      "category": "Kitchen",
+      "estimated_price_range": "800-1200",
+      "items_count": 5
+    },
+    {
+      "file": "boiler_installation.json",
+      "name": "Installation Chaudière Gaz Murale",
+      "category": "Heating",
+      "estimated_price_range": "4000-5500",
+      "items_count": 8
+    },
+    {
+      "file": "water_heater_installation.json",
+      "name": "Installation Chauffe-Eau Électrique",
+      "category": "Heating",
+      "estimated_price_range": "1400-2000",
+      "items_count": 7
+    },
+    {
+      "file": "radiator_replacement.json",
+      "name": "Remplacement Radiateur",
+      "category": "Heating",
+      "estimated_price_range": "750-1000",
+      "items_count": 6
+    },
+    {
+      "file": "emergency_leak_repair.json",
+      "name": "Dépannage d'Urgence - Fuite d'Eau",
+      "category": "Emergency",
+      "estimated_price_range": "450-700",
+      "items_count": 6
+    },
+    {
+      "file": "drain_cleaning.json",
+      "name": "Débouchage Canalisation",
+      "category": "Maintenance",
+      "estimated_price_range": "350-550",
+      "items_count": 5
+    },
+    {
+      "file": "faucet_replacement.json",
+      "name": "Remplacement Robinetterie",
+      "category": "Maintenance",
+      "estimated_price_range": "300-450",
+      "items_count": 6
+    },
+    {
+      "file": "underfloor_heating_installation.json",
+      "name": "Installation Plancher Chauffant",
+      "category": "Heating",
+      "estimated_price_range": "4500-5500",
+      "items_count": 8
+    },
+    {
+      "file": "bathroom_bathtub_replacement.json",
+      "name": "Remplacement Baignoire",
+      "category": "Bathroom",
+      "estimated_price_range": "1900-2400",
+      "items_count": 7
+    },
+    {
+      "file": "pipe_replacement_copper.json",
+      "name": "Remplacement Tuyauterie Cuivre",
+      "category": "Pipe Work",
+      "estimated_price_range": "1800-2200",
+      "items_count": 7
+    },
+    {
+      "file": "solar_water_heater.json",
+      "name": "Installation Chauffe-Eau Solaire",
+      "category": "Heating",
+      "estimated_price_range": "7500-9000",
+      "items_count": 7
+    },
+    {
+      "file": "kitchen_complete_plumbing.json",
+      "name": "Plomberie Cuisine Complète",
+      "category": "Kitchen",
+      "estimated_price_range": "1100-1500",
+      "items_count": 8
+    },
+    {
+      "file": "emergency_burst_pipe.json",
+      "name": "Dépannage Urgence - Canalisation Éclatée",
+      "category": "Emergency",
+      "estimated_price_range": "650-850",
+      "items_count": 7
+    },
+    {
+      "file": "annual_maintenance_heating.json",
+      "name": "Entretien Annuel Chaudière Gaz",
+      "category": "Maintenance",
+      "estimated_price_range": "200-250",
+      "items_count": 7
+    },
+    {
+      "file": "outdoor_tap_installation.json",
+      "name": "Installation Robinet Extérieur",
+      "category": "Garden",
+      "estimated_price_range": "450-600",
+      "items_count": 6
+    },
+    {
+      "file": "water_softener_installation.json",
+      "name": "Installation Adoucisseur d'Eau",
+      "category": "Water Treatment",
+      "estimated_price_range": "1600-2000",
+      "items_count": 7
+    },
+    {
+      "file": "sump_pump_installation.json",
+      "name": "Installation Pompe de Relevage",
+      "category": "Drainage",
+      "estimated_price_range": "1300-1700",
+      "items_count": 7
+    },
+    {
+      "file": "thermostatic_valve_installation.json",
+      "name": "Installation Têtes Thermostatiques",
+      "category": "Heating",
+      "estimated_price_range": "550-750",
+      "items_count": 5
+    },
+    {
+      "file": "dishwasher_installation.json",
+      "name": "Installation Lave-Vaisselle",
+      "category": "Kitchen",
+      "estimated_price_range": "400-500",
+      "items_count": 5
+    },
+    {
+      "file": "washing_machine_installation.json",
+      "name": "Installation Lave-Linge",
+      "category": "Bathroom",
+      "estimated_price_range": "400-500",
+      "items_count": 5
+    },
+    {
+      "file": "septic_tank_pumping.json",
+      "name": "Vidange Fosse Septique",
+      "category": "Maintenance",
+      "estimated_price_range": "600-700",
+      "items_count": 6
+    },
+    {
+      "file": "pressure_reducer_installation.json",
+      "name": "Installation Réducteur de Pression",
+      "category": "Pipe Work",
+      "estimated_price_range": "450-550",
+      "items_count": 6
+    },
+    {
+      "file": "bathroom_pmr_adaptation.json",
+      "name": "Adaptation Salle de Bain PMR",
+      "category": "Bathroom",
+      "estimated_price_range": "4400-5200",
+      "items_count": 7
+    },
+    {
+      "file": "rainwater_harvesting.json",
+      "name": "Installation Récupération Eau de Pluie",
+      "category": "Garden",
+      "estimated_price_range": "2900-3500",
+      "items_count": 7
+    },
+    {
+      "file": "gas_leak_repair.json",
+      "name": "Dépannage Urgence - Fuite Gaz",
+      "category": "Emergency",
+      "estimated_price_range": "650-850",
+      "items_count": 7
+    },
+    {
+      "file": "backflow_preventer_installation.json",
+      "name": "Installation Disconnecteur",
+      "category": "Pipe Work",
+      "estimated_price_range": "650-800",
+      "items_count": 6
+    },
+    {
+      "file": "condensing_boiler_upgrade.json",
+      "name": "Remplacement Chaudière par Condensation",
+      "category": "Heating",
+      "estimated_price_range": "4600-5200",
+      "items_count": 8
+    },
+    {
+      "file": "pipe_insulation.json",
+      "name": "Calorifugeage Tuyauterie",
+      "category": "Pipe Work",
+      "estimated_price_range": "650-800",
+      "items_count": 4
+    },
+    {
+      "file": "heat_pump_water_heater.json",
+      "name": "Installation Chauffe-Eau Thermodynamique",
+      "category": "Heating",
+      "estimated_price_range": "3500-4200",
+      "items_count": 6
+    },
+    {
+      "file": "shower_leak_repair.json",
+      "name": "Réparation Fuite Douche",
+      "category": "Emergency",
+      "estimated_price_range": "550-750",
+      "items_count": 5
+    },
+    {
+      "file": "bathroom_sink_installation.json",
+      "name": "Installation Lavabo",
+      "category": "Bathroom",
+      "estimated_price_range": "550-700",
+      "items_count": 5
+    },
+    {
+      "file": "expansion_tank_replacement.json",
+      "name": "Remplacement Vase d'Expansion",
+      "category": "Heating",
+      "estimated_price_range": "550-700",
+      "items_count": 6
+    },
+    {
+      "file": "garbage_disposal_installation.json",
+      "name": "Installation Broyeur d'Évier",
+      "category": "Kitchen",
+      "estimated_price_range": "650-800",
+      "items_count": 5
+    },
+    {
+      "file": "towel_warmer_installation.json",
+      "name": "Installation Sèche-Serviettes Mixte",
+      "category": "Heating",
+      "estimated_price_range": "1000-1300",
+      "items_count": 6
+    },
+    {
+      "file": "clogged_toilet_emergency.json",
+      "name": "Débouchage WC en Urgence",
+      "category": "Emergency",
+      "estimated_price_range": "350-450",
+      "items_count": 4
+    },
+    {
+      "file": "bathroom_ventilation_installation.json",
+      "name": "Installation VMC Salle de Bain",
+      "category": "Bathroom",
+      "estimated_price_range": "600-750",
+      "items_count": 6
+    },
+    {
+      "file": "hot_water_recirculation.json",
+      "name": "Installation Bouclage Eau Chaude",
+      "category": "Pipe Work",
+      "estimated_price_range": "850-1100",
+      "items_count": 6
+    },
+    {
+      "file": "commercial_bathroom_renovation.json",
+      "name": "Rénovation Sanitaires Commerce (2 WC)",
+      "category": "Commercial",
+      "estimated_price_range": "3000-3800",
+      "items_count": 6
+    },
+    {
+      "file": "instant_water_heater.json",
+      "name": "Installation Chauffe-Eau Instantané",
+      "category": "Heating",
+      "estimated_price_range": "1000-1300",
+      "items_count": 6
+    },
+    {
+      "file": "grease_trap_installation.json",
+      "name": "Installation Bac à Graisse",
+      "category": "Commercial",
+      "estimated_price_range": "1500-1900",
+      "items_count": 6
+    },
+    {
+      "file": "leaking_pipe_detection.json",
+      "name": "Recherche de Fuite Non Destructive",
+      "category": "Maintenance",
+      "estimated_price_range": "850-1100",
+      "items_count": 5
+    },
+    {
+      "file": "outdoor_shower_installation.json",
+      "name": "Installation Douche Extérieure Piscine",
+      "category": "Garden",
+      "estimated_price_range": "950-1250",
+      "items_count": 6
+    },
+    {
+      "file": "bidet_installation.json",
+      "name": "Installation Bidet",
+      "category": "Bathroom",
+      "estimated_price_range": "700-900",
+      "items_count": 5
+    },
+    {
+      "file": "electric_water_heater_basic.json",
+      "name": "Installation Chauffe-Eau Électrique 200L",
+      "category": "Heating",
+      "estimated_price_range": "1000-1300",
+      "items_count": 7
+    },
+    {
+      "file": "bathtub_to_shower_conversion.json",
+      "name": "Transformation Baignoire en Douche",
+      "category": "Bathroom",
+      "estimated_price_range": "2500-3200",
+      "items_count": 7
+    },
+    {
+      "file": "water_meter_installation.json",
+      "name": "Installation Compteur d'Eau Divisionnaire",
+      "category": "Pipe Work",
+      "estimated_price_range": "350-450",
+      "items_count": 5
+    },
+    {
+      "file": "kitchen_water_filtration.json",
+      "name": "Installation Système Filtration Eau Potable",
+      "category": "Kitchen",
+      "estimated_price_range": "700-900",
+      "items_count": 6
+    },
+    {
+      "file": "pool_backwash_hookup.json",
+      "name": "Raccordement Contre-Lavage Piscine",
+      "category": "Garden",
+      "estimated_price_range": "1100-1400",
+      "items_count": 6
+    }
+  ]
+}

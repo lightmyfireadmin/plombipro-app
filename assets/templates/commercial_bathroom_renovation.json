@@ -1,0 +1,51 @@
+{
+  "template_name": "Rénovation Sanitaires Commerce (2 WC)",
+  "template_type": "quote",
+  "category": "Commercial",
+  "line_items": [
+    {
+      "description": "Dépose sanitaires existants x2",
+      "quantity": 2,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "WC suspendu avec bâti-support renforcé x2",
+      "quantity": 2,
+      "unit_price": 780.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Lave-mains PMR avec barre d'appui",
+      "quantity": 1,
+      "unit_price": 320.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Robinetterie temporisée x3",
+      "quantity": 3,
+      "unit_price": 95.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Installation complète conforme ERP",
+      "quantity": 1,
+      "unit_price": 1200.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Test et mise en service",
+      "quantity": 1,
+      "unit_price": 150.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    }
+  ],
+  "terms_conditions": "Conforme normes ERP et accessibilité PMR. Garantie 2 ans. TVA 20% (commercial).",
+  "is_system_template": true
+}
