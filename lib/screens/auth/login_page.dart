@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:go_router/go_router.dart';
 import '../../services/supabase_service.dart';
+import '../../services/biometric_auth_service.dart';
+import '../../services/error_handler.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -16,6 +18,60 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
 
   bool _isLoading = false;
+  bool _isBiometricAvailable = false;
+  bool _enableBiometricLogin = false;
+  String _biometricType = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _checkBiometricAvailability();
+    _attemptBiometricLogin();
+  }
+
+  Future<void> _checkBiometricAvailability() async {
+    final isAvailable = await BiometricAuthService.isBiometricAvailable();
+    final biometricType = await BiometricAuthService.getBiometricDescription();
+    final isEnabled = await BiometricAuthService.isBiometricEnabled();
+
+    if (mounted) {
+      setState(() {
+        _isBiometricAvailable = isAvailable;
+        _biometricType = biometricType;
+        _enableBiometricLogin = isEnabled;
+      });
+    }
+  }
+
+  Future<void> _attemptBiometricLogin() async {
+    // Only attempt if biometric is enabled and available
+    final isEnabled = await BiometricAuthService.isBiometricEnabled();
+    if (!isEnabled) return;
+
+    final credentials = await BiometricAuthService.getBiometricCredentials();
+    if (credentials != null && mounted) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      try {
+        await SupabaseService.signIn(
+          email: credentials['email']!,
+          password: credentials['password']!,
+        );
+        if (mounted) {
+          context.go('/home');
+        }
+      } catch (e) {
+        // Silently fail biometric auto-login
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
+      }
+    }
+  }
 
   Future<void> _signIn() async {
     if (!_formKey.currentState!.validate()) {
@@ -31,20 +87,54 @@ class _LoginPageState extends State<LoginPage> {
         email: _emailController.text,
         password: _passwordController.text,
       );
-      if (mounted) {
-        context.go('/home');
-      }
-    } on AuthException catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.message)),
+
+      // Save credentials for biometric login if enabled
+      if (_enableBiometricLogin && _isBiometricAvailable) {
+        await BiometricAuthService.enableBiometricLogin(
+          email: _emailController.text,
+          password: _passwordController.text,
         );
+      }
+
+      if (mounted) {
+        context.showSuccess('Connexion réussie!');
+        context.go('/home');
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erreur inattendue: ${e.toString()}')),
+        context.handleError(e);
+      }
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  Future<void> _signInWithBiometric() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    final credentials = await BiometricAuthService.getBiometricCredentials();
+    if (credentials != null) {
+      try {
+        await SupabaseService.signIn(
+          email: credentials['email']!,
+          password: credentials['password']!,
         );
+        if (mounted) {
+          context.showSuccess('Connexion réussie!');
+          context.go('/home');
+        }
+      } catch (e) {
+        if (mounted) {
+          context.handleError(e);
+        }
+      }
+    } else {
+      if (mounted) {
+        context.showWarning('Authentification biométrique échouée');
       }
     }
 
@@ -95,12 +185,39 @@ class _LoginPageState extends State<LoginPage> {
                     return null;
                   },
                 ),
+                const SizedBox(height: 16),
+                // Biometric login checkbox
+                if (_isBiometricAvailable)
+                  CheckboxListTile(
+                    title: Text('Activer $_biometricType'),
+                    subtitle: const Text('Connexion rapide et sécurisée'),
+                    value: _enableBiometricLogin,
+                    onChanged: (value) {
+                      setState(() {
+                        _enableBiometricLogin = value ?? false;
+                      });
+                    },
+                  ),
                 const SizedBox(height: 24),
                 _isLoading
                     ? const CircularProgressIndicator()
-                    : ElevatedButton(
-                        onPressed: _signIn,
-                        child: const Text('Se connecter'),
+                    : Column(
+                        children: [
+                          ElevatedButton(
+                            onPressed: _signIn,
+                            child: const Text('Se connecter'),
+                          ),
+                          // Biometric login button
+                          if (_isBiometricAvailable && _enableBiometricLogin)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 12.0),
+                              child: OutlinedButton.icon(
+                                onPressed: _signInWithBiometric,
+                                icon: const Icon(Icons.fingerprint),
+                                label: Text('Connexion avec $_biometricType'),
+                              ),
+                            ),
+                        ],
                       ),
                 const SizedBox(height: 16),
                 TextButton(

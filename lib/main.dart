@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 // import 'package:flutter_stripe/flutter_stripe.dart'; // Uncomment if Stripe UI is used
 
 import 'config/router.dart';
@@ -39,6 +40,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF1976D2)), // French blue
         useMaterial3: true,
+        // Satoshi-like font for headings and main UI (using Outfit as alternative)
+        textTheme: GoogleFonts.outfitTextTheme().copyWith(
+          // Inter for body text, paragraphs, bills, quotes (more official)
+          bodySmall: GoogleFonts.inter(fontSize: 12),
+          bodyMedium: GoogleFonts.inter(fontSize: 14),
+          bodyLarge: GoogleFonts.inter(fontSize: 16),
+        ),
+        // Primary font family for app
+        fontFamily: GoogleFonts.outfit().fontFamily,
       ),
 
       // Set up localization for French
