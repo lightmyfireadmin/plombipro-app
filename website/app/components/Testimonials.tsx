@@ -142,7 +142,7 @@ export default function Testimonials() {
               href="#"
               className="bg-[#FF6F00] text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-[#E65100] transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
             >
-              Essayer gratuitement pendant 14 jours
+              Essayer gratuitement (sans CB)
             </a>
             <a
               href="#pricing"

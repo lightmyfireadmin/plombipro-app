@@ -104,10 +104,10 @@ export default function ProblemSolution() {
             href="#pricing"
             className="inline-block bg-gradient-to-r from-[#FF6F00] to-[#E65100] text-white px-10 py-5 rounded-xl font-bold text-xl hover:shadow-2xl transition-all transform hover:-translate-y-1"
           >
-            Essayer gratuitement pendant 14 jours
+            Essayer gratuitement (sans CB)
           </a>
           <p className="text-gray-500 mt-4 text-sm">
-            Sans carte bancaire • 5 devis offerts • Résiliation en 2 clics
+            5 devis offerts • Résiliation en 2 clics • Aucune CB requise
           </p>
         </div>
       </div>

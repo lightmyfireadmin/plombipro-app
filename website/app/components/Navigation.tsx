@@ -48,7 +48,7 @@ export default function Navigation() {
               href="#"
               className="bg-[#1976D2] text-white px-6 py-2.5 rounded-lg hover:bg-[#1565C0] transition-colors font-medium"
             >
-              Essai gratuit
+              Essai gratuit (sans CB)
             </Link>
           </div>
 
@@ -127,7 +127,7 @@ export default function Navigation() {
                 href="#"
                 className="block px-3 py-2 rounded-md text-center bg-[#1976D2] text-white hover:bg-[#1565C0] font-medium"
               >
-                Essai gratuit
+                Essai gratuit (sans CB)
               </Link>
             </div>
           </div>
