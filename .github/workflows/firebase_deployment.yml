@@ -12,18 +12,23 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-            - name: Install dependencies
-              run: flutter pub get
-      
-            - name: Re-create web configuration
-              run: flutter create . --platforms web
-      
-            - name: Build Flutter web app
-              run: flutter build web
+
+      # --- CORRECTED INDENTATION: These steps are now at the correct level ---
+      - name: Install dependencies
+        run: flutter pub get
+    
+      - name: Re-create web configuration
+        run: flutter create . --platforms web
+        
+      - name: Build Flutter web app
+        run: flutter build web
+      # --- End of correction ---
+
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
