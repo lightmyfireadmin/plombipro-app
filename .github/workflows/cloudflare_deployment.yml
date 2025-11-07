@@ -1,4 +1,4 @@
-name: Deploy to Cloudflare Pages
+name: Deploy Marketing Website to Cloudflare Pages
 
 on:
   push:
@@ -8,7 +8,6 @@ on:
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -18,7 +17,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: "plombipro-app"
-          directory: "marketing_website"
+          command: pages deploy marketing_website --project-name=plombipro-app
           wranglerVersion: "3.22.4"
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
