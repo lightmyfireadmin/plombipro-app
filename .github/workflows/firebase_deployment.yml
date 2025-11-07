@@ -1,4 +1,4 @@
-name: Deploy to Firebase Hosting
+name: Deploy to Firebase
 
 on:
   push:
@@ -6,24 +6,20 @@ on:
       - main
 
 jobs:
-  build_and_deploy:
+  build_and_deploy_web:
+    name: Build and Deploy Web App to Firebase Hosting
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-
       - name: Install dependencies
         run: flutter pub get
-
       - name: Build Flutter web app
         run: flutter build web
-
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
@@ -31,3 +27,65 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PLOMBIPRO_DEVLPT }}'
           channelId: live
           projectId: plombipro-devlpt
+
+  build_and_deploy_android:
+    name: Build and Deploy Android App to Firebase App Distribution
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Build Android App Bundle
+        run: flutter build appbundle
+      - name: Deploy to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: '${{ secrets.FIREBASE_ANDROID_APP_ID }}' # <-- IMPORTANT: Create this secret in your repository settings
+          serviceCredentialsFileContent: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PLOMBIPRO_DEVLPT }}'
+          file: build/app/outputs/bundle/release/app-release.aab
+          testers: editionsrevel@gmail.com
+
+  # build_and_deploy_ios:
+  #   name: Build and Deploy iOS App to Firebase App Distribution
+  #   runs-on: macos-latest # iOS builds must run on a macOS runner
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
+  #     - name: Set up Flutter
+  #       uses: subosito/flutter-action@v2
+  #       with:
+  #         channel: 'stable'
+  #
+  #     # ------------------------------------------------------------------
+  #     # IMPORTANT: iOS Signing Configuration
+  #     # You must configure the following secrets in your GitHub repository
+  #     # for this job to succeed.
+  #     #
+  #     # 1. APPLE_CERTIFICATE_BASE64: Your Apple Distribution certificate (.p12) encoded in base64.
+  #     # 2. APPLE_CERTIFICATE_PASSWORD: The password for the certificate.
+  #     # 3. APPLE_PROVISIONING_PROFILE_BASE64: Your provisioning profile encoded in base64.
+  #     # 4. APPLE_KEYCHAIN_PASSWORD: A password to create a temporary keychain.
+  #     # ------------------------------------------------------------------
+  #
+  #     # - name: Decode and install certificates and provisioning profile
+  #     #   run: |
+  #     #     # ... script to decode and install secrets ...
+  #
+  #     - name: Install dependencies
+  #       run: flutter pub get
+  #
+  #     - name: Build iOS IPA
+  #       run: flutter build ipa
+  #
+  #     - name: Deploy to Firebase App Distribution
+  #       uses: wzieba/Firebase-Distribution-Github-Action@v1
+  #       with:
+  #         appId: '${{ secrets.FIREBASE_IOS_APP_ID }}' # <-- IMPORTANT: Create this secret
+  #         serviceCredentialsFileContent: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PLOMBIPRO_DEVLPT }}'
+  #         file: build/ios/ipa/*.ipa
+  #         testers: editionsrevel@gmail.com
