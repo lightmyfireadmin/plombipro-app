@@ -17,6 +17,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy marketing_website --project-name=plombipro-app
+          # --- CORRECTED: Updated project-name to 'plombipro-landing' ---
+          command: pages deploy marketing_website --project-name=plombipro-landing
           wranglerVersion: "3.22.4"
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
