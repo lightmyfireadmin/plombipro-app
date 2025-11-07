@@ -29,7 +29,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: "plombipro-app"
-          directory: "build/web"
-          # Optional: specify the branch to deploy to
-          # branch: "main"
+          command: "pages deploy build/web --project-name=plombipro-app"
