@@ -4,7 +4,7 @@ export default function Pricing() {
       name: "Gratuit",
       price: "0",
       period: "pour toujours",
-      description: "Pour tester PlombiPro sans engagement",
+      description: "Pour essayer sans sortir la carte bleue",
       features: [
         "5 devis par mois",
         "5 factures par mois",
@@ -14,7 +14,7 @@ export default function Pricing() {
         "Application mobile iOS/Android",
         "Support par email",
       ],
-      cta: "Essayer gratuitement",
+      cta: "Essayer gratuitement (sans CB)",
       popular: false,
       gradient: "from-gray-700 to-gray-900",
     },
@@ -36,7 +36,7 @@ export default function Pricing() {
         "Support prioritaire",
         "Personnalisation avancée",
       ],
-      cta: "Essai gratuit 14 jours",
+      cta: "Essai gratuit 14 jours (sans CB)",
       popular: true,
       gradient: "from-[#1976D2] to-[#1565C0]",
       badge: "Offre de lancement",
@@ -152,8 +152,37 @@ export default function Pricing() {
           ))}
         </div>
 
+        {/* Why So Cheap Section */}
+        <div className="mt-16 max-w-3xl mx-auto">
+          <div className="bg-gradient-to-br from-blue-50 to-white rounded-2xl p-8 md:p-10 border-2 border-blue-200">
+            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 flex items-center">
+              <span className="text-3xl mr-3">💡</span>
+              Pourquoi seulement 9,90€ ?
+            </h3>
+            <p className="text-gray-700 leading-relaxed mb-4 text-lg">
+              <strong>Pendant le lancement, on veut 1000 plombiers heureux, pas la rentabilité.</strong>
+            </p>
+            <p className="text-gray-700 leading-relaxed mb-4">
+              Une fois qu'on aura prouvé que PlombiPro vous fait gagner 10h/semaine,
+              le tarif normal sera 19,90€. Mais ceux qui s'inscrivent maintenant
+              <strong className="text-orange-600"> gardent 9,90€ À VIE.</strong>
+            </p>
+            <div className="inline-flex items-center bg-orange-100 rounded-full px-6 py-3 border-2 border-orange-300 mb-4">
+              <svg className="w-5 h-5 text-orange-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+              </svg>
+              <span className="text-orange-800 font-bold">
+                Prix bloqué à vie pour les 1000 premiers
+              </span>
+            </div>
+            <p className="text-sm text-gray-500">
+              ⚡ 327 / 1000 places "Prix Fondateur" déjà prises
+            </p>
+          </div>
+        </div>
+
         {/* FAQ/Guarantees Section */}
-        <div className="mt-16 max-w-4xl mx-auto">
+        <div className="mt-12 max-w-4xl mx-auto">
           <div className="bg-blue-50 rounded-2xl p-8 md:p-10">
             <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
               Questions fréquentes
@@ -178,7 +207,7 @@ export default function Pricing() {
                   Comment payer ?
                 </h4>
                 <p className="text-gray-600">
-                  Carte bancaire sécurisée via Stripe. Pas de frais cachés. Résiliation en 2 clics.
+                  Carte bancaire sécurisée via Stripe (leader mondial des paiements). Pas de frais cachés, pas d'engagement. Résiliation en 2 clics.
                 </p>
               </div>
               <div>
@@ -189,7 +218,7 @@ export default function Pricing() {
                   L'essai est-il vraiment gratuit ?
                 </h4>
                 <p className="text-gray-600">
-                  Oui, 14 jours gratuits sans CB. Puis 9,90€/mois ou retour au plan gratuit.
+                  Oui, 14 jours gratuits sans carte bancaire. Puis 9,90€/mois ou retour automatique au plan gratuit. Aucune CB requise pour tester.
                 </p>
               </div>
               <div>

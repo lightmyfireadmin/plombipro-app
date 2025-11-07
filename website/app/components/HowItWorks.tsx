@@ -120,7 +120,7 @@ export default function HowItWorks() {
                 href="#"
                 className="bg-[#FF6F00] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#E65100] transition-all shadow-xl"
               >
-                Essayer gratuitement
+                Essayer gratuitement (sans CB)
               </a>
               <a
                 href="#pricing"

@@ -8,10 +8,11 @@ export default function Features() {
         </svg>
       ),
       title: "Scanner OCR Intelligent",
-      description: "Photographiez vos factures fournisseurs, PlombiPro extrait automatiquement tous les articles, prix et références. Gagnez 15 minutes par devis.",
+      description: "Photographiez vos factures Point P/Cedeo. PlombiPro extrait automatiquement tous les articles, prix et références. ⏱️ Gain : 15 min par devis = 25h/mois économisées.",
       badge: "Exclusif",
       badgeColor: "bg-[#FF6F00]",
       highlight: true,
+      timeSaved: "15 min/devis",
     },
     {
       icon: (
@@ -20,22 +21,38 @@ export default function Features() {
         </svg>
       ),
       title: "Catalogues Point P & Cedeo",
-      description: "Accédez directement aux catalogues de vos fournisseurs. Plus de 50 000 références avec prix à jour automatiquement.",
+      description: "Accédez directement aux catalogues de vos fournisseurs. Plus de 50 000 références avec prix à jour automatiquement. ⏱️ Gain : 10 min par recherche article.",
       badge: "Exclusif",
       badgeColor: "bg-[#FF6F00]",
       highlight: true,
+      timeSaved: "10 min/recherche",
     },
     {
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 10h10M7 14h10" />
         </svg>
       ),
-      title: "Devis & Factures en 2 min",
-      description: "Templates professionnels avec votre logo. Marges automatiques, TVA, conditions de paiement. PDF prêt à envoyer.",
-      badge: null,
-      badgeColor: "",
+      title: "50 Templates Plomberie Gratuits",
+      description: "Installation chauffe-eau, dépannage fuite, rénovation SDB... tous les cas courants pré-remplis avec prix 2025. Personnalisables en 2 clics.",
+      badge: "Exclusif",
+      badgeColor: "bg-[#FF6F00]",
+      highlight: true,
+      timeSaved: "20 min/devis",
+    },
+    {
+      icon: (
+        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      ),
+      title: "Mode Urgence",
+      description: "Dépannage en pleine nuit ou week-end ? Le coefficient d'urgence (×1.5 à ×2.5) s'applique automatiquement selon l'heure et le jour. Ne perdez plus d'argent sur les dépannages.",
+      badge: "Nouveau",
+      badgeColor: "bg-[#FFC107]",
       highlight: false,
+      timeSaved: "+18% CA urgences",
     },
     {
       icon: (
@@ -44,10 +61,11 @@ export default function Features() {
         </svg>
       ),
       title: "Gestion de Chantiers",
-      description: "Suivez tous vos chantiers en un coup d'œil. Achats, main d'œuvre, rentabilité réelle. Identifiez les chantiers qui perdent de l'argent.",
+      description: "Suivez tous vos chantiers en un coup d'œil. Achats, main d'œuvre, rentabilité réelle. Identifiez les chantiers qui perdent de l'argent avant qu'il soit trop tard.",
       badge: null,
       badgeColor: "",
       highlight: false,
+      timeSaved: "2h/semaine",
     },
     {
       icon: (
@@ -56,10 +74,11 @@ export default function Features() {
         </svg>
       ),
       title: "Suivi Impayés",
-      description: "Relances automatiques par email et SMS. Tableau de bord des paiements en attente. Ne perdez plus jamais un centime.",
+      description: "Relances automatiques par email et SMS selon un planning personnalisable. Tableau de bord des paiements en attente. Nos clients récupèrent en moyenne 8 000€/an d'impayés.",
       badge: null,
       badgeColor: "",
       highlight: false,
+      timeSaved: "1h/semaine",
     },
     {
       icon: (
@@ -67,11 +86,12 @@ export default function Features() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
         </svg>
       ),
-      title: "Conforme 2026",
-      description: "Format Factur-X, export Chorus Pro pour les chantiers publics. Certificat d'authenticité inclus. Vous êtes tranquille.",
+      title: "Conforme 2026 DÈS MAINTENANT",
+      description: "Format Factur-X natif, export Chorus Pro pour les chantiers publics. Évitez les amendes de 15€ par facture non conforme. Mises à jour réglementaires automatiques incluses.",
       badge: "Obligatoire",
       badgeColor: "bg-[#4CAF50]",
       highlight: false,
+      timeSaved: "Évite amendes",
     },
   ];
 
@@ -81,11 +101,14 @@ export default function Features() {
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Tout ce dont un plombier a besoin
+            Tout ce qui vous fait VRAIMENT gagner du temps
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-4">
             Des fonctionnalités pensées <strong>spécialement pour les plombiers</strong>.
             Pas de superflu, que de l'essentiel pour gagner du temps et de l'argent.
+          </p>
+          <p className="text-sm text-gray-500">
+            Les fonctionnalités que les autres logiciels n'ont pas.
           </p>
         </div>
 
@@ -130,9 +153,21 @@ export default function Features() {
                 {feature.description}
               </p>
 
+              {/* Time saved indicator */}
+              {feature.timeSaved && (
+                <div className="mt-6 inline-flex items-center bg-blue-50 rounded-full px-4 py-2">
+                  <svg className="w-4 h-4 mr-2 text-[#1976D2]" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-[#1976D2] font-semibold text-sm">
+                    {feature.timeSaved}
+                  </span>
+                </div>
+              )}
+
               {/* Highlight indicator */}
               {feature.highlight && (
-                <div className="mt-6 flex items-center text-[#FF6F00] font-medium text-sm">
+                <div className="mt-4 flex items-center text-[#FF6F00] font-medium text-sm">
                   <svg
                     className="w-5 h-5 mr-2"
                     fill="currentColor"
