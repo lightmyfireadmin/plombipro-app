@@ -1,0 +1,8 @@
+# Appfile - Android App Configuration
+
+# Package name of your Android app
+json_key_file("") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+package_name("com.example.app") # e.g. com.plombipro.app
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile

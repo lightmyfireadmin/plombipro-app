@@ -78,3 +78,7 @@ fastlane/.env
 firebase-debug.log
 firestore-debug.log
 ui-debug.log
+
+# Secret files
+.env
+cloud_functions/.env
