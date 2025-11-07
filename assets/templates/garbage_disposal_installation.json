@@ -1,0 +1,44 @@
+{
+  "template_name": "Installation Broyeur d'Évier",
+  "template_type": "quote",
+  "category": "Kitchen",
+  "line_items": [
+    {
+      "description": "Broyeur de déchets 0.5HP",
+      "quantity": 1,
+      "unit_price": 280.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Adaptation évacuation évier",
+      "quantity": 1,
+      "unit_price": 95.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Prise électrique dédiée sous évier",
+      "quantity": 1,
+      "unit_price": 85.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Installation et raccordements",
+      "quantity": 1,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Test de fonctionnement",
+      "quantity": 1,
+      "unit_price": 45.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Conforme normes NF. Notice d'utilisation fournie. Garantie 2 ans. TVA 10%.",
+  "is_system_template": true
+}

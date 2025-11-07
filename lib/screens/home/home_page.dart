@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../notifications/notifications_page.dart';
 
 import '../../models/activity.dart';
@@ -6,6 +7,7 @@ import '../../models/appointment.dart';
 import '../../models/invoice.dart';
 import '../../models/job_site.dart';
 import '../../models/payment.dart';
+import '../../models/profile.dart';
 import '../../models/quote.dart';
 import '../../services/invoice_calculator.dart';
 import '../../services/supabase_service.dart';
@@ -27,6 +29,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool _isLoading = true;
+  Profile? _profile;
   List<Quote> _quotes = [];
   List<Invoice> _invoices = [];
   List<JobSite> _jobSites = [];
@@ -53,6 +56,7 @@ class _HomePageState extends State<HomePage> {
     });
 
     try {
+      final profile = await SupabaseService.fetchUserProfile();
       final quotes = await SupabaseService.fetchQuotes();
       final invoices = await SupabaseService.fetchInvoices();
       final jobSites = await SupabaseService.getJobSites();
@@ -60,6 +64,7 @@ class _HomePageState extends State<HomePage> {
       final appointments = await SupabaseService.fetchUpcomingAppointments();
       if (mounted) {
         setState(() {
+          _profile = profile;
           _quotes = quotes;
           _invoices = invoices;
           _jobSites = jobSites;
@@ -153,7 +158,12 @@ class _HomePageState extends State<HomePage> {
             },
             icon: const Icon(Icons.notifications_none),
           ),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.settings)),
+          IconButton(
+            onPressed: () {
+              context.go('/settings');
+            },
+            icon: const Icon(Icons.settings),
+          ),
         ],
       ),
       drawer: const AppDrawer(),
@@ -194,6 +204,35 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
+    );
+  }
+
+
+  Widget _buildHeader() {
+    return SliverAppBar(
+      pinned: true,
+      expandedHeight: 120.0,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      flexibleSpace: FlexibleSpaceBar(
+        titlePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        centerTitle: false,
+        title: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              _profile != null && _profile!.firstName != null
+                  ? 'Bonjour, ${_profile!.firstName}!'
+                  : 'Bonjour!',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            Text(
+              InvoiceCalculator.formatDate(DateTime.now()),
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -250,9 +289,9 @@ class _HomePageState extends State<HomePage> {
         return Card(
           child: ListTile(
             leading: const Icon(Icons.calendar_today),
-            title: Text(appointment.clientName),
-            subtitle: Text(InvoiceCalculator.formatDate(appointment.dateTime)),
-            trailing: Text(InvoiceCalculator.formatTime(appointment.dateTime)),
+            title: Text(appointment.title),
+            subtitle: Text(InvoiceCalculator.formatDate(appointment.appointmentDate)),
+            trailing: Text(appointment.appointmentTime),
           ),
         );
       },
@@ -267,12 +306,20 @@ class _HomePageState extends State<HomePage> {
         _ActionButton(title: '+ Nouveau Devis', icon: Icons.add, onTap: () {
            Navigator.of(context).push(MaterialPageRoute(builder: (_) => const QuoteFormPage()));
         }),
-        _ActionButton(title: '+ Nv. Facture', icon: Icons.receipt_long, onTap: () {}), // Placeholder
+        _ActionButton(title: '+ Nv. Facture', icon: Icons.receipt_long, onTap: () {
+          context.go('/invoices/new');
+        }),
         _ActionButton(title: '+ Nouveau Client', icon: Icons.person_add, onTap: () {
           Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ClientFormPage()));
         }),
-        _ActionButton(title: 'Scanner', icon: Icons.qr_code_scanner, onTap: () {}), // Placeholder
-        _ActionButton(title: 'Contacter', icon: Icons.call, onTap: () {}), // Placeholder
+        _ActionButton(title: 'Scanner', icon: Icons.qr_code_scanner, onTap: () {
+          context.go('/scan-invoice');
+        }),
+        _ActionButton(title: 'Contacter', icon: Icons.call, onTap: () {
+          // Open phone dialer - this would typically use url_launcher
+          // For now, navigate to client list to select who to contact
+          context.go('/clients');
+        }),
       ],
     );
   }

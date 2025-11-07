@@ -1,0 +1,44 @@
+{
+  "template_name": "Installation Évier de Cuisine",
+  "template_type": "quote",
+  "category": "Kitchen",
+  "line_items": [
+    {
+      "description": "Dépose ancien évier et robinetterie",
+      "quantity": 1,
+      "unit_price": 120.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Évier inox 2 bacs 120x60cm",
+      "quantity": 1,
+      "unit_price": 280.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Mitigeur cuisine avec douchette extractible",
+      "quantity": 1,
+      "unit_price": 185.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Siphon double avec renvoi lave-vaisselle",
+      "quantity": 1,
+      "unit_price": 45.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Main d'œuvre pose et raccordements",
+      "quantity": 1,
+      "unit_price": 320.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Installation conforme aux normes en vigueur. Garantie biennale. Fournitures et main d'œuvre comprises. TVA réduite 10% applicable.",
+  "is_system_template": true
+}

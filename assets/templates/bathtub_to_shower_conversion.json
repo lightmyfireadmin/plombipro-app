@@ -1,0 +1,58 @@
+{
+  "template_name": "Transformation Baignoire en Douche",
+  "template_type": "quote",
+  "category": "Bathroom",
+  "line_items": [
+    {
+      "description": "Dépose baignoire et évacuation",
+      "quantity": 1,
+      "unit_price": 280.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Receveur de douche 90x90cm extra-plat",
+      "quantity": 1,
+      "unit_price": 320.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Paroi de douche 3 volets",
+      "quantity": 1,
+      "unit_price": 380.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Mitigeur thermostatique avec barre de douche",
+      "quantity": 1,
+      "unit_price": 280.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Adaptation évacuation",
+      "quantity": 1,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Installation complète avec étanchéité",
+      "quantity": 1,
+      "unit_price": 850.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Finitions carrelage si nécessaire",
+      "quantity": 1,
+      "unit_price": 380.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Transformation en 1 jour. Éligible crédit d'impôt si PMR. Garantie 2 ans. TVA 10%.",
+  "is_system_template": true
+}

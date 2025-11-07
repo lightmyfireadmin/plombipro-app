@@ -1,0 +1,58 @@
+{
+  "template_name": "Dépannage Urgence - Canalisation Éclatée",
+  "template_type": "quote",
+  "category": "Emergency",
+  "line_items": [
+    {
+      "description": "Déplacement d'urgence (majoration horaire)",
+      "quantity": 1,
+      "unit_price": 120.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Diagnostic et localisation de la fuite",
+      "quantity": 1,
+      "unit_price": 90.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Coupure d'eau et sécurisation",
+      "quantity": 1,
+      "unit_price": 60.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Découpe et dépose section endommagée",
+      "quantity": 1,
+      "unit_price": 150.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Remplacement tuyau (1.5m) avec raccords",
+      "quantity": 1.5,
+      "unit_price": 85.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Soudure et installation",
+      "quantity": 1,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Test d'étanchéité et remise en service",
+      "quantity": 1,
+      "unit_price": 80.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    }
+  ],
+  "terms_conditions": "Intervention d'urgence avec majoration. TVA 20% (dépannage). Garantie 1 an pièces et main d'œuvre.",
+  "is_system_template": true
+}

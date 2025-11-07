@@ -46,3 +46,39 @@ app.*.map.json
 
 # Ignore environment variables file
 /lib/.env
+
+# Android signing
+/android/key.properties
+/android/**/*.keystore
+/android/**/*.jks
+/android/app/upload-keystore.jks
+/android/app/keystore.properties
+/android/**/service-account*.json
+
+# iOS signing
+/ios/**/*.mobileprovision
+/ios/**/*.p12
+/ios/**/*.cer
+/ios/fastlane/report.xml
+/ios/fastlane/Preview.html
+/ios/fastlane/screenshots
+/ios/fastlane/test_output
+/ios/fastlane/.env
+/ios/Gemfile.lock
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+fastlane/.env
+
+# Firebase
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+
+# Secret files
+.env
+cloud_functions/.env

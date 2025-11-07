@@ -1,0 +1,51 @@
+{
+  "template_name": "Installation Système Filtration Eau Potable",
+  "template_type": "quote",
+  "category": "Kitchen",
+  "line_items": [
+    {
+      "description": "Système de filtration sous évier 3 étages",
+      "quantity": 1,
+      "unit_price": 280.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Robinet dédié eau filtrée sur évier",
+      "quantity": 1,
+      "unit_price": 85.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Raccordement sur arrivée froide",
+      "quantity": 1,
+      "unit_price": 120.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Perçage évier pour robinet",
+      "quantity": 1,
+      "unit_price": 65.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Installation et fixation sous évier",
+      "quantity": 1,
+      "unit_price": 150.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Test et rinçage système",
+      "quantity": 1,
+      "unit_price": 60.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Cartouches à changer tous les 6-12 mois. Notice d'entretien fournie. Garantie 2 ans.",
+  "is_system_template": true
+}

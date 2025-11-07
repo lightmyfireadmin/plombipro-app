@@ -1,0 +1,2018 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PlombiPro - Logiciel de gestion pour artisans plombiers. Créez devis, factures, gérez clients et chantiers. Conforme facturation électronique 2026. Essai gratuit 30 jours.">
+    <meta name="keywords" content="logiciel plombier, devis plomberie, facture plombier, gestion chantier, facturation électronique 2026, OCR factures">
+    <meta name="author" content="PlombiPro">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://plombipro.fr/">
+    <meta property="og:title" content="PlombiPro - Logiciel de Gestion pour Plombiers">
+    <meta property="og:description" content="Logiciel complet de gestion pour plombiers. Devis, factures, clients, chantiers, scanner OCR. Conforme 2026. Essai gratuit 30 jours.">
+    <meta property="og:image" content="https://plombipro.fr/assets/social/og-image.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://plombipro.fr/">
+    <meta property="twitter:title" content="PlombiPro - Logiciel de Gestion pour Plombiers">
+    <meta property="twitter:description" content="Logiciel complet de gestion pour plombiers. Devis, factures, scanner OCR. Conforme 2026.">
+    <meta property="twitter:image" content="https://plombipro.fr/assets/social/twitter-image.png">
+
+    <title>PlombiPro - Logiciel de Gestion pour Plombiers</title>
+
+    <link rel="icon" type="image/png" href="web/favicon.png">
+
+    <!-- Preconnect to external resources for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="dns-prefetch" href="https://images.unsplash.com">
+
+    <!-- Google Fonts - Modern Professional Combination -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ========================================
+           CSS RESET & BASE STYLES
+           ======================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Brand Colors (from knowledge base) */
+            --primary-blue: #1976D2;
+            --tool-orange: #FF6B35;
+            --success-green: #4CAF50;
+            --warning-amber: #FFC107;
+            --error-red: #F44336;
+            --dark-gray: #212121;
+            --medium-gray: #757575;
+            --light-gray: #F5F5F5;
+            --white: #FFFFFF;
+
+            /* Spacing (8dp grid) */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-xxl: 48px;
+
+            /* Typography */
+            --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-family-headings: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-size-base: 16px;
+            --line-height-base: 1.6;
+        }
+
+        body {
+            font-family: var(--font-family-base);
+            font-size: var(--font-size-base);
+            line-height: var(--line-height-base);
+            color: var(--dark-gray);
+            background-color: var(--white);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-family-headings);
+            font-weight: 700;
+        }
+
+        /* ========================================
+           UTILITY CLASSES
+           ======================================== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-lg {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .mb-xl {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .mb-xxl {
+            margin-bottom: var(--spacing-xxl);
+        }
+
+        /* ========================================
+           NAVIGATION
+           ======================================== */
+        nav {
+            background-color: var(--white);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: var(--spacing-md);
+            padding-bottom: var(--spacing-md);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-blue);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background-color: var(--primary-blue);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 20px;
+        }
+
+        .logo-icon-svg {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: var(--spacing-xl);
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a {
+            color: var(--dark-gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-blue);
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                position: fixed;
+                top: 72px;
+                left: 0;
+                right: 0;
+                background-color: var(--white);
+                flex-direction: column;
+                gap: 0;
+                padding: var(--spacing-lg) 0;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                transform: translateY(-100%);
+                opacity: 0;
+                pointer-events: none;
+                z-index: 999;
+            }
+
+            nav ul.active {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: all;
+            }
+
+            nav ul li {
+                width: 100%;
+                text-align: center;
+                padding: var(--spacing-md) 0;
+                border-bottom: 1px solid var(--light-gray);
+            }
+
+            nav ul li:last-child {
+                border-bottom: none;
+            }
+
+            #desktop-cta {
+                display: none;
+            }
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: #1565C0;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(25, 118, 210, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background-color: var(--tool-orange);
+            color: var(--white);
+        }
+
+        .btn-secondary:hover {
+            background-color: #E55A25;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-blue);
+            color: var(--white);
+        }
+
+        /* ========================================
+           HERO SECTION
+           ======================================== */
+        .hero {
+            background: linear-gradient(135deg, #1976D2 0%, #2196F3 50%, #1565C0 100%);
+            color: var(--white);
+            padding: 100px 0 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(76, 175, 80, 0.1) 0%, transparent 50%),
+                url('data:image/svg+xml,<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg"><path d="M30 0L60 15L30 30L0 15Z" fill="rgba(255,255,255,0.03)"/></svg>');
+            opacity: 0.5;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero .container {
+            position: relative;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xxl);
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .hero-content .subtitle {
+            font-size: 20px;
+            opacity: 0.95;
+            margin-bottom: var(--spacing-xl);
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .hero-features {
+            list-style: none;
+            display: grid;
+            gap: var(--spacing-sm);
+        }
+
+        .hero-features li {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .hero-features li::before {
+            content: '✓';
+            background-color: var(--success-green);
+            color: var(--white);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .hero-image {
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: var(--spacing-lg);
+            backdrop-filter: blur(10px);
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+            will-change: transform;
+        }
+
+        .hero-image:hover img {
+            transform: scale(1.02);
+        }
+
+        /* Performance optimization for animated elements */
+        .feature-card, .pricing-card, .testimonial-card {
+            will-change: transform, box-shadow;
+        }
+
+        /* ========================================
+           STATS BAR
+           ======================================== */
+        .stats {
+            background-color: var(--light-gray);
+            padding: var(--spacing-xl) 0;
+        }
+
+        .stats .container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-lg);
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 36px;
+            color: var(--primary-blue);
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .stat-item p {
+            color: var(--medium-gray);
+        }
+
+        /* ========================================
+           FEATURES SECTION
+           ======================================== */
+        .features {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 40px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: var(--spacing-md);
+            color: var(--dark-gray);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 20px;
+            color: var(--medium-gray);
+            margin-bottom: var(--spacing-xxl);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-xxl);
+        }
+
+        .feature-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: var(--spacing-xl);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: rotate(5deg) scale(1.1);
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--tool-orange));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: var(--spacing-md);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            margin-bottom: var(--spacing-sm);
+            color: var(--dark-gray);
+        }
+
+        .feature-card p {
+            color: var(--medium-gray);
+            line-height: 1.6;
+        }
+
+        .feature-badge {
+            display: inline-block;
+            background-color: var(--warning-amber);
+            color: var(--dark-gray);
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: var(--spacing-sm);
+        }
+
+        /* ========================================
+           COMPARISON SECTION (vs Obat)
+           ======================================== */
+        .comparison {
+            background-color: var(--light-gray);
+            padding: 80px 0;
+        }
+
+        .comparison-table {
+            background-color: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: var(--spacing-md);
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .comparison-table thead {
+            background-color: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .comparison-table thead th {
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .comparison-table tbody tr:hover {
+            background-color: var(--light-gray);
+        }
+
+        .comparison-table .check {
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .comparison-table .check.yes {
+            color: var(--success-green);
+        }
+
+        .comparison-table .check.no {
+            color: var(--error-red);
+        }
+
+        /* ========================================
+           PRICING SECTION
+           ======================================== */
+        .pricing {
+            padding: 80px 0;
+        }
+
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-xl);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background-color: var(--white);
+            border-radius: 16px;
+            padding: var(--spacing-xl);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            position: relative;
+            transition: transform 0.3s;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .pricing-card.featured {
+            border: 3px solid var(--primary-blue);
+            box-shadow: 0 8px 24px rgba(25, 118, 210, 0.2);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -12px;
+            right: 24px;
+            background-color: var(--tool-orange);
+            color: var(--white);
+            padding: 4px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .pricing-card h3 {
+            font-size: 24px;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .pricing-card .price {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .pricing-card .period {
+            color: var(--medium-gray);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .pricing-card ul li {
+            padding: var(--spacing-sm) 0;
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-sm);
+        }
+
+        .pricing-card ul li::before {
+            content: '✓';
+            color: var(--success-green);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* ========================================
+           TESTIMONIALS SECTION
+           ======================================== */
+        .testimonials {
+            background-color: var(--light-gray);
+            padding: 80px 0;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-xl);
+        }
+
+        .testimonial-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: var(--spacing-xl);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .testimonial-content {
+            font-style: italic;
+            color: var(--dark-gray);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .testimonial-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: var(--primary-blue);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 20px;
+        }
+
+        .testimonial-info h4 {
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .testimonial-info p {
+            font-size: 14px;
+            color: var(--medium-gray);
+        }
+
+        .stars {
+            color: var(--warning-amber);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        /* ========================================
+           TRUST BADGES SECTION
+           ======================================== */
+        .trust-section {
+            background-color: var(--white);
+            padding: 60px 0;
+            border-top: 1px solid var(--light-gray);
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: var(--spacing-xxl);
+            flex-wrap: wrap;
+        }
+
+        .trust-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md);
+            transition: transform 0.3s;
+        }
+
+        .trust-badge:hover {
+            transform: translateY(-5px);
+        }
+
+        .trust-badge-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--success-green));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: var(--white);
+            box-shadow: 0 4px 12px rgba(25, 118, 210, 0.2);
+        }
+
+        .trust-badge-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark-gray);
+            text-align: center;
+        }
+
+        /* ========================================
+           CTA SECTION
+           ======================================== */
+        .cta {
+            background: linear-gradient(135deg, #1976D2 0%, #FF6B35 50%, #E91E63 100%);
+            background-size: 200% 200%;
+            animation: gradient 5s ease infinite;
+            color: var(--white);
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.05)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .cta h2 {
+            font-size: 40px;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .cta p {
+            font-size: 20px;
+            margin-bottom: var(--spacing-xl);
+            opacity: 0.95;
+        }
+
+        .cta .btn {
+            font-size: 18px;
+            padding: 16px 32px;
+        }
+
+        .cta-features {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-xl);
+            flex-wrap: wrap;
+        }
+
+        .cta-feature {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .cta-feature::before {
+            content: '✓';
+            background-color: rgba(255,255,255,0.2);
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        /* ========================================
+           FOOTER
+           ======================================== */
+        footer {
+            background-color: var(--dark-gray);
+            color: rgba(255,255,255,0.8);
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: var(--spacing-xxl);
+            margin-bottom: var(--spacing-xxl);
+        }
+
+        .footer-section h4 {
+            color: var(--white);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .footer-section ul li a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: var(--spacing-lg);
+            text-align: center;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* ========================================
+           MOBILE MENU & STICKY CTA
+           ======================================== */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--dark-gray);
+            transition: all 0.3s;
+            border-radius: 2px;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .mobile-menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        .sticky-mobile-cta {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: var(--spacing-md);
+            background: var(--white);
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
+            z-index: 999;
+            transform: translateY(100%);
+            transition: transform 0.3s ease-out;
+        }
+
+        .sticky-mobile-cta.visible {
+            transform: translateY(0);
+        }
+
+        .sticky-mobile-cta .btn {
+            width: 100%;
+        }
+
+        /* Scroll to top button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 80px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--tool-orange));
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 0.3s ease;
+            z-index: 998;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .scroll-to-top {
+                bottom: 90px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+        /* ========================================
+           RESPONSIVE DESIGN
+           ======================================== */
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .sticky-mobile-cta {
+                display: block;
+            }
+            .hero .container {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-image {
+                display: none;
+            }
+
+            .stats .container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            nav ul {
+                display: none; /* Mobile menu would need JS */
+            }
+
+            .hero-content h1 {
+                font-size: 32px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+        }
+
+        /* ========================================
+           ANIMATIONS
+           ======================================== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .fade-in-left {
+            animation: fadeInLeft 0.8s ease-out;
+        }
+
+        .fade-in-right {
+            animation: fadeInRight 0.8s ease-out;
+        }
+
+        .scale-in {
+            animation: scaleIn 0.6s ease-out;
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Gradient text effect */
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary-blue), var(--tool-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: gradient 3s ease infinite;
+        }
+
+        /* Pulse effect for important CTAs */
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+            }
+            50% {
+                box-shadow: 0 4px 24px rgba(255, 107, 53, 0.6);
+            }
+        }
+
+        .btn-pulse {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========================================
+         NAVIGATION
+         ======================================== -->
+    <nav>
+        <div class="container">
+            <a href="#" class="logo">
+                <img src="assets/branding/logo/plombipro-logo-icon.svg" alt="PlombiPro" class="logo-icon-svg">
+                <span>PlombiPro</span>
+            </a>
+            <ul id="nav-menu">
+                <li><a href="#fonctionnalites">Fonctionnalités</a></li>
+                <li><a href="#tarifs">Tarifs</a></li>
+                <li><a href="#temoignages">Témoignages</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <a href="#tarifs" class="btn btn-primary" id="desktop-cta">Essai Gratuit</a>
+        </div>
+    </nav>
+
+    <!-- ========================================
+         HERO SECTION
+         ======================================== -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content fade-in-up">
+                <h1>Logiciel de gestion pour artisans plombiers</h1>
+                <p class="subtitle">
+                    Créez vos devis et factures professionnels en quelques clics.
+                    <strong>Scannez vos factures, générez vos devis. Simple et efficace.</strong>
+                </p>
+                <div class="hero-cta">
+                    <a href="#tarifs" class="btn btn-secondary btn-pulse">Commencer maintenant</a>
+                    <a href="#fonctionnalites" class="btn btn-outline">Voir les Fonctionnalités</a>
+                </div>
+                <ul class="hero-features">
+                    <li>Essai gratuit 30 jours sans engagement</li>
+                    <li>Devis et factures PDF professionnels</li>
+                    <li>Scanner OCR intelligent inclus</li>
+                    <li>Conforme facturation électronique 2026</li>
+                </ul>
+            </div>
+            <div class="hero-image fade-in-right animate-float">
+                <img src="https://images.unsplash.com/photo-1621905251918-48416bd8575a?q=80&w=800&auto=format&fit=crop" alt="Plombier professionnel au travail" loading="lazy">
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         STATS BAR
+         ======================================== -->
+    <section class="stats">
+        <div class="container">
+            <div class="stat-item">
+                <h3>500+</h3>
+                <p>Artisans plombiers actifs</p>
+            </div>
+            <div class="stat-item">
+                <h3>10K+</h3>
+                <p>Devis générés par mois</p>
+            </div>
+            <div class="stat-item">
+                <h3>30 jours</h3>
+                <p>Essai gratuit sans CB</p>
+            </div>
+            <div class="stat-item">
+                <h3>2026</h3>
+                <p>Déjà conforme</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         FEATURES SECTION
+         ======================================== -->
+    <section id="fonctionnalites" class="features">
+        <div class="container">
+            <h2 class="section-title">Toutes les fonctionnalités dont vous avez besoin</h2>
+            <p class="section-subtitle">
+                PlombiPro vous accompagne au quotidien avec des outils professionnels et intuitifs.
+            </p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📄</div>
+                    <h3>Devis & Factures PDF</h3>
+                    <p>
+                        Créez des devis et factures professionnels avec numérotation automatique,
+                        calculs TVA, et génération PDF. Convertissez vos devis en factures en un clic.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📸</div>
+                    <h3>Scanner OCR Intelligent</h3>
+                    <p>
+                        Scannez vos factures fournisseurs avec notre OCR alimenté par IA.
+                        Extraction automatique des produits, prix et références. Gain de temps garanti.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>Gestion Clients Complète</h3>
+                    <p>
+                        Gérez vos clients (particuliers et entreprises), leurs coordonnées,
+                        historique de facturation, et soldes impayés. Import CSV disponible.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🏗️</div>
+                    <h3>Suivi de Chantiers</h3>
+                    <p>
+                        Suivez vos chantiers avec photos, tâches, logs de temps,
+                        notes et budget. Tableau de bord complet pour chaque intervention.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📦</div>
+                    <h3>Catalogue Produits & Prix</h3>
+                    <p>
+                        Catalogue personnel et catalogues auto-scrapés (Leroy Merlin, Point P, etc.).
+                        Prix à jour automatiquement, marges personnalisées, gestion du stock.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🇫🇷</div>
+                    <h3>Conformité 2026</h3>
+                    <p>
+                        Factur-X et Chorus Pro intégrés. Vous êtes déjà prêt pour
+                        la facturation électronique obligatoire de septembre 2026.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         COMPARISON TABLE (PlombiPro vs Obat)
+         ======================================== -->
+    <section class="comparison">
+        <div class="container">
+            <h2 class="section-title">PlombiPro vs Obat</h2>
+            <p class="section-subtitle">
+                Découvrez pourquoi les plombiers choisissent PlombiPro plutôt qu'Obat
+            </p>
+
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fonctionnalité</th>
+                            <th>PlombiPro</th>
+                            <th>Obat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Devis/Factures PDF</td>
+                            <td class="check yes">✓</td>
+                            <td class="check yes">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Gestion Clients</td>
+                            <td class="check yes">✓</td>
+                            <td class="check yes">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Scanner OCR Factures</td>
+                            <td class="check yes">✓</td>
+                            <td class="check no">✗</td>
+                        </tr>
+                        <tr>
+                            <td>Catalogues Auto-Scrapés</td>
+                            <td class="check yes">✓</td>
+                            <td class="check no">✗</td>
+                        </tr>
+                        <tr>
+                            <td>Suivi Chantiers Photos</td>
+                            <td class="check yes">✓</td>
+                            <td class="check no">✗</td>
+                        </tr>
+                        <tr>
+                            <td>Mode Offline</td>
+                            <td class="check yes">✓</td>
+                            <td class="check no">✗</td>
+                        </tr>
+                        <tr>
+                            <td>Paiements en Ligne</td>
+                            <td class="check yes">✓</td>
+                            <td class="check no">✗</td>
+                        </tr>
+                        <tr>
+                            <td>Conforme 2026</td>
+                            <td class="check yes">✓</td>
+                            <td class="check yes">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Application Mobile</td>
+                            <td class="check yes">✓ iOS & Android</td>
+                            <td class="check yes">✓ Android</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Prix mensuel</strong></td>
+                            <td class="check yes"><strong>Dès 19€ HT</strong></td>
+                            <td class="check"><strong>Dès 17€ HT</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         PRICING SECTION
+         ======================================== -->
+    <section id="tarifs" class="pricing">
+        <div class="container">
+            <h2 class="section-title">Tarifs simples et transparents</h2>
+            <p class="section-subtitle">
+                Choisissez la formule adaptée à votre activité. Essai gratuit 30 jours, sans engagement.
+            </p>
+
+            <div class="pricing-cards">
+                <!-- Solo Plan -->
+                <div class="pricing-card">
+                    <h3>Solo</h3>
+                    <div class="price">19€</div>
+                    <div class="period">par mois / HT</div>
+
+                    <ul>
+                        <li>5 devis par mois</li>
+                        <li>5 factures par mois</li>
+                        <li>50 clients max</li>
+                        <li>Gestion produits basique</li>
+                        <li>Suivi 3 chantiers actifs</li>
+                        <li>Support email (48h)</li>
+                        <li>Application mobile</li>
+                    </ul>
+
+                    <a href="#demo" class="btn btn-outline" style="width: 100%; margin-top: var(--spacing-lg);">Essayer gratuitement</a>
+
+                    <p style="text-align: center; margin-top: var(--spacing-md); font-size: 14px; color: var(--medium-gray);">
+                        Parfait pour auto-entrepreneurs
+                    </p>
+                </div>
+
+                <!-- Pro Plan (Most Popular) -->
+                <div class="pricing-card featured">
+                    <span class="pricing-badge">🔥 Le Plus Populaire</span>
+                    <h3>Pro</h3>
+                    <div class="price">29€</div>
+                    <div class="period">par mois / HT</div>
+
+                    <ul>
+                        <li>Devis et factures <strong>illimités</strong></li>
+                        <li>Clients <strong>illimités</strong></li>
+                        <li>Catalogue produits complet</li>
+                        <li>Chantiers <strong>illimités</strong></li>
+                        <li>📸 Scanner OCR factures fournisseurs</li>
+                        <li>📦 Catalogues auto-scrapés (Leroy Merlin, etc.)</li>
+                        <li>🇫🇷 Factur-X & Chorus Pro (2026)</li>
+                        <li>💳 Paiements en ligne (Stripe)</li>
+                        <li>📊 Tableaux de bord & statistiques</li>
+                        <li>☁️ Stockage cloud 5 Go</li>
+                        <li>📱 Mode offline</li>
+                        <li>Support prioritaire (24h)</li>
+                    </ul>
+
+                    <a href="#demo" class="btn btn-primary" style="width: 100%; margin-top: var(--spacing-lg);">Essayer gratuitement</a>
+
+                    <p style="text-align: center; margin-top: var(--spacing-md); font-size: 14px; color: var(--medium-gray);">
+                        Idéal pour artisans établis
+                    </p>
+                </div>
+
+                <!-- Enterprise Plan -->
+                <div class="pricing-card">
+                    <h3>Enterprise</h3>
+                    <div class="price">Sur mesure</div>
+                    <div class="period">Contactez-nous</div>
+
+                    <ul>
+                        <li><strong>Tout du plan Pro</strong>, plus:</li>
+                        <li>👥 Multi-utilisateurs illimités</li>
+                        <li>🏢 Gestion multi-chantiers</li>
+                        <li>📋 Templates personnalisés</li>
+                        <li>🔗 Intégrations API</li>
+                        <li>🎓 Formation personnalisée</li>
+                        <li>☁️ Stockage cloud illimité</li>
+                        <li>🔒 Hébergement dédié (option)</li>
+                        <li>📞 Support téléphone prioritaire</li>
+                        <li>👨‍💼 Account manager dédié</li>
+                        <li>📄 Contrat SLA personnalisé</li>
+                    </ul>
+
+                    <a href="#contact" class="btn btn-secondary" style="width: 100%; margin-top: var(--spacing-lg);">Nous contacter</a>
+
+                    <p style="text-align: center; margin-top: var(--spacing-md); font-size: 14px; color: var(--medium-gray);">
+                        Pour PME et grandes équipes
+                    </p>
+                </div>
+            </div>
+
+            <p class="text-center" style="margin-top: var(--spacing-xxl); color: var(--medium-gray); font-size: 18px;">
+                ✨ <strong>Tous les plans incluent un essai gratuit de 30 jours</strong> - Aucune carte bancaire requise<br>
+                <span style="font-size: 14px;">Résiliez à tout moment. Migrations gratuites depuis Obat ou Excel.</span>
+            </p>
+        </div>
+    </section>
+
+    <!-- ========================================
+         HOW IT WORKS SECTION
+         ======================================== -->
+    <section id="comment-ca-marche" class="how-it-works" style="padding: 100px 0; background-color: var(--white);">
+        <div class="container">
+            <h2 class="section-title">Comment ça marche ?</h2>
+            <p class="section-subtitle">
+                PlombiPro simplifie votre quotidien en 3 étapes seulement
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-xxl); margin-top: var(--spacing-xxl);">
+                <!-- Step 1 -->
+                <div style="text-align: center;">
+                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--primary-blue), var(--tool-orange)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-lg); font-size: 36px; font-weight: 800; color: white;">1</div>
+                    <h3 style="margin-bottom: var(--spacing-md);">📸 Scannez</h3>
+                    <p style="color: var(--medium-gray); line-height: 1.7;">
+                        Prenez en photo vos factures fournisseurs. Notre OCR alimenté par IA extrait automatiquement les produits, prix et références. Précision garantie.
+                    </p>
+                </div>
+
+                <!-- Step 2 -->
+                <div style="text-align: center;">
+                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--primary-blue), var(--tool-orange)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-lg); font-size: 36px; font-weight: 800; color: white;">2</div>
+                    <h3 style="margin-bottom: var(--spacing-md);">⚡ Générez</h3>
+                    <p style="color: var(--medium-gray); line-height: 1.7;">
+                        Appliquez votre marge habituelle (30-50%). PlombiPro calcule le devis TTC et génère un PDF professionnel en 10 secondes.
+                    </p>
+                </div>
+
+                <!-- Step 3 -->
+                <div style="text-align: center;">
+                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--primary-blue), var(--tool-orange)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-lg); font-size: 36px; font-weight: 800; color: white;">3</div>
+                    <h3 style="margin-bottom: var(--spacing-md);">📤 Envoyez</h3>
+                    <p style="color: var(--medium-gray); line-height: 1.7;">
+                        Envoyez le devis par email ou SMS directement depuis l'app. Suivez les ouvertures et relancez automatiquement.
+                    </p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: var(--spacing-xxl);">
+                <a href="#demo" class="btn btn-primary btn-large">Essayer maintenant →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         TESTIMONIALS SECTION
+         ======================================== -->
+    <section id="temoignages" class="testimonials">
+        <div class="container">
+            <h2 class="section-title">Ils ont choisi PlombiPro</h2>
+            <p class="section-subtitle">
+                Découvrez ce que nos clients disent de PlombiPro au quotidien
+            </p>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="testimonial-content">
+                        "Le scanner OCR me fait gagner un temps fou ! Je scanne mes factures Leroy Merlin,
+                        j'applique ma marge et j'envoie le devis au client. Tout ça en 2 minutes chrono."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">JM</div>
+                        <div class="testimonial-info">
+                            <h4>Jean-Marc D.</h4>
+                            <p>Artisan plombier, Région parisienne</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="testimonial-content">
+                        "Enfin un logiciel pensé par des plombiers pour des plombiers !
+                        Le mode offline est parfait pour les chantiers sans réseau. Simple et efficace."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">SL</div>
+                        <div class="testimonial-info">
+                            <h4>Sophie L.</h4>
+                            <p>Plombier indépendant, Lyon</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="testimonial-content">
+                        "J'ai migré depuis Obat il y a 3 mois. Les catalogues auto-scrapés et le suivi
+                        de chantiers avec photos sont des game-changers. Je ne reviendrai jamais en arrière."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">PR</div>
+                        <div class="testimonial-info">
+                            <h4>Pierre R.</h4>
+                            <p>Entreprise de plomberie, Marseille</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         TRUST & SECURITY BADGES
+         ======================================== -->
+    <section class="trust-section">
+        <div class="container">
+            <div class="trust-badges">
+                <div class="trust-badge">
+                    <div class="trust-badge-icon">🔒</div>
+                    <div class="trust-badge-text">Données<br>Sécurisées</div>
+                </div>
+                <div class="trust-badge">
+                    <div class="trust-badge-icon">🇫🇷</div>
+                    <div class="trust-badge-text">Conforme<br>2026</div>
+                </div>
+                <div class="trust-badge">
+                    <div class="trust-badge-icon">✓</div>
+                    <div class="trust-badge-text">RGPD<br>Compliant</div>
+                </div>
+                <div class="trust-badge">
+                    <div class="trust-badge-icon">💳</div>
+                    <div class="trust-badge-text">Paiements<br>Sécurisés</div>
+                </div>
+                <div class="trust-badge">
+                    <div class="trust-badge-icon">📱</div>
+                    <div class="trust-badge-text">Mobile<br>First</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         CTA SECTION
+         ======================================== -->
+    <section class="cta">
+        <div class="container">
+            <h2>Prêt à simplifier votre gestion au quotidien ?</h2>
+            <p>Rejoignez des centaines de plombiers qui gagnent du temps avec PlombiPro</p>
+            <a href="#tarifs" class="btn btn-secondary" style="background-color: white; color: var(--primary-blue);">
+                🚀 Essayer gratuitement 30 jours
+            </a>
+            <div class="cta-features">
+                <div class="cta-feature">Sans engagement, sans carte bancaire</div>
+                <div class="cta-feature">Toutes les fonctionnalités incluses</div>
+                <div class="cta-feature">Support client réactif</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         FAQ SECTION
+         ======================================== -->
+    <section id="faq" style="padding: 100px 0; background-color: var(--white);">
+        <div class="container">
+            <h2 class="section-title">Foire Aux Questions</h2>
+            <p class="section-subtitle">
+                Tout ce que vous devez savoir sur PlombiPro
+            </p>
+
+            <div style="max-width: 800px; margin: var(--spacing-xxl) auto 0;">
+                <!-- FAQ Item 1 -->
+                <div class="faq-item" style="border-bottom: 2px solid var(--light-gray); padding: var(--spacing-lg) 0;">
+                    <button class="faq-question" style="width: 100%; text-align: left; background: none; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 20px; font-weight: 600; color: var(--dark-gray); padding: 0;">
+                        <span>💳 Dois-je entrer ma carte bancaire pour l'essai gratuit ?</span>
+                        <span class="faq-icon" style="font-size: 24px; transition: transform 0.3s;">+</span>
+                    </button>
+                    <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease, margin-top 0.3s; color: var(--medium-gray); line-height: 1.7;">
+                        <p style="margin-top: 0; padding-top: var(--spacing-md);">
+                            Non ! Aucune carte bancaire n'est requise pour l'essai gratuit de 30 jours. Vous aurez accès à toutes les fonctionnalités du plan Pro sans engagement. À la fin de l'essai, vous pourrez choisir votre formule ou annuler simplement.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-item" style="border-bottom: 2px solid var(--light-gray); padding: var(--spacing-lg) 0;">
+                    <button class="faq-question" style="width: 100%; text-align: left; background: none; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 20px; font-weight: 600; color: var(--dark-gray); padding: 0;">
+                        <span>🇫🇷 PlombiPro est-il conforme à la facturation électronique 2026 ?</span>
+                        <span class="faq-icon" style="font-size: 24px; transition: transform 0.3s;">+</span>
+                    </button>
+                    <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease, margin-top 0.3s; color: var(--medium-gray); line-height: 1.7;">
+                        <p style="margin-top: 0; padding-top: var(--spacing-md);">
+                            Oui, complètement ! PlombiPro intègre le format Factur-X et Chorus Pro, obligatoires pour les factures à destination des professionnels et de l'État à partir de septembre 2026. Toutes vos factures générées avec PlombiPro sont automatiquement conformes. Vous êtes déjà prêt pour les nouvelles obligations légales.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-item" style="border-bottom: 2px solid var(--light-gray); padding: var(--spacing-lg) 0;">
+                    <button class="faq-question" style="width: 100%; text-align: left; background: none; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 20px; font-weight: 600; color: var(--dark-gray); padding: 0;">
+                        <span>📱 Puis-je utiliser PlombiPro sans connexion internet sur mes chantiers ?</span>
+                        <span class="faq-icon" style="font-size: 24px; transition: transform 0.3s;">+</span>
+                    </button>
+                    <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease, margin-top 0.3s; color: var(--medium-gray); line-height: 1.7;">
+                        <p style="margin-top: 0; padding-top: var(--spacing-md);">
+                            Oui ! Le mode offline est inclus dans le plan Pro et Enterprise. Vous pouvez créer des devis, consulter vos clients et noter vos interventions même sans réseau. Tout se synchronise automatiquement dès que vous retrouvez une connexion.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="faq-item" style="border-bottom: 2px solid var(--light-gray); padding: var(--spacing-lg) 0;">
+                    <button class="faq-question" style="width: 100%; text-align: left; background: none; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 20px; font-weight: 600; color: var(--dark-gray); padding: 0;">
+                        <span>📸 Comment fonctionne le scanner OCR de factures ?</span>
+                        <span class="faq-icon" style="font-size: 24px; transition: transform 0.3s;">+</span>
+                    </button>
+                    <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease, margin-top 0.3s; color: var(--medium-gray); line-height: 1.7;">
+                        <p style="margin-top: 0; padding-top: var(--spacing-md);">
+                            Prenez simplement une photo de votre facture fournisseur (Leroy Merlin, Point P, etc.) avec votre téléphone. Notre intelligence artificielle (Google Vision API) extrait automatiquement les produits, quantités, prix et références. Vous pouvez ensuite ajouter votre marge et générer un devis client en quelques secondes.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="faq-item" style="border-bottom: 2px solid var(--light-gray); padding: var(--spacing-lg) 0;">
+                    <button class="faq-question" style="width: 100%; text-align: left; background: none; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 20px; font-weight: 600; color: var(--dark-gray); padding: 0;">
+                        <span>🔄 Puis-je migrer mes données depuis Obat ou Excel ?</span>
+                        <span class="faq-icon" style="font-size: 24px; transition: transform 0.3s;">+</span>
+                    </button>
+                    <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease, margin-top 0.3s; color: var(--medium-gray); line-height: 1.7;">
+                        <p style="margin-top: 0; padding-top: var(--spacing-md);">
+                            Oui ! PlombiPro permet d'importer vos clients via fichier CSV (compatible Excel). Pour les données Obat, notre équipe support vous accompagne gratuitement dans la migration. Comptez 1-2 jours maximum pour tout transférer.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 6 -->
+                <div class="faq-item" style="border-bottom: 2px solid var(--light-gray); padding: var(--spacing-lg) 0;">
+                    <button class="faq-question" style="width: 100%; text-align: left; background: none; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 20px; font-weight: 600; color: var(--dark-gray); padding: 0;">
+                        <span>💰 Y a-t-il des frais cachés ou des options payantes ?</span>
+                        <span class="faq-icon" style="font-size: 24px; transition: transform 0.3s;">+</span>
+                    </button>
+                    <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease, margin-top 0.3s; color: var(--medium-gray); line-height: 1.7;">
+                        <p style="margin-top: 0; padding-top: var(--spacing-md);">
+                            Non, aucun frais caché. Le prix affiché est le prix final HT (TVA 20% en sus). Toutes les fonctionnalités sont incluses dans votre plan. Les seuls frais supplémentaires possibles sont les commissions Stripe (1,4% + 0,25€) si vous utilisez les paiements en ligne - mais c'est vous qui encaissez directement.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 7 -->
+                <div class="faq-item" style="border-bottom: 2px solid var(--light-gray); padding: var(--spacing-lg) 0;">
+                    <button class="faq-question" style="width: 100%; text-align: left; background: none; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 20px; font-weight: 600; color: var(--dark-gray); padding: 0;">
+                        <span>🔒 Mes données sont-elles sécurisées ?</span>
+                        <span class="faq-icon" style="font-size: 24px; transition: transform 0.3s;">+</span>
+                    </button>
+                    <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease, margin-top 0.3s; color: var(--medium-gray); line-height: 1.7;">
+                        <p style="margin-top: 0; padding-top: var(--spacing-md);">
+                            Absolument. Vos données sont hébergées sur des serveurs sécurisés Supabase (certifiés SOC 2, ISO 27001) en Europe. Chiffrement SSL/TLS, sauvegardes quotidiennes automatiques, conformité RGPD totale. Vous restez propriétaire de vos données et pouvez les exporter à tout moment.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 8 -->
+                <div class="faq-item" style="padding: var(--spacing-lg) 0;">
+                    <button class="faq-question" style="width: 100%; text-align: left; background: none; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 20px; font-weight: 600; color: var(--dark-gray); padding: 0;">
+                        <span>❓ J'ai une autre question, comment vous contacter ?</span>
+                        <span class="faq-icon" style="font-size: 24px; transition: transform 0.3s;">+</span>
+                    </button>
+                    <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease, margin-top 0.3s; color: var(--medium-gray); line-height: 1.7;">
+                        <p style="margin-top: 0; padding-top: var(--spacing-md);">
+                            Nous sommes là pour vous ! Contactez-nous par email à <strong>contact@plombipro.fr</strong> ou via le formulaire en bas de page. Temps de réponse moyen : 4h en semaine. Vous pouvez aussi réserver un appel de démonstration personnalisé.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: var(--spacing-xxl);">
+                <p style="font-size: 18px; color: var(--medium-gray); margin-bottom: var(--spacing-md);">
+                    Vous n'avez pas trouvé votre réponse ?
+                </p>
+                <a href="#contact" class="btn btn-outline">Contactez notre équipe</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         FOOTER
+         ======================================== -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>PlombiPro</h4>
+                    <p style="margin-bottom: var(--spacing-md);">
+                        Logiciel de gestion complet pour artisans plombiers.
+                        Scanner OCR, catalogues auto-scrapés, conforme 2026. Simple et efficace.
+                    </p>
+                    <p style="color: rgba(255,255,255,0.5); font-size: 14px;">
+                        © 2025 PlombiPro SAS<br>
+                        SIRET: XXX XXX XXX 00012<br>
+                        contact@plombipro.fr
+                    </p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Produit</h4>
+                    <ul>
+                        <li><a href="#fonctionnalites">Fonctionnalités</a></li>
+                        <li><a href="#tarifs">Tarifs</a></li>
+                        <li><a href="#">Démo</a></li>
+                        <li><a href="#">Changelog</a></li>
+                        <li><a href="#">Documentation</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Ressources</h4>
+                    <ul>
+                        <li><a href="#">Guide démarrage</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Conformité 2026</a></li>
+                        <li><a href="#">Migrer depuis Obat</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Légal</h4>
+                    <ul>
+                        <li><a href="#">CGU</a></li>
+                        <li><a href="#">CGV</a></li>
+                        <li><a href="#">Politique de confidentialité</a></li>
+                        <li><a href="#">Mentions légales</a></li>
+                        <li><a href="#">RGPD</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>Fait avec ❤️ pour les artisans plombiers de France</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Sticky Mobile CTA -->
+    <div class="sticky-mobile-cta" id="sticky-mobile-cta">
+        <a href="#tarifs" class="btn btn-primary">Essayer gratuitement 30 jours</a>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scroll-to-top" aria-label="Scroll to top">
+        ↑
+    </button>
+
+    <!-- ========================================
+         JAVASCRIPT
+         ======================================== -->
+    <script>
+        // ============================================
+        // MOBILE MENU TOGGLE
+        // ============================================
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+
+        if (mobileMenuToggle) {
+            mobileMenuToggle.addEventListener('click', () => {
+                mobileMenuToggle.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+        }
+
+        // ============================================
+        // SMOOTH SCROLLING
+        // ============================================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    if (navMenu.classList.contains('active')) {
+                        mobileMenuToggle.classList.remove('active');
+                        navMenu.classList.remove('active');
+                    }
+                }
+            });
+        });
+
+        // ============================================
+        // STICKY MOBILE CTA & SCROLL TO TOP
+        // ============================================
+        const stickyCTA = document.getElementById('sticky-mobile-cta');
+        const scrollToTopBtn = document.getElementById('scroll-to-top');
+        const heroSection = document.querySelector('.hero');
+
+        if (stickyCTA && heroSection) {
+            window.addEventListener('scroll', () => {
+                const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+                const scrolled = window.scrollY;
+
+                // Sticky CTA
+                if (scrolled > heroBottom) {
+                    stickyCTA.classList.add('visible');
+                } else {
+                    stickyCTA.classList.remove('visible');
+                }
+
+                // Scroll to top button
+                if (scrolled > 500) {
+                    scrollToTopBtn.classList.add('visible');
+                } else {
+                    scrollToTopBtn.classList.remove('visible');
+                }
+            });
+        }
+
+        // Scroll to top functionality
+        if (scrollToTopBtn) {
+            scrollToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+
+        // ============================================
+        // ANIMATED COUNTERS
+        // ============================================
+        function animateCounter(element, target, suffix = '') {
+            let current = 0;
+            const increment = target / 50;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target + suffix;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current) + suffix;
+                }
+            }, 30);
+        }
+
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.dataset.counted) {
+                    entry.target.dataset.counted = 'true';
+                    const text = entry.target.textContent;
+                    if (text.includes('%')) {
+                        animateCounter(entry.target, parseInt(text), '%');
+                    } else if (!isNaN(parseInt(text))) {
+                        animateCounter(entry.target, parseInt(text));
+                    }
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.stat-item h3').forEach(el => {
+            counterObserver.observe(el);
+        });
+
+        // ============================================
+        // SCROLL ANIMATIONS
+        // ============================================
+        const scrollObserverOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Add appropriate animation based on element
+                    if (entry.target.classList.contains('feature-card')) {
+                        entry.target.classList.add('scale-in');
+                    } else if (entry.target.classList.contains('testimonial-card')) {
+                        entry.target.classList.add('fade-in-up');
+                    } else if (entry.target.classList.contains('pricing-card')) {
+                        entry.target.classList.add('fade-in-up');
+                    }
+                }
+            });
+        }, scrollObserverOptions);
+
+        // Observe all animatable elements
+        document.querySelectorAll('.feature-card, .pricing-card, .testimonial-card').forEach(el => {
+            scrollObserver.observe(el);
+        });
+
+        // ============================================
+        // PARALLAX EFFECT ON HERO
+        // ============================================
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroContent = document.querySelector('.hero-content');
+            if (heroContent && scrolled < window.innerHeight) {
+                heroContent.style.transform = `translateY(${scrolled * 0.5}px)`;
+                heroContent.style.opacity = 1 - (scrolled / 600);
+            }
+        });
+
+        // ============================================
+        // PERFORMANCE: Lazy load images
+        // ============================================
+        if ('loading' in HTMLImageElement.prototype) {
+            const images = document.querySelectorAll('img[loading="lazy"]');
+            images.forEach(img => {
+                img.src = img.src;
+            });
+        } else {
+            // Fallback for browsers that don't support lazy loading
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js';
+            document.body.appendChild(script);
+        }
+
+        // ============================================
+        // FAQ ACCORDION
+        // ============================================
+        const faqQuestions = document.querySelectorAll('.faq-question');
+
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                const answer = faqItem.querySelector('.faq-answer');
+                const icon = question.querySelector('.faq-icon');
+                const isOpen = answer.style.maxHeight && answer.style.maxHeight !== '0px';
+
+                // Close all other FAQs
+                document.querySelectorAll('.faq-answer').forEach(otherAnswer => {
+                    if (otherAnswer !== answer) {
+                        otherAnswer.style.maxHeight = '0';
+                        otherAnswer.previousElementSibling.querySelector('.faq-icon').textContent = '+';
+                        otherAnswer.previousElementSibling.querySelector('.faq-icon').style.transform = 'rotate(0deg)';
+                    }
+                });
+
+                // Toggle current FAQ
+                if (isOpen) {
+                    answer.style.maxHeight = '0';
+                    icon.textContent = '+';
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                    icon.textContent = '−';
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+
+        // ============================================
+        // FORM SUBMISSION (DEMO)
+        // ============================================
+        const demoForm = document.getElementById('demo-form');
+        if (demoForm) {
+            demoForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                // Get form data
+                const formData = new FormData(demoForm);
+                const data = Object.fromEntries(formData);
+
+                // In production, this would send to your backend
+                console.log('Form submitted:', data);
+
+                // Show success message
+                alert('Merci ! Nous vous contactons dans les 24h pour démarrer votre essai gratuit. 🎉');
+
+                // Reset form
+                demoForm.reset();
+
+                // Scroll to pricing
+                document.querySelector('#tarifs').scrollIntoView({ behavior: 'smooth' });
+            });
+        }
+    </script>
+
+</body>
+</html>

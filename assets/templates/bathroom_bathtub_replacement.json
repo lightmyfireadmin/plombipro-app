@@ -1,0 +1,58 @@
+{
+  "template_name": "Remplacement Baignoire",
+  "template_type": "quote",
+  "category": "Bathroom",
+  "line_items": [
+    {
+      "description": "Dépose ancienne baignoire et évacuation",
+      "quantity": 1,
+      "unit_price": 250.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Baignoire acrylique 170x75cm",
+      "quantity": 1,
+      "unit_price": 680.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Tablier de baignoire 170cm",
+      "quantity": 1,
+      "unit_price": 120.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Mitigeur bain/douche thermostatique",
+      "quantity": 1,
+      "unit_price": 240.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Vidage baignoire automatique",
+      "quantity": 1,
+      "unit_price": 85.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Installation et raccordements",
+      "quantity": 1,
+      "unit_price": 550.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Test d'étanchéité et finitions",
+      "quantity": 1,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Installation selon normes DTU 60.11. Garantie 2 ans pièces et main d'œuvre. TVA réduite 10%.",
+  "is_system_template": true
+}

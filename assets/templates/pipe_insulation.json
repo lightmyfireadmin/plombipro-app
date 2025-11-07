@@ -1,0 +1,37 @@
+{
+  "template_name": "Calorifugeage Tuyauterie",
+  "template_type": "quote",
+  "category": "Pipe Work",
+  "line_items": [
+    {
+      "description": "Diagnostic et mesure des tuyauteries",
+      "quantity": 1,
+      "unit_price": 95.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Manchons isolants mousse PE (30m)",
+      "quantity": 30,
+      "unit_price": 4.50,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Bande adhésive aluminium",
+      "quantity": 2,
+      "unit_price": 12.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Installation isolation complète",
+      "quantity": 1,
+      "unit_price": 420.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Économies d'énergie 10-15%. Éligible CEE. Garantie 5 ans. TVA 10%.",
+  "is_system_template": true
+}

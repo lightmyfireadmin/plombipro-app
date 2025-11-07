@@ -1,0 +1,58 @@
+{
+  "template_name": "Remplacement Tuyauterie Cuivre",
+  "template_type": "quote",
+  "category": "Pipe Work",
+  "line_items": [
+    {
+      "description": "Diagnostic et traçage de la tuyauterie",
+      "quantity": 1,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Dépose ancienne tuyauterie plomb/acier",
+      "quantity": 15,
+      "unit_price": 22.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Tube cuivre écroui Ø16mm (eau froide/chaude)",
+      "quantity": 30,
+      "unit_price": 8.50,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Raccords et accessoires cuivre",
+      "quantity": 1,
+      "unit_price": 240.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Installation et soudure",
+      "quantity": 1,
+      "unit_price": 950.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Isolation thermique et phonique",
+      "quantity": 30,
+      "unit_price": 4.20,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Test de pression et désinfection",
+      "quantity": 1,
+      "unit_price": 220.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Tuyauterie conforme NF DTU 60.1. Cuivre alimentaire NF. Garantie décennale. TVA 10%.",
+  "is_system_template": true
+}

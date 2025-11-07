@@ -1,0 +1,58 @@
+{
+  "template_name": "Installation Récupération Eau de Pluie",
+  "template_type": "quote",
+  "category": "Garden",
+  "line_items": [
+    {
+      "description": "Cuve enterrée 3000L avec couvercle",
+      "quantity": 1,
+      "unit_price": 1200.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Pompe immergée avec flotteur",
+      "quantity": 1,
+      "unit_price": 320.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Filtre collecteur de gouttière",
+      "quantity": 1,
+      "unit_price": 85.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Tuyauterie raccordement gouttières",
+      "quantity": 1,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Trop-plein vers réseau",
+      "quantity": 1,
+      "unit_price": 95.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Installation cuve et pompe",
+      "quantity": 1,
+      "unit_price": 980.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Raccordement réseau arrosage",
+      "quantity": 1,
+      "unit_price": 280.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Usage jardin et WC uniquement (non potable). Déclaration mairie obligatoire. Garantie 2 ans.",
+  "is_system_template": true
+}

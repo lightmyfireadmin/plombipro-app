@@ -1,0 +1,37 @@
+{
+  "template_name": "Débouchage WC en Urgence",
+  "template_type": "quote",
+  "category": "Emergency",
+  "line_items": [
+    {
+      "description": "Déplacement d'urgence",
+      "quantity": 1,
+      "unit_price": 80.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Débouchage mécanique WC",
+      "quantity": 1,
+      "unit_price": 150.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Inspection caméra si nécessaire",
+      "quantity": 1,
+      "unit_price": 120.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Test de bon écoulement",
+      "quantity": 1,
+      "unit_price": 40.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    }
+  ],
+  "terms_conditions": "Intervention rapide sous 2h. TVA 20%. Garantie débouchage 3 mois.",
+  "is_system_template": true
+}

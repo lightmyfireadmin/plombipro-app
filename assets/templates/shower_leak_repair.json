@@ -1,0 +1,44 @@
+{
+  "template_name": "Réparation Fuite Douche",
+  "template_type": "quote",
+  "category": "Emergency",
+  "line_items": [
+    {
+      "description": "Diagnostic et localisation fuite",
+      "quantity": 1,
+      "unit_price": 85.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Dépose carrelage zone fuite",
+      "quantity": 1,
+      "unit_price": 120.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Réparation étanchéité (joint/siphon)",
+      "quantity": 1,
+      "unit_price": 150.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Test d'étanchéité 24h",
+      "quantity": 1,
+      "unit_price": 60.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Repose carrelage et joints",
+      "quantity": 1,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    }
+  ],
+  "terms_conditions": "Garantie 1 an réparation. TVA 20% (dépannage). Devis finitions supplémentaires si nécessaire.",
+  "is_system_template": true
+}

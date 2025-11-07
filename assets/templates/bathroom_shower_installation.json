@@ -1,0 +1,51 @@
+{
+  "template_name": "Installation Douche Italienne",
+  "template_type": "quote",
+  "category": "Bathroom",
+  "line_items": [
+    {
+      "description": "Dépose de l'ancienne baignoire ou douche",
+      "quantity": 1,
+      "unit_price": 250.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Receveur de douche extra-plat 120x80cm",
+      "quantity": 1,
+      "unit_price": 380.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Paroi de douche fixe + porte pivotante",
+      "quantity": 1,
+      "unit_price": 650.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Colonne de douche thermostatique avec douchette",
+      "quantity": 1,
+      "unit_price": 420.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Évacuation et siphon extra-plat",
+      "quantity": 1,
+      "unit_price": 85.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Main d'œuvre installation et raccordements",
+      "quantity": 1,
+      "unit_price": 950.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Travaux conformes aux normes NF DTU. Garantie décennale. Prix incluant fournitures et main d'œuvre. TVA réduite 10% pour logement de plus de 2 ans.",
+  "is_system_template": true
+}

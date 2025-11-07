@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'; // Added
 import 'package:flutter/services.dart'; // Added for PlatformException
@@ -94,7 +95,7 @@ class StripePaymentService {
         throw Exception(response.data['error'] ?? 'Échec du remboursement');
       }
     } catch (e) {
-      print('Erreur de remboursement: ${e.toString()}');
+      debugPrint('Erreur de remboursement: ${e.toString()}');
       return false;
     }
   }

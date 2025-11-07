@@ -1,27 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 // import 'package:flutter_stripe/flutter_stripe.dart'; // Uncomment if Stripe UI is used
 
 import 'config/router.dart';
+import 'config/app_theme.dart';
+import 'services/error_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize flutter_dotenv to load our .env file
-  await dotenv.load(fileName: 'lib/.env');
+  // Read environment variables from dart-define
+  const supabaseUrl = String.fromEnvironment('SUPABASE_URL');
+  const supabaseAnonKey = String.fromEnvironment('SUPABASE_ANON_KEY');
+  const sentryDsn = String.fromEnvironment('SENTRY_DSN', defaultValue: '');
+
+  // Initialize Sentry for error tracking (optional)
+  if (sentryDsn.isNotEmpty) {
+    await ErrorService.initialize(sentryDsn: sentryDsn);
+  }
 
   // Initialize supabase_flutter
   await Supabase.initialize(
-    url: dotenv.env['SUPABASE_URL']!,
-    anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
+    url: supabaseUrl,
+    anonKey: supabaseAnonKey,
   );
 
   // Initialize Stripe publishable key (as per guide page 33)
   // Uncomment and ensure flutter_stripe is correctly configured if you intend to use Stripe UI components.
-  // Stripe.publishableKey = dotenv.env['STRIPE_PUBLISHABLE_KEY'] ?? '';
+  // const stripePublishableKey = String.fromEnvironment('STRIPE_PUBLISHABLE_KEY', defaultValue: '');
+  // if (stripePublishableKey.isNotEmpty) {
+  //   Stripe.publishableKey = stripePublishableKey;
+  // }
 
   runApp(const MyApp());
 }
@@ -33,6 +44,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'PlombiPro',
+      debugShowCheckedModeBanner: false,
+
       // Configure go_router
       routerConfig: AppRouter.router,
 
@@ -50,6 +63,10 @@ class MyApp extends StatelessWidget {
         // Primary font family for app
         fontFamily: GoogleFonts.outfit().fontFamily,
       ),
+      // Custom Material Design 3 theme
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.light, // Default to light theme
 
       // Set up localization for French
       localizationsDelegates: const [
