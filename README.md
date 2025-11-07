@@ -248,3 +248,5 @@ Proprietary - © 2025 PlombiPro. Tous droits réservés.
 ---
 
 **Made with ❤️ by plumbers, for plumbers. 🔧**
+
+<!-- Trigger CI/CD -->
