@@ -162,7 +162,7 @@ class _BackupExportPageState extends State<BackupExportPage> {
 
       // Create CSV
       final List<List<dynamic>> rows = [
-        ['Nom', 'Description', 'Référence', 'Prix Unitaire', 'Unité', 'Catégorie', 'Fournisseur', 'Stock'],
+        ['Nom', 'Description', 'Référence', 'Prix Unitaire', 'Unité', 'Catégorie', 'Fournisseur'],
       ];
 
       for (var product in products) {
@@ -174,7 +174,6 @@ class _BackupExportPageState extends State<BackupExportPage> {
           product.unit ?? '',
           product.category ?? '',
           product.supplier ?? '',
-          product.stock?.toString() ?? '',
         ]);
       }
 

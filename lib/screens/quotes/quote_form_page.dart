@@ -394,7 +394,7 @@ class _QuoteFormPageState extends State<QuoteFormPage> {
 
       // Generate PDF
       final pdfBytes = await PdfGenerator.generateQuotePdf(
-        quoteNumber: _quote!.number,
+        quoteNumber: _quote!.quoteNumber,
         clientName: _selectedClient!.name,
         totalTtc: _totalTTC,
         companyName: companyName,
@@ -407,7 +407,7 @@ class _QuoteFormPageState extends State<QuoteFormPage> {
 
       // Save to temporary file
       final tempDir = await getTemporaryDirectory();
-      final fileName = 'devis_${_quote!.number}_${DateTime.now().millisecondsSinceEpoch}.pdf';
+      final fileName = 'devis_${_quote!.quoteNumber}_${DateTime.now().millisecondsSinceEpoch}.pdf';
       final file = File('${tempDir.path}/$fileName');
       await file.writeAsBytes(pdfBytes);
 

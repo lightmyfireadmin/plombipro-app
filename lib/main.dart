@@ -49,21 +49,6 @@ class MyApp extends StatelessWidget {
       // Configure go_router
       routerConfig: AppRouter.router,
 
-      // Set up the theme with Material 3 and primary color
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF1976D2)), // French blue
-        useMaterial3: true,
-        // Satoshi-like font for headings and main UI (using Outfit as alternative)
-        textTheme: GoogleFonts.outfitTextTheme().copyWith(
-          // Inter for body text, paragraphs, bills, quotes (more official)
-          bodySmall: GoogleFonts.inter(fontSize: 12),
-          bodyMedium: GoogleFonts.inter(fontSize: 14),
-          bodyLarge: GoogleFonts.inter(fontSize: 16),
-        ),
-        // Primary font family for app
-        fontFamily: GoogleFonts.outfit().fontFamily,
-      ),
-      // Custom Material Design 3 theme
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.light, // Default to light theme

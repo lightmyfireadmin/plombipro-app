@@ -234,8 +234,6 @@ class _QuotesListPageState extends State<QuotesListPage> {
     final isSmallScreen = MediaQuery.of(context).size.width < 600;
 
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: 'Mes Devis',
       appBar: AppBar(
         title: _isSelectionMode
             ? Text('${_selectedQuoteIds.length} sélectionné(s)')

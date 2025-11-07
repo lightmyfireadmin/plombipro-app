@@ -43,7 +43,7 @@ class RevenueChart extends StatelessWidget {
                     getTitlesWidget: (value, meta) {
                       final month = _getAbbreviatedMonthName(value.toInt() + 1);
                       return SideTitleWidget(
-                        meta: meta,
+                        axisSide: meta.axisSide,
                         space: 4.0,
                         child: Text(month, style: const TextStyle(fontSize: 10)),
                       );
