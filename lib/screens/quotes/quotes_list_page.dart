@@ -9,6 +9,8 @@ import '../../models/invoice.dart'; // Added
 import '../../services/invoice_calculator.dart';
 import '../../services/supabase_service.dart';
 import '../../services/pdf_generator.dart'; // Added
+import '../../services/error_handler.dart';
+import '../../widgets/custom_app_bar.dart';
 // For _InvoiceCard
 
 class QuotesListPage extends StatefulWidget {
@@ -60,8 +62,10 @@ class _QuotesListPageState extends State<QuotesListPage> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Erreur de chargement des devis: ${e.toString()}")),
+        context.handleError(
+          e,
+          customMessage: "Erreur de chargement des devis",
+          onRetry: _fetchQuotes,
         );
         setState(() {
           _isLoading = false;
@@ -230,6 +234,8 @@ class _QuotesListPageState extends State<QuotesListPage> {
     final isSmallScreen = MediaQuery.of(context).size.width < 600;
 
     return Scaffold(
+      appBar: const CustomAppBar(
+        title: 'Mes Devis',
       appBar: AppBar(
         title: _isSelectionMode
             ? Text('${_selectedQuoteIds.length} sélectionné(s)')

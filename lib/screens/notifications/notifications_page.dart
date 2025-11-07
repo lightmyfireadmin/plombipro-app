@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../models/notification.dart' as model;
 import '../../services/supabase_service.dart';
+import '../../services/error_handler.dart';
+import '../../widgets/custom_app_bar.dart';
 
 class NotificationsPage extends StatefulWidget {
   const NotificationsPage({super.key});
@@ -35,8 +37,10 @@ class _NotificationsPageState extends State<NotificationsPage> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Erreur de chargement des notifications: ${e.toString()}")),
+        context.handleError(
+          e,
+          customMessage: "Erreur de chargement des notifications",
+          onRetry: _fetchNotifications,
         );
         setState(() {
           _isLoading = false;
@@ -48,8 +52,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Notifications'),
+      appBar: const CustomAppBar(
+        title: 'Notifications',
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())

@@ -11,8 +11,10 @@ import '../../models/profile.dart';
 import '../../models/quote.dart';
 import '../../services/invoice_calculator.dart';
 import '../../services/supabase_service.dart';
+import '../../services/error_handler.dart';
 import '../../widgets/section_header.dart';
 import '../../widgets/app_drawer.dart';
+import '../../widgets/custom_app_bar.dart';
 import '../clients/client_form_page.dart';
 import '../quotes/quote_form_page.dart';
 import '../quotes/quotes_list_page.dart';
@@ -75,8 +77,10 @@ class _HomePageState extends State<HomePage> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Erreur de chargement du tableau de bord: ${e.toString()}")),
+        context.handleError(
+          e,
+          customMessage: "Erreur de chargement du tableau de bord",
+          onRetry: _fetchDashboardData,
         );
         setState(() {
           _isLoading = false;
@@ -145,8 +149,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('PlombiPro'),
+      appBar: CustomAppBarWithDrawer(
+        title: 'PlombiPro',
         actions: [
           IconButton(
             onPressed: () {
@@ -167,34 +171,37 @@ class _HomePageState extends State<HomePage> {
           ? const Center(child: CircularProgressIndicator())
           : RefreshIndicator(
               onRefresh: _fetchDashboardData,
-              child: CustomScrollView(
-                slivers: [
-                  _buildHeader(),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SectionHeader(title: 'Statistiques Rapides'),
-                          _buildQuickStatsGrid(),
-                          const Divider(height: 32),
-                          const SectionHeader(title: 'Revenus des 12 derniers mois'),
-                          RevenueChart(quotes: _quotes),
-                          const Divider(height: 32),
-                          const SectionHeader(title: 'Activité Récente'),
-                          _buildRecentActivityList(),
-                          const Divider(height: 32),
-                          const SectionHeader(title: 'Rendez-vous à venir'),
-                          _buildUpcomingAppointments(),
-                          const Divider(height: 32),
-                          const SectionHeader(title: 'Actions Rapides'),
-                          _buildQuickActions(),
-                        ],
-                      ),
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Greeting Header
+                    Text(
+                      'Bonjour, Utilisateur!',
+                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
                     ),
-                  ),
-                ],
+                    Text(
+                      InvoiceCalculator.formatDate(DateTime.now()),
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                    const SizedBox(height: 24),
+                    const SectionHeader(title: 'Statistiques Rapides'),
+                    _buildQuickStatsGrid(),
+                    const Divider(height: 32),
+                    const SectionHeader(title: 'Revenus des 12 derniers mois'),
+                    RevenueChart(quotes: _quotes),
+                    const Divider(height: 32),
+                    const SectionHeader(title: 'Activité Récente'),
+                    _buildRecentActivityList(),
+                    const Divider(height: 32),
+                    const SectionHeader(title: 'Rendez-vous à venir'),
+                    _buildUpcomingAppointments(),
+                    const Divider(height: 32),
+                    const SectionHeader(title: 'Actions Rapides'),
+                    _buildQuickActions(),
+                  ],
+                ),
               ),
             ),
     );
