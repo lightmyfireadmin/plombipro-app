@@ -2,6 +2,50 @@
 
 ---
 
+## ⚠️ MVP STATUS DISCLAIMER
+
+**Document Date**: November 2025
+**Implementation Status**: MVP Phase 1 (55% Complete)
+**Last Verified**: November 5, 2025
+
+### 🚨 IMPORTANT: This Document Describes Target Architecture
+
+This document describes the **target architecture** and **planned features** for PlombiPro.
+Many features described here are **not yet implemented** or **partially implemented**.
+
+**For accurate current status**, see:
+- `TECH_STACK.md` - Authoritative technology stack
+- `WEBSITE_CONTENT_AUDIT_SUMMARY.md` - Marketing vs reality analysis
+- `KNOWLEDGE_BASE_REVIEW.md` - Documentation accuracy audit
+
+### ✅ Operational Features (Production-Ready)
+- Quotes & Invoices PDF generation
+- Client management (full CRUD)
+- Worksite tracking with photos
+- Product catalog (personal)
+- Basic payment tracking
+- Dashboard analytics
+- User authentication & profiles
+
+### ⚠️ Limited/Beta Features (Use with Caution)
+- **OCR scanning**: Basic text extraction only (NOT automated quote generation)
+- **Stripe payments**: Code ready, webhooks not deployed
+- **Electronic invoicing**: Factur-X code ready, not tested in production
+- **Email notifications**: Function exists, templates need production validation
+
+### ❌ Not Yet Implemented (Do Not Expect These)
+- Offline mode with sync
+- Auto-scraped product catalogs (20K+ products from suppliers)
+- Multi-user/team features
+- Emergency pricing mode (+50%/+100%)
+- Automated payment reminders (code exists, not tested)
+- Advanced analytics beyond basic dashboard
+- Accounting software connectors (Pennylane, Indy)
+
+**Timeline**: Full feature parity expected **Q2 2026**
+
+---
+
 ## 🎯 PROJECT SUMMARY (Quick Reference)
 
 | Aspect | Details |
@@ -12,10 +56,10 @@
 | **Backend** | Google Cloud Functions (Python) + Supabase PostgreSQL |
 | **MVP Pages** | 20 core pages + 8 bonus pages |
 | **Database** | 12 tables + 6 storage buckets |
-| **APIs** | Supabase, Stripe, Google Vision, SendGrid |
+| **APIs** | Supabase, Stripe, Google Vision, Resend (email) |
 | **Deployment** | iOS App Store + Google Play |
 | **Development Time** | 10 weeks (1 dev + 1 AI) |
-| **Monthly Cost** | €140-200 (scales with usage) |
+| **Monthly Cost** | €25-60 (MVP), €174-274 (Production) |
 | **Core Features** | Invoicing, OCR, Payments, Signatures, e-Invoice 2026 |
 
 ---

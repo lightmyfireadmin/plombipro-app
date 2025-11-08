@@ -36,6 +36,11 @@ import '../screens/clients/import_clients_page.dart';
 
 import '../screens/job_sites/job_sites_list_page.dart';
 import '../screens/job_sites/job_site_form_page.dart';
+import '../screens/analytics/analytics_dashboard_page.dart';
+import '../screens/onboarding/onboarding_wizard_page.dart';
+import '../screens/reports/advanced_reports_page.dart';
+import '../screens/tools/tools_page.dart';
+import '../services/onboarding_service.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
@@ -282,19 +287,57 @@ class AppRouter {
           ),
         ],
       ),
+      GoRoute(
+        path: '/analytics',
+        builder: (BuildContext context, GoRouterState state) {
+          return const AnalyticsDashboardPage();
+        },
+      ),
+      GoRoute(
+        path: '/onboarding',
+        builder: (BuildContext context, GoRouterState state) {
+          return const OnboardingWizardPage();
+        },
+      ),
+      GoRoute(
+        path: '/advanced-reports',
+        builder: (BuildContext context, GoRouterState state) {
+          return const AdvancedReportsPage();
+        },
+      ),
+      GoRoute(
+        path: '/tools',
+        builder: (BuildContext context, GoRouterState state) {
+          return const ToolsPage();
+        },
+      ),
     ],
-    redirect: (BuildContext context, GoRouterState state) {
+    redirect: (BuildContext context, GoRouterState state) async {
       final bool loggedIn = Supabase.instance.client.auth.currentUser != null;
-      final bool loggingIn = state.matchedLocation == '/login' || state.matchedLocation == '/register' || state.matchedLocation == '/forgot-password' || state.matchedLocation == '/reset-password';
+      final bool loggingIn = state.matchedLocation == '/login' ||
+                              state.matchedLocation == '/register' ||
+                              state.matchedLocation == '/forgot-password' ||
+                              state.matchedLocation == '/reset-password';
+      final bool isOnboarding = state.matchedLocation == '/onboarding';
 
       // If not logged in, and not on the login/register/forgot/reset password page, redirect to login
       if (!loggedIn && !loggingIn) {
         return '/login';
       }
+
+      // If logged in, check onboarding status
+      if (loggedIn && !loggingIn && !isOnboarding) {
+        final shouldShowOnboarding = await OnboardingService.shouldShowOnboarding();
+        if (shouldShowOnboarding) {
+          return '/onboarding';
+        }
+      }
+
       // If logged in, and on the login/register/forgot/reset password page, redirect to home
       if (loggedIn && loggingIn) {
         return '/home';
       }
+
       // No redirect needed
       return null;
     },

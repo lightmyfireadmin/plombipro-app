@@ -1,0 +1,65 @@
+{
+  "template_name": "Installation Plancher Chauffant",
+  "template_type": "quote",
+  "category": "Heating",
+  "line_items": [
+    {
+      "description": "Préparation et nettoyage du support",
+      "quantity": 1,
+      "unit_price": 450.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Isolation thermique 30mm (50m²)",
+      "quantity": 50,
+      "unit_price": 18.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Tube PER 16mm pour plancher chauffant (200m)",
+      "quantity": 200,
+      "unit_price": 3.50,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Collecteur 8 circuits avec vannes",
+      "quantity": 1,
+      "unit_price": 580.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Régulation thermostat programmable",
+      "quantity": 1,
+      "unit_price": 320.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Pompe de circulation",
+      "quantity": 1,
+      "unit_price": 280.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Installation et mise en service complète",
+      "quantity": 1,
+      "unit_price": 2100.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Test d'étanchéité et équilibrage hydraulique",
+      "quantity": 1,
+      "unit_price": 350.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Installation conforme DTU 65.14. Garantie décennale. Surface 50m². TVA réduite 10% applicable.",
+  "is_system_template": true
+}

@@ -1,0 +1,44 @@
+{
+  "template_name": "Installation Compteur d'Eau Divisionnaire",
+  "template_type": "quote",
+  "category": "Pipe Work",
+  "line_items": [
+    {
+      "description": "Compteur d'eau divisionnaire DN20",
+      "quantity": 1,
+      "unit_price": 85.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Raccords et joints",
+      "quantity": 1,
+      "unit_price": 35.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Vannes d'isolement amont/aval",
+      "quantity": 2,
+      "unit_price": 28.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Installation sur réseau",
+      "quantity": 1,
+      "unit_price": 150.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Test et mise en service",
+      "quantity": 1,
+      "unit_price": 65.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Pour copropriété ou location. Relevé facile. Garantie 2 ans. TVA 10%.",
+  "is_system_template": true
+}

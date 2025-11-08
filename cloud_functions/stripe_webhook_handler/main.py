@@ -1,6 +1,7 @@
 import functions_framework
 import os
 import stripe
+from datetime import datetime
 from supabase import create_client, Client
 
 # Initialize Supabase client
@@ -48,6 +49,6 @@ def stripe_webhook_handler(request):
         supabase.table('profiles').update({'subscription_plan': 'free'}).eq('id', user_id).execute()
         supabase.table('stripe_subscriptions').update({'status': 'canceled'}).eq('stripe_subscription_id', subscription['id']).execute()
     else:
-        print('Unhandled event type {}'.format(event['type'])
+        print('Unhandled event type {}'.format(event['type']))
 
     return {'success': True}, 200

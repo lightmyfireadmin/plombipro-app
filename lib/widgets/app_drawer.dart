@@ -23,8 +23,8 @@ class _AppDrawerState extends State<AppDrawer> {
     final userProfile = await SupabaseService.fetchUserProfile();
     if (userProfile != null && mounted) {
       setState(() {
-        _userName = userProfile['first_name'] ?? userProfile['email'] ?? 'Utilisateur';
-        _userEmail = userProfile['email'] ?? 'email@example.com';
+        _userName = userProfile.firstName ?? userProfile.email ?? 'Utilisateur';
+        _userEmail = userProfile.email ?? 'email@example.com';
       });
     }
   }
@@ -51,6 +51,22 @@ class _AppDrawerState extends State<AppDrawer> {
             title: const Text('Tableau de bord'),
             onTap: () {
               context.go('/home');
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.bar_chart),
+            title: const Text('Analytiques'),
+            onTap: () {
+              context.go('/analytics');
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.assessment),
+            title: const Text('Rapports Avancés'),
+            onTap: () {
+              context.go('/advanced-reports');
               Navigator.pop(context);
             },
           ),
@@ -114,7 +130,8 @@ class _AppDrawerState extends State<AppDrawer> {
             leading: const Icon(Icons.build),
             title: const Text('Outils'),
             onTap: () {
-              // TODO: Create a tools page that links to the different tools
+              context.go('/tools');
+              Navigator.pop(context);
             },
           ),
           ListTile(

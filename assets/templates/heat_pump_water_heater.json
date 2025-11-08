@@ -1,0 +1,51 @@
+{
+  "template_name": "Installation Chauffe-Eau Thermodynamique",
+  "template_type": "quote",
+  "category": "Heating",
+  "line_items": [
+    {
+      "description": "Chauffe-eau thermodynamique 250L",
+      "quantity": 1,
+      "unit_price": 2200.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Kit de ventilation avec gaines",
+      "quantity": 1,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Groupe de sécurité et raccords",
+      "quantity": 1,
+      "unit_price": 95.00,
+      "discount_percent": 0,
+      "tax_rate": 20.0
+    },
+    {
+      "description": "Installation et raccordements",
+      "quantity": 1,
+      "unit_price": 850.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Raccordement électrique dédié",
+      "quantity": 1,
+      "unit_price": 180.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Mise en service et programmation",
+      "quantity": 1,
+      "unit_price": 150.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Économies 70% vs chauffe-eau électrique. Éligible MaPrimeRénov'. Garantie 2 ans. TVA 10%.",
+  "is_system_template": true
+}

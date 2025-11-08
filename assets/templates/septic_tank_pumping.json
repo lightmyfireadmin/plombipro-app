@@ -1,0 +1,51 @@
+{
+  "template_name": "Vidange Fosse Septique",
+  "template_type": "quote",
+  "category": "Maintenance",
+  "line_items": [
+    {
+      "description": "Déplacement camion hydrocureur",
+      "quantity": 1,
+      "unit_price": 120.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Vidange fosse septique (jusqu'à 3m³)",
+      "quantity": 1,
+      "unit_price": 280.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Nettoyage haute pression parois",
+      "quantity": 1,
+      "unit_price": 95.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Contrôle visuel état de la fosse",
+      "quantity": 1,
+      "unit_price": 50.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Bordereau de suivi des déchets",
+      "quantity": 1,
+      "unit_price": 0.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    },
+    {
+      "description": "Traitement et évacuation en station",
+      "quantity": 1,
+      "unit_price": 85.00,
+      "discount_percent": 0,
+      "tax_rate": 10.0
+    }
+  ],
+  "terms_conditions": "Vidange obligatoire tous les 3-4 ans. Bordereau de suivi réglementaire fourni. TVA 10%.",
+  "is_system_template": true
+}

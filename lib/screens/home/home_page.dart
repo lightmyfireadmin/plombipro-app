@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../notifications/notifications_page.dart';
 
 import '../../models/activity.dart';
@@ -6,10 +7,14 @@ import '../../models/appointment.dart';
 import '../../models/invoice.dart';
 import '../../models/job_site.dart';
 import '../../models/payment.dart';
+import '../../models/profile.dart';
 import '../../models/quote.dart';
 import '../../services/invoice_calculator.dart';
 import '../../services/supabase_service.dart';
+import '../../services/error_handler.dart';
 import '../../widgets/section_header.dart';
+import '../../widgets/app_drawer.dart';
+import '../../widgets/custom_app_bar.dart';
 import '../clients/client_form_page.dart';
 import '../quotes/quote_form_page.dart';
 import '../quotes/quotes_list_page.dart';
@@ -24,6 +29,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool _isLoading = true;
+  Profile? _profile;
   List<Quote> _quotes = [];
   List<Invoice> _invoices = [];
   List<JobSite> _jobSites = [];
@@ -50,6 +56,7 @@ class _HomePageState extends State<HomePage> {
     });
 
     try {
+      final profile = await SupabaseService.fetchUserProfile();
       final quotes = await SupabaseService.fetchQuotes();
       final invoices = await SupabaseService.fetchInvoices();
       final jobSites = await SupabaseService.getJobSites();
@@ -57,6 +64,7 @@ class _HomePageState extends State<HomePage> {
       final appointments = await SupabaseService.fetchUpcomingAppointments();
       if (mounted) {
         setState(() {
+          _profile = profile;
           _quotes = quotes;
           _invoices = invoices;
           _jobSites = jobSites;
@@ -69,8 +77,10 @@ class _HomePageState extends State<HomePage> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Erreur de chargement du tableau de bord: ${e.toString()}")),
+        context.handleError(
+          e,
+          customMessage: "Erreur de chargement du tableau de bord",
+          onRetry: _fetchDashboardData,
         );
         setState(() {
           _isLoading = false;
@@ -139,8 +149,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('PlombiPro'),
+      appBar: CustomAppBarWithDrawer(
+        title: 'PlombiPro',
         actions: [
           IconButton(
             onPressed: () {
@@ -148,66 +158,55 @@ class _HomePageState extends State<HomePage> {
             },
             icon: const Icon(Icons.notifications_none),
           ),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.settings)),
+          IconButton(
+            onPressed: () {
+              context.go('/settings');
+            },
+            icon: const Icon(Icons.settings),
+          ),
         ],
       ),
-      drawer: _buildAppDrawer(),
+      drawer: const AppDrawer(),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : RefreshIndicator(
               onRefresh: _fetchDashboardData,
-              child: CustomScrollView(
-                slivers: [
-                  _buildHeader(),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SectionHeader(title: 'Statistiques Rapides'),
-                          _buildQuickStatsGrid(),
-                          const Divider(height: 32),
-                          const SectionHeader(title: 'Revenus des 12 derniers mois'),
-                          RevenueChart(quotes: _quotes),
-                          const Divider(height: 32),
-                          const SectionHeader(title: 'Activité Récente'),
-                          _buildRecentActivityList(),
-                          const Divider(height: 32),
-                          const SectionHeader(title: 'Rendez-vous à venir'),
-                          _buildUpcomingAppointments(),
-                          const Divider(height: 32),
-                          const SectionHeader(title: 'Actions Rapides'),
-                          _buildQuickActions(),
-                        ],
-                      ),
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Greeting Header
+                    Text(
+                      'Bonjour, Utilisateur!',
+                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
                     ),
-                  ),
-                ],
+                    Text(
+                      InvoiceCalculator.formatDate(DateTime.now()),
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                    const SizedBox(height: 24),
+                    const SectionHeader(title: 'Statistiques Rapides'),
+                    _buildQuickStatsGrid(),
+                    const Divider(height: 32),
+                    const SectionHeader(title: 'Revenus des 12 derniers mois'),
+                    RevenueChart(quotes: _quotes),
+                    const Divider(height: 32),
+                    const SectionHeader(title: 'Activité Récente'),
+                    _buildRecentActivityList(),
+                    const Divider(height: 32),
+                    const SectionHeader(title: 'Rendez-vous à venir'),
+                    _buildUpcomingAppointments(),
+                    const Divider(height: 32),
+                    const SectionHeader(title: 'Actions Rapides'),
+                    _buildQuickActions(),
+                  ],
+                ),
               ),
             ),
     );
   }
 
-  Widget _buildAppDrawer() {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(color: Colors.blue),
-            child: Text('PlombiPro Menu', style: TextStyle(color: Colors.white, fontSize: 24)),
-          ),
-          ListTile(leading: const Icon(Icons.dashboard), title: const Text('Tableau de bord'), onTap: () => Navigator.of(context).pop()),
-          ListTile(leading: const Icon(Icons.request_quote), title: const Text('Devis'), onTap: () {
-            Navigator.of(context).pop(); // Close drawer
-            Navigator.of(context).push(MaterialPageRoute(builder: (_) => const QuotesListPage()));
-          }),
-          // Add other navigation items here
-        ],
-      ),
-    );
-  }
 
   Widget _buildHeader() {
     return SliverAppBar(
@@ -222,7 +221,9 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Bonjour, Utilisateur!', // Placeholder for user name
+              _profile != null && _profile!.firstName != null
+                  ? 'Bonjour, ${_profile!.firstName}!'
+                  : 'Bonjour!',
               style: Theme.of(context).textTheme.titleLarge,
             ),
             Text(
@@ -288,9 +289,9 @@ class _HomePageState extends State<HomePage> {
         return Card(
           child: ListTile(
             leading: const Icon(Icons.calendar_today),
-            title: Text(appointment.clientName),
-            subtitle: Text(InvoiceCalculator.formatDate(appointment.dateTime)),
-            trailing: Text(InvoiceCalculator.formatTime(appointment.dateTime)),
+            title: Text(appointment.title),
+            subtitle: Text(InvoiceCalculator.formatDate(appointment.appointmentDate)),
+            trailing: Text(appointment.appointmentTime),
           ),
         );
       },
@@ -305,12 +306,20 @@ class _HomePageState extends State<HomePage> {
         _ActionButton(title: '+ Nouveau Devis', icon: Icons.add, onTap: () {
            Navigator.of(context).push(MaterialPageRoute(builder: (_) => const QuoteFormPage()));
         }),
-        _ActionButton(title: '+ Nv. Facture', icon: Icons.receipt_long, onTap: () {}), // Placeholder
+        _ActionButton(title: '+ Nv. Facture', icon: Icons.receipt_long, onTap: () {
+          context.go('/invoices/new');
+        }),
         _ActionButton(title: '+ Nouveau Client', icon: Icons.person_add, onTap: () {
           Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ClientFormPage()));
         }),
-        _ActionButton(title: 'Scanner', icon: Icons.qr_code_scanner, onTap: () {}), // Placeholder
-        _ActionButton(title: 'Contacter', icon: Icons.call, onTap: () {}), // Placeholder
+        _ActionButton(title: 'Scanner', icon: Icons.qr_code_scanner, onTap: () {
+          context.go('/scan-invoice');
+        }),
+        _ActionButton(title: 'Contacter', icon: Icons.call, onTap: () {
+          // Open phone dialer - this would typically use url_launcher
+          // For now, navigate to client list to select who to contact
+          context.go('/clients');
+        }),
       ],
     );
   }

@@ -1,0 +1,23 @@
+name: Deploy Marketing Website to Cloudflare Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # --- CORRECTED: Updated project-name to 'plombipro-landing' ---
+          command: pages deploy marketing_website --project-name=plombipro-landing
+          wranglerVersion: "3.22.4"
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
