@@ -26,52 +26,215 @@ class SupabaseService {
 
   // ===== APPOINTMENTS =====
 
-  static Future<List<Appointment>> fetchUpcomingAppointments() async {
-    // Placeholder implementation
-    return Future.delayed(const Duration(seconds: 1), () {
-      final now = DateTime.now();
-      return [
-        Appointment(
-          id: '1',
-          userId: 'user1',
-          title: 'Rendez-vous Client A',
-          appointmentDate: now.add(const Duration(days: 1)),
-          appointmentTime: '09:00:00',
-          addressLine1: '123 Rue Example',
-          postalCode: '75001',
-          city: 'Paris',
-          plannedEta: now.add(const Duration(days: 1, hours: 9)),
-          createdAt: now,
-          updatedAt: now,
-        ),
-        Appointment(
-          id: '2',
-          userId: 'user1',
-          title: 'Rendez-vous Client B',
-          appointmentDate: now.add(const Duration(days: 2)),
-          appointmentTime: '14:00:00',
-          addressLine1: '456 Avenue Test',
-          postalCode: '75002',
-          city: 'Paris',
-          plannedEta: now.add(const Duration(days: 2, hours: 14)),
-          createdAt: now,
-          updatedAt: now,
-        ),
-        Appointment(
-          id: '3',
-          userId: 'user1',
-          title: 'Rendez-vous Client C',
-          appointmentDate: now.add(const Duration(days: 3)),
-          appointmentTime: '11:00:00',
-          addressLine1: '789 Boulevard Demo',
-          postalCode: '75003',
-          city: 'Paris',
-          plannedEta: now.add(const Duration(days: 3, hours: 11)),
-          createdAt: now,
-          updatedAt: now,
-        ),
-      ];
-    });
+  /// Fetch upcoming appointments for the current user
+  /// Returns appointments starting from now, ordered by start_time ascending
+  static Future<List<Map<String, dynamic>>> fetchUpcomingAppointments({int limit = 5}) async {
+    try {
+      final userId = _client.auth.currentUser?.id;
+      if (userId == null) throw Exception('User not authenticated');
+
+      final response = await _client
+        .from('appointments')
+        .select('''
+          *,
+          clients (
+            id,
+            full_name,
+            company_name,
+            email,
+            phone
+          ),
+          job_sites (
+            id,
+            name,
+            address,
+            city,
+            postal_code
+          )
+        ''')
+        .eq('user_id', userId)
+        .gte('start_time', DateTime.now().toIso8601String())
+        .order('start_time', ascending: true)
+        .limit(limit);
+
+      return List<Map<String, dynamic>>.from(response);
+    } catch (e) {
+      print('Error fetching upcoming appointments: $e');
+      rethrow;
+    }
+  }
+
+  /// Fetch all appointments within a date range
+  static Future<List<Map<String, dynamic>>> fetchAppointmentsByDateRange({
+    required DateTime startDate,
+    required DateTime endDate,
+  }) async {
+    try {
+      final userId = _client.auth.currentUser?.id;
+      if (userId == null) throw Exception('User not authenticated');
+
+      final response = await _client
+        .from('appointments')
+        .select('''
+          *,
+          clients (
+            id,
+            full_name,
+            company_name
+          ),
+          job_sites (
+            id,
+            name,
+            address
+          )
+        ''')
+        .eq('user_id', userId)
+        .gte('start_time', startDate.toIso8601String())
+        .lte('start_time', endDate.toIso8601String())
+        .order('start_time', ascending: true);
+
+      return List<Map<String, dynamic>>.from(response);
+    } catch (e) {
+      print('Error fetching appointments by date range: $e');
+      rethrow;
+    }
+  }
+
+  /// Get a single appointment by ID
+  static Future<Map<String, dynamic>?> getAppointment(String id) async {
+    try {
+      final userId = _client.auth.currentUser?.id;
+      if (userId == null) throw Exception('User not authenticated');
+
+      final response = await _client
+        .from('appointments')
+        .select('''
+          *,
+          clients (
+            id,
+            full_name,
+            company_name,
+            email,
+            phone
+          ),
+          job_sites (
+            id,
+            name,
+            address,
+            city,
+            postal_code
+          )
+        ''')
+        .eq('id', id)
+        .eq('user_id', userId)
+        .single();
+
+      return response;
+    } catch (e) {
+      print('Error fetching appointment: $e');
+      return null;
+    }
+  }
+
+  /// Create a new appointment
+  static Future<String> createAppointment(Map<String, dynamic> appointmentData) async {
+    try {
+      final userId = _client.auth.currentUser?.id;
+      if (userId == null) throw Exception('User not authenticated');
+
+      appointmentData['user_id'] = userId;
+
+      final response = await _client
+        .from('appointments')
+        .insert(appointmentData)
+        .select()
+        .single();
+
+      return response['id'] as String;
+    } catch (e) {
+      print('Error creating appointment: $e');
+      rethrow;
+    }
+  }
+
+  /// Update an existing appointment
+  static Future<bool> updateAppointment(String id, Map<String, dynamic> updates) async {
+    try {
+      final userId = _client.auth.currentUser?.id;
+      if (userId == null) throw Exception('User not authenticated');
+
+      await _client
+        .from('appointments')
+        .update(updates)
+        .eq('id', id)
+        .eq('user_id', userId);
+
+      return true;
+    } catch (e) {
+      print('Error updating appointment: $e');
+      return false;
+    }
+  }
+
+  /// Delete an appointment
+  static Future<bool> deleteAppointment(String id) async {
+    try {
+      final userId = _client.auth.currentUser?.id;
+      if (userId == null) throw Exception('User not authenticated');
+
+      await _client
+        .from('appointments')
+        .delete()
+        .eq('id', id)
+        .eq('user_id', userId);
+
+      return true;
+    } catch (e) {
+      print('Error deleting appointment: $e');
+      return false;
+    }
+  }
+
+  /// Update appointment status
+  static Future<bool> updateAppointmentStatus(String id, String status) async {
+    try {
+      return await updateAppointment(id, {'status': status});
+    } catch (e) {
+      print('Error updating appointment status: $e');
+      return false;
+    }
+  }
+
+  /// Get today's appointments
+  static Future<List<Map<String, dynamic>>> getTodayAppointments() async {
+    final now = DateTime.now();
+    final startOfDay = DateTime(now.year, now.month, now.day);
+    final endOfDay = DateTime(now.year, now.month, now.day, 23, 59, 59);
+
+    return await fetchAppointmentsByDateRange(
+      startDate: startOfDay,
+      endDate: endOfDay,
+    );
+  }
+
+  /// Get appointments for a specific client
+  static Future<List<Map<String, dynamic>>> getClientAppointments(String clientId) async {
+    try {
+      final userId = _client.auth.currentUser?.id;
+      if (userId == null) throw Exception('User not authenticated');
+
+      final response = await _client
+        .from('appointments')
+        .select('*')
+        .eq('user_id', userId)
+        .eq('client_id', clientId)
+        .order('start_time', ascending: false);
+
+      return List<Map<String, dynamic>>.from(response);
+    } catch (e) {
+      print('Error fetching client appointments: $e');
+      rethrow;
+    }
   }
 
   // ===== AUTHENTICATION =====
