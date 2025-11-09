@@ -204,12 +204,75 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Mobile Phone Background */}
-          <div className="lg:hidden absolute inset-0 opacity-15 pointer-events-none overflow-hidden">
-            <div className="absolute right-[-100px] top-10 w-64 h-[520px] bg-gradient-to-br from-gray-900/30 to-gray-800/30 rounded-[2.5rem] p-3 transform rotate-12 scale-90">
-              <div className="bg-white/20 rounded-[2rem] h-full backdrop-blur-sm"></div>
+          {/* Mobile Phone Background - Enhanced */}
+          <div className="lg:hidden absolute inset-0 pointer-events-none overflow-hidden">
+            {/* Phone Mockup with Content */}
+            <div className="absolute right-[-80px] top-32 w-72 h-[580px] opacity-25">
+              {/* Phone Frame */}
+              <div className="relative w-full h-full bg-gradient-to-br from-gray-900 to-gray-800 rounded-[2.5rem] p-3 shadow-2xl transform rotate-12">
+                <div className="bg-white rounded-[2rem] h-full overflow-hidden">
+                  {/* Status Bar */}
+                  <div className="bg-gradient-to-r from-[#1976D2] to-[#1565C0] px-4 py-3 flex items-center justify-between text-white text-xs">
+                    <span className="font-semibold">9:41</span>
+                    <div className="flex gap-1">
+                      <div className="w-3 h-3 bg-white/30 rounded"></div>
+                      <div className="w-3 h-3 bg-white/50 rounded"></div>
+                      <div className="w-3 h-3 bg-white rounded"></div>
+                    </div>
+                  </div>
+
+                  {/* App Content Preview */}
+                  <div className="p-4 bg-gradient-to-br from-blue-50 to-white h-full">
+                    <div className="text-center mb-4">
+                      <h3 className="text-lg font-bold text-gray-900">Scan automatique</h3>
+                      <p className="text-xs text-gray-600">Facture Point P</p>
+                    </div>
+
+                    {/* Camera View */}
+                    <div className="relative bg-gray-100 rounded-xl p-4 mb-3 aspect-square flex items-center justify-center border-2 border-dashed border-blue-300">
+                      <div className="absolute top-3 left-3 right-3 bottom-3 border-2 border-[#FF6F00] rounded-lg animate-pulse"></div>
+                      <svg className="w-16 h-16 text-[#1976D2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                    </div>
+
+                    {/* Extracted Items */}
+                    <div className="bg-white rounded-lg p-3 shadow-md">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                          <span className="text-green-600 font-bold text-xs">✓</span>
+                        </div>
+                        <span className="text-xs font-semibold text-gray-900">8 articles détectés</span>
+                      </div>
+                      <div className="space-y-1.5">
+                        <div className="flex justify-between text-[10px] text-gray-600">
+                          <span>Radiateur 1500W</span>
+                          <span className="font-semibold">189€</span>
+                        </div>
+                        <div className="flex justify-between text-[10px] text-gray-600">
+                          <span>Tuyau PER Ø16</span>
+                          <span className="font-semibold">38€</span>
+                        </div>
+                        <div className="flex justify-between text-[10px] text-gray-600">
+                          <span>Raccords x10</span>
+                          <span className="font-semibold">45€</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Mini CTA */}
+                    <button className="w-full mt-3 bg-gradient-to-r from-[#FF6F00] to-[#E65100] text-white py-2 rounded-lg font-bold text-xs shadow-md">
+                      Créer le devis
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+
+          {/* Text Content Backdrop for Readability on Mobile */}
+          <div className="lg:hidden absolute inset-0 bg-gradient-to-r from-[#1976D2]/90 via-[#1565C0]/85 to-transparent pointer-events-none"></div>
 
           {/* Right Column - Interactive Demo Mockup */}
           <div className="hidden lg:block relative">
