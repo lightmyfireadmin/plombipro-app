@@ -167,6 +167,71 @@ export default function Features() {
                 {feature.description}
               </p>
 
+              {/* GPS Animation - Only for GPS feature */}
+              {feature.title === "GPS Automatique + Planning Intelligent" && (
+                <div className="mt-6 bg-gradient-to-br from-blue-50 to-green-50 rounded-xl p-4 border-2 border-green-200">
+                  <div className="relative h-40">
+                    {/* Map Background */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg opacity-50">
+                      <div className="grid grid-cols-4 grid-rows-4 h-full">
+                        {[...Array(16)].map((_, i) => (
+                          <div key={i} className="border border-gray-300/30"></div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Route Line */}
+                    <svg className="absolute inset-0 w-full h-full" viewBox="0 0 200 160">
+                      <path
+                        d="M 30,80 Q 60,30 100,60 T 170,80"
+                        stroke="#4CAF50"
+                        strokeWidth="3"
+                        fill="none"
+                        strokeDasharray="5,5"
+                        className="animate-pulse"
+                      />
+                    </svg>
+
+                    {/* Location Pins */}
+                    <div className="absolute top-16 left-6 animate-bounce">
+                      <div className="relative">
+                        <svg className="w-8 h-8 text-[#FF6F00]" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                        <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-white px-2 py-1 rounded shadow-md whitespace-nowrap text-xs font-bold">
+                          RDV 1
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="absolute top-8 right-6 animate-bounce animation-delay-200">
+                      <div className="relative">
+                        <svg className="w-8 h-8 text-[#4CAF50]" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                        <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-white px-2 py-1 rounded shadow-md whitespace-nowrap text-xs font-bold">
+                          RDV 2
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Moving Van */}
+                    <div className="absolute top-20 left-20 animate-pulse-slow">
+                      <svg className="w-10 h-10 text-[#1976D2]" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M18 18.5a1.5 1.5 0 01-1.5-1.5 1.5 1.5 0 011.5-1.5 1.5 1.5 0 011.5 1.5 1.5 1.5 0 01-1.5 1.5m1.5-9l1.96 2.5H17V9.5M6 18.5A1.5 1.5 0 014.5 17 1.5 1.5 0 016 15.5 1.5 1.5 0 017.5 17 1.5 1.5 0 016 18.5M20 8h-3V4H3c-1.11 0-2 .89-2 2v11h2a3 3 0 003 3 3 3 0 003-3h6a3 3 0 003 3 3 3 0 003-3h2v-5l-3-4z"/>
+                      </svg>
+                    </div>
+                  </div>
+
+                  <div className="mt-3 flex items-center justify-center gap-2 text-xs text-green-700">
+                    <svg className="w-4 h-4 animate-spin-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span className="font-semibold">Itinéraire optimisé automatiquement</span>
+                  </div>
+                </div>
+              )}
+
               {/* Time saved indicator */}
               {feature.timeSaved && (
                 <div className="mt-6 inline-flex items-center bg-blue-50 rounded-full px-4 py-2">
