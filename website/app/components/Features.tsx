@@ -7,8 +7,8 @@ export default function Features() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
         </svg>
       ),
-      title: "Scanner OCR Intelligent",
-      description: "Photographiez vos factures Point P/Cedeo. PlombiPro extrait automatiquement tous les articles, prix et références. ⏱️ Gain : 15 min par devis = 25h/mois économisées.",
+      title: "Photo → Devis en 2 minutes",
+      description: "Prenez vos factures Point P et Cedeo en photo. L'appli lit automatiquement tous les articles, prix et références pour créer votre devis. ⏱️ Gain : 15 min par devis = 25h/mois récupérées.",
       badge: "Exclusif",
       badgeColor: "bg-[#FF6F00]",
       highlight: true,
@@ -20,8 +20,8 @@ export default function Features() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
         </svg>
       ),
-      title: "Catalogues Point P & Cedeo",
-      description: "Accédez directement aux catalogues de vos fournisseurs. Plus de 50 000 références avec prix à jour automatiquement. ⏱️ Gain : 10 min par recherche article.",
+      title: "50 000 articles Point P & Cedeo",
+      description: "Recherchez vos articles directement dans l'appli. Les prix sont à jour automatiquement : radiateurs, PER, raccords, robinetterie... tout votre matériel habituel. ⏱️ Gain : 10 min par article recherché.",
       badge: "Exclusif",
       badgeColor: "bg-[#FF6F00]",
       highlight: true,
@@ -34,8 +34,8 @@ export default function Features() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 10h10M7 14h10" />
         </svg>
       ),
-      title: "50 Templates Plomberie Gratuits",
-      description: "Installation chauffe-eau, dépannage fuite, rénovation SDB... tous les cas courants pré-remplis avec prix 2025. Personnalisables en 2 clics.",
+      title: "50 devis types plomberie",
+      description: "Chauffe-eau, fuite, rénovation salle de bain, installation chaudière... tous les chantiers courants sont pré-remplis avec les prix 2025. Personnalisez en 2 clics et c'est prêt.",
       badge: "Exclusif",
       badgeColor: "bg-[#FF6F00]",
       highlight: true,

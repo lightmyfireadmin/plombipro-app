@@ -5,13 +5,13 @@ export default function Comparison() {
       description: "Pour tous les secteurs d'activité",
       icon: "📄",
       limitations: [
-        "Pas de scanner OCR pour factures fournisseurs",
-        "Pas de catalogues Point P & Cedeo intégrés",
-        "Templates générique pour tous les métiers",
-        "Pas de calculateurs techniques",
-        "Aucune spécialisation plomberie",
+        "Pas de scan automatique des factures fournisseurs",
+        "Pas de catalogues Point P & Cedeo",
+        "Devis générique pour tous les métiers",
+        "Pas de calculateurs plomberie",
+        "Aucune spécialisation pour votre métier",
       ],
-      plombiProSolution: "PlombiPro est construit UNIQUEMENT pour les plombiers avec OCR + catalogues fournisseurs intégrés",
+      plombiProSolution: "PlombiPro est le SEUL logiciel conçu à 100% pour les plombiers : scan automatique + catalogues Point P et Cedeo intégrés",
     },
     {
       category: "Les ERP BTP complets",
@@ -44,13 +44,13 @@ export default function Comparison() {
       description: "Solutions construction non spécialisées",
       icon: "🔧",
       limitations: [
-        "BTP générique (pas 100% plomberie)",
-        "Pas de scanner OCR mentionné",
-        "Pas de catalogues Point P/Cedeo",
-        "Tarifs non transparents",
-        "Manque d'innovation technique",
+        "BTP générique (pas exclusif plombiers)",
+        "Pas de scan automatique des factures",
+        "Pas de catalogues Point P ou Cedeo",
+        "Prix cachés ou non affichés",
+        "Pas d'innovation sur le gain de temps",
       ],
-      plombiProSolution: "PlombiPro innove avec OCR + catalogues et affiche ses prix clairement",
+      plombiProSolution: "PlombiPro est exclusif plombiers, avec scan automatique + catalogues intégrés. Prix affiché : 19,90€/mois, le plus bas du marché",
     },
   ];
 
@@ -61,8 +61,8 @@ export default function Comparison() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
         </svg>
       ),
-      title: "Scanner OCR Unique",
-      description: "AUCUN concurrent n'a de scanner pour factures Point P/Cedeo. Économisez 15 min par devis.",
+      title: "Scan automatique unique",
+      description: "AUCUN autre logiciel ne scanne vos factures Point P et Cedeo. Économisez 15 min sur chaque devis.",
       badge: "Exclusif",
     },
     {

@@ -3,43 +3,45 @@ export default function Pricing() {
     {
       name: "Gratuit",
       price: "0",
+      originalPrice: null,
       period: "pour toujours",
-      description: "Pour essayer sans sortir la carte bleue",
+      description: "Pour tester sans carte bancaire",
       features: [
         "5 devis par mois",
         "5 factures par mois",
-        "Scanner OCR illimité",
-        "Catalogues Point P & Cedeo",
+        "Scan automatique illimité",
+        "Accès aux 50 000 articles",
         "Gestion des clients",
-        "Application mobile iOS/Android",
+        "Application mobile",
         "Support par email",
       ],
       cta: "Essayer gratuitement (sans CB)",
       popular: false,
       gradient: "from-gray-700 to-gray-900",
+      badge: null,
     },
     {
       name: "Pro",
-      price: "9,90",
-      originalPrice: "19,90",
+      price: "19,90",
+      originalPrice: null,
       period: "par mois",
-      description: "L'offre complète pour les pros (offre de lancement)",
+      description: "Tout illimité, le prix le plus bas du marché",
       features: [
         "Devis & factures illimités",
-        "Scanner OCR illimité",
-        "Catalogues Point P & Cedeo",
+        "Scan automatique illimité",
+        "50 000 articles Point P & Cedeo",
+        "50 devis types plomberie",
         "Gestion des chantiers",
         "Suivi de rentabilité",
-        "Relances automatiques",
+        "Relances automatiques SMS/Email",
         "Export comptable",
-        "Factur-X & Chorus Pro",
+        "Conforme facturation 2026",
         "Support prioritaire",
-        "Personnalisation avancée",
       ],
       cta: "Essai gratuit 14 jours (sans CB)",
       popular: true,
       gradient: "from-[#1976D2] to-[#1565C0]",
-      badge: "Offre de lancement",
+      badge: "LE - CHER",
     },
   ];
 
@@ -47,15 +49,18 @@ export default function Pricing() {
     <section id="pricing" className="py-20 bg-gradient-to-br from-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Tarifs simples et transparents
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center bg-gradient-to-r from-[#FF6F00] to-[#E65100] text-white rounded-full px-6 py-2 font-bold text-sm mb-4">
+            💰 LE PRIX LE PLUS BAS DU MARCHÉ
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+            19,90€/mois tout compris
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Commencez gratuitement. Passez en Pro quand vous êtes prêt. <strong>Aucun engagement.</strong>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-4">
+            Les autres logiciels : 40€ à 150€/mois. <strong>PlombiPro : moins cher, plus puissant.</strong>
           </p>
-          <div className="mt-6 inline-flex items-center bg-blue-50 rounded-full px-6 py-3">
-            <svg className="w-5 h-5 text-[#4CAF50] mr-2" fill="currentColor" viewBox="0 0 20 20">
+          <div className="inline-flex items-center bg-blue-50 rounded-full px-5 py-2 text-sm">
+            <svg className="w-4 h-4 text-[#4CAF50] mr-2" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
             </svg>
             <span className="text-gray-700 font-medium">Annulez quand vous voulez • Résiliez en 2 clics</span>
