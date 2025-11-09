@@ -46,10 +46,66 @@ export default function Hero() {
       <div className="absolute top-40 right-10 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
       <div className="absolute -bottom-8 left-40 w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      {/* Mobile Phone Background - Behind everything */}
+      <div className="lg:hidden absolute inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute right-[-120px] top-20 w-80 h-[620px] opacity-100">
+          <div className="relative w-full h-full bg-gradient-to-br from-gray-900 to-gray-800 rounded-[2.5rem] p-3 shadow-2xl transform rotate-12">
+            <div className="bg-white rounded-[2rem] h-full overflow-hidden">
+              <div className="bg-gradient-to-r from-[#1976D2] to-[#1565C0] px-4 py-3 flex items-center justify-between text-white text-xs">
+                <span className="font-semibold">9:41</span>
+                <div className="flex gap-1">
+                  <div className="w-3 h-3 bg-white/30 rounded"></div>
+                  <div className="w-3 h-3 bg-white/50 rounded"></div>
+                  <div className="w-3 h-3 bg-white rounded"></div>
+                </div>
+              </div>
+              <div className="p-4 bg-gradient-to-br from-blue-50 to-white h-full">
+                <div className="text-center mb-4">
+                  <h3 className="text-lg font-bold text-gray-900">Scan universel</h3>
+                  <p className="text-xs text-gray-600">Factures, devis, récapitulatifs...</p>
+                </div>
+                <div className="relative bg-gray-100 rounded-xl p-4 mb-3 aspect-square flex items-center justify-center border-2 border-dashed border-blue-300">
+                  <div className="absolute top-3 left-3 right-3 bottom-3 border-2 border-[#FF6F00] rounded-lg animate-pulse"></div>
+                  <svg className="w-16 h-16 text-[#1976D2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+                <div className="bg-white rounded-lg p-3 shadow-md">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                      <span className="text-green-600 font-bold text-xs">✓</span>
+                    </div>
+                    <span className="text-xs font-semibold text-gray-900">8 articles détectés</span>
+                  </div>
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between text-[10px] text-gray-600">
+                      <span>Radiateur 1500W</span>
+                      <span className="font-semibold">189€</span>
+                    </div>
+                    <div className="flex justify-between text-[10px] text-gray-600">
+                      <span>Tuyau PER Ø16</span>
+                      <span className="font-semibold">38€</span>
+                    </div>
+                    <div className="flex justify-between text-[10px] text-gray-600">
+                      <span>Raccords x10</span>
+                      <span className="font-semibold">18€</span>
+                    </div>
+                  </div>
+                </div>
+                <button className="w-full mt-3 bg-gradient-to-r from-[#FF6F00] to-[#E65100] text-white py-2 rounded-lg font-bold text-xs shadow-md">
+                  Créer le devis
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Column - Text Content */}
-          <div className="text-center lg:text-left">
+          {/* Left Column - Text Content with backdrop on mobile */}
+          <div className="text-center lg:text-left relative z-50">
             {/* 2026 Urgency Badge with Countdown */}
             <div className="inline-flex flex-col items-center bg-gradient-to-r from-red-500 to-orange-500 rounded-xl px-4 sm:px-6 py-3 sm:py-4 mb-4 sm:mb-6 shadow-2xl">
               <div className="flex items-center mb-1.5 sm:mb-2">
@@ -87,13 +143,17 @@ export default function Hero() {
               </span>
             </h1>
 
-            <p className="text-base sm:text-lg text-blue-100 mb-5 sm:mb-6 leading-relaxed">
-              Photographiez n'importe quelle facture ou devis : les articles s'ajoutent automatiquement. 10 principaux fournisseurs intégrés (Point P, Cedeo, Leroy Merlin...).
-              <br className="hidden sm:block" />
-              <strong className="text-white">Créez un devis complet en 2 minutes</strong> au lieu de 45.
-              <br className="hidden sm:block" />
-              <span className="text-[#4CAF50] font-bold">Prix ultra-compétitif.</span> Conforme Factur-X 2026 (Chorus Pro).
-            </p>
+            <div className="lg:bg-transparent bg-[#1976D2]/85 backdrop-blur-sm lg:backdrop-blur-none rounded-2xl lg:rounded-none p-4 lg:p-0 mb-5 sm:mb-6">
+              <p className="text-base sm:text-lg text-blue-100 leading-relaxed">
+                <strong className="text-white">Scannez n'importe quel document</strong> (factures, devis, récapitulatifs, bons de commande...) : extraction automatique complète.
+                <br className="hidden sm:block" />
+                Catalogues intégrés : <span className="text-white font-semibold">Point P, Cedeo, Leroy Merlin, Manomano, Castorama, Waterout</span> + 4 autres.
+                <br className="hidden sm:block" />
+                <strong className="text-white">Gérez tout</strong> : CA, marges, taxes, planning, GPS automatique, relances clients.
+                <br className="hidden sm:block" />
+                <span className="text-[#4CAF50] font-bold">Conforme Factur-X 2026 (Chorus Pro).</span> 19,90€/mois tout compris.
+              </p>
+            </div>
 
             {/* Key USPs - Animated */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 mb-6">
@@ -202,77 +262,36 @@ export default function Hero() {
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Mobile Phone Background - Enhanced */}
-          <div className="lg:hidden absolute inset-0 pointer-events-none overflow-hidden">
-            {/* Phone Mockup with Content */}
-            <div className="absolute right-[-120px] top-20 w-80 h-[620px] opacity-100">
-              {/* Phone Frame */}
-              <div className="relative w-full h-full bg-gradient-to-br from-gray-900 to-gray-800 rounded-[2.5rem] p-3 shadow-2xl transform rotate-12">
-                <div className="bg-white rounded-[2rem] h-full overflow-hidden">
-                  {/* Status Bar */}
-                  <div className="bg-gradient-to-r from-[#1976D2] to-[#1565C0] px-4 py-3 flex items-center justify-between text-white text-xs">
-                    <span className="font-semibold">9:41</span>
-                    <div className="flex gap-1">
-                      <div className="w-3 h-3 bg-white/30 rounded"></div>
-                      <div className="w-3 h-3 bg-white/50 rounded"></div>
-                      <div className="w-3 h-3 bg-white rounded"></div>
-                    </div>
-                  </div>
+            {/* Floating Success Cards - Mobile */}
+            <div className="lg:hidden relative z-40 mt-6 space-y-3">
+              {/* Accepted Quote Card */}
+              <div className="bg-white rounded-xl shadow-xl p-4 border-2 border-green-200 animate-fade-in-up">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-semibold text-gray-600">Devis #2847</span>
+                  <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full font-bold">Accepté ✓</span>
+                </div>
+                <p className="text-2xl font-extrabold text-gray-900">4 280 €</p>
+                <p className="text-xs text-gray-600 mb-2">Rénovation salle de bain</p>
+                <div className="flex items-center gap-1.5 text-xs text-green-700 bg-green-50 rounded-lg p-2">
+                  <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                  </svg>
+                  <span className="font-semibold">Créé en 2 min par scan</span>
+                </div>
+              </div>
 
-                  {/* App Content Preview */}
-                  <div className="p-4 bg-gradient-to-br from-blue-50 to-white h-full">
-                    <div className="text-center mb-4">
-                      <h3 className="text-lg font-bold text-gray-900">Scan automatique</h3>
-                      <p className="text-xs text-gray-600">Toute facture ou devis</p>
-                    </div>
-
-                    {/* Camera View */}
-                    <div className="relative bg-gray-100 rounded-xl p-4 mb-3 aspect-square flex items-center justify-center border-2 border-dashed border-blue-300">
-                      <div className="absolute top-3 left-3 right-3 bottom-3 border-2 border-[#FF6F00] rounded-lg animate-pulse"></div>
-                      <svg className="w-16 h-16 text-[#1976D2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                    </div>
-
-                    {/* Extracted Items */}
-                    <div className="bg-white rounded-lg p-3 shadow-md">
-                      <div className="flex items-center gap-2 mb-2">
-                        <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
-                          <span className="text-green-600 font-bold text-xs">✓</span>
-                        </div>
-                        <span className="text-xs font-semibold text-gray-900">8 articles détectés</span>
-                      </div>
-                      <div className="space-y-1.5">
-                        <div className="flex justify-between text-[10px] text-gray-600">
-                          <span>Radiateur 1500W</span>
-                          <span className="font-semibold">189€</span>
-                        </div>
-                        <div className="flex justify-between text-[10px] text-gray-600">
-                          <span>Tuyau PER Ø16</span>
-                          <span className="font-semibold">38€</span>
-                        </div>
-                        <div className="flex justify-between text-[10px] text-gray-600">
-                          <span>Raccords x10</span>
-                          <span className="font-semibold">18€</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Mini CTA */}
-                    <button className="w-full mt-3 bg-gradient-to-r from-[#FF6F00] to-[#E65100] text-white py-2 rounded-lg font-bold text-xs shadow-md">
-                      Créer le devis
-                    </button>
-                  </div>
+              {/* Time Saved Card */}
+              <div className="bg-gradient-to-br from-[#FF6F00] to-[#E65100] text-white rounded-xl shadow-xl p-4 animate-fade-in-up animation-delay-200">
+                <p className="text-xs font-semibold mb-1">Temps économisé ce mois</p>
+                <p className="text-3xl font-extrabold mb-1">12h</p>
+                <p className="text-xs opacity-90 mb-2">= 600€ de temps facturable</p>
+                <div className="pt-2 border-t border-white/30">
+                  <p className="text-[10px]">sur 25 devis créés</p>
                 </div>
               </div>
             </div>
           </div>
-
-          {/* Text Content Backdrop for Readability on Mobile */}
-          <div className="lg:hidden absolute inset-0 bg-gradient-to-r from-[#1976D2]/95 via-[#1565C0]/90 via-40% to-transparent pointer-events-none"></div>
 
           {/* Right Column - Interactive Demo Mockup */}
           <div className="hidden lg:block relative">
@@ -412,6 +431,7 @@ export default function Hero() {
         }
         .animate-gradient-x { animation: gradient-x 3s ease infinite; background-size: 200% 200%; }
         .animate-blob { animation: blob 7s infinite; }
+        .animation-delay-200 { animation-delay: 200ms; }
         .animation-delay-2000 { animation-delay: 2s; }
         .animation-delay-4000 { animation-delay: 4s; }
         .animate-bounce-soft { animation: bounce-soft 2s ease-in-out infinite; }

@@ -9,7 +9,7 @@ export default function FAQ() {
     {
       question: "Pourquoi c'est gratuit jusqu'à 5 devis ?",
       answer:
-        "Parce qu'on veut que vous testiez l'OCR et les catalogues Point P/Cedeo avant de sortir la carte bleue. Si ça ne vous plaît pas, vous gardez le gratuit à vie. Zéro risque.",
+        "Parce qu'on veut que vous testiez le scan universel et les catalogues des 10 fournisseurs avant de sortir la carte bleue. Si ça ne vous plaît pas, vous gardez le gratuit à vie. Zéro risque.",
     },
     {
       question: "Mes données sont stockées où ?",
@@ -17,9 +17,9 @@ export default function FAQ() {
         "En France et en Europe (serveurs Supabase EU en Irlande) avec sauvegardes quotidiennes automatiques. On ne revend JAMAIS vos données. Conformité RGPD totale.",
     },
     {
-      question: "Point P et Cedeo sont vraiment intégrés ?",
+      question: "Les 10 fournisseurs sont vraiment intégrés ?",
       answer:
-        "Oui. Plus de 50 000 articles avec prix à jour. On actualise les catalogues toutes les semaines automatiquement. Vous recherchez un produit, hop il est dans votre devis.",
+        "Oui. Plus de 50 000 articles (Point P, Cedeo, Leroy Merlin, Manomano, Castorama, Waterout, Distriartisan, SIDER, Legallais, Domomat) avec prix à jour. Catalogues actualisés automatiquement. Vous recherchez un produit, hop il est dans votre devis.",
     },
     {
       question: "Je serai vraiment conforme en 2026 ?",

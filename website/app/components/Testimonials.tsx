@@ -5,7 +5,7 @@ export default function Testimonials() {
       role: "Plombier chauffagiste, Paris",
       company: "JM Plomberie",
       image: null, // Placeholder for actual image
-      quote: "Le scanner OCR est une révolution. Je photographie mes factures Point P et hop, tout est dans le devis. J'ai gagné 2 heures par jour, c'est énorme.",
+      quote: "Le scan universel est une révolution. Je photographie n'importe quel document et hop, tout est dans le devis. Plus de ressaisie ! J'ai gagné 2 heures par jour, c'est énorme.",
       rating: 5,
       stat: "2h/jour économisées",
     },
@@ -14,7 +14,7 @@ export default function Testimonials() {
       role: "Plombier indépendant, Lyon",
       company: "MD Services",
       image: null,
-      quote: "Avant je perdais du temps à ressaisir les prix du catalogue Cedeo. Maintenant c'est intégré. En plus je vois enfin quels chantiers sont vraiment rentables.",
+      quote: "Catalogues des 10 fournisseurs intégrés, GPS automatique pour mes tournées, suivi du CA en temps réel... En plus je vois enfin quels chantiers sont vraiment rentables.",
       rating: 5,
       stat: "+35% de rentabilité",
     },
@@ -122,13 +122,16 @@ export default function Testimonials() {
 
         {/* Social Proof Logos */}
         <div className="mt-16 text-center">
-          <p className="text-gray-600 mb-8">Compatible avec vos outils</p>
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12 opacity-60">
-            <div className="text-gray-400 font-bold text-xl">Point P</div>
-            <div className="text-gray-400 font-bold text-xl">Cedeo</div>
-            <div className="text-gray-400 font-bold text-xl">Chorus Pro</div>
-            <div className="text-gray-400 font-bold text-xl">Stripe</div>
-            <div className="text-gray-400 font-bold text-xl">iOS & Android</div>
+          <p className="text-gray-600 mb-8">Compatible avec les 10 principaux fournisseurs + vos outils</p>
+          <div className="flex flex-wrap justify-center items-center gap-6 md:gap-8 opacity-60">
+            <div className="text-gray-400 font-bold text-base md:text-lg">Point P</div>
+            <div className="text-gray-400 font-bold text-base md:text-lg">Cedeo</div>
+            <div className="text-gray-400 font-bold text-base md:text-lg">Leroy Merlin</div>
+            <div className="text-gray-400 font-bold text-base md:text-lg">Manomano</div>
+            <div className="text-gray-400 font-bold text-base md:text-lg">Castorama</div>
+            <div className="text-gray-400 font-bold text-base md:text-lg">Waterout</div>
+            <div className="text-gray-400 font-bold text-base md:text-lg">Chorus Pro</div>
+            <div className="text-gray-400 font-bold text-base md:text-lg">iOS & Android</div>
           </div>
         </div>
 

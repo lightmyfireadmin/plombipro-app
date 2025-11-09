@@ -7,15 +7,15 @@ export default function BeforeAfter() {
       highlight: true,
     },
     {
-      task: "Chercher prix Point P",
-      before: "15 min (catalogue papier)",
-      after: "10 sec (catalogue intégré)",
+      task: "Chercher prix fournisseurs",
+      before: "15 min (catalogues papier)",
+      after: "10 sec (10 catalogues intégrés)",
       highlight: false,
     },
     {
-      task: "Ressaisir facture fournisseur",
+      task: "Ressaisir documents fournisseurs",
       before: "20 min de saisie manuelle",
-      after: "30 sec (scan OCR)",
+      after: "30 sec (scan universel)",
       highlight: false,
     },
     {
