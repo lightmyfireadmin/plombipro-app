@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 // import 'package:flutter_stripe/flutter_stripe.dart'; // Uncomment if Stripe UI is used
 
 import 'config/router.dart';
@@ -34,7 +35,12 @@ void main() async {
   //   Stripe.publishableKey = stripePublishableKey;
   // }
 
-  runApp(const MyApp());
+  // Wrap app with ProviderScope for Riverpod state management
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
