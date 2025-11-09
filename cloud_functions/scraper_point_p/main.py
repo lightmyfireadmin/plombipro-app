@@ -276,22 +276,37 @@ class PointPScraper:
         return products
 
     def save_products(self, products):
-        """Save products to Supabase"""
+        """Save products to Supabase supplier_products table"""
         saved_count = 0
         for product in products:
             try:
-                # Upsert based on reference if available, otherwise name + source
-                if 'reference' in product:
-                    existing = supabase.table('products').select('id').eq('reference', product['reference']).eq('source', 'pointp').execute()
-                else:
-                    existing = supabase.table('products').select('id').eq('name', product['name']).eq('source', 'pointp').execute()
+                # Transform product data to match supplier_products schema
+                supplier_product = {
+                    'supplier': 'point_p',
+                    'supplier_product_id': product.get('reference'),
+                    'reference': product.get('reference', ''),
+                    'name': product['name'],
+                    'description': product.get('description'),
+                    'category': product.get('category'),
+                    'price': product.get('purchase_price_ht') or product.get('selling_price_ht'),
+                    'price_unit': 'unité',
+                    'vat_rate': 20.0,
+                    'in_stock': True,
+                    'is_active': True,
+                    'image_url': product.get('image_url'),
+                    'product_url': product.get('url'),
+                    'last_scraped_at': datetime.utcnow().isoformat(),
+                }
+
+                # Upsert based on supplier + reference (unique constraint)
+                existing = supabase.table('supplier_products').select('id').eq('supplier', 'point_p').eq('reference', supplier_product['reference']).execute()
 
                 if existing.data:
                     # Update existing
-                    supabase.table('products').update(product).eq('id', existing.data[0]['id']).execute()
+                    supabase.table('supplier_products').update(supplier_product).eq('id', existing.data[0]['id']).execute()
                 else:
                     # Insert new
-                    supabase.table('products').insert(product).execute()
+                    supabase.table('supplier_products').insert(supplier_product).execute()
 
                 saved_count += 1
                 self.products_scraped += 1

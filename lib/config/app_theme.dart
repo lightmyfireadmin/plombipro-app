@@ -1,54 +1,52 @@
 import 'package:flutter/material.dart';
+import 'plombipro_colors.dart';
+import 'plombipro_text_styles.dart';
+import 'plombipro_spacing.dart';
 
-/// Custom Material Design 3 theme for PlombiPro
-/// Based on PLOMBIFACTO.pdf color specifications
+/// PlombiPro App Theme
+/// Material Design 3 theme using PlombiPro design system
+/// Provides consistent theming across the entire application
 class AppTheme {
-  // Primary Color Palette
-  static const Color primaryBlue = Color(0xFF1976D2); // #1976D2
-  static const Color primaryDark = Color(0xFF1565C0); // #1565C0
-  static const Color primaryLight = Color(0xFF42A5F5); // #42A5F5
-
-  // Accent/Secondary Color Palette
-  static const Color accentOrange = Color(0xFFFF6F00); // #FF6F00
-  static const Color accentLight = Color(0xFFFFA726); // #FFA726
-
-  // Semantic Colors
-  static const Color successGreen = Color(0xFF4CAF50); // #4CAF50
-  static const Color errorRed = Color(0xFFF44336); // #F44336
-  static const Color warningOrange = Color(0xFFFF9800); // #FF9800
-  static const Color infoBlue = Color(0xFF2196F3); // #2196F3
-
-  // Background & Surface Colors
-  static const Color backgroundLight = Color(0xFFFAFAFA); // #FAFAFA
-  static const Color surfaceLight = Color(0xFFFFFFFF); // #FFFFFF
-  static const Color surfaceDark = Color(0xFF121212); // #121212
-
-  // Text Colors
-  static const Color textPrimary = Color(0xFF212121); // #212121
-  static const Color textSecondary = Color(0xFF757575); // #757575
-  static const Color textDisabled = Color(0xFFBDBDBD); // #BDBDBD
+  // Legacy color constants for backward compatibility
+  static const Color primaryBlue = PlombiProColors.primaryBlue;
+  static const Color primaryDark = PlombiProColors.primaryBlueDark;
+  static const Color primaryLight = PlombiProColors.primaryBlueLight;
+  static const Color accentOrange = PlombiProColors.secondaryOrange;
+  static const Color accentLight = PlombiProColors.secondaryOrangeLight;
+  static const Color successGreen = PlombiProColors.success;
+  static const Color errorRed = PlombiProColors.error;
+  static const Color warningOrange = PlombiProColors.warning;
+  static const Color infoBlue = PlombiProColors.info;
+  static const Color backgroundLight = PlombiProColors.backgroundLight;
+  static const Color surfaceLight = PlombiProColors.surfaceLight;
+  static const Color surfaceDark = PlombiProColors.surfaceDark;
+  static const Color textPrimary = PlombiProColors.textPrimaryLight;
+  static const Color textSecondary = PlombiProColors.textSecondaryLight;
+  static const Color textDisabled = PlombiProColors.textDisabledLight;
 
   /// Light Theme
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
 
-    // Color Scheme
+    // Color Scheme using PlombiProColors
     colorScheme: ColorScheme.light(
-      primary: primaryBlue,
-      primaryContainer: primaryLight,
-      secondary: accentOrange,
-      secondaryContainer: accentLight,
-      surface: surfaceLight,
-      error: errorRed,
-      onPrimary: Colors.white,
-      onSecondary: Colors.white,
-      onSurface: textPrimary,
-      onError: Colors.white,
+      primary: PlombiProColors.primaryBlue,
+      primaryContainer: PlombiProColors.primaryBlueLight,
+      secondary: PlombiProColors.secondaryOrange,
+      secondaryContainer: PlombiProColors.secondaryOrangeLight,
+      tertiary: PlombiProColors.tertiaryTeal,
+      tertiaryContainer: PlombiProColors.tertiaryTealLight,
+      surface: PlombiProColors.surfaceLight,
+      error: PlombiProColors.error,
+      onPrimary: PlombiProColors.white,
+      onSecondary: PlombiProColors.white,
+      onSurface: PlombiProColors.textPrimaryLight,
+      onError: PlombiProColors.white,
     ),
 
     // Scaffold
-    scaffoldBackgroundColor: backgroundLight,
+    scaffoldBackgroundColor: PlombiProColors.backgroundLight,
 
     // App Bar
     appBarTheme: const AppBarTheme(
@@ -64,24 +62,24 @@ class AppTheme {
       ),
     ),
 
-    // Card
+    // Card using PlombiProSpacing
     cardTheme: CardThemeData(
-      elevation: 2,
+      elevation: PlombiProSpacing.elevationSM,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: PlombiProSpacing.borderRadiusMD,
       ),
       clipBehavior: Clip.antiAlias,
     ),
 
-    // Elevated Button
+    // Elevated Button using PlombiProColors and PlombiProSpacing
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: primaryBlue,
-        foregroundColor: Colors.white,
-        elevation: 2,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        backgroundColor: PlombiProColors.primaryBlue,
+        foregroundColor: PlombiProColors.white,
+        elevation: PlombiProSpacing.elevationSM,
+        padding: PlombiProSpacing.buttonPadding,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: PlombiProSpacing.borderRadiusSM,
         ),
       ),
     ),
@@ -291,87 +289,27 @@ class AppTheme {
       indicatorSize: TabBarIndicatorSize.tab,
     ),
 
-    // Text Theme
+    // Text Theme using PlombiProTextStyles
     textTheme: const TextTheme(
-      displayLarge: TextStyle(
-        fontSize: 57,
-        fontWeight: FontWeight.w400,
-        color: textPrimary,
-      ),
-      displayMedium: TextStyle(
-        fontSize: 45,
-        fontWeight: FontWeight.w400,
-        color: textPrimary,
-      ),
-      displaySmall: TextStyle(
-        fontSize: 36,
-        fontWeight: FontWeight.w400,
-        color: textPrimary,
-      ),
-      headlineLarge: TextStyle(
-        fontSize: 32,
-        fontWeight: FontWeight.w400,
-        color: textPrimary,
-      ),
-      headlineMedium: TextStyle(
-        fontSize: 28,
-        fontWeight: FontWeight.w400,
-        color: textPrimary,
-      ),
-      headlineSmall: TextStyle(
-        fontSize: 24,
-        fontWeight: FontWeight.w400,
-        color: textPrimary,
-      ),
-      titleLarge: TextStyle(
-        fontSize: 22,
-        fontWeight: FontWeight.w500,
-        color: textPrimary,
-      ),
-      titleMedium: TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.w500,
-        color: textPrimary,
-      ),
-      titleSmall: TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.w500,
-        color: textPrimary,
-      ),
-      bodyLarge: TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.w400,
-        color: textPrimary,
-      ),
-      bodyMedium: TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.w400,
-        color: textPrimary,
-      ),
-      bodySmall: TextStyle(
-        fontSize: 12,
-        fontWeight: FontWeight.w400,
-        color: textSecondary,
-      ),
-      labelLarge: TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.w500,
-        color: textPrimary,
-      ),
-      labelMedium: TextStyle(
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
-        color: textPrimary,
-      ),
-      labelSmall: TextStyle(
-        fontSize: 11,
-        fontWeight: FontWeight.w500,
-        color: textSecondary,
-      ),
+      displayLarge: PlombiProTextStyles.displayLarge,
+      displayMedium: PlombiProTextStyles.displayMedium,
+      displaySmall: PlombiProTextStyles.displaySmall,
+      headlineLarge: PlombiProTextStyles.headlineLarge,
+      headlineMedium: PlombiProTextStyles.headlineMedium,
+      headlineSmall: PlombiProTextStyles.headlineSmall,
+      titleLarge: PlombiProTextStyles.titleLarge,
+      titleMedium: PlombiProTextStyles.titleMedium,
+      titleSmall: PlombiProTextStyles.titleSmall,
+      bodyLarge: PlombiProTextStyles.bodyLarge,
+      bodyMedium: PlombiProTextStyles.bodyMedium,
+      bodySmall: PlombiProTextStyles.bodySmall,
+      labelLarge: PlombiProTextStyles.labelLarge,
+      labelMedium: PlombiProTextStyles.labelMedium,
+      labelSmall: PlombiProTextStyles.labelSmall,
     ),
 
-    // Font Family (Roboto is default for Material)
-    fontFamily: 'Roboto',
+    // Font Family from PlombiProTextStyles
+    fontFamily: PlombiProTextStyles.fontFamily,
   );
 
   /// Dark Theme

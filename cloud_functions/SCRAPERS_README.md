@@ -214,30 +214,42 @@ This will only scrape the first 2 categories.
 
 ## Database Schema
 
-Products are saved to the `products` table with the following fields:
+Products are saved to the `supplier_products` table with the following fields:
 
 ```sql
-CREATE TABLE products (
+CREATE TABLE supplier_products (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  user_id UUID REFERENCES auth.users(id),  -- NULL for scraped products
+  supplier TEXT NOT NULL CHECK (supplier IN ('point_p', 'cedeo', 'leroy_merlin', 'castorama')),
+  supplier_product_id TEXT,
+  reference TEXT NOT NULL,
   name TEXT NOT NULL,
   description TEXT,
-  reference TEXT,
   category TEXT,
-  purchase_price_ht DECIMAL(10,2),
-  selling_price_ht DECIMAL(10,2),
-  vat_rate DECIMAL(5,2) DEFAULT 20.00,
-  source TEXT,  -- 'pointp' or 'cedeo'
+  subcategory TEXT,
+  product_type TEXT,
+  price NUMERIC(10, 2),
+  price_unit TEXT,
+  vat_rate NUMERIC(5, 2) DEFAULT 20.0,
+  in_stock BOOLEAN DEFAULT true,
+  is_active BOOLEAN DEFAULT true,
+  brand TEXT,
+  specifications JSONB,
   image_url TEXT,
-  scraped_at TIMESTAMP WITH TIME ZONE,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+  product_url TEXT,
+  diameter_mm NUMERIC(10, 2),
+  length_m NUMERIC(10, 2),
+  material TEXT,
+  last_scraped_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
+  UNIQUE(supplier, reference)
 );
 
--- Indexes for scraper queries
-CREATE INDEX idx_products_source ON products(source);
-CREATE INDEX idx_products_reference_source ON products(reference, source);
-CREATE INDEX idx_products_name_source ON products(name, source);
+-- Indexes for scraper queries and app search
+CREATE INDEX idx_supplier_products_supplier ON supplier_products(supplier);
+CREATE INDEX idx_supplier_products_category ON supplier_products(category);
+CREATE INDEX idx_supplier_products_active ON supplier_products(is_active);
+CREATE INDEX idx_supplier_products_search ON supplier_products USING GIN(search_vector);
 ```
 
 ---

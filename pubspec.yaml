@@ -17,6 +17,10 @@ dependencies:
   firebase_core: ^3.4.0
   supabase_flutter: ^2.5.3
 
+  # State Management
+  flutter_riverpod: ^2.5.1
+  riverpod_annotation: ^2.3.5
+
   # Biometric Authentication
   local_auth: ^2.3.0
   flutter_secure_storage: ^9.2.2
@@ -54,6 +58,8 @@ dev_dependencies:
   # PlombiPro Dev Dependencies
   build_runner: ^2.4.9
   freezed: ^2.4.7
+  riverpod_generator: ^2.4.0
+  riverpod_lint: ^2.3.10
 
   flutter_lints: ^4.0.0
   json_serializable: ^6.8.0
