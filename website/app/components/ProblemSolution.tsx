@@ -1,40 +1,40 @@
 export default function ProblemSolution() {
   const problems = [
     {
-      badge: "Adieu Excel",
+      badge: "Fini les erreurs",
       color: "from-[#4CAF50] to-[#45A049]",
       textColor: "text-[#4CAF50]",
       borderColor: "border-[#4CAF50]",
       icon: "✓",
-      problem: "Vous perdez du temps avec Excel et les erreurs de calcul ?",
-      solution: "PlombiPro calcule automatiquement vos devis avec les bons taux de TVA, marges et remises. Zéro erreur, gain de temps immédiat.",
+      problem: "Vous en avez assez des erreurs de calcul dans vos devis ?",
+      solution: "L'application calcule automatiquement les montants, TVA, marges et remises. Fini les erreurs et les pertes de temps.",
     },
     {
-      badge: "Ne passez plus vos soirées",
+      badge: "Gagnez du temps",
       color: "from-[#FF6F00] to-[#E65100]",
       textColor: "text-[#FF6F00]",
       borderColor: "border-[#FF6F00]",
       icon: "⏰",
-      problem: "Vous passez vos soirées à ressaisir vos factures ?",
-      solution: "Prenez vos factures Point P et Cedeo en photo : tous les articles sont ajoutés automatiquement à votre devis. 2 minutes au lieu de 20.",
+      problem: "Trop de temps perdu à ressaisir vos achats fournisseurs ?",
+      solution: "Photographiez vos factures Point P ou Cedeo : les articles s'ajoutent automatiquement dans le devis. 2 minutes au lieu de 20.",
     },
     {
-      badge: "Ne perdez plus 1€",
+      badge: "Récupérez vos impayés",
       color: "from-[#FFC107] to-[#FFB300]",
       textColor: "text-[#FFC107]",
       borderColor: "border-[#FFC107]",
       icon: "💰",
-      problem: "Vous avez des impayés qui traînent ?",
-      solution: "Relances automatiques par email et SMS. Suivi des paiements en temps réel. PlombiPro vous alerte et relance vos clients pour vous.",
+      problem: "Des factures impayées qui s'accumulent ?",
+      solution: "Relances automatiques par email et SMS selon votre planning. Tableau de bord des paiements en attente. L'application vous alerte et relance pour vous.",
     },
     {
-      badge: "Toujours conforme",
+      badge: "Conforme 2026",
       color: "from-[#2196F3] to-[#1976D2]",
       textColor: "text-[#2196F3]",
       borderColor: "border-[#2196F3]",
       icon: "🛡️",
-      problem: "Vous avez peur de ne pas être conforme en 2026 ?",
-      solution: "Factur-X intégré, Chorus Pro compatible, prêt pour la facturation électronique obligatoire. Mises à jour automatiques selon les nouvelles réglementations.",
+      problem: "Inquiet face à la facturation électronique obligatoire ?",
+      solution: "Factur-X intégré, Chorus Pro compatible. Prêt dès maintenant pour septembre 2026. Mises à jour automatiques incluses.",
     },
   ];
 
@@ -42,12 +42,12 @@ export default function ProblemSolution() {
     <section className="py-12 sm:py-16 bg-gradient-to-br from-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-10 sm:mb-12">
+        <div className="text-center mb-8 sm:mb-10">
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
-            Vous reconnaissez-vous ?
+            Vos défis quotidiens
           </h2>
           <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
-            PlombiPro résout les problèmes quotidiens des plombiers.
+            Une application pensée pour répondre aux vrais besoins des plombiers.
           </p>
         </div>
 
@@ -96,9 +96,9 @@ export default function ProblemSolution() {
         </div>
 
         {/* Bottom CTA */}
-        <div className="mt-10 sm:mt-12 text-center">
+        <div className="mt-8 sm:mt-10 text-center">
           <p className="text-gray-600 mb-4 text-base sm:text-lg">
-            Prêt à dire adieu à ces problèmes ?
+            Simplifiez votre quotidien dès aujourd'hui
           </p>
           <a
             href="#pricing"
@@ -107,7 +107,7 @@ export default function ProblemSolution() {
             Essayer gratuitement (sans CB)
           </a>
           <p className="text-gray-500 mt-3 text-xs sm:text-sm">
-            5 devis offerts • Résiliation en 2 clics • Aucune CB requise
+            14 jours d'essai offerts • Résiliation en 2 clics • Aucune CB requise
           </p>
         </div>
       </div>

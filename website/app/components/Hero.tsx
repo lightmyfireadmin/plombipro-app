@@ -78,21 +78,21 @@ export default function Hero() {
 
             {/* Main Headline - Enhanced */}
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight mb-4 sm:mb-6 animate-fade-in-up">
-              Le <span className="relative">
-                <span className="relative z-10">SEUL</span>
+              La <span className="relative">
+                <span className="relative z-10">SEULE</span>
                 <span className="absolute bottom-2 left-0 right-0 h-4 bg-[#FF6F00] opacity-30 transform -rotate-1"></span>
-              </span> logiciel{" "}
+              </span> application{" "}
               <span className="bg-gradient-to-r from-[#FF6F00] via-[#FFC107] to-[#FF6F00] bg-clip-text text-transparent animate-gradient-x">
-                conçu exclusivement pour plombiers
+                100% dédiée aux plombiers
               </span>
             </h1>
 
             <p className="text-base sm:text-lg text-blue-100 mb-5 sm:mb-6 leading-relaxed">
-              Photographiez vos factures Point P et Cedeo, tous les articles sont automatiquement ajoutés à votre devis.
+              Photographiez vos factures Point P ou Cedeo : les articles s'ajoutent automatiquement dans votre devis.
               <br className="hidden sm:block" />
-              <strong className="text-white">Créez un devis en 2 minutes</strong> au lieu de 45 minutes.
+              <strong className="text-white">Créez un devis complet en 2 minutes</strong> au lieu de 45.
               <br className="hidden sm:block" />
-              <span className="text-[#4CAF50] font-bold">Le prix le plus bas du marché.</span> Conforme 2026.
+              <span className="text-[#4CAF50] font-bold">Prix ultra-compétitif.</span> Conforme facturation 2026.
             </p>
 
             {/* Key USPs - Animated */}
@@ -204,6 +204,13 @@ export default function Hero() {
             </div>
           </div>
 
+          {/* Mobile Phone Background */}
+          <div className="lg:hidden absolute inset-0 opacity-15 pointer-events-none overflow-hidden">
+            <div className="absolute right-[-100px] top-10 w-64 h-[520px] bg-gradient-to-br from-gray-900/30 to-gray-800/30 rounded-[2.5rem] p-3 transform rotate-12 scale-90">
+              <div className="bg-white/20 rounded-[2rem] h-full backdrop-blur-sm"></div>
+            </div>
+          </div>
+
           {/* Right Column - Interactive Demo Mockup */}
           <div className="hidden lg:block relative">
             <div className="relative">
@@ -258,7 +265,7 @@ export default function Hero() {
                         </div>
                         <div className="flex justify-between text-xs text-gray-600">
                           <span>Tuyau PER Ø16 - 50m</span>
-                          <span className="font-semibold">127,50€</span>
+                          <span className="font-semibold">38,50€</span>
                         </div>
                         <div className="flex justify-between text-xs text-gray-600">
                           <span>Raccords laiton x10</span>
