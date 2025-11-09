@@ -74,7 +74,7 @@ export default function Hero() {
       <div className="absolute -bottom-8 left-40 w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
 
       {/* Live Activity - Top of mobile hero */}
-      <div className="lg:hidden max-w-7xl mx-auto px-4 relative z-50 pt-2 pb-4">
+      <div className="lg:hidden max-w-7xl mx-auto px-4 relative z-50 pt-1 pb-2">
         <div className="inline-flex items-center bg-green-500/20 backdrop-blur-sm rounded-full px-4 py-2 border border-green-400/30 animate-pulse-soft">
           <span className="inline-block w-2 h-2 bg-green-400 rounded-full mr-2 animate-ping"></span>
           <span className="text-xs text-green-100 font-medium">
@@ -143,8 +143,8 @@ export default function Hero() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Text Content with backdrop on mobile */}
           <div className="text-left lg:text-left relative z-50">
-            {/* 2026 Urgency Badge with Countdown - Mobile left aligned */}
-            <div className="flex flex-col items-start sm:items-center lg:items-start bg-gradient-to-r from-red-500 to-orange-500 rounded-xl px-4 sm:px-6 py-3 sm:py-4 mb-4 sm:mb-6 shadow-2xl max-w-fit">
+            {/* 2026 Urgency Badge with Countdown - Centered */}
+            <div className="flex flex-col items-center bg-gradient-to-r from-red-500 to-orange-500 rounded-xl px-4 sm:px-6 py-3 sm:py-4 mb-4 sm:mb-6 shadow-2xl max-w-fit mx-auto lg:mx-0">
               <div className="flex items-center mb-1.5 sm:mb-2">
                 <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white mr-1.5 sm:mr-2 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
@@ -170,7 +170,7 @@ export default function Hero() {
             </div>
 
             {/* Main Headline - Enhanced */}
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight mb-4 sm:mb-6 animate-fade-in-up">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight mb-4 sm:mb-6 animate-fade-in-up max-w-[50%] lg:max-w-none">
               La <span className="relative">
                 <span className="relative z-10">SEULE</span>
                 <span className="absolute bottom-2 left-0 right-0 h-4 bg-[#FF6F00] opacity-30 transform -rotate-1"></span>
@@ -194,7 +194,7 @@ export default function Hero() {
             </div>
 
             {/* Key USPs - Vertical on mobile, horizontal on desktop */}
-            <div className="flex flex-col lg:grid lg:grid-cols-4 gap-2 sm:gap-3 mb-6 max-w-xs lg:max-w-none">
+            <div className="flex flex-col lg:grid lg:grid-cols-4 gap-2 sm:gap-3 mb-6 max-w-[40%] lg:max-w-none">
               {[
                 { icon: "📸", text: "Photo → Devis automatique", badge: "EXCLUSIF" },
                 { icon: "🔧", text: "100% spécial plombiers", badge: "UNIQUE" },
