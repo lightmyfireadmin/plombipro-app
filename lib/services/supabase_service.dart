@@ -655,6 +655,69 @@ class SupabaseService {
     }
   }
 
+  /// Fetch products from supplier catalogs (Point P, Cedeo, Leroy Merlin, Castorama)
+  /// This uses the public supplier_products table with scraped catalog data
+  static Future<List<Product>> fetchSupplierProducts({
+    required String supplier,
+    String? searchQuery,
+    String? category,
+    int limit = 50,
+    int offset = 0,
+  }) async {
+    try {
+      var query = _client
+          .from('supplier_products')
+          .select('*')
+          .eq('supplier', supplier)
+          .eq('is_active', true);
+
+      // Apply search filter if provided
+      if (searchQuery != null && searchQuery.isNotEmpty) {
+        query = query.textSearch('search_vector', searchQuery, config: 'french');
+      }
+
+      // Apply category filter if provided
+      if (category != null && category.isNotEmpty) {
+        query = query.eq('category', category);
+      }
+
+      final response = await query
+          .order('name', ascending: true)
+          .range(offset, offset + limit - 1);
+
+      return (response as List)
+          .map((item) => Product.fromSupplierProductJson(item))
+          .toList();
+    } catch (e) {
+      print('Error fetching supplier products: $e');
+      rethrow;
+    }
+  }
+
+  /// Get distinct categories for a supplier
+  static Future<List<String>> getSupplierCategories(String supplier) async {
+    try {
+      final response = await _client
+          .from('supplier_products')
+          .select('category')
+          .eq('supplier', supplier)
+          .eq('is_active', true)
+          .not('category', 'is', null);
+
+      final categories = (response as List)
+          .map((item) => item['category'] as String?)
+          .where((cat) => cat != null && cat.isNotEmpty)
+          .toSet()
+          .toList()
+        ..sort();
+
+      return categories;
+    } catch (e) {
+      print('Error fetching supplier categories: $e');
+      return [];
+    }
+  }
+
   static Future<String> createProduct(Product product) async {
     try {
       final user = _client.auth.currentUser;

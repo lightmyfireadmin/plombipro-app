@@ -65,6 +65,25 @@ class Product {
     );
   }
 
+  /// Factory constructor for supplier_products table data
+  factory Product.fromSupplierProductJson(Map<String, dynamic> json) {
+    return Product(
+      id: json['id'],
+      ref: json['reference'],
+      name: json['name'] ?? '',
+      description: json['description'],
+      priceBuy: (json['price'] as num?)?.toDouble(),
+      unitPrice: (json['price'] as num?)?.toDouble() ?? 0,
+      unit: json['price_unit'] ?? 'unité',
+      photoUrl: json['image_url'],
+      category: json['category'],
+      supplier: json['supplier'],
+      isFavorite: false,
+      usageCount: 0,
+      source: json['supplier'],
+    );
+  }
+
   Product copyWith({
     String? id,
     String? ref,
