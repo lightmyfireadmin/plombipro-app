@@ -28,7 +28,7 @@ class SupabaseService {
 
   /// Fetch upcoming appointments for the current user
   /// Returns appointments starting from now, ordered by start_time ascending
-  static Future<List<Map<String, dynamic>>> fetchUpcomingAppointments({int limit = 5}) async {
+  static Future<List<Appointment>> fetchUpcomingAppointments({int limit = 5}) async {
     try {
       final userId = _client.auth.currentUser?.id;
       if (userId == null) throw Exception('User not authenticated');
@@ -53,14 +53,16 @@ class SupabaseService {
           )
         ''')
         .eq('user_id', userId)
-        .gte('start_time', DateTime.now().toIso8601String())
-        .order('start_time', ascending: true)
+        .gte('planned_eta', DateTime.now().toIso8601String())
+        .order('planned_eta', ascending: true)
         .limit(limit);
 
-      return List<Map<String, dynamic>>.from(response);
+      return (response as List)
+          .map((json) => Appointment.fromJson(json as Map<String, dynamic>))
+          .toList();
     } catch (e) {
       print('Error fetching upcoming appointments: $e');
-      rethrow;
+      return [];
     }
   }
 
@@ -707,6 +709,7 @@ class SupabaseService {
       final categories = (response as List)
           .map((item) => item['category'] as String?)
           .where((cat) => cat != null && cat.isNotEmpty)
+          .cast<String>()
           .toSet()
           .toList()
         ..sort();
