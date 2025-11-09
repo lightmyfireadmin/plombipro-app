@@ -2,7 +2,7 @@ export default function Comparison() {
   const comparisons = [
     {
       category: "Les logiciels génériques",
-      description: "Pour tous les secteurs d'activité",
+      description: "Henrri, Facture.net, etc.",
       icon: "📄",
       limitations: [
         "Pas de scanner OCR pour factures fournisseurs",
@@ -15,7 +15,7 @@ export default function Comparison() {
     },
     {
       category: "Les ERP BTP complets",
-      description: "Solutions tout-en-un pour grandes entreprises",
+      description: "Kalitics, Sellsy, etc.",
       icon: "🏗️",
       limitations: [
         "Prix: 50-150€/mois (trop cher pour solo)",
@@ -28,7 +28,7 @@ export default function Comparison() {
     },
     {
       category: "Les plateformes de formulaires",
-      description: "Outils de gestion de chantier généralistes",
+      description: "Kizeo Forms, Alobees, etc.",
       icon: "📋",
       limitations: [
         "Focus: gestion de chantier et formulaires",
@@ -41,7 +41,7 @@ export default function Comparison() {
     },
     {
       category: "Les outils BTP basiques",
-      description: "Solutions construction non spécialisées",
+      description: "Batappli, Obat, etc.",
       icon: "🔧",
       limitations: [
         "BTP générique (pas 100% plomberie)",
