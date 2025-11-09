@@ -7,8 +7,8 @@ export default function Features() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
         </svg>
       ),
-      title: "Photo → Devis en 2 minutes",
-      description: "Prenez vos factures Point P et Cedeo en photo. L'appli lit automatiquement tous les articles, prix et références pour créer votre devis. ⏱️ Gain : 15 min par devis = 25h/mois récupérées.",
+      title: "Scan Universel → Devis en 2 min",
+      description: "Photographiez n'importe quel document (factures fournisseurs, devis, bons de livraison, récapitulatifs...). Extraction automatique complète des articles, quantités et prix. Gérez votre comptabilité, suivez vos marges, CA et taxes en temps réel. ⏱️ Gain : 15 min par devis = 25h/mois.",
       badge: "Exclusif",
       badgeColor: "bg-[#FF6F00]",
       highlight: true,
@@ -20,8 +20,8 @@ export default function Features() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
         </svg>
       ),
-      title: "50 000 articles Point P & Cedeo",
-      description: "Recherchez vos articles directement dans l'appli. Les prix sont à jour automatiquement : radiateurs, PER, raccords, robinetterie... tout votre matériel habituel. ⏱️ Gain : 10 min par article recherché.",
+      title: "Catalogues 10 Fournisseurs",
+      description: "50 000+ articles des principaux fournisseurs (Point P, Cedeo, Leroy Merlin, Manomano, Castorama, Waterout, Distriartisan, SIDER, Legallais, Domomat). Prix à jour automatiquement : radiateurs, PER, raccords, robinetterie... ⏱️ Gain : 10 min par recherche.",
       badge: "Exclusif",
       badgeColor: "bg-[#FF6F00]",
       highlight: true,
@@ -40,6 +40,20 @@ export default function Features() {
       badgeColor: "bg-[#FF6F00]",
       highlight: true,
       timeSaved: "20 min/devis",
+    },
+    {
+      icon: (
+        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+      ),
+      title: "GPS Automatique + Planning Intelligent",
+      description: "Vos RDV du jour s'organisent automatiquement par GPS. Itinéraire optimisé, navigation directe, messages clients automatiques (\"J'arrive dans 15 min\"). Gérez vos employés, évitez les retards, planifiez les dépenses. ⏱️ Gain : 1h/jour de trajets.",
+      badge: "Nouveau",
+      badgeColor: "bg-[#4CAF50]",
+      highlight: true,
+      timeSaved: "1h/jour trajets",
     },
     {
       icon: (

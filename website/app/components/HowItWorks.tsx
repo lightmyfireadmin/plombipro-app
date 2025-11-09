@@ -2,8 +2,8 @@ export default function HowItWorks() {
   const steps = [
     {
       number: "01",
-      title: "Photographiez votre facture",
-      description: "Prenez en photo votre facture Point P ou Cedeo avec votre téléphone. L'OCR extrait automatiquement tous les articles.",
+      title: "Photographiez n'importe quel document",
+      description: "Factures fournisseurs, devis, bons de livraison, récapitulatifs... Le scan universel extrait automatiquement tous les articles, quantités et prix. Compatible avec les 10 principaux fournisseurs.",
       icon: (
         <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
