@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "268663350911",
+    "project_id": "plombipro-devlpt",
+    "storage_bucket": "plombipro-devlpt.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:268663350911:android:e3f69147ff7c8bcd66014a",
+        "android_client_info": {
+          "package_name": "com.plombipro.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_bi3c25tXsirTmyq-MOIhgO1L5XxRTHs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:268663350911:android:e3f69147ff7c8bcd66014a",
+        "android_client_info": {
+          "package_name": "com.plombipro.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_bi3c25tXsirTmyq-MOIhgO1L5XxRTHs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
