@@ -5,13 +5,13 @@ export default function Comparison() {
       description: "Pour tous les secteurs d'activité",
       icon: "📄",
       limitations: [
-        "Pas de scan automatique des factures fournisseurs",
-        "Pas de catalogues Point P & Cedeo",
+        "Pas de scan automatique des factures et devis",
+        "Pas de catalogues fournisseurs intégrés",
         "Devis générique pour tous les métiers",
         "Pas de calculateurs plomberie",
         "Aucune spécialisation pour votre métier",
       ],
-      plombiProSolution: "PlombiPro est la SEULE application conçue à 100% pour les plombiers : scan automatique + catalogues Point P et Cedeo intégrés",
+      plombiProSolution: "PlombiPro est la SEULE application conçue à 100% pour les plombiers : scan automatique universel + catalogues des 10 principaux fournisseurs",
     },
     {
       category: "Les ERP BTP complets",
@@ -45,12 +45,12 @@ export default function Comparison() {
       icon: "🔧",
       limitations: [
         "BTP générique (pas exclusif plombiers)",
-        "Pas de scan automatique des factures",
-        "Pas de catalogues Point P ou Cedeo",
+        "Pas de scan automatique des factures et devis",
+        "Pas de catalogues fournisseurs",
         "Prix cachés ou non affichés",
         "Pas d'innovation sur le gain de temps",
       ],
-      plombiProSolution: "PlombiPro est exclusif plombiers, avec scan automatique + catalogues intégrés. Tarif transparent : 19,90€/mois tout compris",
+      plombiProSolution: "PlombiPro est exclusif plombiers, avec scan automatique universel + catalogues intégrés. Tarif transparent : 19,90€/mois tout compris",
     },
   ];
 
@@ -61,8 +61,8 @@ export default function Comparison() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
         </svg>
       ),
-      title: "Scan automatique exclusif",
-      description: "La seule application qui scanne automatiquement vos factures Point P et Cedeo. Économisez 15 min par devis.",
+      title: "Scan automatique universel",
+      description: "Scannez n'importe quelle facture ou devis : extraction automatique des articles, quantités et prix. Économisez 15 min par devis.",
       badge: "Exclusif",
     },
     {
@@ -71,8 +71,8 @@ export default function Comparison() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
         </svg>
       ),
-      title: "Catalogues Intégrés",
-      description: "50 000+ articles Point P & Cedeo avec prix à jour. Personne d'autre ne l'a.",
+      title: "Catalogues 10 Fournisseurs",
+      description: "50 000+ articles des 10 principaux fournisseurs (Point P, Cedeo, Leroy Merlin...) avec prix à jour. Personne d'autre ne l'a.",
       badge: "Exclusif",
     },
     {
@@ -266,13 +266,13 @@ export default function Comparison() {
               Résumé : PlombiPro c'est quoi ?
             </h3>
             <p className="text-xl mb-6 leading-relaxed">
-              Le <strong>seul logiciel conçu à 100% pour les plombiers</strong>
+              La <strong>seule application conçue à 100% pour les plombiers</strong>
               ,<br />
-              avec scanner OCR et catalogues Point P/Cedeo intégrés,
+              avec scan automatique universel et catalogues des 10 principaux fournisseurs,
               <br />
               au <strong>prix le plus juste</strong> (19,90€ au lieu de 50-150€),
               <br />
-              et <strong>sans superflu</strong> (pas un ERP complexe).
+              conforme <strong>Factur-X 2026</strong> et <strong>sans superflu</strong>.
             </p>
             <a
               href="#pricing"

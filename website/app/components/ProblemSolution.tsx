@@ -16,7 +16,7 @@ export default function ProblemSolution() {
       borderColor: "border-[#FF6F00]",
       icon: "⏰",
       problem: "Trop de temps perdu à ressaisir vos achats fournisseurs ?",
-      solution: "Photographiez vos factures Point P ou Cedeo : les articles s'ajoutent automatiquement dans le devis. 2 minutes au lieu de 20.",
+      solution: "Photographiez n'importe quelle facture ou devis : les articles s'ajoutent automatiquement. 10 principaux fournisseurs intégrés. 2 minutes au lieu de 20.",
     },
     {
       badge: "Récupérez vos impayés",
