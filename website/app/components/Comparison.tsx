@@ -260,7 +260,7 @@ export default function Comparison() {
         </div>
 
         {/* Bottom Summary */}
-        <div className="mt-16 text-center">
+        <div className="mt-8 sm:mt-16 text-center">
           <div className="bg-gradient-to-r from-[#FF6F00] to-[#E65100] rounded-2xl p-10 text-white">
             <h3 className="text-3xl font-bold mb-4">
               Résumé : PlombiPro c'est quoi ?

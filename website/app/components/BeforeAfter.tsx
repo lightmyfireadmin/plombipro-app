@@ -1,3 +1,5 @@
+"use client";
+
 export default function BeforeAfter() {
   const comparisons = [
     {
@@ -33,20 +35,67 @@ export default function BeforeAfter() {
   ];
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-12 sm:py-20 bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+        <div className="text-center mb-8 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">
             Sans PlombiPro vs Avec PlombiPro
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
             La différence est énorme. Jugez par vous-même.
           </p>
         </div>
 
-        {/* Comparison Table */}
-        <div className="overflow-x-auto">
+        {/* Mobile Card Layout */}
+        <div className="md:hidden space-y-4 mb-8">
+          {comparisons.map((item, index) => (
+            <div
+              key={index}
+              className={`bg-gradient-to-br from-white to-gray-50 rounded-xl p-4 border-2 ${
+                item.highlight ? 'border-[#FF6F00]' : 'border-gray-200'
+              } shadow-md transform transition-all hover:scale-105`}
+            >
+              <h3 className="font-bold text-lg text-gray-900 mb-3">{item.task}</h3>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-red-50 rounded-lg p-3 border-l-4 border-red-500">
+                  <div className="flex items-center mb-1">
+                    <span className="text-lg mr-1">❌</span>
+                    <span className="text-xs font-semibold text-red-600">AVANT</span>
+                  </div>
+                  <p className="text-sm text-gray-700">{item.before}</p>
+                </div>
+                <div className="bg-green-50 rounded-lg p-3 border-l-4 border-green-500">
+                  <div className="flex items-center mb-1">
+                    <span className="text-lg mr-1">✅</span>
+                    <span className="text-xs font-semibold text-green-600">APRÈS</span>
+                  </div>
+                  <p className="text-sm font-bold text-green-700">{item.after}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+
+          {/* Mobile Total */}
+          <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-5 text-white shadow-xl">
+            <h4 className="font-bold text-sm mb-2">TOTAL TEMPS/SEMAINE</h4>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <p className="text-xs opacity-90 mb-1">Sans PlombiPro</p>
+                <p className="text-2xl font-extrabold">~20h</p>
+                <p className="text-xs opacity-75">gaspillées</p>
+              </div>
+              <div>
+                <p className="text-xs opacity-90 mb-1">Avec PlombiPro</p>
+                <p className="text-2xl font-extrabold text-green-300">10h</p>
+                <p className="text-xs opacity-75">gagnées = 500€+</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop Table Layout */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full border-collapse">
             <thead>
               <tr className="bg-gradient-to-r from-gray-100 to-gray-50">
@@ -111,11 +160,11 @@ export default function BeforeAfter() {
         </div>
 
         {/* Bottom explanation */}
-        <div className="mt-12 bg-gradient-to-br from-orange-50 to-white rounded-2xl p-8 border-2 border-orange-200">
-          <div className="flex items-start space-x-4">
+        <div className="mt-8 sm:mt-12 bg-gradient-to-br from-orange-50 to-white rounded-2xl p-6 sm:p-8 border-2 border-orange-200">
+          <div className="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-4">
             <div className="flex-shrink-0">
               <svg
-                className="w-12 h-12 text-orange-500"
+                className="w-10 sm:w-12 h-10 sm:h-12 text-orange-500"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -123,10 +172,10 @@ export default function BeforeAfter() {
               </svg>
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-3">
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3">
                 10 heures par semaine, c'est quoi concrètement ?
               </h3>
-              <ul className="space-y-2 text-gray-700">
+              <ul className="space-y-2 text-sm sm:text-base text-gray-700">
                 <li className="flex items-start">
                   <span className="text-orange-500 mr-2 font-bold">•</span>
                   <span>
@@ -151,14 +200,14 @@ export default function BeforeAfter() {
         </div>
 
         {/* CTA */}
-        <div className="mt-12 text-center">
+        <div className="mt-8 sm:mt-12 text-center">
           <a
             href="#pricing"
-            className="inline-block bg-gradient-to-r from-[#FF6F00] to-[#E65100] text-white px-10 py-5 rounded-xl font-bold text-xl hover:shadow-2xl transition-all transform hover:-translate-y-1"
+            className="inline-block bg-gradient-to-r from-[#FF6F00] to-[#E65100] text-white px-8 sm:px-10 py-4 sm:py-5 rounded-xl font-bold text-lg sm:text-xl hover:shadow-2xl transition-all transform hover:-translate-y-1"
           >
             Je veux gagner 10h par semaine
           </a>
-          <p className="text-gray-500 mt-4 text-sm">
+          <p className="text-gray-500 mt-4 text-xs sm:text-sm">
             Sans carte bancaire • 5 devis offerts • Résiliation en 2 clics
           </p>
         </div>

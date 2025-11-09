@@ -6,6 +6,33 @@ import { useState, useEffect } from "react";
 export default function Hero() {
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0 });
   const [spotsRemaining] = useState(327);
+  const [dailySignups, setDailySignups] = useState(15);
+
+  // Calculate daily random signups (10-30, changes at 9pm UTC daily)
+  useEffect(() => {
+    const getDailySignups = () => {
+      const now = new Date();
+      const utcHours = now.getUTCHours();
+      const dayKey = `${now.getUTCFullYear()}-${now.getUTCMonth()}-${now.getUTCDate()}${utcHours >= 21 ? '+1' : ''}`;
+
+      // Check localStorage for today's value
+      const stored = typeof window !== 'undefined' ? localStorage.getItem('dailySignups') : null;
+      const storedData = stored ? JSON.parse(stored) : null;
+
+      if (storedData && storedData.key === dayKey) {
+        return storedData.value;
+      }
+
+      // Generate new random value for today (10-30)
+      const newValue = Math.floor(Math.random() * 21) + 10;
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('dailySignups', JSON.stringify({ key: dayKey, value: newValue }));
+      }
+      return newValue;
+    };
+
+    setDailySignups(getDailySignups());
+  }, []);
 
   // Countdown to Sept 1, 2026 compliance deadline
   useEffect(() => {
@@ -45,6 +72,16 @@ export default function Hero() {
       <div className="absolute top-20 left-10 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
       <div className="absolute top-40 right-10 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
       <div className="absolute -bottom-8 left-40 w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+
+      {/* Live Activity - Top of mobile hero */}
+      <div className="lg:hidden max-w-7xl mx-auto px-4 relative z-50 pt-2 pb-4">
+        <div className="inline-flex items-center bg-green-500/20 backdrop-blur-sm rounded-full px-4 py-2 border border-green-400/30 animate-pulse-soft">
+          <span className="inline-block w-2 h-2 bg-green-400 rounded-full mr-2 animate-ping"></span>
+          <span className="text-xs text-green-100 font-medium">
+            🟢 {dailySignups} plombiers ont créé leur compte aujourd'hui
+          </span>
+        </div>
+      </div>
 
       {/* Mobile Phone Background - Behind everything */}
       <div className="lg:hidden absolute inset-0 pointer-events-none overflow-hidden z-0">
@@ -105,14 +142,14 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Text Content with backdrop on mobile */}
-          <div className="text-center lg:text-left relative z-50">
-            {/* 2026 Urgency Badge with Countdown */}
-            <div className="inline-flex flex-col items-center bg-gradient-to-r from-red-500 to-orange-500 rounded-xl px-4 sm:px-6 py-3 sm:py-4 mb-4 sm:mb-6 shadow-2xl">
+          <div className="text-left lg:text-left relative z-50">
+            {/* 2026 Urgency Badge with Countdown - Mobile left aligned */}
+            <div className="flex flex-col items-start sm:items-center lg:items-start bg-gradient-to-r from-red-500 to-orange-500 rounded-xl px-4 sm:px-6 py-3 sm:py-4 mb-4 sm:mb-6 shadow-2xl max-w-fit">
               <div className="flex items-center mb-1.5 sm:mb-2">
                 <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white mr-1.5 sm:mr-2 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                 </svg>
-                <span className="text-xs sm:text-base font-bold text-white">Factur-X 2026 obligatoire</span>
+                <span className="text-[11px] sm:text-base font-bold text-white">Facturation Électronique 2026</span>
               </div>
               <div className="flex gap-2 sm:gap-4 text-white">
                 <div className="text-center">
@@ -143,7 +180,8 @@ export default function Hero() {
               </span>
             </h1>
 
-            <div className="lg:bg-transparent bg-[#1976D2]/85 backdrop-blur-sm lg:backdrop-blur-none rounded-2xl lg:rounded-none p-4 lg:p-0 mb-5 sm:mb-6">
+            {/* Description - Desktop only */}
+            <div className="hidden lg:block lg:bg-transparent rounded-2xl lg:rounded-none mb-5 sm:mb-6">
               <p className="text-base sm:text-lg text-blue-100 leading-relaxed">
                 <strong className="text-white">Scannez n'importe quel document</strong> (factures, devis, récapitulatifs, bons de commande...) : extraction automatique complète.
                 <br className="hidden sm:block" />
@@ -155,21 +193,23 @@ export default function Hero() {
               </p>
             </div>
 
-            {/* Key USPs - Animated */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 mb-6">
+            {/* Key USPs - Vertical on mobile, horizontal on desktop */}
+            <div className="flex flex-col lg:grid lg:grid-cols-4 gap-2 sm:gap-3 mb-6 max-w-xs lg:max-w-none">
               {[
                 { icon: "📸", text: "Photo → Devis automatique", badge: "EXCLUSIF" },
                 { icon: "🔧", text: "100% spécial plombiers", badge: "UNIQUE" },
                 { icon: "💶", text: "19,90€/mois tout compris", badge: "LE - CHER" },
-                { icon: "✅", text: "Conforme 2026", badge: "GARANTI" },
+                { icon: "✅", text: "Conforme Factur-X & Chorus Pro", badge: "GARANTI" },
               ].map((item, index) => (
                 <div
                   key={index}
-                  className="group flex flex-col items-center bg-white/10 backdrop-blur-md rounded-lg p-2 sm:p-3 hover:bg-white/20 transition-all border border-white/20"
+                  className="group flex flex-row lg:flex-col items-center bg-white/10 backdrop-blur-md rounded-lg p-2 sm:p-3 hover:bg-white/20 transition-all border border-white/20"
                 >
-                  <div className="text-2xl sm:text-3xl mb-1">{item.icon}</div>
-                  <span className="text-xs font-semibold text-center leading-tight">{item.text}</span>
-                  <span className="text-[10px] sm:text-xs bg-[#FF6F00] px-1.5 py-0.5 rounded-full mt-1 font-bold whitespace-nowrap">{item.badge}</span>
+                  <div className="text-2xl sm:text-3xl lg:mb-1 mr-3 lg:mr-0">{item.icon}</div>
+                  <div className="flex-1 lg:flex-none lg:text-center">
+                    <span className="text-xs font-semibold leading-tight block lg:inline">{item.text}</span>
+                    <span className="text-[10px] sm:text-xs bg-[#FF6F00] px-1.5 py-0.5 rounded-full lg:mt-1 ml-2 lg:ml-0 font-bold whitespace-nowrap inline-block">{item.badge}</span>
+                  </div>
                 </div>
               ))}
             </div>
@@ -199,48 +239,37 @@ export default function Hero() {
               </Link>
             </div>
 
-            {/* Trust Indicators - Enhanced */}
-            <div className="space-y-6">
-              {/* Stats Bar */}
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 lg:gap-8">
-                <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-full px-5 py-3 border border-white/20">
+            {/* Trust Indicators - Single line on mobile */}
+            <div className="space-y-4">
+              {/* Stats Bar - Horizontal on all screens */}
+              <div className="flex items-center justify-start gap-3 lg:gap-6 overflow-x-auto">
+                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-3 lg:px-5 py-2 lg:py-3 border border-white/20 flex-shrink-0">
                   <div className="flex">
                     {[1, 2, 3, 4, 5].map((star) => (
-                      <svg key={star} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                      <svg key={star} className="w-3 lg:w-5 h-3 lg:h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                       </svg>
                     ))}
                   </div>
                   <div className="flex flex-col">
-                    <span className="font-bold text-xl">4.8/5</span>
-                    <span className="text-xs text-blue-200">247 avis</span>
+                    <span className="font-bold text-sm lg:text-xl">4.8/5</span>
+                    <span className="text-[10px] lg:text-xs text-blue-200">247 avis</span>
                   </div>
                 </div>
 
-                <div className="flex flex-col bg-white/10 backdrop-blur-sm rounded-full px-5 py-3 border border-white/20">
-                  <span className="font-bold text-3xl">500+</span>
-                  <span className="text-sm text-blue-200">plombiers actifs</span>
-                  <span className="text-xs text-green-300 flex items-center gap-1 mt-1">
-                    <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                    Vérifié Nov 2025
-                  </span>
+                <div className="flex flex-col bg-white/10 backdrop-blur-sm rounded-full px-3 lg:px-5 py-2 lg:py-3 border border-white/20 flex-shrink-0">
+                  <span className="font-bold text-xl lg:text-3xl">500+</span>
+                  <span className="text-[10px] lg:text-sm text-blue-200">plombiers actifs</span>
                 </div>
 
-                <div className="flex flex-col bg-white/10 backdrop-blur-sm rounded-full px-5 py-3 border border-white/20">
-                  <span className="font-bold text-3xl">15k+</span>
-                  <span className="text-sm text-blue-200">devis créés</span>
+                <div className="flex flex-col bg-white/10 backdrop-blur-sm rounded-full px-3 lg:px-5 py-2 lg:py-3 border border-white/20 flex-shrink-0">
+                  <span className="font-bold text-xl lg:text-3xl">15k+</span>
+                  <span className="text-[10px] lg:text-sm text-blue-200">devis créés</span>
                 </div>
               </div>
 
-              {/* Live Activity */}
-              <div className="flex flex-col sm:flex-row gap-3 items-center justify-center lg:justify-start">
-                <div className="inline-flex items-center bg-green-500/20 backdrop-blur-sm rounded-full px-5 py-3 border border-green-400/30 animate-pulse-soft">
-                  <span className="inline-block w-3 h-3 bg-green-400 rounded-full mr-3 animate-ping"></span>
-                  <span className="text-sm text-green-100 font-medium">
-                    🟢 12 plombiers ont créé leur compte aujourd'hui
-                  </span>
-                </div>
-
+              {/* Prix Fondateur - Desktop only (mobile has it at top) */}
+              <div className="hidden lg:flex flex-col sm:flex-row gap-3 items-center justify-center lg:justify-start">
                 <div className="inline-flex items-center bg-orange-500/20 backdrop-blur-sm rounded-full px-5 py-3 border border-orange-400/30">
                   <svg className="w-5 h-5 text-orange-300 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clipRule="evenodd" />
@@ -259,35 +288,6 @@ export default function Hero() {
                 <div className="flex flex-col">
                   <span className="text-sm font-semibold">Satisfait ou remboursé 30 jours</span>
                   <span className="text-xs text-blue-200">+ 14 jours d'essai gratuit sans CB</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Floating Success Cards - Mobile */}
-            <div className="lg:hidden relative z-40 mt-6 space-y-3">
-              {/* Accepted Quote Card */}
-              <div className="bg-white rounded-xl shadow-xl p-4 border-2 border-green-200 animate-fade-in-up">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-semibold text-gray-600">Devis #2847</span>
-                  <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full font-bold">Accepté ✓</span>
-                </div>
-                <p className="text-2xl font-extrabold text-gray-900">4 280 €</p>
-                <p className="text-xs text-gray-600 mb-2">Rénovation salle de bain</p>
-                <div className="flex items-center gap-1.5 text-xs text-green-700 bg-green-50 rounded-lg p-2">
-                  <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
-                  </svg>
-                  <span className="font-semibold">Créé en 2 min par scan</span>
-                </div>
-              </div>
-
-              {/* Time Saved Card */}
-              <div className="bg-gradient-to-br from-[#FF6F00] to-[#E65100] text-white rounded-xl shadow-xl p-4 animate-fade-in-up animation-delay-200">
-                <p className="text-xs font-semibold mb-1">Temps économisé ce mois</p>
-                <p className="text-3xl font-extrabold mb-1">12h</p>
-                <p className="text-xs opacity-90 mb-2">= 600€ de temps facturable</p>
-                <div className="pt-2 border-t border-white/30">
-                  <p className="text-[10px]">sur 25 devis créés</p>
                 </div>
               </div>
             </div>
