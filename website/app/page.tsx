@@ -2,6 +2,7 @@ import Navigation from "./components/Navigation";
 import Hero from "./components/Hero";
 import ProblemSolution from "./components/ProblemSolution";
 import Features from "./components/Features";
+import Comparison from "./components/Comparison";
 import BeforeAfter from "./components/BeforeAfter";
 import HowItWorks from "./components/HowItWorks";
 import Pricing from "./components/Pricing";
@@ -19,6 +20,7 @@ export default function Home() {
         <Hero />
         <ProblemSolution />
         <Features />
+        <Comparison />
         <BeforeAfter />
         <HowItWorks />
         <Pricing />
