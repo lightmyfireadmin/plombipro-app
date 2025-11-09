@@ -25,45 +25,45 @@ export default function Pricing() {
       price: "19,90",
       originalPrice: null,
       period: "par mois",
-      description: "Tout illimité, le prix le plus bas du marché",
+      description: "Tout illimité, tarif compétitif garanti",
       features: [
         "Devis & factures illimités",
         "Scan automatique illimité",
         "50 000 articles Point P & Cedeo",
         "50 devis types plomberie",
-        "Gestion des chantiers",
-        "Suivi de rentabilité",
+        "Gestion multi-chantiers",
+        "Suivi de rentabilité détaillé",
         "Relances automatiques SMS/Email",
         "Export comptable",
         "Conforme facturation 2026",
-        "Support prioritaire",
+        "Support prioritaire par chat",
       ],
       cta: "Essai gratuit 14 jours (sans CB)",
       popular: true,
       gradient: "from-[#1976D2] to-[#1565C0]",
-      badge: "LE - CHER",
+      badge: "RECOMMANDÉ",
     },
   ];
 
   return (
-    <section id="pricing" className="py-20 bg-gradient-to-br from-gray-50 to-white">
+    <section id="pricing" className="py-12 sm:py-16 bg-gradient-to-br from-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center bg-gradient-to-r from-[#FF6F00] to-[#E65100] text-white rounded-full px-6 py-2 font-bold text-sm mb-4">
-            💰 LE PRIX LE PLUS BAS DU MARCHÉ
+        <div className="text-center mb-8 sm:mb-10">
+          <div className="inline-flex items-center bg-gradient-to-r from-[#FF6F00] to-[#E65100] text-white rounded-full px-4 sm:px-5 py-1.5 sm:py-2 font-bold text-xs sm:text-sm mb-3">
+            💰 TARIF ULTRA-COMPÉTITIF
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
             19,90€/mois tout compris
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-4">
-            Les autres logiciels : 40€ à 150€/mois. <strong>PlombiPro : moins cher, plus puissant.</strong>
+          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto mb-3">
+            Applications pro complètes : 40€ à 150€/mois. <strong>PlombiPro : puissant et accessible.</strong>
           </p>
-          <div className="inline-flex items-center bg-blue-50 rounded-full px-5 py-2 text-sm">
+          <div className="inline-flex items-center bg-blue-50 rounded-full px-4 sm:px-5 py-2 text-xs sm:text-sm">
             <svg className="w-4 h-4 text-[#4CAF50] mr-2" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
             </svg>
-            <span className="text-gray-700 font-medium">Annulez quand vous voulez • Résiliez en 2 clics</span>
+            <span className="text-gray-700 font-medium">Sans engagement • Annulez en 2 clics</span>
           </div>
         </div>
 

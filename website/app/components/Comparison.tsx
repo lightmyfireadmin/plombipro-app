@@ -11,7 +11,7 @@ export default function Comparison() {
         "Pas de calculateurs plomberie",
         "Aucune spécialisation pour votre métier",
       ],
-      plombiProSolution: "PlombiPro est le SEUL logiciel conçu à 100% pour les plombiers : scan automatique + catalogues Point P et Cedeo intégrés",
+      plombiProSolution: "PlombiPro est la SEULE application conçue à 100% pour les plombiers : scan automatique + catalogues Point P et Cedeo intégrés",
     },
     {
       category: "Les ERP BTP complets",
@@ -37,7 +37,7 @@ export default function Comparison() {
         "Il faut créer ses formulaires soi-même",
         "Pas de catalogues fournisseurs",
       ],
-      plombiProSolution: "PlombiPro est un logiciel de facturation prêt à l'emploi avec templates plomberie pré-remplis",
+      plombiProSolution: "PlombiPro est une application de facturation prête à l'emploi avec 50 devis types plomberie pré-remplis",
     },
     {
       category: "Les outils BTP basiques",
@@ -50,7 +50,7 @@ export default function Comparison() {
         "Prix cachés ou non affichés",
         "Pas d'innovation sur le gain de temps",
       ],
-      plombiProSolution: "PlombiPro est exclusif plombiers, avec scan automatique + catalogues intégrés. Prix affiché : 19,90€/mois, le plus bas du marché",
+      plombiProSolution: "PlombiPro est exclusif plombiers, avec scan automatique + catalogues intégrés. Tarif transparent : 19,90€/mois tout compris",
     },
   ];
 
@@ -61,8 +61,8 @@ export default function Comparison() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
         </svg>
       ),
-      title: "Scan automatique unique",
-      description: "AUCUN autre logiciel ne scanne vos factures Point P et Cedeo. Économisez 15 min sur chaque devis.",
+      title: "Scan automatique exclusif",
+      description: "La seule application qui scanne automatiquement vos factures Point P et Cedeo. Économisez 15 min par devis.",
       badge: "Exclusif",
     },
     {
