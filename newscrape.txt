@@ -1,4 +1,6 @@
 ﻿Here is a comprehensive scrape of JSON data from current competition and/or apps addressing same niche.
+You can retrieve it in main directory at ./newscrape.txt.
+Please read it ENTIRELY, chunk by chunk if too heavy.
 Please review this content extensively and use it to :
 * Spot our differentiation points
 * Assess our features and update our roadmap to launch implementing what we miss and adapting what we offer
@@ -9,6 +11,7 @@ Please review this content extensively and use it to :
 * Revise (now) entirely the website to implement our changes, make it the best landing selling on market, push our differentiation and adaptation + niche specialization, and remove any citing of other competition and brands in our content for legal reasons
 * Document your progress and changes
 * Generate needed assets extensive list based on what competition does
+
 Obat JSON
 {
   "title": "Logiciel de devis et factures en ligne pour le bâtiment | Obat",
@@ -1073,4 +1076,5 @@ Kizeo JSON
       "https://www.kizeo-forms.com/app/uploads/sites/19/2024/05/cropped-kizeo-favicon-180x180.png": {}
     }
   }
+
 }
