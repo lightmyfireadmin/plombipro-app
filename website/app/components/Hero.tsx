@@ -4,28 +4,36 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 
 export default function Hero() {
-  const [countdown, setCountdown] = useState({ days: 52, hours: 0, minutes: 0 });
-  const [spotsRemaining, setSpotsRemaining] = useState(327);
+  const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0 });
+  const [spotsRemaining] = useState(327);
 
-  // Countdown to 2026 compliance deadline
+  // Countdown to Sept 1, 2026 compliance deadline
   useEffect(() => {
-    const target = new Date("2026-09-01");
-    const interval = setInterval(() => {
+    const calculateCountdown = () => {
+      const target = new Date("2026-09-01T00:00:00");
       const now = new Date();
       const diff = target.getTime() - now.getTime();
 
-      setCountdown({
-        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
-      });
-    }, 60000); // Update every minute
+      if (diff > 0) {
+        setCountdown({
+          days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
+        });
+      }
+    };
+
+    // Calculate immediately on mount
+    calculateCountdown();
+
+    // Update every minute
+    const interval = setInterval(calculateCountdown, 60000);
 
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <section className="relative bg-gradient-to-br from-[#1976D2] via-[#1565C0] to-[#0D47A1] text-white pt-32 pb-24 overflow-hidden">
+    <section className="relative bg-gradient-to-br from-[#1976D2] via-[#1565C0] to-[#0D47A1] text-white pt-24 sm:pt-32 pb-16 sm:pb-24 overflow-hidden">
       {/* Animated Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{
@@ -43,76 +51,77 @@ export default function Hero() {
           {/* Left Column - Text Content */}
           <div className="text-center lg:text-left">
             {/* 2026 Urgency Badge with Countdown */}
-            <div className="inline-flex flex-col items-center bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl px-6 py-4 mb-6 shadow-2xl transform hover:scale-105 transition-transform">
-              <div className="flex items-center mb-2">
-                <svg className="w-6 h-6 text-white mr-2 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
+            <div className="inline-flex flex-col items-center bg-gradient-to-r from-red-500 to-orange-500 rounded-xl px-4 sm:px-6 py-3 sm:py-4 mb-4 sm:mb-6 shadow-2xl">
+              <div className="flex items-center mb-1.5 sm:mb-2">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white mr-1.5 sm:mr-2 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                 </svg>
-                <span className="text-lg font-bold text-white">Facturation électronique obligatoire</span>
+                <span className="text-xs sm:text-base font-bold text-white">Facturation électronique obligatoire</span>
               </div>
-              <div className="flex gap-4 text-white">
+              <div className="flex gap-2 sm:gap-4 text-white">
                 <div className="text-center">
-                  <div className="text-3xl font-bold">{countdown.days}</div>
-                  <div className="text-xs opacity-90">jours</div>
+                  <div className="text-xl sm:text-3xl font-bold">{countdown.days}</div>
+                  <div className="text-[10px] sm:text-xs opacity-90">jours</div>
                 </div>
-                <div className="text-2xl font-bold self-center">:</div>
+                <div className="text-lg sm:text-2xl font-bold self-center">:</div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold">{countdown.hours}</div>
-                  <div className="text-xs opacity-90">heures</div>
+                  <div className="text-xl sm:text-3xl font-bold">{countdown.hours}</div>
+                  <div className="text-[10px] sm:text-xs opacity-90">heures</div>
                 </div>
-                <div className="text-2xl font-bold self-center">:</div>
+                <div className="text-lg sm:text-2xl font-bold self-center">:</div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold">{countdown.minutes}</div>
-                  <div className="text-xs opacity-90">min</div>
+                  <div className="text-xl sm:text-3xl font-bold">{countdown.minutes}</div>
+                  <div className="text-[10px] sm:text-xs opacity-90">min</div>
                 </div>
               </div>
             </div>
 
             {/* Main Headline - Enhanced */}
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight mb-6 animate-fade-in-up">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight mb-4 sm:mb-6 animate-fade-in-up">
               Le <span className="relative">
                 <span className="relative z-10">SEUL</span>
                 <span className="absolute bottom-2 left-0 right-0 h-4 bg-[#FF6F00] opacity-30 transform -rotate-1"></span>
-              </span> logiciel plombier{" "}
+              </span> logiciel{" "}
               <span className="bg-gradient-to-r from-[#FF6F00] via-[#FFC107] to-[#FF6F00] bg-clip-text text-transparent animate-gradient-x">
-                qui scanne Point P & Cedeo
+                conçu exclusivement pour plombiers
               </span>
             </h1>
 
-            <p className="text-xl sm:text-2xl text-blue-100 mb-8 leading-relaxed font-medium">
-              Photographiez vos factures fournisseurs, créez vos devis en <strong className="text-white">2 minutes</strong> au lieu de 45.
-              <br />
-              <span className="text-[#4CAF50] font-bold">Économisez 10h par semaine.</span> Conforme 2026 dès maintenant.
+            <p className="text-base sm:text-lg text-blue-100 mb-5 sm:mb-6 leading-relaxed">
+              Photographiez vos factures Point P et Cedeo, tous les articles sont automatiquement ajoutés à votre devis.
+              <br className="hidden sm:block" />
+              <strong className="text-white">Créez un devis en 2 minutes</strong> au lieu de 45 minutes.
+              <br className="hidden sm:block" />
+              <span className="text-[#4CAF50] font-bold">Le prix le plus bas du marché.</span> Conforme 2026.
             </p>
 
             {/* Key USPs - Animated */}
-            <div className="grid grid-cols-2 sm:flex sm:flex-row gap-3 sm:gap-4 mb-8">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 mb-6">
               {[
-                { icon: "📷", text: "Scanner OCR inclus", badge: "EXCLUSIF" },
-                { icon: "🏪", text: "50K articles Point P/Cedeo", badge: "UNIQUE" },
-                { icon: "✅", text: "Conforme 2026", badge: "DÈS MAINTENANT" },
-                { icon: "🇫🇷", text: "Made in France", badge: "100%" },
+                { icon: "📸", text: "Photo → Devis automatique", badge: "EXCLUSIF" },
+                { icon: "🔧", text: "100% spécial plombiers", badge: "UNIQUE" },
+                { icon: "💶", text: "19,90€/mois tout compris", badge: "LE - CHER" },
+                { icon: "✅", text: "Conforme 2026", badge: "GARANTI" },
               ].map((item, index) => (
                 <div
                   key={index}
-                  className="group flex flex-col items-center bg-white/10 backdrop-blur-md rounded-xl p-3 sm:p-4 hover:bg-white/20 transition-all transform hover:-translate-y-1 hover:shadow-2xl border border-white/20"
-                  style={{ animationDelay: `${index * 100}ms` }}
+                  className="group flex flex-col items-center bg-white/10 backdrop-blur-md rounded-lg p-2 sm:p-3 hover:bg-white/20 transition-all border border-white/20"
                 >
-                  <div className="text-3xl sm:text-4xl mb-2 transform group-hover:scale-110 transition-transform">{item.icon}</div>
-                  <span className="text-xs sm:text-sm font-semibold text-center leading-tight">{item.text}</span>
-                  <span className="text-xs bg-[#FF6F00] px-2 py-0.5 rounded-full mt-1 font-bold">{item.badge}</span>
+                  <div className="text-2xl sm:text-3xl mb-1">{item.icon}</div>
+                  <span className="text-xs font-semibold text-center leading-tight">{item.text}</span>
+                  <span className="text-[10px] sm:text-xs bg-[#FF6F00] px-1.5 py-0.5 rounded-full mt-1 font-bold whitespace-nowrap">{item.badge}</span>
                 </div>
               ))}
             </div>
 
             {/* CTA Buttons - Enhanced */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start mb-6 sm:mb-8">
               <Link
                 href="#pricing"
-                className="group relative bg-gradient-to-r from-[#FF6F00] to-[#E65100] text-white px-8 py-5 rounded-2xl font-bold text-lg hover:shadow-2xl transition-all transform hover:-translate-y-1 overflow-hidden"
+                className="group relative bg-gradient-to-r from-[#FF6F00] to-[#E65100] text-white px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl font-bold text-base sm:text-lg hover:shadow-2xl transition-all overflow-hidden"
               >
                 <span className="relative z-10 flex items-center justify-center">
-                  <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                   Essayer gratuitement (sans CB)
@@ -121,9 +130,9 @@ export default function Hero() {
               </Link>
               <Link
                 href="#demo-video"
-                className="group bg-white/10 backdrop-blur-sm text-white border-2 border-white/40 px-8 py-5 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all flex items-center justify-center gap-2"
+                className="group bg-white/10 backdrop-blur-sm text-white border-2 border-white/40 px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl font-bold text-base sm:text-lg hover:bg-white/20 transition-all flex items-center justify-center gap-2"
               >
-                <svg className="w-6 h-6 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
                 </svg>
                 Voir la démo (2 min)
@@ -215,8 +224,8 @@ export default function Hero() {
                   {/* App Content - Scanner Demo */}
                   <div className="p-6 bg-gradient-to-br from-blue-50 to-white h-full">
                     <div className="text-center mb-6">
-                      <h3 className="text-2xl font-bold text-gray-900 mb-1">Scanner OCR</h3>
-                      <p className="text-sm text-gray-600">Photographiez votre facture</p>
+                      <h3 className="text-2xl font-bold text-gray-900 mb-1">Scan automatique</h3>
+                      <p className="text-sm text-gray-600">Prenez en photo votre facture</p>
                     </div>
 
                     {/* Camera View Simulation */}
@@ -281,7 +290,7 @@ export default function Hero() {
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
                   </svg>
-                  <span className="font-semibold">Créé en 2 min avec OCR</span>
+                  <span className="font-semibold">Créé en 2 min par photo</span>
                 </div>
               </div>
 
