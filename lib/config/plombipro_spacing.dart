@@ -70,6 +70,9 @@ class PlombiProSpacing {
   /// Padding inside large cards
   static const EdgeInsets cardPaddingLarge = EdgeInsets.all(lg);
 
+  /// Padding inside extra large cards
+  static const EdgeInsets cardPaddingXLarge = EdgeInsets.all(xl);
+
   /// Padding inside list tiles
   static const EdgeInsets listTilePadding = EdgeInsets.symmetric(
     horizontal: md,

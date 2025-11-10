@@ -12,6 +12,9 @@ class PlombiProColors {
   static const Color primaryBlueLight = Color(0xFF3385D6); // Lighter shade
   static const Color primaryBlueExtraLight = Color(0xFFE6F2FF); // Very light tint
 
+  /// Alias for primary color (commonly used in UI components)
+  static const Color primary = primaryBlue;
+
   /// Secondary Orange - Accent color for CTAs and highlights
   static const Color secondaryOrange = Color(0xFFFF6B35); // Warm orange
   static const Color secondaryOrangeDark = Color(0xFFE55A2B); // Darker orange
@@ -115,6 +118,9 @@ class PlombiProColors {
   static const Color textSecondaryDark = gray400;
   static const Color textTertiaryDark = gray500;
   static const Color textDisabledDark = gray600;
+
+  /// Alias for secondary text color (commonly used, defaults to light theme)
+  static const Color textSecondary = textSecondaryLight;
 
   // ===== BORDER COLORS =====
 
