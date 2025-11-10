@@ -38,6 +38,9 @@ import '../screens/job_sites/job_sites_list_page.dart';
 import '../screens/job_sites/job_site_form_page.dart';
 import '../screens/analytics/analytics_dashboard_page.dart';
 import '../screens/onboarding/onboarding_wizard_page.dart';
+import '../screens/onboarding/onboarding_screen_enhanced.dart';
+import '../screens/auth/register_step_by_step_screen.dart';
+import '../screens/home/home_screen_enhanced.dart';
 import '../screens/reports/advanced_reports_page.dart';
 import '../screens/tools/tools_page.dart';
 import '../services/onboarding_service.dart';
@@ -61,6 +64,24 @@ class AppRouter {
         path: '/register',
         builder: (BuildContext context, GoRouterState state) {
           return const RegisterPage();
+        },
+      ),
+      GoRoute(
+        path: '/auth/register-step-by-step',
+        builder: (BuildContext context, GoRouterState state) {
+          return const RegisterStepByStepScreen();
+        },
+      ),
+      GoRoute(
+        path: '/onboarding-enhanced',
+        builder: (BuildContext context, GoRouterState state) {
+          return const OnboardingScreenEnhanced();
+        },
+      ),
+      GoRoute(
+        path: '/home-enhanced',
+        builder: (BuildContext context, GoRouterState state) {
+          return const HomeScreenEnhanced();
         },
       ),
       GoRoute(

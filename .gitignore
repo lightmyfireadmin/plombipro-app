@@ -82,3 +82,8 @@ ui-debug.log
 # Secret files
 .env
 cloud_functions/.env
+
+# Extracted APK files and archives
+obat_extracted/
+*.apk
+Obat*.zip
