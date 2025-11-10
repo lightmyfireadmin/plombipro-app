@@ -62,7 +62,7 @@ class SupabaseService {
           .toList();
     } catch (e) {
       print('Error fetching upcoming appointments: $e');
-      return [];
+      rethrow; // Propagate error instead of silently returning empty list
     }
   }
 

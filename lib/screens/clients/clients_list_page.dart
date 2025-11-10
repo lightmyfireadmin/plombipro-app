@@ -59,8 +59,8 @@ class _ClientsListPageState extends State<ClientsListPage> {
     setState(() {
       _filteredClients = _clients.where((client) {
         final clientName = client.name.toLowerCase();
-        final clientEmail = client.email.toLowerCase() ?? '';
-        final clientPhone = client.phone.toLowerCase() ?? '';
+        final clientEmail = (client.email ?? '').toLowerCase();
+        final clientPhone = (client.phone ?? '').toLowerCase();
         return clientName.contains(searchTerm) ||
                clientEmail.contains(searchTerm) ||
                clientPhone.contains(searchTerm);
@@ -147,8 +147,10 @@ class _ClientCard extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(client.email!),
-            Text(client.phone!),
+            if (client.email != null && client.email!.isNotEmpty)
+              Text(client.email!),
+            if (client.phone != null && client.phone!.isNotEmpty)
+              Text(client.phone!),
           ],
         ),
         trailing: PopupMenuButton<String>(
