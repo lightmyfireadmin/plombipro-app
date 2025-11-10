@@ -31,6 +31,11 @@ class ErrorHandler {
                 )
               : null,
           duration: const Duration(seconds: 4),
+          margin: const EdgeInsets.only(
+            left: 16.0,
+            right: 16.0,
+            bottom: 80.0, // 80px from bottom to avoid covering FABs and buttons
+          ),
         ),
       );
     }
@@ -51,6 +56,11 @@ class ErrorHandler {
           backgroundColor: Colors.green.shade700,
           behavior: SnackBarBehavior.floating,
           duration: const Duration(seconds: 3),
+          margin: const EdgeInsets.only(
+            left: 16.0,
+            right: 16.0,
+            bottom: 80.0, // 80px from bottom to avoid covering FABs and buttons
+          ),
         ),
       );
     }
@@ -68,6 +78,11 @@ class ErrorHandler {
           backgroundColor: Colors.blue.shade700,
           behavior: SnackBarBehavior.floating,
           duration: const Duration(seconds: 3),
+          margin: const EdgeInsets.only(
+            left: 16.0,
+            right: 16.0,
+            bottom: 80.0, // 80px from bottom to avoid covering FABs and buttons
+          ),
         ),
       );
     }
@@ -85,6 +100,11 @@ class ErrorHandler {
           backgroundColor: Colors.orange.shade700,
           behavior: SnackBarBehavior.floating,
           duration: const Duration(seconds: 4),
+          margin: const EdgeInsets.only(
+            left: 16.0,
+            right: 16.0,
+            bottom: 80.0, // 80px from bottom to avoid covering FABs and buttons
+          ),
         ),
       );
     }

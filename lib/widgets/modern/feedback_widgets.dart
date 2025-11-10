@@ -56,7 +56,11 @@ class ModernSnackBar {
                 onPressed: onAction ?? () {},
               )
             : null,
-        margin: PlombiProSpacing.pagePadding,
+        margin: const EdgeInsets.only(
+          left: PlombiProSpacing.md,
+          right: PlombiProSpacing.md,
+          bottom: PlombiProSpacing.xxxxxl, // 80px from bottom to avoid covering FABs and buttons
+        ),
       ),
     );
   }
