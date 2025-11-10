@@ -4,18 +4,13 @@ on: push
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
-
+    runs-on: ${{ mac.os }}
     steps:
       - uses: actions/checkout@v2
 
       - name: Extract zip
         uses: ./
         with:
-          file_path: /Obat+_+devis+facture+bâtiment_1.0.33_apkcombo.com.zip
-          extract_dir: /zip
+          file_path: ./Obat+_+devis+facture+bâtiment_1.0.33_apkcombo.com.zip
+          extract_dir: ./zip
           verbose: true
