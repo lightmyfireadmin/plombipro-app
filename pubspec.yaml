@@ -51,6 +51,12 @@ dependencies:
   introduction_screen: ^4.0.0
   shared_preferences: ^2.2.3
 
+  # Modernization 2025 - Animations & UI
+  animate_do: ^3.3.4
+  shimmer: ^3.0.0
+  lottie: ^3.1.2
+  tutorial_coach_mark: ^1.2.11
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
