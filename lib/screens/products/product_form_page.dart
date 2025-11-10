@@ -152,6 +152,11 @@ class _ProductFormPageState extends State<ProductFormPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_isEditing ? 'Éditer le produit' : 'Nouveau Produit'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+          tooltip: 'Retour',
+        ),
         actions: [
           if (_isSaving)
             const Padding(

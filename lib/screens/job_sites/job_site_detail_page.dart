@@ -434,6 +434,11 @@ class _JobSiteDetailPageState extends State<JobSiteDetailPage>
     return Scaffold(
       appBar: AppBar(
         title: Text(_jobSite?.jobName ?? 'Chantier'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+          tooltip: 'Retour',
+        ),
         bottom: TabBar(
           controller: _tabController,
           isScrollable: true,

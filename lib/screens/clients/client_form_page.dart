@@ -279,6 +279,12 @@ class _ClientFormPageState extends State<ClientFormPage> {
 
         title: Text(_client == null ? 'Nouveau Client' : 'Modifier le Client'),
 
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+          tooltip: 'Retour',
+        ),
+
         actions: [
 
           IconButton(

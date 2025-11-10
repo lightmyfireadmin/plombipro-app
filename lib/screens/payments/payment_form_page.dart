@@ -87,6 +87,11 @@ class _PaymentFormPageState extends State<PaymentFormPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.paymentId == null ? 'Enregistrer un paiement' : 'Modifier le paiement'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+          tooltip: 'Retour',
+        ),
         actions: [
           IconButton(
             onPressed: _isLoading ? null : _savePayment,
