@@ -12,6 +12,7 @@ import '../screens/quotes/quotes_list_page.dart';
 import '../screens/quotes/quote_form_page.dart';
 import '../screens/clients/clients_list_page.dart';
 import '../screens/clients/client_form_page.dart';
+import '../screens/clients/add_client_wizard_page.dart';
 import '../screens/invoices/invoices_list_page.dart';
 import '../screens/invoices/invoice_form_page.dart';
 import '../screens/products/products_list_page.dart';
@@ -136,10 +137,16 @@ class AppRouter {
             },
           ),
           GoRoute(
+            path: 'wizard',
+            builder: (BuildContext context, GoRouterState state) {
+              return const AddClientWizardPage();
+            },
+          ),
+          GoRoute(
             path: ':id',
             builder: (BuildContext context, GoRouterState state) {
               final clientId = state.pathParameters['id']!;
-              return ClientFormPage(clientId: clientId); 
+              return ClientFormPage(clientId: clientId);
             },
           ),
         ],
