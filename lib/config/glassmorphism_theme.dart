@@ -38,7 +38,7 @@ class GlassmorphismTheme {
     double? opacity,
   }) {
     return BoxDecoration(
-      color: (color ?? PlombiProColors.primary)
+      color: (color ?? PlombiProColors.primaryBlue)
           .withOpacity(opacity ?? opacityLight),
       borderRadius: borderRadius ?? BorderRadius.circular(20),
       border: Border.all(
@@ -47,7 +47,7 @@ class GlassmorphismTheme {
       ),
       boxShadow: [
         BoxShadow(
-          color: PlombiProColors.primary.withOpacity(0.1),
+          color: PlombiProColors.primaryBlue.withOpacity(0.1),
           blurRadius: 20,
           offset: const Offset(0, 10),
         ),
@@ -61,7 +61,7 @@ class GlassmorphismTheme {
     double? opacity,
   }) {
     return BoxDecoration(
-      color: PlombiProColors.accent.withOpacity(opacity ?? opacityLight),
+      color: PlombiProColors.secondaryOrange.withOpacity(opacity ?? opacityLight),
       borderRadius: borderRadius ?? BorderRadius.circular(20),
       border: Border.all(
         color: Colors.white.withOpacity(borderOpacity),
@@ -69,7 +69,7 @@ class GlassmorphismTheme {
       ),
       boxShadow: [
         BoxShadow(
-          color: PlombiProColors.accent.withOpacity(0.1),
+          color: PlombiProColors.secondaryOrange.withOpacity(0.1),
           blurRadius: 20,
           offset: const Offset(0, 10),
         ),
@@ -171,8 +171,8 @@ class GlassmorphismTheme {
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
       colors: [
-        PlombiProColors.primary.withOpacity(opacity),
-        PlombiProColors.tertiary.withOpacity(opacity * 0.7),
+        PlombiProColors.primaryBlue.withOpacity(opacity),
+        PlombiProColors.tertiaryTeal.withOpacity(opacity * 0.7),
       ],
     );
   }
@@ -182,8 +182,8 @@ class GlassmorphismTheme {
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
       colors: [
-        PlombiProColors.accent.withOpacity(opacity),
-        PlombiProColors.accent.withOpacity(opacity * 0.5),
+        PlombiProColors.secondaryOrange.withOpacity(opacity),
+        PlombiProColors.secondaryOrange.withOpacity(opacity * 0.5),
       ],
     );
   }

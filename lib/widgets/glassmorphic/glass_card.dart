@@ -39,7 +39,7 @@ class GlassCard extends StatelessWidget {
         width: width,
         height: height,
         margin: margin,
-        color: color ?? PlombiProColors.primary,
+        color: color ?? PlombiProColors.primaryBlue,
         borderRadius: borderRadius,
         onTap: onTap,
         child: cardChild,
@@ -51,7 +51,7 @@ class GlassCard extends StatelessWidget {
       height: height,
       margin: margin,
       padding: const EdgeInsets.all(0),
-      color: color ?? PlombiProColors.primary,
+      color: color ?? PlombiProColors.primaryBlue,
       borderRadius: borderRadius,
       child: InkWell(
         onTap: onTap,
@@ -87,7 +87,7 @@ class GlassStatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GlassCard(
       onTap: onTap,
-      color: color ?? PlombiProColors.primary,
+      color: color ?? PlombiProColors.primaryBlue,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -169,7 +169,7 @@ class GlassActionButton extends StatelessWidget {
         horizontal: isLarge ? 32 : 24,
         vertical: isLarge ? 20 : 16,
       ),
-      color: color ?? PlombiProColors.accent,
+      color: color ?? PlombiProColors.secondaryOrange,
       borderRadius: BorderRadius.circular(isLarge ? 20 : 16),
       onTap: onTap,
       child: Row(

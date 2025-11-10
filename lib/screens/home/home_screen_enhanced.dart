@@ -87,8 +87,8 @@ class _HomeScreenEnhancedState extends State<HomeScreenEnhanced>
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  PlombiProColors.primary.withOpacity(0.9),
-                  PlombiProColors.tertiary.withOpacity(0.7),
+                  PlombiProColors.primaryBlue.withOpacity(0.9),
+                  PlombiProColors.tertiaryTeal.withOpacity(0.7),
                   PlombiProColors.backgroundDark,
                 ],
               ),
@@ -221,7 +221,7 @@ class _HomeScreenEnhancedState extends State<HomeScreenEnhanced>
                           width: 8,
                           height: 8,
                           decoration: const BoxDecoration(
-                            color: PlombiProColors.accent,
+                            color: PlombiProColors.secondaryOrange,
                             shape: BoxShape.circle,
                           ),
                         ),
@@ -299,10 +299,10 @@ class _HomeScreenEnhancedState extends State<HomeScreenEnhanced>
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: PlombiProColors.accent.withOpacity(0.2),
+                  color: PlombiProColors.secondaryOrange.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: PlombiProColors.accent.withOpacity(0.3),
+                    color: PlombiProColors.secondaryOrange.withOpacity(0.3),
                     width: 1,
                   ),
                 ),
@@ -310,7 +310,7 @@ class _HomeScreenEnhancedState extends State<HomeScreenEnhanced>
                   children: [
                     const Icon(
                       Icons.rocket_launch_outlined,
-                      color: PlombiProColors.accent,
+                      color: PlombiProColors.secondaryOrange,
                       size: 24,
                     ),
                     const SizedBox(width: 12),
@@ -338,7 +338,7 @@ class _HomeScreenEnhancedState extends State<HomeScreenEnhanced>
                     ),
                     const Icon(
                       Icons.arrow_forward,
-                      color: PlombiProColors.accent,
+                      color: PlombiProColors.secondaryOrange,
                       size: 20,
                     ),
                   ],
@@ -372,7 +372,7 @@ class _HomeScreenEnhancedState extends State<HomeScreenEnhanced>
                 child: _buildQuickActionButton(
                   'Nouveau\nDevis',
                   Icons.description_outlined,
-                  PlombiProColors.accent,
+                  PlombiProColors.secondaryOrange,
                   () => context.push('/quotes/new'),
                 ),
               ),
@@ -381,7 +381,7 @@ class _HomeScreenEnhancedState extends State<HomeScreenEnhanced>
                 child: _buildQuickActionButton(
                   'Nouvelle\nFacture',
                   Icons.receipt_long_outlined,
-                  PlombiProColors.tertiary,
+                  PlombiProColors.tertiaryTeal,
                   () => context.push('/invoices/new'),
                 ),
               ),
@@ -390,7 +390,7 @@ class _HomeScreenEnhancedState extends State<HomeScreenEnhanced>
                 child: _buildQuickActionButton(
                   'Nouveau\nClient',
                   Icons.person_add_outlined,
-                  PlombiProColors.primary,
+                  PlombiProColors.primaryBlue,
                   () => context.push('/clients/new'),
                 ),
               ),
@@ -458,14 +458,14 @@ class _HomeScreenEnhancedState extends State<HomeScreenEnhanced>
                 title: 'Clients',
                 value: '$_totalClients',
                 icon: Icons.people_outline,
-                color: PlombiProColors.primary,
+                color: PlombiProColors.primaryBlue,
                 onTap: () => context.push('/clients'),
               ),
               GlassStatCard(
                 title: 'Devis en attente',
                 value: '$_pendingQuotes',
                 icon: Icons.description_outlined,
-                color: PlombiProColors.accent,
+                color: PlombiProColors.secondaryOrange,
                 onTap: () => context.push('/quotes'),
               ),
               GlassStatCard(
@@ -480,7 +480,7 @@ class _HomeScreenEnhancedState extends State<HomeScreenEnhanced>
                 title: 'Chantiers actifs',
                 value: '$_activeJobSites',
                 icon: Icons.construction_outlined,
-                color: PlombiProColors.tertiary,
+                color: PlombiProColors.tertiaryTeal,
                 onTap: () => context.push('/job-sites'),
               ),
             ],
@@ -578,7 +578,7 @@ class _HomeScreenEnhancedState extends State<HomeScreenEnhanced>
             'Nouveau paiement',
             'Paiement reçu pour FAC-2025-001 (171,00 €)',
             Icons.payment_outlined,
-            PlombiProColors.primary,
+            PlombiProColors.primaryBlue,
             'Hier à 14:30',
           ),
           const SizedBox(height: 12),
@@ -656,7 +656,7 @@ class _HomeScreenEnhancedState extends State<HomeScreenEnhanced>
       width: 64,
       height: 64,
       padding: const EdgeInsets.all(0),
-      color: PlombiProColors.accent,
+      color: PlombiProColors.secondaryOrange,
       borderRadius: BorderRadius.circular(20),
       onTap: () {
         _showQuickMenu();
@@ -682,11 +682,11 @@ class _HomeScreenEnhancedState extends State<HomeScreenEnhanced>
           crossAxisSpacing: 12,
           children: [
             _buildMenuOption('Devis', Icons.description_outlined,
-                PlombiProColors.accent, () => context.push('/quotes/new')),
+                PlombiProColors.secondaryOrange, () => context.push('/quotes/new')),
             _buildMenuOption('Facture', Icons.receipt_long_outlined,
-                PlombiProColors.primary, () => context.push('/invoices/new')),
+                PlombiProColors.primaryBlue, () => context.push('/invoices/new')),
             _buildMenuOption('Client', Icons.person_add_outlined,
-                PlombiProColors.tertiary, () => context.push('/clients/new')),
+                PlombiProColors.tertiaryTeal, () => context.push('/clients/new')),
             _buildMenuOption('Chantier', Icons.construction_outlined,
                 PlombiProColors.success, () => context.push('/job-sites/new')),
           ],

@@ -238,8 +238,8 @@ class _RegisterStepByStepScreenState extends State<RegisterStepByStepScreen>
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  PlombiProColors.primary,
-                  PlombiProColors.tertiary,
+                  PlombiProColors.primaryBlue,
+                  PlombiProColors.tertiaryTeal,
                   PlombiProColors.backgroundDark,
                 ],
               ),
@@ -535,7 +535,7 @@ class _RegisterStepByStepScreenState extends State<RegisterStepByStepScreen>
                   prefixIcon: const Icon(Icons.business_center_outlined,
                       color: Colors.white70),
                 ),
-                dropdownColor: PlombiProColors.primary,
+                dropdownColor: PlombiProColors.primaryBlue,
                 style: const TextStyle(color: Colors.white),
                 items: _companyTypes
                     .map((type) => DropdownMenuItem(
@@ -676,7 +676,7 @@ class _RegisterStepByStepScreenState extends State<RegisterStepByStepScreen>
         child: Text(
           isLastStep ? 'Créer mon compte' : 'Continuer',
           style: TextStyle(
-            color: PlombiProColors.primary,
+            color: PlombiProColors.primaryBlue,
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
