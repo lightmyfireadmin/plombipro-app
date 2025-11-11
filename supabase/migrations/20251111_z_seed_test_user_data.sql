@@ -361,7 +361,7 @@ INSERT INTO quotes (
  'Installation sanitaires neufs',
  NOW() - INTERVAL '75 days', NOW() - INTERVAL '70 days'),
 ('40000000-0000-0000-0003-000000000006', test_user_id, client_06, 'DEV-2025-0006',
- (NOW() - INTERVAL '90 days')::date, 'rejected',
+ (NOW() - INTERVAL '90 days')::date, 'expired',
  1650.00, 330.00, 1980.00,
  'Mise aux normes plomberie',
  NOW() - INTERVAL '90 days', NOW() - INTERVAL '84 days'),
