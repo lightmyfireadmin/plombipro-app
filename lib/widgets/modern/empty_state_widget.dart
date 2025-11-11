@@ -86,6 +86,18 @@ class EmptyStateWidget extends StatelessWidget {
     );
   }
 
+  factory EmptyStateWidget.noJobSites({VoidCallback? onAddJobSite}) {
+    return EmptyStateWidget(
+      icon: Icons.location_on_outlined,
+      title: 'Aucun chantier',
+      message:
+          'Ajoutez vos chantiers pour organiser vos interventions et suivre l\'avancement de vos projets',
+      actionLabel: 'Ajouter un chantier',
+      onAction: onAddJobSite,
+      iconColor: PlombiProColors.tertiaryTeal,
+    );
+  }
+
   factory EmptyStateWidget.noSearchResults() {
     return const EmptyStateWidget(
       icon: Icons.search_off,
