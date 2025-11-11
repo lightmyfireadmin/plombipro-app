@@ -30,7 +30,7 @@ INSERT INTO profiles (
   email,
   company_name,
   siret,
-  vat_number,
+  tva_number,
   iban,
   bic,
   phone,
@@ -59,7 +59,7 @@ INSERT INTO profiles (
 ON CONFLICT (id) DO UPDATE SET
   company_name = EXCLUDED.company_name,
   siret = EXCLUDED.siret,
-  vat_number = EXCLUDED.vat_number,
+  tva_number = EXCLUDED.tva_number,
   iban = EXCLUDED.iban,
   bic = EXCLUDED.bic,
   phone = EXCLUDED.phone,
@@ -218,7 +218,7 @@ INSERT INTO clients (
 );
 
 -- =====================================================
--- 3. JOB SITES (8 chantiers with various statuses)
+-- 3. JOB SITES (4 chantiers with various statuses)
 -- =====================================================
 
 WITH client_ids AS (
@@ -232,8 +232,8 @@ WITH client_ids AS (
 )
 INSERT INTO job_sites (
   id, user_id, client_id, job_name, description,
-  address, postal_code, city, country,
-  status, start_date, end_date, estimated_hours, actual_hours,
+  address, status, start_date, estimated_end_date, actual_end_date,
+  progress_percentage, estimated_budget, actual_cost,
   notes, created_at
 )
 SELECT
@@ -251,21 +251,14 @@ SELECT
     WHEN 4 THEN 'Maintenance préventive système sanitaire cuisine professionnelle'
   END,
   CASE ROW_NUMBER() OVER ()
-    WHEN 1 THEN '88 Avenue Hoche'
-    WHEN 2 THEN '23 Rue de la Tour'
-    WHEN 3 THEN '23 Avenue des Champs-Élysées'
-    WHEN 4 THEN '56 Rue Saint-Antoine'
+    WHEN 1 THEN '88 Avenue Hoche, 75008 Paris'
+    WHEN 2 THEN '23 Rue de la Tour, 75016 Paris'
+    WHEN 3 THEN '23 Avenue des Champs-Élysées, 75008 Paris'
+    WHEN 4 THEN '56 Rue Saint-Antoine, 75004 Paris'
   END,
-  CASE ROW_NUMBER() OVER ()
-    WHEN 1 THEN '75008'
-    WHEN 2 THEN '75016'
-    WHEN 3 THEN '75008'
-    WHEN 4 THEN '75004'
-  END,
-  'Paris', 'France',
   CASE ROW_NUMBER() OVER ()
     WHEN 1 THEN 'in_progress'
-    WHEN 2 THEN 'pending'
+    WHEN 2 THEN 'planned'
     WHEN 3 THEN 'completed'
     WHEN 4 THEN 'in_progress'
   END,
@@ -282,16 +275,28 @@ SELECT
     WHEN 4 THEN NOW() + INTERVAL '2 days'
   END,
   CASE ROW_NUMBER() OVER ()
-    WHEN 1 THEN 40.0
-    WHEN 2 THEN 120.0
-    WHEN 3 THEN 3.0
-    WHEN 4 THEN 8.0
+    WHEN 1 THEN NULL
+    WHEN 2 THEN NULL
+    WHEN 3 THEN NOW() - INTERVAL '28 days'
+    WHEN 4 THEN NULL
   END,
   CASE ROW_NUMBER() OVER ()
-    WHEN 1 THEN 32.5
+    WHEN 1 THEN 80
+    WHEN 2 THEN 0
+    WHEN 3 THEN 100
+    WHEN 4 THEN 90
+  END,
+  CASE ROW_NUMBER() OVER ()
+    WHEN 1 THEN 4500.00
+    WHEN 2 THEN 15000.00
+    WHEN 3 THEN 450.00
+    WHEN 4 THEN 890.00
+  END,
+  CASE ROW_NUMBER() OVER ()
+    WHEN 1 THEN 3750.50
     WHEN 2 THEN NULL
-    WHEN 3 THEN 3.5
-    WHEN 4 THEN 7.0
+    WHEN 3 THEN 425.00
+    WHEN 4 THEN 780.25
   END,
   CASE ROW_NUMBER() OVER ()
     WHEN 1 THEN 'Client très exigeant. Travaux de qualité requis.'
@@ -308,116 +313,115 @@ LIMIT 4;
 -- =====================================================
 
 INSERT INTO products (
-  id, user_id, name, reference, description, unit,
-  purchase_price, sale_price, vat_rate, stock_quantity,
-  minimum_stock, supplier, category, is_favorite,
-  tags, created_at
+  id, user_id, name, ref, description, unit,
+  price_buy, price_sell, vat_rate, supplier, category, is_favorite,
+  created_at
 ) VALUES
 -- Robinetterie
 (gen_random_uuid(), test_user_id, 'Mitigeur lavabo chromé', 'ROB-MIT-001',
  'Mitigeur monotrou pour lavabo, finition chromée', 'pièce',
- 45.90, 125.00, 20.0, 15, 5, 'Grohe', 'Robinetterie', true,
- ARRAY['Grohe', 'Chrome', 'Bestseller'], NOW() - INTERVAL '2 years'),
+ 45.90, 125.00, 20.0, 'Grohe', 'Robinetterie', true,
+ NOW() - INTERVAL '2 years'),
 
 (gen_random_uuid(), test_user_id, 'Mitigeur douche thermostatique', 'ROB-MIT-002',
  'Mitigeur thermostatique pour douche avec sécurité anti-brûlure', 'pièce',
- 89.50, 245.00, 20.0, 8, 3, 'Grohe', 'Robinetterie', true,
- ARRAY['Grohe', 'Sécurité', 'Premium'], NOW() - INTERVAL '1 year'),
+ 89.50, 245.00, 20.0, 'Grohe', 'Robinetterie', true,
+ NOW() - INTERVAL '1 year'),
 
 (gen_random_uuid(), test_user_id, 'Robinet cuisine douchette', 'ROB-CUI-001',
  'Mitigeur cuisine avec douchette extractible', 'pièce',
- 67.00, 189.00, 20.0, 10, 4, 'Hansgrohe', 'Robinetterie', false,
- ARRAY['Hansgrohe', 'Cuisine'], NOW() - INTERVAL '1 year')),
+ 67.00, 189.00, 20.0, 'Hansgrohe', 'Robinetterie', false,
+ NOW() - INTERVAL '1 year'),
 
 -- Sanitaires
 (gen_random_uuid(), test_user_id, 'WC suspendu compact', 'SAN-WC-001',
  'WC suspendu gain de place avec mécanisme économie d''eau', 'pièce',
- 145.00, 395.00, 20.0, 6, 2, 'Geberit', 'Sanitaires', true,
- ARRAY['Geberit', 'Eco', 'Moderne'], NOW() - INTERVAL '6 months'),
+ 145.00, 395.00, 20.0, 'Geberit', 'Sanitaires', true,
+ NOW() - INTERVAL '6 months'),
 
 (gen_random_uuid(), test_user_id, 'Lavabo céramique 60cm', 'SAN-LAV-001',
  'Vasque à poser en céramique blanche 60x45cm', 'pièce',
- 56.00, 159.00, 20.0, 12, 5, 'Roca', 'Sanitaires', false,
- ARRAY['Roca', 'Blanc', 'Standard'], NOW() - INTERVAL '1 year')),
+ 56.00, 159.00, 20.0, 'Roca', 'Sanitaires', false,
+ NOW() - INTERVAL '1 year'),
 
 (gen_random_uuid(), test_user_id, 'Baignoire acrylique 170cm', 'SAN-BAI-001',
  'Baignoire rectangulaire acrylique 170x75cm', 'pièce',
- 234.00, 650.00, 20.0, 3, 1, 'Jacob Delafon', 'Sanitaires', false,
- ARRAY['Jacob Delafon', 'Acrylique'], NOW() - INTERVAL '8 months'),
+ 234.00, 650.00, 20.0, 'Jacob Delafon', 'Sanitaires', false,
+ NOW() - INTERVAL '8 months'),
 
 (gen_random_uuid(), test_user_id, 'Receveur douche extra-plat', 'SAN-REC-001',
  'Receveur de douche 90x90cm hauteur 3cm', 'pièce',
- 123.00, 340.00, 20.0, 7, 3, 'Villeroy & Boch', 'Sanitaires', true,
- ARRAY['Villeroy', 'Extra-plat', 'Design'], NOW() - INTERVAL '3 months'),
+ 123.00, 340.00, 20.0, 'Villeroy & Boch', 'Sanitaires', true,
+ NOW() - INTERVAL '3 months'),
 
 -- Tuyauterie
 (gen_random_uuid(), test_user_id, 'Tube PER nu Ø16mm', 'TUY-PER-016',
  'Tube PER nu diamètre 16mm - couronne 50m', 'ml',
- 0.45, 1.20, 20.0, 450, 100, 'Rehau', 'Tuyauterie', true,
- ARRAY['Rehau', 'PER', 'Couronne'], NOW() - INTERVAL '2 years'),
+ 0.45, 1.20, 20.0, 'Rehau', 'Tuyauterie', true,
+ NOW() - INTERVAL '2 years'),
 
 (gen_random_uuid(), test_user_id, 'Tube PER nu Ø20mm', 'TUY-PER-020',
  'Tube PER nu diamètre 20mm - couronne 50m', 'ml',
- 0.65, 1.75, 20.0, 300, 80, 'Rehau', 'Tuyauterie', true,
- ARRAY['Rehau', 'PER'], NOW() - INTERVAL '2 years'),
+ 0.65, 1.75, 20.0, 'Rehau', 'Tuyauterie', true,
+ NOW() - INTERVAL '2 years'),
 
 (gen_random_uuid(), test_user_id, 'Tube cuivre écroui Ø14mm', 'TUY-CUI-014',
  'Tube cuivre écroui diamètre 14mm - barre 4m', 'ml',
- 3.20, 8.50, 20.0, 160, 40, 'Comap', 'Tuyauterie', false,
- ARRAY['Comap', 'Cuivre'], NOW() - INTERVAL '3 years'),
+ 3.20, 8.50, 20.0, 'Comap', 'Tuyauterie', false,
+ NOW() - INTERVAL '3 years'),
 
 (gen_random_uuid(), test_user_id, 'Multicouche Ø16mm', 'TUY-MUL-016',
  'Tube multicouche diamètre 16mm - couronne 50m', 'ml',
- 0.75, 2.00, 20.0, 250, 60, 'Henco', 'Tuyauterie', true,
- ARRAY['Henco', 'Multicouche', 'Premium'], NOW() - INTERVAL '1 year')),
+ 0.75, 2.00, 20.0, 'Henco', 'Tuyauterie', true,
+ NOW() - INTERVAL '1 year'),
 
 -- Raccords
 (gen_random_uuid(), test_user_id, 'Raccord PER à compression', 'RAC-PER-001',
  'Raccord PER à compression Ø16mm - lot de 10', 'lot',
- 12.50, 34.00, 20.0, 45, 15, 'Comap', 'Raccords', true,
- ARRAY['Comap', 'Compression'], NOW() - INTERVAL '1 year'),
+ 12.50, 34.00, 20.0, 'Comap', 'Raccords', true,
+ NOW() - INTERVAL '1 year'),
 
 (gen_random_uuid(), test_user_id, 'Té égal laiton 15/21', 'RAC-TEE-001',
  'Raccord en Té égal laiton 15/21 (1/2")', 'pièce',
- 1.20, 3.50, 20.0, 120, 30, 'Boutte', 'Raccords', false,
- ARRAY['Laiton', 'Standard'], NOW() - INTERVAL '2 years'),
+ 1.20, 3.50, 20.0, 'Boutte', 'Raccords', false,
+ NOW() - INTERVAL '2 years'),
 
 (gen_random_uuid(), test_user_id, 'Coude à sertir cuivre 90°', 'RAC-COU-001',
  'Coude à sertir cuivre 90° Ø14mm', 'pièce',
- 2.30, 6.50, 20.0, 80, 20, 'Comap', 'Raccords', false,
- ARRAY['Comap', 'Sertir'], NOW() - INTERVAL '1 year')),
+ 2.30, 6.50, 20.0, 'Comap', 'Raccords', false,
+ NOW() - INTERVAL '1 year'),
 
 -- Chauffage
 (gen_random_uuid(), test_user_id, 'Radiateur aluminium 600mm', 'CHA-RAD-001',
  'Radiateur aluminium hauteur 600mm - 8 éléments', 'pièce',
- 89.00, 245.00, 20.0, 12, 4, 'Acova', 'Chauffage', true,
- ARRAY['Acova', 'Aluminium', 'Bestseller'], NOW() - INTERVAL '1 year')),
+ 89.00, 245.00, 20.0, 'Acova', 'Chauffage', true,
+ NOW() - INTERVAL '1 year'),
 
 (gen_random_uuid(), test_user_id, 'Vanne thermostatique radiateur', 'CHA-VAN-001',
  'Tête thermostatique pour radiateur', 'pièce',
- 23.00, 65.00, 20.0, 25, 10, 'Danfoss', 'Chauffage', true,
- ARRAY['Danfoss', 'Thermostatique'], NOW() - INTERVAL '6 months'),
+ 23.00, 65.00, 20.0, 'Danfoss', 'Chauffage', true,
+ NOW() - INTERVAL '6 months'),
 
 (gen_random_uuid(), test_user_id, 'Collecteur chauffage sol 8 circuits', 'CHA-COL-001',
  'Collecteur pour plancher chauffant 8 départs', 'pièce',
- 156.00, 425.00, 20.0, 4, 2, 'Oventrop', 'Chauffage', false,
- ARRAY['Oventrop', 'Collecteur'], NOW() - INTERVAL '8 months'),
+ 156.00, 425.00, 20.0, 'Oventrop', 'Chauffage', false,
+ NOW() - INTERVAL '8 months'),
 
 -- Outils & Consommables
 (gen_random_uuid(), test_user_id, 'Pâte à joint pot 500g', 'OUT-PAT-001',
  'Pâte à joint pour raccords filetés - pot 500g', 'pièce',
- 8.50, 22.00, 20.0, 35, 10, 'Gebatout', 'Consommables', true,
- ARRAY['Gebatout', 'Joint'], NOW() - INTERVAL '3 years'),
+ 8.50, 22.00, 20.0, 'Gebatout', 'Consommables', true,
+ NOW() - INTERVAL '3 years'),
 
 (gen_random_uuid(), test_user_id, 'Téflon rouleau professionnel', 'OUT-TEF-001',
  'Ruban téflon PTFE largeur 19mm - rouleau 50m', 'pièce',
- 4.20, 11.50, 20.0, 50, 15, 'Guilbert', 'Consommables', true,
- ARRAY['Téflon', 'Pro'], NOW() - INTERVAL '3 years'),
+ 4.20, 11.50, 20.0, 'Guilbert', 'Consommables', true,
+ NOW() - INTERVAL '3 years'),
 
 (gen_random_uuid(), test_user_id, 'Silicone sanitaire blanc', 'OUT-SIL-001',
  'Cartouche silicone sanitaire anti-moisissures 310ml', 'pièce',
- 3.80, 10.50, 20.0, 60, 20, 'Rubson', 'Consommables', true,
- ARRAY['Rubson', 'Silicone', 'Blanc'], NOW() - INTERVAL '2 years');
+ 3.80, 10.50, 20.0, 'Rubson', 'Consommables', true,
+ NOW() - INTERVAL '2 years');
 
 -- =====================================================
 -- 5. QUOTES (12 devis avec différents statuts)
@@ -436,9 +440,8 @@ WITH quote_data AS (
   LIMIT 12
 )
 INSERT INTO quotes (
-  id, user_id, client_id, quote_number, subject, status,
-  subtotal, discount_percentage, discount_amount, tax_amount, total,
-  valid_until, notes, terms,
+  id, user_id, client_id, quote_number, quote_date, status,
+  subtotal_ht, total_vat, total_ttc, notes,
   created_at, updated_at
 )
 SELECT
@@ -446,20 +449,7 @@ SELECT
   test_user_id,
   client_id,
   'DEV-2025-' || LPAD(row_num::TEXT, 4, '0'),
-  CASE row_num
-    WHEN 1 THEN 'Rénovation salle de bain'
-    WHEN 2 THEN 'Installation chauffage central'
-    WHEN 3 THEN 'Remplacement robinetterie cuisine'
-    WHEN 4 THEN 'Réparation fuite et maintenance'
-    WHEN 5 THEN 'Installation sanitaires neufs'
-    WHEN 6 THEN 'Mise aux normes plomberie'
-    WHEN 7 THEN 'Création salle d''eau'
-    WHEN 8 THEN 'Entretien annuel système chauffage'
-    WHEN 9 THEN 'Dépannage urgentfuite'
-    WHEN 10 THEN 'Installation radiateurs neufs'
-    WHEN 11 THEN 'Réfection complète sanitaires'
-    WHEN 12 THEN 'Maintenance préventive'
-  END,
+  (NOW() - INTERVAL '15 days' * row_num)::date,
   CASE row_num
     WHEN 1 THEN 'accepted'
     WHEN 2 THEN 'pending'
@@ -488,20 +478,14 @@ SELECT
     WHEN 11 THEN 5600.00
     WHEN 12 THEN 890.00
   END,
-  CASE row_num WHEN 1 THEN 5.0 WHEN 7 THEN 10.0 ELSE 0.0 END,
   CASE row_num
-    WHEN 1 THEN 3250.00 * 0.05
-    WHEN 7 THEN 4200.00 * 0.10
-    ELSE 0.0
-  END,
-  CASE row_num
-    WHEN 1 THEN (3250.00 - 3250.00 * 0.05) * 0.20
+    WHEN 1 THEN 3250.00 * 0.20
     WHEN 2 THEN 8900.00 * 0.20
     WHEN 3 THEN 450.00 * 0.20
     WHEN 4 THEN 780.00 * 0.20
     WHEN 5 THEN 2100.00 * 0.20
     WHEN 6 THEN 1650.00 * 0.20
-    WHEN 7 THEN (4200.00 - 4200.00 * 0.10) * 0.20
+    WHEN 7 THEN 4200.00 * 0.20
     WHEN 8 THEN 590.00 * 0.20
     WHEN 9 THEN 320.00 * 0.20
     WHEN 10 THEN 3100.00 * 0.20
@@ -509,27 +493,33 @@ SELECT
     WHEN 12 THEN 890.00 * 0.20
   END,
   CASE row_num
-    WHEN 1 THEN (3250.00 - 3250.00 * 0.05) * 1.20
+    WHEN 1 THEN 3250.00 * 1.20
     WHEN 2 THEN 8900.00 * 1.20
     WHEN 3 THEN 450.00 * 1.20
     WHEN 4 THEN 780.00 * 1.20
     WHEN 5 THEN 2100.00 * 1.20
     WHEN 6 THEN 1650.00 * 1.20
-    WHEN 7 THEN (4200.00 - 4200.00 * 0.10) * 1.20
+    WHEN 7 THEN 4200.00 * 1.20
     WHEN 8 THEN 590.00 * 1.20
     WHEN 9 THEN 320.00 * 1.20
     WHEN 10 THEN 3100.00 * 1.20
     WHEN 11 THEN 5600.00 * 1.20
     WHEN 12 THEN 890.00 * 1.20
   END,
-  NOW() + INTERVAL '30 days',
   CASE row_num
-    WHEN 1 THEN 'Devis détaillé pour rénovation complète. Délai: 3 semaines'
-    WHEN 2 THEN 'Installation sur 2 mois. Fournitures premium.'
-    WHEN 9 THEN 'Intervention urgente réalisée. Devis établi a posteriori.'
-    ELSE NULL
+    WHEN 1 THEN 'Rénovation salle de bain - Devis détaillé pour rénovation complète. Délai: 3 semaines'
+    WHEN 2 THEN 'Installation chauffage central - Installation sur 2 mois. Fournitures premium.'
+    WHEN 3 THEN 'Remplacement robinetterie cuisine'
+    WHEN 4 THEN 'Réparation fuite et maintenance'
+    WHEN 5 THEN 'Installation sanitaires neufs'
+    WHEN 6 THEN 'Mise aux normes plomberie'
+    WHEN 7 THEN 'Création salle d''eau'
+    WHEN 8 THEN 'Entretien annuel système chauffage'
+    WHEN 9 THEN 'Dépannage urgent - Intervention urgente réalisée. Devis établi a posteriori.'
+    WHEN 10 THEN 'Installation radiateurs neufs'
+    WHEN 11 THEN 'Réfection complète sanitaires'
+    WHEN 12 THEN 'Maintenance préventive'
   END,
-  'Conditions de paiement: 30% à la commande, 70% à la livraison. Garantie 2 ans pièces et main d''œuvre.',
   NOW() - INTERVAL '15 days' * row_num,
   NOW() - INTERVAL '14 days' * row_num
 FROM quote_data;
@@ -547,9 +537,9 @@ WITH invoice_data AS (
   LIMIT 10
 )
 INSERT INTO invoices (
-  id, user_id, client_id, invoice_number, subject,
-  issue_date, due_date, payment_date, status, payment_method,
-  subtotal, discount_percentage, discount_amount, tax_amount, total,
+  id, user_id, client_id, invoice_number,
+  invoice_date, due_date, payment_date, status, payment_method,
+  subtotal_ht, total_vat, total_ttc,
   amount_paid, payment_status,
   notes, legal_mentions,
   created_at, updated_at
@@ -559,26 +549,14 @@ SELECT
   test_user_id,
   client_id,
   'FACT-2025-' || LPAD(row_num::TEXT, 4, '0'),
+  (NOW() - INTERVAL '30 days' + (row_num * INTERVAL '3 days'))::date,
+  (NOW() - INTERVAL '30 days' + (row_num * INTERVAL '3 days') + INTERVAL '30 days')::date,
   CASE row_num
-    WHEN 1 THEN 'Rénovation salle de bain - Solde'
-    WHEN 2 THEN 'Remplacement robinetterie'
-    WHEN 3 THEN 'Dépannage urgent'
-    WHEN 4 THEN 'Installation chauffage - Acompte 30%'
-    WHEN 5 THEN 'Création salle d''eau - Solde'
-    WHEN 6 THEN 'Maintenance annuelle'
-    WHEN 7 THEN 'Réparation fuite'
-    WHEN 8 THEN 'Installation radiateurs - Acompte'
-    WHEN 9 THEN 'Entretien système'
-    WHEN 10 THEN 'Fourniture matériel'
-  END,
-  NOW() - INTERVAL '30 days' + (row_num * INTERVAL '3 days'),
-  NOW() - INTERVAL '30 days' + (row_num * INTERVAL '3 days') + INTERVAL '30 days',
-  CASE row_num
-    WHEN 1 THEN NOW() - INTERVAL '25 days'
-    WHEN 2 THEN NOW() - INTERVAL '20 days'
-    WHEN 3 THEN NOW() - INTERVAL '28 days'
-    WHEN 5 THEN NOW() - INTERVAL '15 days'
-    WHEN 6 THEN NOW() - INTERVAL '10 days'
+    WHEN 1 THEN (NOW() - INTERVAL '25 days')::date
+    WHEN 2 THEN (NOW() - INTERVAL '20 days')::date
+    WHEN 3 THEN (NOW() - INTERVAL '28 days')::date
+    WHEN 5 THEN (NOW() - INTERVAL '15 days')::date
+    WHEN 6 THEN (NOW() - INTERVAL '10 days')::date
     ELSE NULL
   END,
   CASE row_num
@@ -613,7 +591,6 @@ SELECT
     WHEN 9 THEN 890.00
     WHEN 10 THEN 1250.00
   END,
-  0.0, 0.0,
   CASE row_num
     WHEN 1 THEN 2275.00 * 0.20
     WHEN 2 THEN 450.00 * 0.20
@@ -659,10 +636,16 @@ SELECT
     WHEN 10 THEN 'unpaid'
   END,
   CASE row_num
-    WHEN 4 THEN 'Acompte de 30% sur installation chauffage'
-    WHEN 7 THEN 'Facture en retard - relance envoyée'
-    WHEN 9 THEN 'Client à relancer'
-    ELSE NULL
+    WHEN 1 THEN 'Rénovation salle de bain - Solde'
+    WHEN 2 THEN 'Remplacement robinetterie'
+    WHEN 3 THEN 'Dépannage urgent'
+    WHEN 4 THEN 'Installation chauffage - Acompte de 30%'
+    WHEN 5 THEN 'Création salle d''eau - Solde'
+    WHEN 6 THEN 'Maintenance annuelle'
+    WHEN 7 THEN 'Réparation fuite - Facture en retard, relance envoyée'
+    WHEN 8 THEN 'Installation radiateurs - Acompte'
+    WHEN 9 THEN 'Entretien système - Client à relancer'
+    WHEN 10 THEN 'Fourniture matériel'
   END,
   'En cas de retard de paiement, seront exigibles, conformément à l''article L 441-10 du code de commerce, une indemnité calculée sur la base de trois fois le taux de l''intérêt légal en vigueur ainsi qu''une indemnité forfaitaire pour frais de recouvrement de 40 euros. SIRET: 85234567800012 - TVA: FR85234567800 - RCS Paris',
   NOW() - INTERVAL '30 days' + (row_num * INTERVAL '3 days'),
@@ -676,10 +659,10 @@ FROM invoice_data;
 WITH payment_data AS (
   SELECT
     i.id as invoice_id,
-    i.total,
+    i.total_ttc,
     i.payment_date,
     i.payment_method,
-    ROW_NUMBER() OVER (ORDER BY i.issue_date) as row_num
+    ROW_NUMBER() OVER (ORDER BY i.invoice_date) as row_num
   FROM invoices i
   WHERE i.user_id = test_user_id
     AND i.payment_status = 'paid'
@@ -693,7 +676,7 @@ SELECT
   gen_random_uuid(),
   test_user_id,
   invoice_id,
-  total,
+  total_ttc,
   payment_method,
   payment_date,
   CASE row_num
@@ -759,7 +742,7 @@ WITH appointment_data AS (
 )
 INSERT INTO appointments (
   id, user_id, client_id, job_site_id, title, description,
-  planned_eta, estimated_duration, status,
+  start_time, end_time, duration_minutes, status,
   notes, created_at
 )
 SELECT
@@ -787,6 +770,13 @@ SELECT
     WHEN 3 THEN NOW() + INTERVAL '1 day' + INTERVAL '10 hours'
     WHEN 4 THEN NOW() + INTERVAL '7 days' + INTERVAL '8 hours'
     WHEN 5 THEN NOW() + INTERVAL '10 days' + INTERVAL '15 hours'
+  END,
+  CASE row_num
+    WHEN 1 THEN NOW() + INTERVAL '2 days' + INTERVAL '9 hours' + INTERVAL '180 minutes'
+    WHEN 2 THEN NOW() + INTERVAL '4 days' + INTERVAL '14 hours' + INTERVAL '60 minutes'
+    WHEN 3 THEN NOW() + INTERVAL '1 day' + INTERVAL '10 hours' + INTERVAL '120 minutes'
+    WHEN 4 THEN NOW() + INTERVAL '7 days' + INTERVAL '8 hours' + INTERVAL '90 minutes'
+    WHEN 5 THEN NOW() + INTERVAL '10 days' + INTERVAL '15 hours' + INTERVAL '45 minutes'
   END,
   CASE row_num
     WHEN 1 THEN 180  -- 3 heures

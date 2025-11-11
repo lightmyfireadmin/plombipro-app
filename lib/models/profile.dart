@@ -10,7 +10,7 @@ class Profile {
   final String? postalCode;
   final String? city;
   final String? country;
-  final String? vatNumber;
+  final String? tvaNumber;
   final String? logoUrl;
   final String? iban;
   final String? bic;
@@ -33,7 +33,7 @@ class Profile {
     this.postalCode,
     this.city,
     this.country,
-    this.vatNumber,
+    this.tvaNumber,
     this.logoUrl,
     this.iban,
     this.bic,
@@ -58,7 +58,7 @@ class Profile {
       postalCode: json['postal_code'],
       city: json['city'],
       country: json['country'],
-      vatNumber: json['vat_number'],
+      tvaNumber: json['tva_number'],
       logoUrl: json['logo_url'],
       iban: json['iban'],
       bic: json['bic'],
@@ -83,7 +83,7 @@ class Profile {
         'postal_code': postalCode,
         'city': city,
         'country': country,
-        'vat_number': vatNumber,
+        'tva_number': tvaNumber,
         'logo_url': logoUrl,
         'iban': iban,
         'bic': bic,
@@ -107,7 +107,7 @@ class Profile {
     String? postalCode,
     String? city,
     String? country,
-    String? vatNumber,
+    String? tvaNumber,
     String? logoUrl,
     String? iban,
     String? bic,
@@ -130,7 +130,7 @@ class Profile {
       postalCode: postalCode ?? this.postalCode,
       city: city ?? this.city,
       country: country ?? this.country,
-      vatNumber: vatNumber ?? this.vatNumber,
+      tvaNumber: tvaNumber ?? this.tvaNumber,
       logoUrl: logoUrl ?? this.logoUrl,
       iban: iban ?? this.iban,
       bic: bic ?? this.bic,

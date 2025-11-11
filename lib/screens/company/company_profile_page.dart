@@ -19,7 +19,7 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
   late String _companyName;
   late String _address;
   late String _siret;
-  late String _vatNumber;
+  late String _tvaNumber;
   late String _iban;
 
   @override
@@ -43,7 +43,7 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
             _companyName = _profile!.companyName ?? '';
             _address = _profile!.address ?? '';
             _siret = _profile!.siret ?? '';
-            _vatNumber = _profile!.vatNumber ?? '';
+            _tvaNumber = _profile!.tvaNumber ?? '';
             _iban = _profile!.iban ?? '';
           });
         }
@@ -75,7 +75,7 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
           companyName: _companyName,
           address: _address,
           siret: _siret,
-          vatNumber: _vatNumber,
+          tvaNumber: _tvaNumber,
           iban: _iban,
         );
 
@@ -150,9 +150,9 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
                         ),
                         const SizedBox(height: 16),
                         TextFormField(
-                          initialValue: _vatNumber,
+                          initialValue: _tvaNumber,
                           decoration: const InputDecoration(labelText: 'Numéro de TVA'),
-                          onSaved: (value) => _vatNumber = value!,
+                          onSaved: (value) => _tvaNumber = value!,
                         ),
                         const SizedBox(height: 16),
                         TextFormField(

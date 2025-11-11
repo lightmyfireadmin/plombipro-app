@@ -45,14 +45,14 @@ class Invoice {
   factory Invoice.fromJson(Map<String, dynamic> json) {
     return Invoice(
       id: json['id'],
-      number: json['number'] ?? '',
+      number: json['invoice_number'] ?? '',
       clientId: json['client_id'] ?? '',
-      date: DateTime.parse(json['date'] ?? DateTime.now().toIso8601String()),
+      date: DateTime.parse(json['invoice_date'] ?? DateTime.now().toIso8601String()),
       dueDate: json['due_date'] != null ? DateTime.parse(json['due_date']) : null,
       status: json['status'] ?? 'draft',
       paymentStatus: json['payment_status'] ?? 'unpaid',
-      totalHt: (json['total_ht'] as num?)?.toDouble() ?? 0,
-      totalTva: (json['tva_amount'] as num?)?.toDouble() ?? 0, // Note: schema uses tva_amount
+      totalHt: (json['subtotal_ht'] as num?)?.toDouble() ?? 0,
+      totalTva: (json['total_vat'] as num?)?.toDouble() ?? 0,
       totalTtc: (json['total_ttc'] as num?)?.toDouble() ?? 0,
       amountPaid: (json['amount_paid'] as num?)?.toDouble() ?? 0,
       balanceDue: (json['balance_due'] as num?)?.toDouble() ?? 0,
@@ -69,12 +69,12 @@ class Invoice {
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'number': number,
+        'invoice_number': number,
         'client_id': clientId,
-        'date': date.toIso8601String(),
+        'invoice_date': date.toIso8601String(),
         'due_date': dueDate?.toIso8601String(),
-        'total_ht': totalHt,
-        'total_tva': totalTva,
+        'subtotal_ht': totalHt,
+        'total_vat': totalTva,
         'total_ttc': totalTtc,
         'amount_paid': amountPaid,
         'balance_due': balanceDue,
