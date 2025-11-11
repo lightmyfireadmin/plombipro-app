@@ -22,7 +22,7 @@ CREATE INDEX IF NOT EXISTS idx_job_sites_client_id ON job_sites(client_id);
 CREATE INDEX IF NOT EXISTS idx_job_sites_related_quote_id ON job_sites(related_quote_id);
 CREATE INDEX IF NOT EXISTS idx_appointments_user_id ON appointments(user_id);
 CREATE INDEX IF NOT EXISTS idx_appointments_client_id ON appointments(client_id);
-CREATE INDEX IF NOT EXISTS idx_appointments_scheduled_date ON appointments(scheduled_date);
+CREATE INDEX IF NOT EXISTS idx_appointments_start_time ON appointments(start_time);
 
 -- Additional strategic indexes for common queries
 CREATE INDEX IF NOT EXISTS idx_quotes_status ON quotes(status);

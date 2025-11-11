@@ -22,7 +22,7 @@ This implementation represents the **MOST COMPREHENSIVE DATABASE IMPROVEMENT** e
 ✅ idx_products_user_id, idx_products_favorite, idx_products_last_used
 ✅ idx_payments_invoice_id
 ✅ idx_job_sites_client_id, idx_job_sites_related_quote_id
-✅ idx_appointments_user_id, idx_appointments_client_id, idx_appointments_scheduled_date
+✅ idx_appointments_user_id, idx_appointments_client_id, idx_appointments_start_time
 ```
 
 **Impact:** Queries on foreign keys are now **10-50x faster**. Large dataset queries improved by up to **100x**.
