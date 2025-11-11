@@ -1754,12 +1754,13 @@ class SupabaseService {
               email
             )
           ''')
-          .eq('user_id', userId)
-          .order('next_invoice_date', ascending: true);
+          .eq('user_id', userId);
 
       if (onlyActive) {
         query = query.eq('is_active', true);
       }
+
+      query = query.order('next_invoice_date', ascending: true);
 
       final response = await query;
       return List<Map<String, dynamic>>.from(response);
@@ -1862,12 +1863,13 @@ class SupabaseService {
             ),
             progress_milestones (*)
           ''')
-          .eq('user_id', userId)
-          .order('created_at', ascending: false);
+          .eq('user_id', userId);
 
       if (jobSiteId != null) {
         query = query.eq('job_site_id', jobSiteId);
       }
+
+      query = query.order('created_at', ascending: false);
 
       final response = await query;
       return List<Map<String, dynamic>>.from(response);
@@ -1985,10 +1987,7 @@ class SupabaseService {
       var query = _client
           .from('audit_logs')
           .select('*')
-          .eq('user_id', userId)
-          .order('created_at', ascending: false)
-          .limit(limit)
-          .range(offset, offset + limit - 1);
+          .eq('user_id', userId);
 
       if (tableName != null) {
         query = query.eq('table_name', tableName);
@@ -2005,6 +2004,11 @@ class SupabaseService {
       if (endDate != null) {
         query = query.lte('created_at', endDate.toIso8601String());
       }
+
+      query = query
+          .order('created_at', ascending: false)
+          .limit(limit)
+          .range(offset, offset + limit - 1);
 
       final response = await query;
       return List<Map<String, dynamic>>.from(response);

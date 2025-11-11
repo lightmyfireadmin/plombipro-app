@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
@@ -183,8 +184,7 @@ class _AddClientWizardPageState extends State<AddClientWizardPage> with TickerPr
     setState(() => _isLoading = true);
 
     try {
-      final supabaseService = SupabaseService();
-      final userId = await supabaseService.getCurrentUserId();
+      final userId = Supabase.instance.client.auth.currentUser?.id;
 
       if (userId == null) {
         throw Exception('Utilisateur non authentifié');
@@ -214,7 +214,7 @@ class _AddClientWizardPageState extends State<AddClientWizardPage> with TickerPr
         notes: _notesController.text.trim().isEmpty ? null : _notesController.text.trim(),
       );
 
-      await supabaseService.addClient(client);
+      await SupabaseService.createClient(client);
 
       if (mounted) {
         ModernSnackBar.show(

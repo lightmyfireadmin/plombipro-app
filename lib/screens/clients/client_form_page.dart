@@ -31,9 +31,9 @@ class _ClientFormPageState extends State<ClientFormPage> {
 
   late String _name;
 
-  late String _email;
+  String _email = '';
 
-  late String _phone;
+  String _phone = '';
 
   String? _mobilePhone;
 
@@ -101,9 +101,9 @@ class _ClientFormPageState extends State<ClientFormPage> {
 
           _name = _client!.name;
 
-          _email = _client!.email;
+          _email = _client!.email ?? '';
 
-          _phone = _client!.phone;
+          _phone = _client!.phone ?? '';
 
           _mobilePhone = _client!.mobilePhone;
 
