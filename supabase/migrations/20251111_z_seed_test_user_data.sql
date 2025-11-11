@@ -38,7 +38,7 @@ INSERT INTO profiles (
   email,
   company_name,
   siret,
-  tva_number,
+  vat_number,
   iban,
   bic,
   phone,
@@ -67,7 +67,7 @@ INSERT INTO profiles (
 ON CONFLICT (id) DO UPDATE SET
   company_name = EXCLUDED.company_name,
   siret = EXCLUDED.siret,
-  tva_number = EXCLUDED.tva_number,
+  vat_number = EXCLUDED.vat_number,
   iban = EXCLUDED.iban,
   bic = EXCLUDED.bic,
   phone = EXCLUDED.phone,
@@ -237,8 +237,8 @@ ON CONFLICT (id) DO UPDATE SET
 -- =====================================================
 
 INSERT INTO products (
-  id, user_id, name, ref, description, unit,
-  price_buy, price_sell, vat_rate, supplier, category, is_favorite,
+  id, user_id, name, reference, description, unit,
+  purchase_price_ht, selling_price_ht, vat_rate, supplier_name, category, is_favorite,
   created_at
 ) VALUES
 ('30000000-0000-0000-0002-000000000001', test_user_id, 'Mitigeur lavabo chromé', 'ROB-MIT-001',
@@ -322,8 +322,8 @@ INSERT INTO products (
  3.80, 10.50, 20.0, 'Rubson', 'Consommables', true,
  NOW() - INTERVAL '2 years')
 ON CONFLICT (id) DO UPDATE SET
-  price_buy = EXCLUDED.price_buy,
-  price_sell = EXCLUDED.price_sell,
+  purchase_price_ht = EXCLUDED.purchase_price_ht,
+  selling_price_ht = EXCLUDED.selling_price_ht,
   updated_at = NOW();
 
 -- =====================================================

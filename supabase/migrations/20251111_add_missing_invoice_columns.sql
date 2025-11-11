@@ -57,4 +57,22 @@ BEGIN
         RAISE NOTICE 'Added payment_date column to invoices table';
     END IF;
 
+    -- Add legal_mentions column if it doesn't exist
+    IF NOT EXISTS (
+        SELECT 1 FROM information_schema.columns
+        WHERE table_name = 'invoices' AND column_name = 'legal_mentions'
+    ) THEN
+        ALTER TABLE invoices ADD COLUMN legal_mentions TEXT;
+        RAISE NOTICE 'Added legal_mentions column to invoices table';
+    END IF;
+
+    -- Add status column if it doesn't exist (distinct from payment_status)
+    IF NOT EXISTS (
+        SELECT 1 FROM information_schema.columns
+        WHERE table_name = 'invoices' AND column_name = 'status'
+    ) THEN
+        ALTER TABLE invoices ADD COLUMN status TEXT;
+        RAISE NOTICE 'Added status column to invoices table';
+    END IF;
+
 END $$;
