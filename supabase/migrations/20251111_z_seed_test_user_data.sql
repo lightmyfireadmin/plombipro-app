@@ -788,7 +788,7 @@ SELECT
   CASE row_num
     WHEN 1 THEN 'scheduled'
     WHEN 2 THEN 'scheduled'
-    WHEN 3 THEN 'urgent'
+    WHEN 3 THEN 'confirmed'
     WHEN 4 THEN 'scheduled'
     WHEN 5 THEN 'scheduled'
   END,
