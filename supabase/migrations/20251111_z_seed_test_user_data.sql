@@ -38,7 +38,7 @@ INSERT INTO profiles (
   email,
   company_name,
   siret,
-  vat_number,
+  tva_number,
   iban,
   bic,
   phone,
@@ -67,7 +67,7 @@ INSERT INTO profiles (
 ON CONFLICT (id) DO UPDATE SET
   company_name = EXCLUDED.company_name,
   siret = EXCLUDED.siret,
-  vat_number = EXCLUDED.vat_number,
+  tva_number = EXCLUDED.tva_number,
   iban = EXCLUDED.iban,
   bic = EXCLUDED.bic,
   phone = EXCLUDED.phone,
