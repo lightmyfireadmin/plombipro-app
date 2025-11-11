@@ -10,7 +10,7 @@ ADD COLUMN IF NOT EXISTS first_name TEXT,
 ADD COLUMN IF NOT EXISTS last_name TEXT,
 ADD COLUMN IF NOT EXISTS company_name TEXT,
 ADD COLUMN IF NOT EXISTS siret TEXT,
-ADD COLUMN IF NOT EXISTS vat_number TEXT,
+ADD COLUMN IF NOT EXISTS tva_number TEXT,
 ADD COLUMN IF NOT EXISTS phone TEXT,
 ADD COLUMN IF NOT EXISTS address TEXT,
 ADD COLUMN IF NOT EXISTS postal_code TEXT,
@@ -29,7 +29,7 @@ ADD COLUMN IF NOT EXISTS updated_at TIMESTAMP DEFAULT NOW();
 -- Add comments for documentation
 COMMENT ON COLUMN profiles.company_name IS 'Company or business name';
 COMMENT ON COLUMN profiles.siret IS 'French SIRET business identification number';
-COMMENT ON COLUMN profiles.vat_number IS 'VAT (TVA) number for the company';
+COMMENT ON COLUMN profiles.tva_number IS 'TVA (French VAT) number for the company';
 COMMENT ON COLUMN profiles.iban IS 'International Bank Account Number for payments';
 COMMENT ON COLUMN profiles.bic IS 'Bank Identifier Code (SWIFT code)';
 COMMENT ON COLUMN profiles.subscription_plan IS 'Current subscription plan (free, pro, premium)';
