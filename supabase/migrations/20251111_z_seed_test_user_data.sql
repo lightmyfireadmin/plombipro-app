@@ -218,7 +218,7 @@ INSERT INTO clients (
 );
 
 -- =====================================================
--- 3. JOB SITES (8 chantiers with various statuses)
+-- 3. JOB SITES (4 chantiers with various statuses)
 -- =====================================================
 
 WITH client_ids AS (
@@ -232,8 +232,8 @@ WITH client_ids AS (
 )
 INSERT INTO job_sites (
   id, user_id, client_id, job_name, description,
-  address, postal_code, city, country,
-  status, start_date, end_date, estimated_hours, actual_hours,
+  address, status, start_date, estimated_end_date, actual_end_date,
+  progress_percentage, estimated_budget, actual_cost,
   notes, created_at
 )
 SELECT
@@ -251,21 +251,14 @@ SELECT
     WHEN 4 THEN 'Maintenance préventive système sanitaire cuisine professionnelle'
   END,
   CASE ROW_NUMBER() OVER ()
-    WHEN 1 THEN '88 Avenue Hoche'
-    WHEN 2 THEN '23 Rue de la Tour'
-    WHEN 3 THEN '23 Avenue des Champs-Élysées'
-    WHEN 4 THEN '56 Rue Saint-Antoine'
+    WHEN 1 THEN '88 Avenue Hoche, 75008 Paris'
+    WHEN 2 THEN '23 Rue de la Tour, 75016 Paris'
+    WHEN 3 THEN '23 Avenue des Champs-Élysées, 75008 Paris'
+    WHEN 4 THEN '56 Rue Saint-Antoine, 75004 Paris'
   END,
-  CASE ROW_NUMBER() OVER ()
-    WHEN 1 THEN '75008'
-    WHEN 2 THEN '75016'
-    WHEN 3 THEN '75008'
-    WHEN 4 THEN '75004'
-  END,
-  'Paris', 'France',
   CASE ROW_NUMBER() OVER ()
     WHEN 1 THEN 'in_progress'
-    WHEN 2 THEN 'pending'
+    WHEN 2 THEN 'planned'
     WHEN 3 THEN 'completed'
     WHEN 4 THEN 'in_progress'
   END,
@@ -282,16 +275,28 @@ SELECT
     WHEN 4 THEN NOW() + INTERVAL '2 days'
   END,
   CASE ROW_NUMBER() OVER ()
-    WHEN 1 THEN 40.0
-    WHEN 2 THEN 120.0
-    WHEN 3 THEN 3.0
-    WHEN 4 THEN 8.0
+    WHEN 1 THEN NULL
+    WHEN 2 THEN NULL
+    WHEN 3 THEN NOW() - INTERVAL '28 days'
+    WHEN 4 THEN NULL
   END,
   CASE ROW_NUMBER() OVER ()
-    WHEN 1 THEN 32.5
+    WHEN 1 THEN 80
+    WHEN 2 THEN 0
+    WHEN 3 THEN 100
+    WHEN 4 THEN 90
+  END,
+  CASE ROW_NUMBER() OVER ()
+    WHEN 1 THEN 4500.00
+    WHEN 2 THEN 15000.00
+    WHEN 3 THEN 450.00
+    WHEN 4 THEN 890.00
+  END,
+  CASE ROW_NUMBER() OVER ()
+    WHEN 1 THEN 3750.50
     WHEN 2 THEN NULL
-    WHEN 3 THEN 3.5
-    WHEN 4 THEN 7.0
+    WHEN 3 THEN 425.00
+    WHEN 4 THEN 780.25
   END,
   CASE ROW_NUMBER() OVER ()
     WHEN 1 THEN 'Client très exigeant. Travaux de qualité requis.'
