@@ -101,6 +101,11 @@ class _UserProfilePageState extends State<UserProfilePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mon Profil'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+          tooltip: 'Retour',
+        ),
         actions: [
           IconButton(
             onPressed: _isLoading ? null : _saveProfile,

@@ -77,6 +77,11 @@ class PlombiProTextStyles {
     color: PlombiProColors.textPrimaryLight,
   );
 
+  // ===== ALIASES (For backward compatibility) =====
+
+  /// Alias for headlineMedium (commonly used in older code)
+  static const TextStyle headingMedium = headlineMedium;
+
   // ===== TITLE STYLES (For card titles and list headers) =====
 
   /// Title Large - 22px

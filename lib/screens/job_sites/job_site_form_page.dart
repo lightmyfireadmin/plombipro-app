@@ -129,6 +129,11 @@ class _JobSiteFormPageState extends State<JobSiteFormPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.jobSiteId == null ? 'Nouveau Chantier' : 'Modifier le Chantier'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+          tooltip: 'Retour',
+        ),
         actions: [
           IconButton(
             onPressed: _isLoading ? null : _saveJobSite,

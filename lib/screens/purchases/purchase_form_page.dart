@@ -115,6 +115,11 @@ class _PurchaseFormPageState extends State<PurchaseFormPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.purchaseId == null ? 'Nouvel Achat' : 'Modifier l\'achat'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+          tooltip: 'Retour',
+        ),
         actions: [ 
           IconButton(
             onPressed: _isLoading ? null : _savePurchase,

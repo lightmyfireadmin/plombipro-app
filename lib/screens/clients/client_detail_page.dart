@@ -92,7 +92,14 @@ class _ClientDetailPageState extends State<ClientDetailPage> with SingleTickerPr
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.client.name)),
+      appBar: AppBar(
+        title: Text(widget.client.name),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+          tooltip: 'Retour',
+        ),
+      ),
       body: Column(
         children: [
           _buildClientDetailsCard(),

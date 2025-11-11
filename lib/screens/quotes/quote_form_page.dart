@@ -456,6 +456,11 @@ class _QuoteFormPageState extends State<QuoteFormPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_isEditing ? 'Éditer Devis' : 'Nouveau Devis'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+          tooltip: 'Retour',
+        ),
         actions: [
           if (_isSaving)
             const Padding(

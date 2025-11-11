@@ -5,8 +5,8 @@ class Client {
   final String? salutation;
   final String? firstName;
   final String name; // Corresponds to company_name or last_name
-  final String email;
-  final String phone;
+  final String? email;
+  final String? phone;
   final String? mobilePhone;
   final String? address;
   final String? postalCode;
@@ -28,8 +28,8 @@ class Client {
     this.salutation,
     this.firstName,
     required this.name,
-    required this.email,
-    required this.phone,
+    this.email,
+    this.phone,
     this.mobilePhone,
     this.address,
     this.postalCode,

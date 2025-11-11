@@ -1734,4 +1734,361 @@ class SupabaseService {
       rethrow;
     }
   }
+
+  // ===== RECURRING INVOICES ===== 🔥 NEW! 🔥
+
+  /// Fetch all recurring invoices for the current user
+  static Future<List<Map<String, dynamic>>> fetchRecurringInvoices({bool onlyActive = false}) async {
+    try {
+      final userId = _client.auth.currentUser?.id;
+      if (userId == null) throw Exception('User not authenticated');
+
+      var query = _client
+          .from('recurring_invoices')
+          .select('''
+            *,
+            clients (
+              id,
+              full_name,
+              company_name,
+              email
+            )
+          ''')
+          .eq('user_id', userId)
+          .order('next_invoice_date', ascending: true);
+
+      if (onlyActive) {
+        query = query.eq('is_active', true);
+      }
+
+      final response = await query;
+      return List<Map<String, dynamic>>.from(response);
+    } catch (e) {
+      print('Error fetching recurring invoices: $e');
+      rethrow;
+    }
+  }
+
+  /// Create a new recurring invoice
+  static Future<String> createRecurringInvoice(Map<String, dynamic> data) async {
+    try {
+      final userId = _client.auth.currentUser?.id;
+      if (userId == null) throw Exception('User not authenticated');
+
+      data['user_id'] = userId;
+
+      final response = await _client
+          .from('recurring_invoices')
+          .insert(data)
+          .select('id')
+          .single();
+
+      return response['id'] as String;
+    } catch (e) {
+      print('Error creating recurring invoice: $e');
+      rethrow;
+    }
+  }
+
+  /// Update a recurring invoice
+  static Future<void> updateRecurringInvoice(String id, Map<String, dynamic> data) async {
+    try {
+      await _client
+          .from('recurring_invoices')
+          .update(data)
+          .eq('id', id);
+    } catch (e) {
+      print('Error updating recurring invoice: $e');
+      rethrow;
+    }
+  }
+
+  /// Delete a recurring invoice
+  static Future<void> deleteRecurringInvoice(String id) async {
+    try {
+      await _client
+          .from('recurring_invoices')
+          .delete()
+          .eq('id', id);
+    } catch (e) {
+      print('Error deleting recurring invoice: $e');
+      rethrow;
+    }
+  }
+
+  /// Get recurring invoice by ID
+  static Future<Map<String, dynamic>?> getRecurringInvoiceById(String id) async {
+    try {
+      final response = await _client
+          .from('recurring_invoices')
+          .select('''
+            *,
+            clients (
+              id,
+              full_name,
+              company_name,
+              email,
+              phone
+            ),
+            recurring_invoice_items (*)
+          ''')
+          .eq('id', id)
+          .single();
+
+      return response as Map<String, dynamic>;
+    } catch (e) {
+      print('Error fetching recurring invoice by ID: $e');
+      return null;
+    }
+  }
+
+  // ===== PROGRESS INVOICE SCHEDULES ===== 🔥 NEW! 🔥
+
+  /// Fetch all progress invoice schedules for the current user
+  static Future<List<Map<String, dynamic>>> fetchProgressSchedules({String? jobSiteId}) async {
+    try {
+      final userId = _client.auth.currentUser?.id;
+      if (userId == null) throw Exception('User not authenticated');
+
+      var query = _client
+          .from('progress_invoice_schedules')
+          .select('''
+            *,
+            job_sites (
+              id,
+              name,
+              address,
+              city
+            ),
+            progress_milestones (*)
+          ''')
+          .eq('user_id', userId)
+          .order('created_at', ascending: false);
+
+      if (jobSiteId != null) {
+        query = query.eq('job_site_id', jobSiteId);
+      }
+
+      final response = await query;
+      return List<Map<String, dynamic>>.from(response);
+    } catch (e) {
+      print('Error fetching progress schedules: $e');
+      rethrow;
+    }
+  }
+
+  /// Create a new progress invoice schedule
+  static Future<String> createProgressSchedule(Map<String, dynamic> data) async {
+    try {
+      final userId = _client.auth.currentUser?.id;
+      if (userId == null) throw Exception('User not authenticated');
+
+      data['user_id'] = userId;
+
+      final response = await _client
+          .from('progress_invoice_schedules')
+          .insert(data)
+          .select('id')
+          .single();
+
+      return response['id'] as String;
+    } catch (e) {
+      print('Error creating progress schedule: $e');
+      rethrow;
+    }
+  }
+
+  /// Update a progress invoice schedule
+  static Future<void> updateProgressSchedule(String id, Map<String, dynamic> data) async {
+    try {
+      await _client
+          .from('progress_invoice_schedules')
+          .update(data)
+          .eq('id', id);
+    } catch (e) {
+      print('Error updating progress schedule: $e');
+      rethrow;
+    }
+  }
+
+  /// Delete a progress invoice schedule
+  static Future<void> deleteProgressSchedule(String id) async {
+    try {
+      await _client
+          .from('progress_invoice_schedules')
+          .delete()
+          .eq('id', id);
+    } catch (e) {
+      print('Error deleting progress schedule: $e');
+      rethrow;
+    }
+  }
+
+  /// Create a progress milestone
+  static Future<String> createProgressMilestone(Map<String, dynamic> data) async {
+    try {
+      final response = await _client
+          .from('progress_milestones')
+          .insert(data)
+          .select('id')
+          .single();
+
+      return response['id'] as String;
+    } catch (e) {
+      print('Error creating progress milestone: $e');
+      rethrow;
+    }
+  }
+
+  /// Update a progress milestone
+  static Future<void> updateProgressMilestone(String id, Map<String, dynamic> data) async {
+    try {
+      await _client
+          .from('progress_milestones')
+          .update(data)
+          .eq('id', id);
+    } catch (e) {
+      print('Error updating progress milestone: $e');
+      rethrow;
+    }
+  }
+
+  /// Delete a progress milestone
+  static Future<void> deleteProgressMilestone(String id) async {
+    try {
+      await _client
+          .from('progress_milestones')
+          .delete()
+          .eq('id', id);
+    } catch (e) {
+      print('Error deleting progress milestone: $e');
+      rethrow;
+    }
+  }
+
+  // ===== AUDIT LOGS ===== 🔥 NEW! 🔥
+
+  /// Fetch audit logs for the current user
+  /// Note: Audit logs are read-only and populated via database triggers
+  static Future<List<Map<String, dynamic>>> fetchAuditLogs({
+    String? tableName,
+    String? operation,
+    DateTime? startDate,
+    DateTime? endDate,
+    int limit = 100,
+    int offset = 0,
+  }) async {
+    try {
+      final userId = _client.auth.currentUser?.id;
+      if (userId == null) throw Exception('User not authenticated');
+
+      var query = _client
+          .from('audit_logs')
+          .select('*')
+          .eq('user_id', userId)
+          .order('created_at', ascending: false)
+          .limit(limit)
+          .range(offset, offset + limit - 1);
+
+      if (tableName != null) {
+        query = query.eq('table_name', tableName);
+      }
+
+      if (operation != null) {
+        query = query.eq('operation', operation);
+      }
+
+      if (startDate != null) {
+        query = query.gte('created_at', startDate.toIso8601String());
+      }
+
+      if (endDate != null) {
+        query = query.lte('created_at', endDate.toIso8601String());
+      }
+
+      final response = await query;
+      return List<Map<String, dynamic>>.from(response);
+    } catch (e) {
+      print('Error fetching audit logs: $e');
+      rethrow;
+    }
+  }
+
+  /// Get audit trail for a specific record
+  static Future<List<Map<String, dynamic>>> getRecordAuditTrail({
+    required String tableName,
+    required String recordId,
+  }) async {
+    try {
+      final userId = _client.auth.currentUser?.id;
+      if (userId == null) throw Exception('User not authenticated');
+
+      final response = await _client
+          .from('audit_logs')
+          .select('*')
+          .eq('user_id', userId)
+          .eq('table_name', tableName)
+          .eq('record_id', recordId)
+          .order('created_at', ascending: false);
+
+      return List<Map<String, dynamic>>.from(response);
+    } catch (e) {
+      print('Error fetching record audit trail: $e');
+      rethrow;
+    }
+  }
+
+  // ===== ATOMIC OPERATIONS ===== ⚛️ TRANSACTION-SAFE ⚛️
+
+  /// Convert quote to invoice using atomic database function
+  /// Returns the new invoice ID
+  static Future<String> convertQuoteToInvoiceAtomic(String quoteId) async {
+    try {
+      final response = await _client.rpc('convert_quote_to_invoice', params: {
+        'p_quote_id': quoteId,
+      });
+
+      if (response['success'] == true) {
+        return response['invoice_id'] as String;
+      } else {
+        throw Exception(response['error'] ?? 'Failed to convert quote to invoice');
+      }
+    } catch (e) {
+      print('Error converting quote to invoice: $e');
+      rethrow;
+    }
+  }
+
+  /// Record payment using atomic database function
+  /// Automatically updates invoice payment status
+  static Future<Map<String, dynamic>> recordPaymentAtomic({
+    required String invoiceId,
+    required double amount,
+    required String paymentMethod,
+    required DateTime paymentDate,
+    String? notes,
+  }) async {
+    try {
+      final response = await _client.rpc('record_payment', params: {
+        'p_invoice_id': invoiceId,
+        'p_amount': amount,
+        'p_payment_method': paymentMethod,
+        'p_payment_date': paymentDate.toIso8601String().split('T')[0],
+        'p_notes': notes,
+      });
+
+      if (response['success'] == true) {
+        return {
+          'payment_id': response['payment_id'],
+          'total_paid': response['total_paid'],
+          'payment_status': response['payment_status'],
+        };
+      } else {
+        throw Exception(response['error'] ?? 'Failed to record payment');
+      }
+    } catch (e) {
+      print('Error recording payment: $e');
+      rethrow;
+    }
+  }
 }

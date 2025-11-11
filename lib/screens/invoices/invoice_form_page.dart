@@ -421,6 +421,11 @@ Garantie décennale et responsabilité civile professionnelle''';
     return Scaffold(
       appBar: AppBar(
         title: Text(_isEditing ? 'Éditer Facture' : 'Nouvelle Facture'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+          tooltip: 'Retour',
+        ),
         actions: [
           if (_isSaving)
             const Padding(
