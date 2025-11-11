@@ -452,15 +452,15 @@ SELECT
   (NOW() - INTERVAL '15 days' * row_num)::date,
   CASE row_num
     WHEN 1 THEN 'accepted'
-    WHEN 2 THEN 'pending'
+    WHEN 2 THEN 'draft'
     WHEN 3 THEN 'accepted'
     WHEN 4 THEN 'sent'
-    WHEN 5 THEN 'pending'
+    WHEN 5 THEN 'draft'
     WHEN 6 THEN 'rejected'
     WHEN 7 THEN 'accepted'
     WHEN 8 THEN 'sent'
     WHEN 9 THEN 'accepted'
-    WHEN 10 THEN 'pending'
+    WHEN 10 THEN 'draft'
     WHEN 11 THEN 'draft'
     WHEN 12 THEN 'sent'
   END,
@@ -788,7 +788,7 @@ SELECT
   CASE row_num
     WHEN 1 THEN 'scheduled'
     WHEN 2 THEN 'scheduled'
-    WHEN 3 THEN 'urgent'
+    WHEN 3 THEN 'confirmed'
     WHEN 4 THEN 'scheduled'
     WHEN 5 THEN 'scheduled'
   END,
