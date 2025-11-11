@@ -48,4 +48,13 @@ BEGIN
         RAISE NOTICE 'Added total_vat column to invoices table';
     END IF;
 
+    -- Add payment_date column if it doesn't exist
+    IF NOT EXISTS (
+        SELECT 1 FROM information_schema.columns
+        WHERE table_name = 'invoices' AND column_name = 'payment_date'
+    ) THEN
+        ALTER TABLE invoices ADD COLUMN payment_date DATE;
+        RAISE NOTICE 'Added payment_date column to invoices table';
+    END IF;
+
 END $$;
