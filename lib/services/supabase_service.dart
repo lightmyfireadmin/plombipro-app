@@ -1760,9 +1760,7 @@ class SupabaseService {
         query = query.eq('is_active', true);
       }
 
-      query = query.order('next_invoice_date', ascending: true);
-
-      final response = await query;
+      final response = await query.order('next_invoice_date', ascending: true);
       return List<Map<String, dynamic>>.from(response);
     } catch (e) {
       print('Error fetching recurring invoices: $e');
@@ -1869,9 +1867,7 @@ class SupabaseService {
         query = query.eq('job_site_id', jobSiteId);
       }
 
-      query = query.order('created_at', ascending: false);
-
-      final response = await query;
+      final response = await query.order('created_at', ascending: false);
       return List<Map<String, dynamic>>.from(response);
     } catch (e) {
       print('Error fetching progress schedules: $e');
@@ -2005,12 +2001,10 @@ class SupabaseService {
         query = query.lte('created_at', endDate.toIso8601String());
       }
 
-      query = query
+      final response = await query
           .order('created_at', ascending: false)
           .limit(limit)
           .range(offset, offset + limit - 1);
-
-      final response = await query;
       return List<Map<String, dynamic>>.from(response);
     } catch (e) {
       print('Error fetching audit logs: $e');
