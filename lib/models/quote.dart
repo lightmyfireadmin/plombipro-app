@@ -55,7 +55,7 @@ class Quote {
         'quote_date': date.toIso8601String(),
         'expiry_date': expiryDate?.toIso8601String(),
         'status': status,
-        'total_ht': totalHt,
+        'subtotal_ht': totalHt,
         'total_vat': totalTva,
         'total_ttc': totalTtc,
         'notes': notes,

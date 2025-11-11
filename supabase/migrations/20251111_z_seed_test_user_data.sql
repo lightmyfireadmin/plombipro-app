@@ -441,7 +441,7 @@ WITH quote_data AS (
 )
 INSERT INTO quotes (
   id, user_id, client_id, quote_number, quote_date, status,
-  subtotal_ht, total_tva, total_ttc, notes,
+  subtotal_ht, total_vat, total_ttc, notes,
   created_at, updated_at
 )
 SELECT
@@ -539,7 +539,7 @@ WITH invoice_data AS (
 INSERT INTO invoices (
   id, user_id, client_id, invoice_number,
   invoice_date, due_date, payment_date, status, payment_method,
-  subtotal_ht, total_tva, total_ttc,
+  subtotal_ht, total_vat, total_ttc,
   amount_paid, payment_status,
   notes, legal_mentions,
   created_at, updated_at
