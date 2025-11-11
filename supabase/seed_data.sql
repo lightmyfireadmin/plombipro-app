@@ -4,7 +4,7 @@
 -- Linked to: editionsrevel@gmail.com
 -- ============================================
 
--- Note: Replace the UUID '00000000-0000-0000-0000-000000000001' with your actual user ID
+-- Note: Replace the UUID '6b1d26bf-40d7-46c0-9b07-89a120191971' with your actual user ID
 -- You can get it from: SELECT id FROM auth.users WHERE email = 'editionsrevel@gmail.com';
 
 BEGIN;
@@ -33,7 +33,7 @@ INSERT INTO profiles (
   created_at,
   updated_at
 ) VALUES (
-  '00000000-0000-0000-0000-000000000001'::uuid,
+  '6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid,
   'editionsrevel@gmail.com',
   'Plomberie Revel',
   'SARL',
@@ -86,14 +86,14 @@ INSERT INTO clients (
   notes,
   created_at
 ) VALUES
-('00000000-0000-0000-0000-000000000001'::uuid, 'Mme Sophie Martin', 'sophie.martin@email.fr', '+33 6 45 78 12 34', '23 Avenue des Lilas', 'Lyon', '69003', 'individual', NULL, 'Cliente fidèle, préfère les RDV après 17h', NOW()),
-('00000000-0000-0000-0000-000000000001'::uuid, 'M. Pierre Dubois', 'pierre.dubois@email.fr', '+33 6 78 90 12 34', '8 Rue Victor Hugo', 'Villeurbanne', '69100', 'individual', NULL, 'Urgent - fuite salle de bain', NOW()),
-('00000000-0000-0000-0000-000000000001'::uuid, 'Résidence Les Érables', 'syndic@erables.fr', '+33 4 72 12 34 56', '45 Boulevard des Belges', 'Lyon', '69006', 'company', '50234567890012', 'Contrat d''entretien annuel', NOW()),
-('00000000-0000-0000-0000-000000000001'::uuid, 'M. Ahmed Benali', 'ahmed.benali@email.fr', '+33 6 23 45 67 89', '12 Place Bellecour', 'Lyon', '69002', 'individual', NULL, 'Nouveau client - recommandé par Mme Martin', NOW()),
-('00000000-0000-0000-0000-000000000001'::uuid, 'SCI Bâtiment Moderne', 'contact@batiment-moderne.fr', '+33 4 78 45 67 89', '78 Cours Lafayette', 'Lyon', '69003', 'company', '42187654321034', 'Immeuble de 15 appartements', NOW()),
-('00000000-0000-0000-0000-000000000001'::uuid, 'Mme Claire Petit', 'claire.petit@email.fr', '+33 6 34 56 78 90', '5 Rue de la Paix', 'Caluire', '69300', 'individual', NULL, 'Rénovation complète salle de bain prévue Q2', NOW()),
-('00000000-0000-0000-0000-000000000001'::uuid, 'Restaurant Le Bon Plat', 'direction@lebonplat.fr', '+33 4 72 98 76 54', '32 Rue de la Bourse', 'Lyon', '69002', 'company', '38956712340019', 'Maintenance cuisine professionnelle', NOW()),
-('00000000-0000-0000-0000-000000000001'::uuid, 'M. François Lemoine', 'f.lemoine@email.fr', '+33 6 67 89 01 23', '91 Avenue Foch', 'Lyon', '69006', 'individual', NULL, NULL, NOW())
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'Mme Sophie Martin', 'sophie.martin@email.fr', '+33 6 45 78 12 34', '23 Avenue des Lilas', 'Lyon', '69003', 'individual', NULL, 'Cliente fidèle, préfère les RDV après 17h', NOW()),
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'M. Pierre Dubois', 'pierre.dubois@email.fr', '+33 6 78 90 12 34', '8 Rue Victor Hugo', 'Villeurbanne', '69100', 'individual', NULL, 'Urgent - fuite salle de bain', NOW()),
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'Résidence Les Érables', 'syndic@erables.fr', '+33 4 72 12 34 56', '45 Boulevard des Belges', 'Lyon', '69006', 'company', '50234567890012', 'Contrat d''entretien annuel', NOW()),
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'M. Ahmed Benali', 'ahmed.benali@email.fr', '+33 6 23 45 67 89', '12 Place Bellecour', 'Lyon', '69002', 'individual', NULL, 'Nouveau client - recommandé par Mme Martin', NOW()),
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'SCI Bâtiment Moderne', 'contact@batiment-moderne.fr', '+33 4 78 45 67 89', '78 Cours Lafayette', 'Lyon', '69003', 'company', '42187654321034', 'Immeuble de 15 appartements', NOW()),
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'Mme Claire Petit', 'claire.petit@email.fr', '+33 6 34 56 78 90', '5 Rue de la Paix', 'Caluire', '69300', 'individual', NULL, 'Rénovation complète salle de bain prévue Q2', NOW()),
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'Restaurant Le Bon Plat', 'direction@lebonplat.fr', '+33 4 72 98 76 54', '32 Rue de la Bourse', 'Lyon', '69002', 'company', '38956712340019', 'Maintenance cuisine professionnelle', NOW()),
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'M. François Lemoine', 'f.lemoine@email.fr', '+33 6 67 89 01 23', '91 Avenue Foch', 'Lyon', '69006', 'individual', NULL, NULL, NOW())
 ON CONFLICT DO NOTHING;
 
 -- ============================================
@@ -114,27 +114,27 @@ INSERT INTO products (
   created_at
 ) VALUES
 -- Plomberie
-('00000000-0000-0000-0000-000000000001'::uuid, 'Robinet mitigeur cuisine', 'Mitigeur évier bec haut chromé', 'MIG-CUIS-01', 'unité', 89.90, 20.0, 1, 'Point P', 5, NOW()),
-('00000000-0000-0000-0000-000000000001'::uuid, 'Tuyau PER Ø16mm', 'Tube PER bleu/rouge couronne 50m', 'TUY-PER-16', 'mètre', 2.50, 20.0, 1, 'Cedeo', 200, NOW()),
-('00000000-0000-0000-0000-000000000001'::uuid, 'Raccord laiton 20/27', 'Raccord mâle-femelle laiton', 'RAC-LAI-20', 'unité', 3.20, 20.0, 1, 'Point P', 50, NOW()),
-('00000000-0000-0000-0000-000000000001'::uuid, 'Siphon lavabo chromé', 'Siphon design gain de place', 'SIP-LAV-01', 'unité', 15.90, 20.0, 3, 'Leroy Merlin', 12, NOW()),
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'Robinet mitigeur cuisine', 'Mitigeur évier bec haut chromé', 'MIG-CUIS-01', 'unité', 89.90, 20.0, 1, 'Point P', 5, NOW()),
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'Tuyau PER Ø16mm', 'Tube PER bleu/rouge couronne 50m', 'TUY-PER-16', 'mètre', 2.50, 20.0, 1, 'Cedeo', 200, NOW()),
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'Raccord laiton 20/27', 'Raccord mâle-femelle laiton', 'RAC-LAI-20', 'unité', 3.20, 20.0, 1, 'Point P', 50, NOW()),
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'Siphon lavabo chromé', 'Siphon design gain de place', 'SIP-LAV-01', 'unité', 15.90, 20.0, 3, 'Leroy Merlin', 12, NOW()),
 
 -- Chauffage
-('00000000-0000-0000-0000-000000000001'::uuid, 'Chaudière gaz condensation', 'Chaudière murale 24kW', 'CHD-GAZ-24', 'unité', 1890.00, 20.0, 2, 'Cedeo', 2, NOW()),
-('00000000-0000-0000-0000-000000000001'::uuid, 'Radiateur acier', 'Radiateur panneaux 1200x600mm', 'RAD-ACR-12', 'unité', 145.00, 20.0, 2, 'Point P', 8, NOW()),
-('00000000-0000-0000-0000-000000000001'::uuid, 'Vanne thermostatique', 'Tête thermostatique programmable', 'VAN-THE-01', 'unité', 45.00, 20.0, 2, 'Castorama', 15, NOW()),
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'Chaudière gaz condensation', 'Chaudière murale 24kW', 'CHD-GAZ-24', 'unité', 1890.00, 20.0, 2, 'Cedeo', 2, NOW()),
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'Radiateur acier', 'Radiateur panneaux 1200x600mm', 'RAD-ACR-12', 'unité', 145.00, 20.0, 2, 'Point P', 8, NOW()),
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'Vanne thermostatique', 'Tête thermostatique programmable', 'VAN-THE-01', 'unité', 45.00, 20.0, 2, 'Castorama', 15, NOW()),
 
 -- Sanitaires
-('00000000-0000-0000-0000-000000000001'::uuid, 'WC suspendu blanc', 'Pack WC suspendu avec bâti', 'WC-SUS-01', 'unité', 320.00, 20.0, 3, 'Point P', 4, NOW()),
-('00000000-0000-0000-0000-000000000001'::uuid, 'Lavabo céramique 60cm', 'Lavabo blanc avec trop-plein', 'LAV-CER-60', 'unité', 78.00, 20.0, 3, 'Cedeo', 6, NOW()),
-('00000000-0000-0000-0000-000000000001'::uuid, 'Colonne de douche complète', 'Ensemble douche thermostatique', 'COL-DOU-01', 'unité', 230.00, 20.0, 3, 'Leroy Merlin', 3, NOW()),
-('00000000-0000-0000-0000-000000000001'::uuid, 'Baignoire acrylique 170cm', 'Baignoire droite avec pieds', 'BAI-ACR-17', 'unité', 450.00, 20.0, 3, 'Point P', 2, NOW()),
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'WC suspendu blanc', 'Pack WC suspendu avec bâti', 'WC-SUS-01', 'unité', 320.00, 20.0, 3, 'Point P', 4, NOW()),
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'Lavabo céramique 60cm', 'Lavabo blanc avec trop-plein', 'LAV-CER-60', 'unité', 78.00, 20.0, 3, 'Cedeo', 6, NOW()),
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'Colonne de douche complète', 'Ensemble douche thermostatique', 'COL-DOU-01', 'unité', 230.00, 20.0, 3, 'Leroy Merlin', 3, NOW()),
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'Baignoire acrylique 170cm', 'Baignoire droite avec pieds', 'BAI-ACR-17', 'unité', 450.00, 20.0, 3, 'Point P', 2, NOW()),
 
 -- Main d''œuvre
-('00000000-0000-0000-0000-000000000001'::uuid, 'Main d''œuvre plombier', 'Taux horaire qualification', 'MO-PLOMB', 'heure', 45.00, 20.0, 1, NULL, NULL, NOW()),
-('00000000-0000-0000-0000-000000000001'::uuid, 'Main d''œuvre chauffagiste', 'Taux horaire spécialisé', 'MO-CHAUF', 'heure', 50.00, 20.0, 2, NULL, NULL, NOW()),
-('00000000-0000-0000-0000-000000000001'::uuid, 'Déplacement', 'Forfait déplacement', 'DEP-FOR', 'forfait', 35.00, 20.0, 1, NULL, NULL, NOW()),
-('00000000-0000-0000-0000-000000000001'::uuid, 'Intervention urgence', 'Majoration intervention urgente', 'INT-URG', 'forfait', 80.00, 20.0, 4, NULL, NULL, NOW())
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'Main d''œuvre plombier', 'Taux horaire qualification', 'MO-PLOMB', 'heure', 45.00, 20.0, 1, NULL, NULL, NOW()),
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'Main d''œuvre chauffagiste', 'Taux horaire spécialisé', 'MO-CHAUF', 'heure', 50.00, 20.0, 2, NULL, NULL, NOW()),
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'Déplacement', 'Forfait déplacement', 'DEP-FOR', 'forfait', 35.00, 20.0, 1, NULL, NULL, NOW()),
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'Intervention urgence', 'Majoration intervention urgente', 'INT-URG', 'forfait', 80.00, 20.0, 4, NULL, NULL, NOW())
 ON CONFLICT DO NOTHING;
 
 -- ============================================
@@ -157,7 +157,7 @@ INSERT INTO quotes (
   created_at
 ) VALUES
 (
-  '00000000-0000-0000-0000-000000000001'::uuid,
+  '6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid,
   (SELECT id FROM clients WHERE email = 'sophie.martin@email.fr' LIMIT 1),
   'DEV-2025-001',
   'Réparation fuite robinet cuisine',
@@ -176,7 +176,7 @@ INSERT INTO quotes (
   NOW() - INTERVAL '15 days'
 ),
 (
-  '00000000-0000-0000-0000-000000000001'::uuid,
+  '6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid,
   (SELECT id FROM clients WHERE email = 'pierre.dubois@email.fr' LIMIT 1),
   'DEV-2025-002',
   'Dépannage urgence fuite salle de bain',
@@ -198,7 +198,7 @@ INSERT INTO quotes (
   NOW() - INTERVAL '3 days'
 ),
 (
-  '00000000-0000-0000-0000-000000000001'::uuid,
+  '6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid,
   (SELECT id FROM clients WHERE email = 'claire.petit@email.fr' LIMIT 1),
   'DEV-2025-003',
   'Rénovation complète salle de bain',
@@ -248,7 +248,7 @@ INSERT INTO invoices (
   created_at
 ) VALUES
 (
-  '00000000-0000-0000-0000-000000000001'::uuid,
+  '6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid,
   (SELECT id FROM clients WHERE email = 'sophie.martin@email.fr' LIMIT 1),
   'FAC-2025-001',
   'Réparation fuite robinet cuisine',
@@ -270,7 +270,7 @@ INSERT INTO invoices (
   NOW() - INTERVAL '10 days'
 ),
 (
-  '00000000-0000-0000-0000-000000000001'::uuid,
+  '6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid,
   (SELECT id FROM clients WHERE name = 'Résidence Les Érables' LIMIT 1),
   'FAC-2025-002',
   'Contrat maintenance mensuel - Janvier 2025',
@@ -292,7 +292,7 @@ INSERT INTO invoices (
   NOW() - INTERVAL '7 days'
 ),
 (
-  '00000000-0000-0000-0000-000000000001'::uuid,
+  '6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid,
   (SELECT id FROM clients WHERE email = 'ahmed.benali@email.fr' LIMIT 1),
   'FAC-2025-003',
   'Dépannage fuite urgente',
@@ -336,7 +336,7 @@ INSERT INTO job_sites (
   created_at
 ) VALUES
 (
-  '00000000-0000-0000-0000-000000000001'::uuid,
+  '6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid,
   (SELECT id FROM clients WHERE email = 'claire.petit@email.fr' LIMIT 1),
   'Rénovation SDB - Claire Petit',
   'Rénovation complète salle de bain 8m²',
@@ -351,7 +351,7 @@ INSERT INTO job_sites (
   NOW() - INTERVAL '5 days'
 ),
 (
-  '00000000-0000-0000-0000-000000000001'::uuid,
+  '6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid,
   (SELECT id FROM clients WHERE name = 'SCI Bâtiment Moderne' LIMIT 1),
   'Réfection plomberie Immeuble',
   'Remplacement colonnes montantes',
@@ -366,7 +366,7 @@ INSERT INTO job_sites (
   NOW() - INTERVAL '15 days'
 ),
 (
-  '00000000-0000-0000-0000-000000000001'::uuid,
+  '6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid,
   (SELECT id FROM clients WHERE name = 'Restaurant Le Bon Plat' LIMIT 1),
   'Installation cuisine pro',
   'Mise en conformité plomberie cuisine',
@@ -447,7 +447,7 @@ INSERT INTO payments (
   created_at
 ) VALUES
 (
-  '00000000-0000-0000-0000-000000000001'::uuid,
+  '6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid,
   (SELECT id FROM invoices WHERE invoice_number = 'FAC-2025-001' LIMIT 1),
   203.88,
   'bank_transfer',
@@ -470,12 +470,12 @@ INSERT INTO notifications (
   action_url,
   created_at
 ) VALUES
-('00000000-0000-0000-0000-000000000001'::uuid, 'Nouveau paiement reçu', 'Paiement de 203,88 € reçu pour FAC-2025-001', 'payment', true, '/invoices', NOW() - INTERVAL '5 days'),
-('00000000-0000-0000-0000-000000000001'::uuid, 'Devis accepté', 'Le devis DEV-2025-001 a été accepté par Sophie Martin', 'quote', true, '/quotes', NOW() - INTERVAL '15 days'),
-('00000000-0000-0000-0000-000000000001'::uuid, 'Facture en attente', 'La facture FAC-2025-002 est en attente de paiement (624,00 €)', 'reminder', false, '/invoices', NOW() - INTERVAL '1 day'),
-('00000000-0000-0000-0000-000000000001'::uuid, 'Facture en retard', 'La facture FAC-2025-003 est en retard de 5 jours (258,00 €)', 'warning', false, '/invoices', NOW() - INTERVAL '1 hour'),
-('00000000-0000-0000-0000-000000000001'::uuid, 'Nouveau chantier', 'Le chantier "Rénovation SDB" démarre dans 30 jours', 'job_site', false, '/job-sites', NOW()),
-('00000000-0000-0000-0000-000000000001'::uuid, 'Tâche à faire', 'Commander les matériaux pour le chantier Claire Petit', 'task', false, '/job-sites', NOW())
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'Nouveau paiement reçu', 'Paiement de 203,88 € reçu pour FAC-2025-001', 'payment', true, '/invoices', NOW() - INTERVAL '5 days'),
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'Devis accepté', 'Le devis DEV-2025-001 a été accepté par Sophie Martin', 'quote', true, '/quotes', NOW() - INTERVAL '15 days'),
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'Facture en attente', 'La facture FAC-2025-002 est en attente de paiement (624,00 €)', 'reminder', false, '/invoices', NOW() - INTERVAL '1 day'),
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'Facture en retard', 'La facture FAC-2025-003 est en retard de 5 jours (258,00 €)', 'warning', false, '/invoices', NOW() - INTERVAL '1 hour'),
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'Nouveau chantier', 'Le chantier "Rénovation SDB" démarre dans 30 jours', 'job_site', false, '/job-sites', NOW()),
+('6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid, 'Tâche à faire', 'Commander les matériaux pour le chantier Claire Petit', 'task', false, '/job-sites', NOW())
 ON CONFLICT DO NOTHING;
 
 -- ============================================
@@ -496,7 +496,7 @@ INSERT INTO settings (
   updated_at
 ) VALUES
 (
-  '00000000-0000-0000-0000-000000000001'::uuid,
+  '6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid,
   'FAC',
   'DEV',
   3,
@@ -548,7 +548,7 @@ INSERT INTO scheduled_reminders (
 ) VALUES
 -- Reminder for FAC-2025-002 (due in 30 days, reminder 15 days before)
 (
-  '00000000-0000-0000-0000-000000000001'::uuid,
+  '6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid,
   (SELECT id FROM invoices WHERE invoice_number = 'FAC-2025-002' LIMIT 1),
   'payment_due',
   NOW() + INTERVAL '15 days',
@@ -559,7 +559,7 @@ INSERT INTO scheduled_reminders (
 ),
 -- Overdue reminder for FAC-2025-003
 (
-  '00000000-0000-0000-0000-000000000001'::uuid,
+  '6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid,
   (SELECT id FROM invoices WHERE invoice_number = 'FAC-2025-003' LIMIT 1),
   'payment_overdue',
   NOW() + INTERVAL '1 day',
@@ -570,7 +570,7 @@ INSERT INTO scheduled_reminders (
 ),
 -- Quote expiry reminder for DEV-2025-002
 (
-  '00000000-0000-0000-0000-000000000001'::uuid,
+  '6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid,
   NULL,
   'quote_expiry',
   NOW() + INTERVAL '10 days',
@@ -581,7 +581,7 @@ INSERT INTO scheduled_reminders (
 ),
 -- Maintenance reminder for Les Érables
 (
-  '00000000-0000-0000-0000-000000000001'::uuid,
+  '6b1d26bf-40d7-46c0-9b07-89a120191971'::uuid,
   NULL,
   'maintenance',
   NOW() + INTERVAL '25 days',
