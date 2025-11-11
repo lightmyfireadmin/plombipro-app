@@ -10,11 +10,13 @@ import '../screens/auth/reset_password_page.dart';
 import '../screens/home/home_page.dart';
 import '../screens/quotes/quotes_list_page.dart';
 import '../screens/quotes/quote_form_page.dart';
+import '../screens/quotes/quote_wizard_page.dart';
 import '../screens/clients/clients_list_page.dart';
 import '../screens/clients/client_form_page.dart';
 import '../screens/clients/add_client_wizard_page.dart';
 import '../screens/invoices/invoices_list_page.dart';
 import '../screens/invoices/invoice_form_page.dart';
+import '../screens/invoices/invoice_wizard_page.dart';
 import '../screens/products/products_list_page.dart';
 import '../screens/products/product_form_page.dart';
 import '../screens/ocr/scan_invoice_page.dart';
@@ -112,14 +114,14 @@ class AppRouter {
           GoRoute(
             path: 'new',
             builder: (BuildContext context, GoRouterState state) {
-              return const QuoteFormPage();
+              return const QuoteWizardPage();
             },
           ),
           GoRoute(
             path: ':id',
             builder: (BuildContext context, GoRouterState state) {
               final quoteId = state.pathParameters['id']!;
-              return QuoteFormPage(quoteId: quoteId); 
+              return QuoteFormPage(quoteId: quoteId);
             },
           ),
         ],
@@ -132,12 +134,6 @@ class AppRouter {
         routes: [
           GoRoute(
             path: 'new',
-            builder: (BuildContext context, GoRouterState state) {
-              return const ClientFormPage();
-            },
-          ),
-          GoRoute(
-            path: 'wizard',
             builder: (BuildContext context, GoRouterState state) {
               return const AddClientWizardPage();
             },
@@ -160,14 +156,14 @@ class AppRouter {
           GoRoute(
             path: 'new',
             builder: (BuildContext context, GoRouterState state) {
-              return const InvoiceFormPage();
+              return const InvoiceWizardPage();
             },
           ),
           GoRoute(
             path: ':id',
             builder: (BuildContext context, GoRouterState state) {
               final invoiceId = state.pathParameters['id']!;
-              return InvoiceFormPage(invoiceId: invoiceId); 
+              return InvoiceFormPage(invoiceId: invoiceId);
             },
           ),
         ],
@@ -363,7 +359,7 @@ class AppRouter {
 
       // If logged in, and on the login/register/forgot/reset password page, redirect to home
       if (loggedIn && loggingIn) {
-        return '/home';
+        return '/home-enhanced';
       }
 
       // No redirect needed
