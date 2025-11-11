@@ -237,8 +237,8 @@ ON CONFLICT (id) DO UPDATE SET
 -- =====================================================
 
 INSERT INTO products (
-  id, user_id, name, reference, description, unit,
-  purchase_price_ht, selling_price_ht, vat_rate, supplier_name, category, is_favorite,
+  id, user_id, name, ref, description, unit,
+  purchase_price_ht, selling_price_ht, vat_rate, supplier, category, is_favorite,
   created_at
 ) VALUES
 ('30000000-0000-0000-0002-000000000001', test_user_id, 'Mitigeur lavabo chromé', 'ROB-MIT-001',
