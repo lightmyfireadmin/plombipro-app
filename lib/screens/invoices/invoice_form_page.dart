@@ -237,9 +237,71 @@ Garantie décennale et responsabilité civile professionnelle''';
   }
 
   Future<void> _saveInvoice() async {
-    if (!_formKey.currentState!.validate() || _selectedClient == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Veuillez remplir tous les champs requis et sélectionner un client.')),
+    // Validation checks
+    if (!_formKey.currentState!.validate()) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Validation échouée'),
+          content: const Text('Veuillez remplir tous les champs requis.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
+    if (_selectedClient == null) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Client manquant'),
+          content: const Text('Veuillez sélectionner un client pour cette facture.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
+    if (_selectedClient!.id == null || _selectedClient!.id!.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Erreur Client'),
+          content: const Text('Le client sélectionné n\'a pas d\'ID valide. Veuillez sélectionner un autre client.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
+    if (_lineItems.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Articles manquants'),
+          content: const Text('Veuillez ajouter au moins un article à la facture.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
       );
       return;
     }
@@ -247,15 +309,27 @@ Garantie décennale et responsabilité civile professionnelle''';
     setState(() { _isSaving = true; });
 
     try {
+      print('💾 Saving Invoice:');
+      print('  - Client: ${_selectedClient!.name} (ID: ${_selectedClient!.id})');
+      print('  - Number: ${_invoiceNumberController.text}');
+      print('  - Date: $_invoiceDate');
+      print('  - Due Date: $_dueDate');
+      print('  - Line Items: ${_lineItems.length}');
+      print('  - Total HT: $_totalHT');
+      print('  - Total TVA: $_totalTVA');
+      print('  - Total TTC: $_totalTTC');
+      print('  - Payment Status: $_paymentStatus');
+      print('  - Generate Factur-X: $_generateFacturX');
+
       final userId = Supabase.instance.client.auth.currentUser?.id;
       if (userId == null) {
-        throw Exception('User not authenticated');
+        throw Exception('Utilisateur non authentifié. Veuillez vous reconnecter.');
       }
 
       final invoice = Invoice(
         id: _invoice?.id,
         userId: userId,
-        number: _invoiceNumberController.text,
+        number: _invoiceNumberController.text.trim(),
         clientId: _selectedClient!.id!,
         date: _invoiceDate,
         dueDate: _dueDate,
@@ -263,7 +337,7 @@ Garantie décennale et responsabilité civile professionnelle''';
         totalTva: _totalTVA,
         totalTtc: _totalTTC,
         paymentStatus: _paymentStatus,
-        notes: _notesController.text,
+        notes: _notesController.text.trim().isEmpty ? null : _notesController.text.trim(),
         paymentMethod: _paymentMethod,
         isElectronic: _generateFacturX,
         xmlUrl: _xmlUrl,
@@ -271,13 +345,22 @@ Garantie décennale et responsabilité civile professionnelle''';
         items: _lineItems,
       );
 
+      print('  - Invoice object created');
+
       String invoiceId;
       if (_isEditing) {
+        print('  - Updating existing invoice: ${invoice.id}');
         await SupabaseService.updateInvoice(invoice.id!, invoice);
         invoiceId = invoice.id!;
+        print('  ✅ Invoice updated successfully');
       } else {
+        print('  - Creating new invoice...');
         invoiceId = await SupabaseService.createInvoice(invoice);
+        print('  ✅ Invoice created with ID: $invoiceId');
+
+        print('  - Creating ${_lineItems.length} line items...');
         await SupabaseService.createInvoiceLineItems(invoiceId, _lineItems);
+        print('  ✅ Line items created successfully');
       }
 
       // Generate Factur-X if requested
@@ -404,15 +487,36 @@ Garantie décennale et responsabilité civile professionnelle''';
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Facture enregistrée avec succès!')),
+          SnackBar(
+            content: const Text('✅ Facture enregistrée avec succès!'),
+            backgroundColor: Colors.green,
+            duration: const Duration(seconds: 2),
+          ),
         );
         Navigator.of(context).pop(true); // Return true to indicate success
       }
 
-    } catch (e) {
+    } catch (e, stackTrace) {
+      print('❌ Error saving invoice: $e');
+      print('Stack trace: $stackTrace');
+
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Erreur lors de l'enregistrement: ${e.toString()}")),
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Erreur'),
+            content: Text(
+              'Impossible d\'enregistrer la facture.\n\n'
+              'Détails: ${e.toString()}\n\n'
+              'Veuillez vérifier que tous les champs sont correctement remplis.',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('OK'),
+              ),
+            ],
+          ),
         );
       }
     } finally {
