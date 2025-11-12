@@ -12,10 +12,24 @@ import 'services/error_service.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Read environment variables from dart-define
-  const supabaseUrl = String.fromEnvironment('SUPABASE_URL');
-  const supabaseAnonKey = String.fromEnvironment('SUPABASE_ANON_KEY');
+  // Read environment variables from dart-define with fallback defaults
+  const supabaseUrl = String.fromEnvironment(
+    'SUPABASE_URL',
+    defaultValue: 'https://itugqculhbghypclhyfb.supabase.co',
+  );
+  const supabaseAnonKey = String.fromEnvironment(
+    'SUPABASE_ANON_KEY',
+    defaultValue: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml0dWdxY3VsaGJnaHlwY2xoeWZiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI3MTAxODEsImV4cCI6MjA3ODI4NjE4MX0.eSNzgh3pMHaPYCkzJ8L1UcoqzMSgHTJvg4c9IOGv4eI',
+  );
   const sentryDsn = String.fromEnvironment('SENTRY_DSN', defaultValue: '');
+
+  // Validate Supabase credentials
+  if (supabaseUrl.isEmpty || supabaseAnonKey.isEmpty) {
+    throw Exception(
+      'FATAL: Missing Supabase credentials. '
+      'Build with: flutter build apk --dart-define=SUPABASE_URL=... --dart-define=SUPABASE_ANON_KEY=...',
+    );
+  }
 
   // Initialize Sentry for error tracking (optional)
   if (sentryDsn.isNotEmpty) {
