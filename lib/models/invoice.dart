@@ -70,26 +70,34 @@ class Invoice {
     );
   }
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{
       'user_id': userId,
-        'id': id,
-        'invoice_number': number,
-        'client_id': clientId,
-        'invoice_date': date.toIso8601String(),
-        'due_date': dueDate?.toIso8601String(),
-        'subtotal_ht': totalHt,
-        'total_vat': totalTva,
-        'total_ttc': totalTtc,
-        'amount_paid': amountPaid,
-        'balance_due': balanceDue,
-        'status': status,
+      'invoice_number': number,
+      'client_id': clientId,
+      'invoice_date': date.toIso8601String(),
+      'due_date': dueDate?.toIso8601String(),
+      'subtotal_ht': totalHt,
+      'total_vat': totalTva,
+      'total_ttc': totalTtc,
+      'amount_paid': amountPaid,
+      'balance_due': balanceDue,
+      'status': status,
       'payment_status': paymentStatus,
-        'notes': notes,
-        'payment_method': paymentMethod,
-        'is_electronic': isElectronic,
-        'xml_url': xmlUrl,
-        // client and items are handled separately or not directly in invoice table
-      };
+      'notes': notes,
+      'payment_method': paymentMethod,
+      'is_electronic': isElectronic,
+      'xml_url': xmlUrl,
+      // client and items are handled separately or not directly in invoice table
+    };
+
+    // Include id if it exists (for updates)
+    if (id != null) {
+      json['id'] = id;
+    }
+
+    return json;
+  }
 
   Invoice copyWith({
     String? id,

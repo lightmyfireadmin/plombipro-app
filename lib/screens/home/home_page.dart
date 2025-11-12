@@ -4,6 +4,7 @@ import '../notifications/notifications_page.dart';
 
 import '../../models/activity.dart';
 import '../../models/appointment.dart';
+import '../../models/client.dart';
 import '../../models/invoice.dart';
 import '../../models/job_site.dart';
 import '../../models/payment.dart';
@@ -15,6 +16,7 @@ import '../../services/error_handler.dart';
 import '../../widgets/section_header.dart';
 import '../../widgets/app_drawer.dart';
 import '../../widgets/custom_app_bar.dart';
+import '../../widgets/app_bottom_nav.dart';
 import '../clients/client_form_page.dart';
 import '../quotes/quote_form_page.dart';
 import '../quotes/quotes_list_page.dart';
@@ -36,12 +38,15 @@ class _HomePageState extends State<HomePage> {
   List<Payment> _payments = [];
   List<Activity> _activityFeed = [];
   List<Appointment> _upcomingAppointments = [];
+  List<Client> _clients = [];
 
   // Stats
   double _monthlyRevenue = 0;
   int _pendingQuotesCount = 0;
   double _unpaidInvoicesAmount = 0;
   int _activeJobSitesCount = 0;
+  int _totalClientsCount = 0;
+  int _totalQuotesCount = 0;
 
   @override
   void initState() {
@@ -57,14 +62,23 @@ class _HomePageState extends State<HomePage> {
 
     try {
       final profile = await SupabaseService.fetchUserProfile();
+      final clients = await SupabaseService.fetchClients();
       final quotes = await SupabaseService.fetchQuotes();
       final invoices = await SupabaseService.fetchInvoices();
       final jobSites = await SupabaseService.getJobSites();
       final payments = await SupabaseService.getPayments();
       final appointments = await SupabaseService.fetchUpcomingAppointments();
+
+      print('📊 Dashboard Data Fetched:');
+      print('  - Clients: ${clients.length}');
+      print('  - Quotes: ${quotes.length}');
+      print('  - Invoices: ${invoices.length}');
+      print('  - Job Sites: ${jobSites.length}');
+
       if (mounted) {
         setState(() {
           _profile = profile;
+          _clients = clients;
           _quotes = quotes;
           _invoices = invoices;
           _jobSites = jobSites;
@@ -115,16 +129,31 @@ class _HomePageState extends State<HomePage> {
     double unpaidAmount = 0;
     int activeJobSites = 0;
 
+    // Calculate total clients and quotes
+    int totalClients = _clients.length;
+    int totalQuotes = _quotes.length;
+
+    print('📈 Calculating Stats:');
+    print('  - Total Clients: $totalClients');
+    print('  - Total Quotes: $totalQuotes');
+
     for (final quote in _quotes) {
+      print('    Quote: ${quote.quoteNumber}, Status: ${quote.status}, Date: ${quote.date}');
+
       // Monthly revenue from accepted quotes this month
       if (quote.status == 'accepted' && quote.date.month == currentMonth && quote.date.year == currentYear) {
         monthlyRev += quote.totalTtc;
+        print('      ✓ Added to monthly revenue: ${quote.totalTtc}');
       }
-      // Pending quotes
-      if (quote.status == 'sent') {
+      // Pending quotes - count 'sent', 'pending', or 'draft' status
+      if (quote.status == 'sent' || quote.status == 'pending' || quote.status == 'draft') {
         pendingCount++;
+        print('      ✓ Counted as pending');
       }
     }
+
+    print('  - Monthly Revenue: $monthlyRev');
+    print('  - Pending Quotes: $pendingCount');
 
     for (final invoice in _invoices) {
       if (invoice.paymentStatus != 'paid') {
@@ -143,6 +172,8 @@ class _HomePageState extends State<HomePage> {
       _pendingQuotesCount = pendingCount;
       _unpaidInvoicesAmount = unpaidAmount;
       _activeJobSitesCount = activeJobSites;
+      _totalClientsCount = totalClients;
+      _totalQuotesCount = totalQuotes;
     });
   }
 
@@ -152,17 +183,13 @@ class _HomePageState extends State<HomePage> {
       appBar: CustomAppBarWithDrawer(
         title: 'PlombiPro',
         actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (_) => const NotificationsPage()));
-            },
-            icon: const Icon(Icons.notifications_none),
-          ),
+          _buildNotificationBellWithBadge(context),
           IconButton(
             onPressed: () {
               context.go('/settings');
             },
             icon: const Icon(Icons.settings),
+            tooltip: 'Paramètres',
           ),
         ],
       ),
@@ -204,6 +231,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
+      bottomNavigationBar: const AppBottomNav(currentIndex: 0),
     );
   }
 
@@ -245,10 +273,12 @@ class _HomePageState extends State<HomePage> {
       mainAxisSpacing: 12,
       childAspectRatio: 1.8,
       children: [
+        _StatCard(title: 'Total Clients', value: _totalClientsCount.toString(), icon: Icons.people, color: Colors.blue),
+        _StatCard(title: 'Total Devis', value: _totalQuotesCount.toString(), icon: Icons.request_quote, color: Colors.purple),
         _StatCard(title: 'CA du mois', value: InvoiceCalculator.formatCurrency(_monthlyRevenue), icon: Icons.euro, color: Colors.green),
         _StatCard(title: 'Factures impayées', value: InvoiceCalculator.formatCurrency(_unpaidInvoicesAmount), icon: Icons.receipt_long, color: Colors.red),
         _StatCard(title: 'Devis en attente', value: _pendingQuotesCount.toString(), icon: Icons.hourglass_empty, color: Colors.orange),
-        _StatCard(title: "Chantiers actifs", value: _activeJobSitesCount.toString(), icon: Icons.construction, color: Colors.blue),
+        _StatCard(title: "Chantiers actifs", value: _activeJobSitesCount.toString(), icon: Icons.construction, color: Colors.teal),
       ],
     );
   }
@@ -418,6 +448,54 @@ class _ActivityCard extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildNotificationBellWithBadge(BuildContext context) {
+    // Count unread notifications (for now, we'll use a placeholder)
+    // TODO: Get real unread count from SupabaseService
+    final unreadCount = 0; // Placeholder - will be replaced with actual count
+
+    return Stack(
+      children: [
+        IconButton(
+          onPressed: () async {
+            // Add ripple effect by using InkWell behavior (automatic with IconButton)
+            await Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const NotificationsPage()),
+            );
+            // Refresh dashboard when returning from notifications
+            _fetchDashboardData();
+          },
+          icon: const Icon(Icons.notifications_outlined),
+          tooltip: 'Notifications & Rappels',
+        ),
+        if (unreadCount > 0)
+          Positioned(
+            right: 8,
+            top: 8,
+            child: Container(
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                color: Colors.red,
+                shape: BoxShape.circle,
+              ),
+              constraints: const BoxConstraints(
+                minWidth: 18,
+                minHeight: 18,
+              ),
+              child: Text(
+                unreadCount > 99 ? '99+' : unreadCount.toString(),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+      ],
     );
   }
 }

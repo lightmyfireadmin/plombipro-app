@@ -34,7 +34,7 @@ class ErrorHandler {
           margin: const EdgeInsets.only(
             left: 16.0,
             right: 16.0,
-            bottom: 80.0, // 80px from bottom to avoid covering FABs and buttons
+            top: 16.0, // Show at top below AppBar instead of bottom
           ),
         ),
       );
@@ -59,7 +59,7 @@ class ErrorHandler {
           margin: const EdgeInsets.only(
             left: 16.0,
             right: 16.0,
-            bottom: 80.0, // 80px from bottom to avoid covering FABs and buttons
+            top: 16.0, // Show at top below AppBar instead of bottom
           ),
         ),
       );
@@ -81,7 +81,7 @@ class ErrorHandler {
           margin: const EdgeInsets.only(
             left: 16.0,
             right: 16.0,
-            bottom: 80.0, // 80px from bottom to avoid covering FABs and buttons
+            top: 16.0, // Show at top below AppBar instead of bottom
           ),
         ),
       );
@@ -103,7 +103,7 @@ class ErrorHandler {
           margin: const EdgeInsets.only(
             left: 16.0,
             right: 16.0,
-            bottom: 80.0, // 80px from bottom to avoid covering FABs and buttons
+            top: 16.0, // Show at top below AppBar instead of bottom
           ),
         ),
       );

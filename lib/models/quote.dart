@@ -52,17 +52,26 @@ class Quote {
     );
   }
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{
       'user_id': userId,
-        'quote_number': quoteNumber,
-        'client_id': clientId,
-        'quote_date': date.toIso8601String(),
-        'expiry_date': expiryDate?.toIso8601String(),
-        'status': status,
-        'subtotal_ht': totalHt,
-        'total_vat': totalTva,
-        'total_ttc': totalTtc,
-        'notes': notes,
-      };
+      'quote_number': quoteNumber,
+      'client_id': clientId,
+      'quote_date': date.toIso8601String(),
+      'expiry_date': expiryDate?.toIso8601String(),
+      'status': status,
+      'subtotal_ht': totalHt,
+      'total_vat': totalTva,
+      'total_ttc': totalTtc,
+      'notes': notes,
+    };
+
+    // Include id if it exists (for updates)
+    if (id != null) {
+      json['id'] = id;
+    }
+
+    return json;
+  }
 }
 

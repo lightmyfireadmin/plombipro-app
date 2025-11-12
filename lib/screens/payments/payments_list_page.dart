@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../models/payment.dart';
 import '../../services/supabase_service.dart';
 import '../../widgets/section_header.dart';
+import '../../widgets/app_drawer.dart';
 
 class PaymentsListPage extends StatefulWidget {
   const PaymentsListPage({super.key});
@@ -52,6 +53,7 @@ class _PaymentsListPageState extends State<PaymentsListPage> {
       appBar: AppBar(
         title: const Text('Paiements'),
       ),
+      drawer: const AppDrawer(),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : RefreshIndicator(
