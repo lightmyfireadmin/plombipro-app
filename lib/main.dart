@@ -14,54 +14,153 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Read environment variables from dart-define with fallback defaults
-  const supabaseUrl = String.fromEnvironment(
-    'SUPABASE_URL',
-    defaultValue: 'https://itugqculhbghypclhyfb.supabase.co',
-  );
-  const supabaseAnonKey = String.fromEnvironment(
-    'SUPABASE_ANON_KEY',
-    defaultValue: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml0dWdxY3VsaGJnaHlwY2xoeWZiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI3MTAxODEsImV4cCI6MjA3ODI4NjE4MX0.eSNzgh3pMHaPYCkzJ8L1UcoqzMSgHTJvg4c9IOGv4eI',
-  );
-  const sentryDsn = String.fromEnvironment('SENTRY_DSN', defaultValue: '');
+  try {
+    // Read environment variables from dart-define with fallback defaults
+    const supabaseUrl = String.fromEnvironment(
+      'SUPABASE_URL',
+      defaultValue: 'https://itugqculhbghypclhyfb.supabase.co',
+    );
+    const supabaseAnonKey = String.fromEnvironment(
+      'SUPABASE_ANON_KEY',
+      defaultValue: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml0dWdxY3VsaGJnaHlwY2xoeWZiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI3MTAxODEsImV4cCI6MjA3ODI4NjE4MX0.eSNzgh3pMHaPYCkzJ8L1UcoqzMSgHTJvg4c9IOGv4eI',
+    );
+    const sentryDsn = String.fromEnvironment('SENTRY_DSN', defaultValue: '');
 
-  // Validate Supabase credentials
-  if (supabaseUrl.isEmpty || supabaseAnonKey.isEmpty) {
-    throw Exception(
-      'FATAL: Missing Supabase credentials. '
-      'Build with: flutter build apk --dart-define=SUPABASE_URL=... --dart-define=SUPABASE_ANON_KEY=...',
+    // Validate Supabase credentials
+    if (supabaseUrl.isEmpty || supabaseAnonKey.isEmpty) {
+      throw Exception(
+        'FATAL: Missing Supabase credentials. '
+        'Build with: flutter build apk --dart-define=SUPABASE_URL=... --dart-define=SUPABASE_ANON_KEY=...',
+      );
+    }
+
+    debugPrint('🚀 Initializing PlombiPro...');
+
+    // Initialize Firebase (required for Firebase App Distribution and other Firebase services)
+    debugPrint('📱 Initializing Firebase...');
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    debugPrint('✅ Firebase initialized successfully');
+
+    // Initialize Sentry for error tracking (optional)
+    if (sentryDsn.isNotEmpty) {
+      debugPrint('📊 Initializing Sentry...');
+      await ErrorService.initialize(sentryDsn: sentryDsn);
+      debugPrint('✅ Sentry initialized successfully');
+    }
+
+    // Initialize supabase_flutter
+    debugPrint('🔐 Initializing Supabase...');
+    debugPrint('   URL: $supabaseUrl');
+    await Supabase.initialize(
+      url: supabaseUrl,
+      anonKey: supabaseAnonKey,
+    );
+    debugPrint('✅ Supabase initialized successfully');
+
+    // Initialize Stripe publishable key (as per guide page 33)
+    // Uncomment and ensure flutter_stripe is correctly configured if you intend to use Stripe UI components.
+    // const stripePublishableKey = String.fromEnvironment('STRIPE_PUBLISHABLE_KEY', defaultValue: '');
+    // if (stripePublishableKey.isNotEmpty) {
+    //   Stripe.publishableKey = stripePublishableKey;
+    // }
+
+    debugPrint('✅ All services initialized successfully');
+    debugPrint('🎉 Starting PlombiPro app...');
+
+    // Wrap app with ProviderScope for Riverpod state management
+    runApp(
+      const ProviderScope(
+        child: MyApp(),
+      ),
+    );
+  } catch (error, stackTrace) {
+    // Catch any initialization errors and show error screen
+    debugPrint('❌ FATAL ERROR during initialization: $error');
+    debugPrint('Stack trace: $stackTrace');
+
+    runApp(
+      MaterialApp(
+        home: Scaffold(
+          backgroundColor: Colors.red.shade50,
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.error_outline,
+                    size: 80,
+                    color: Colors.red.shade700,
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
+                    'Erreur d\'initialisation',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.red.shade900,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'L\'application a rencontré une erreur lors du démarrage.',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.red.shade800,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 24),
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Colors.red.shade300),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Détails de l\'erreur:',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red.shade900,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          error.toString(),
+                          style: const TextStyle(
+                            fontFamily: 'monospace',
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
+                    'Veuillez contacter le support technique.',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.red.shade700,
+                      fontStyle: FontStyle.italic,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
-
-  // Initialize Firebase (required for Firebase App Distribution and other Firebase services)
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
-  // Initialize Sentry for error tracking (optional)
-  if (sentryDsn.isNotEmpty) {
-    await ErrorService.initialize(sentryDsn: sentryDsn);
-  }
-
-  // Initialize supabase_flutter
-  await Supabase.initialize(
-    url: supabaseUrl,
-    anonKey: supabaseAnonKey,
-  );
-
-  // Initialize Stripe publishable key (as per guide page 33)
-  // Uncomment and ensure flutter_stripe is correctly configured if you intend to use Stripe UI components.
-  // const stripePublishableKey = String.fromEnvironment('STRIPE_PUBLISHABLE_KEY', defaultValue: '');
-  // if (stripePublishableKey.isNotEmpty) {
-  //   Stripe.publishableKey = stripePublishableKey;
-  // }
-
-  // Wrap app with ProviderScope for Riverpod state management
-  runApp(
-    const ProviderScope(
-      child: MyApp(),
-    ),
-  );
 }
 
 class MyApp extends StatelessWidget {
