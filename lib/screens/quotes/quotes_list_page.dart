@@ -16,6 +16,8 @@ import '../../services/error_handler.dart';
 import '../../config/plombipro_colors.dart';
 import '../../config/glassmorphism_theme.dart';
 import '../../widgets/glassmorphic/glass_card.dart';
+import '../../widgets/app_drawer.dart';
+import '../../widgets/app_bottom_nav.dart';
 import 'package:animate_do/animate_do.dart';
 
 /// Premium glassmorphic quotes list with modern design
@@ -346,6 +348,7 @@ class _QuotesListPageState extends State<QuotesListPage> with SingleTickerProvid
       extendBodyBehindAppBar: true,
       backgroundColor: PlombiProColors.backgroundLight,
       appBar: _buildGlassAppBar(),
+      drawer: const AppDrawer(),
       body: Stack(
         children: [
           // Gradient background
@@ -380,6 +383,7 @@ class _QuotesListPageState extends State<QuotesListPage> with SingleTickerProvid
         ],
       ),
       floatingActionButton: _isSelectionMode ? null : _buildGlassFAB(),
+      bottomNavigationBar: const AppBottomNav(currentIndex: 2),
     );
   }
 

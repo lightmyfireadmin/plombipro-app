@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart'; // Added
 import '../../models/product.dart';
 import '../../services/invoice_calculator.dart';
 import '../../services/supabase_service.dart';
+import '../../widgets/app_drawer.dart';
 
 class ProductsListPage extends StatefulWidget {
   const ProductsListPage({super.key});
@@ -70,6 +71,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
       appBar: AppBar(
         title: const Text('Mes Produits'),
       ),
+      drawer: const AppDrawer(),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : Column(

@@ -121,7 +121,7 @@ class AppTheme {
     // Input Decoration
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: Colors.grey[50],
+      fillColor: Colors.white, // Changed from grey[50] to pure white for better visibility
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
@@ -145,6 +145,19 @@ class AppTheme {
       ),
       labelStyle: const TextStyle(color: textSecondary),
       hintStyle: TextStyle(color: Colors.grey[400]),
+      // Force black text color in all text fields to prevent white-on-white
+      prefixStyle: const TextStyle(color: Colors.black87, fontSize: 16),
+      suffixStyle: const TextStyle(color: Colors.black87, fontSize: 16),
+      counterStyle: const TextStyle(color: textSecondary, fontSize: 12),
+      errorStyle: const TextStyle(color: errorRed, fontSize: 12),
+      helperStyle: const TextStyle(color: textSecondary, fontSize: 12),
+    ),
+
+    // Text Selection Theme - Force visible selection colors
+    textSelectionTheme: const TextSelectionThemeData(
+      cursorColor: primaryBlue,
+      selectionColor: Color(0xFFB3D4FF), // Light blue selection
+      selectionHandleColor: primaryBlue,
     ),
 
     // Chip

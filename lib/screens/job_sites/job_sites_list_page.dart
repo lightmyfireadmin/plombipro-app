@@ -4,6 +4,7 @@ import '../../models/job_site.dart';
 import '../../services/supabase_service.dart';
 import '../../widgets/modern/empty_state_widget.dart';
 import '../../config/plombipro_colors.dart';
+import '../../widgets/app_drawer.dart';
 
 class JobSitesListPage extends StatefulWidget {
   const JobSitesListPage({super.key});
@@ -70,6 +71,7 @@ class _JobSitesListPageState extends State<JobSitesListPage> {
           ),
         ],
       ),
+      drawer: const AppDrawer(),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : _jobSites.isEmpty

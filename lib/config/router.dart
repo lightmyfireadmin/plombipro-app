@@ -49,6 +49,7 @@ import '../screens/auth/register_step_by_step_screen.dart';
 import '../screens/home/home_screen_enhanced.dart';
 import '../screens/reports/advanced_reports_page.dart';
 import '../screens/tools/tools_page.dart';
+import '../screens/notifications/notifications_page.dart';
 import '../services/onboarding_service.dart';
 
 class AppRouter {
@@ -102,17 +103,12 @@ class AppRouter {
           return const ResetPasswordPage();
         },
       ),
-      GoRoute(
-        path: '/email-verification',
-        builder: (BuildContext context, GoRouterState state) {
-          final email = state.uri.queryParameters['email'] ?? '';
-          return EmailVerificationPage(email: email);
-        },
-      ),
-      // Redirect /home to /home-enhanced for backward compatibility
+      // Standard home page route (accessible from all places that reference /home)
       GoRoute(
         path: '/home',
-        redirect: (context, state) => '/home-enhanced',
+        builder: (BuildContext context, GoRouterState state) {
+          return const HomePage();
+        },
       ),
       GoRoute(
         path: '/quotes',
@@ -337,6 +333,12 @@ class AppRouter {
         path: '/analytics',
         builder: (BuildContext context, GoRouterState state) {
           return const AnalyticsDashboardPage();
+        },
+      ),
+      GoRoute(
+        path: '/notifications',
+        builder: (BuildContext context, GoRouterState state) {
+          return const NotificationsPage();
         },
       ),
       GoRoute(

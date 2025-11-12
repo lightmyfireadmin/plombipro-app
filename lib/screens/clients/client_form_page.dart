@@ -150,121 +150,110 @@ class _ClientFormPageState extends State<ClientFormPage> {
 
 
   Future<void> _saveClient() async {
-
     if (_formKey.currentState!.validate()) {
-
       _formKey.currentState!.save();
 
       setState(() {
-
         _isLoading = true;
-
       });
 
-
-
       try {
+        print('💾 Saving Client:');
+        print('  - Name: $_name');
+        print('  - Email: $_email');
+        print('  - Phone: $_phone');
+        print('  - Type: $_clientType');
+
+        final currentUser = Supabase.instance.client.auth.currentUser;
+        if (currentUser == null) {
+          throw Exception('User not authenticated. Please log in again.');
+        }
+
+        // Sanitize email and phone (empty string becomes null)
+        final sanitizedEmail = _email.trim().isEmpty ? null : _email.trim();
+        final sanitizedPhone = _phone.trim().isEmpty ? null : _phone.trim();
 
         final newClient = Client(
-
           id: _client?.id,
-
-          userId: Supabase.instance.client.auth.currentUser!.id,
-
+          userId: currentUser.id,
           clientType: _clientType,
-
           salutation: _salutation,
-
           firstName: _firstName,
-
-          name: _name,
-
-          email: _email,
-
-          phone: _phone,
-
-          mobilePhone: _mobilePhone,
-
-          address: _address,
-
-          postalCode: _postalCode,
-
-          city: _city,
-
-          country: _country,
-
-          billingAddress: _billingAddress,
-
-          siret: _siret,
-
-          vatNumber: _vatNumber,
-
+          name: _name.trim(),
+          email: sanitizedEmail,
+          phone: sanitizedPhone,
+          mobilePhone: _mobilePhone?.trim(),
+          address: _address?.trim(),
+          postalCode: _postalCode?.trim(),
+          city: _city?.trim(),
+          country: _country ?? 'France',
+          billingAddress: _billingAddress?.trim(),
+          siret: _siret?.trim(),
+          vatNumber: _vatNumber?.trim(),
           defaultPaymentTerms: _defaultPaymentTerms,
-
           defaultDiscount: _defaultDiscount,
-
           tags: _tags,
-
           isFavorite: _isFavorite,
-
-          notes: _notes,
-
+          notes: _notes?.trim(),
         );
 
+        print('  - Creating client object: ${newClient.toJson()}');
 
-
+        String clientId;
         if (_client == null) {
-
-          await SupabaseService.createClient(newClient);
-
+          print('  - Calling createClient...');
+          clientId = await SupabaseService.createClient(newClient);
+          print('  ✅ Client created with ID: $clientId');
         } else {
-
+          print('  - Calling updateClient for ID: ${_client!.id}');
           await SupabaseService.updateClient(_client!.id!, newClient);
-
+          print('  ✅ Client updated successfully');
         }
-
-
 
         if (mounted) {
-
           ScaffoldMessenger.of(context).showSnackBar(
-
-            SnackBar(content: Text('Client enregistré avec succès')),
-
+            SnackBar(
+              content: Text('✅ Client enregistré avec succès'),
+              backgroundColor: Colors.green,
+              duration: const Duration(seconds: 2),
+            ),
           );
-
-          Navigator.of(context).pop();
-
+          Navigator.of(context).pop(true); // Return true to indicate success
         }
-
-      } catch (e) {
+      } catch (e, stackTrace) {
+        print('❌ Error saving client: $e');
+        print('Stack trace: $stackTrace');
 
         if (mounted) {
-
-          ScaffoldMessenger.of(context).showSnackBar(
-
-            SnackBar(content: Text('Erreur: ${e.toString()}')),
-
+          // Show error at top with more detail
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Erreur'),
+              content: Text(
+                'Impossible d\'enregistrer le client.\n\n'
+                'Détails: ${e.toString()}\n\n'
+                'Veuillez vérifier que tous les champs requis sont remplis correctement.',
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
           );
-
         }
-
       } finally {
-
         if (mounted) {
-
           setState(() {
-
             _isLoading = false;
-
           });
-
         }
-
       }
-
+    } else {
+      print('❌ Form validation failed');
     }
-
   }
 
 
@@ -342,65 +331,73 @@ class _ClientFormPageState extends State<ClientFormPage> {
                     const SizedBox(height: 16),
 
                     TextFormField(
-
                       initialValue: _email,
-
-                      decoration: const InputDecoration(labelText: 'Email'),
-
+                      decoration: const InputDecoration(
+                        labelText: 'Email',
+                        hintText: 'exemple@email.com',
+                        helperText: 'Optionnel',
+                      ),
                       keyboardType: TextInputType.emailAddress,
-
                       validator: (value) {
-
-                        if (value == null || value.isEmpty || !value.contains('@')) {
-
-                          return 'Veuillez entrer une adresse email valide';
-
+                        // Email is optional, but if provided, must be valid
+                        if (value != null && value.isNotEmpty && !value.contains('@')) {
+                          return 'Adresse email invalide';
                         }
-
                         return null;
-
                       },
-
-                      onSaved: (value) => _email = value!,
-
+                      onSaved: (value) => _email = value ?? '',
                     ),
-
                     const SizedBox(height: 16),
 
                     TextFormField(
-
                       initialValue: _phone,
-
-                      decoration: const InputDecoration(labelText: 'Téléphone'),
-
+                      decoration: const InputDecoration(
+                        labelText: 'Téléphone',
+                        hintText: '06 12 34 56 78',
+                        helperText: 'Optionnel',
+                      ),
                       keyboardType: TextInputType.phone,
-
                       validator: (value) {
-
-                        if (value == null || value.isEmpty) {
-
-                          return 'Veuillez entrer un numéro de téléphone';
-
-                        }
-
+                        // Phone is optional
                         return null;
-
                       },
+                      onSaved: (value) => _phone = value ?? '',
+                    ),
+                    const SizedBox(height: 16),
 
-                      onSaved: (value) => _phone = value!,
-
+                    TextFormField(
+                      initialValue: _address,
+                      decoration: const InputDecoration(
+                        labelText: 'Adresse',
+                        hintText: '123 Rue Example',
+                        helperText: 'Optionnel',
+                      ),
+                      onSaved: (value) => _address = value,
                     ),
 
                     const SizedBox(height: 16),
 
                     TextFormField(
+                      initialValue: _postalCode,
+                      decoration: const InputDecoration(
+                        labelText: 'Code Postal',
+                        hintText: '75001',
+                        helperText: 'Optionnel',
+                      ),
+                      keyboardType: TextInputType.number,
+                      onSaved: (value) => _postalCode = value,
+                    ),
 
-                      initialValue: _address,
+                    const SizedBox(height: 16),
 
-                      decoration: const InputDecoration(labelText: 'Adresse'),
-
-                      onSaved: (value) => _address = value!,
-
+                    TextFormField(
+                      initialValue: _city,
+                      decoration: const InputDecoration(
+                        labelText: 'Ville',
+                        hintText: 'Paris',
+                        helperText: 'Optionnel',
+                      ),
+                      onSaved: (value) => _city = value,
                     ),
 
                   ],

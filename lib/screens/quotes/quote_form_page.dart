@@ -238,9 +238,71 @@ class _QuoteFormPageState extends State<QuoteFormPage> {
   }
 
   Future<void> _saveQuote() async {
-    if (!_formKey.currentState!.validate() || _selectedClient == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Veuillez remplir tous les champs requis et sélectionner un client.')),
+    // Validation checks
+    if (!_formKey.currentState!.validate()) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Validation échouée'),
+          content: const Text('Veuillez remplir tous les champs requis.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
+    if (_selectedClient == null) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Client manquant'),
+          content: const Text('Veuillez sélectionner un client pour ce devis.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
+    if (_selectedClient!.id == null || _selectedClient!.id!.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Erreur Client'),
+          content: const Text('Le client sélectionné n\'a pas d\'ID valide. Veuillez sélectionner un autre client.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
+    if (_lineItems.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Articles manquants'),
+          content: const Text('Veuillez ajouter au moins un article au devis.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
       );
       return;
     }
@@ -248,9 +310,18 @@ class _QuoteFormPageState extends State<QuoteFormPage> {
     setState(() { _isSaving = true; });
 
     try {
+      print('💾 Saving Quote:');
+      print('  - Client: ${_selectedClient!.name} (ID: ${_selectedClient!.id})');
+      print('  - Date: $_date');
+      print('  - Expiry Date: $_expiryDate');
+      print('  - Line Items: ${_lineItems.length}');
+      print('  - Total HT: $_totalHT');
+      print('  - Total TVA: $_totalTVA');
+      print('  - Total TTC: $_totalTTC');
+
       final userId = Supabase.instance.client.auth.currentUser?.id;
       if (userId == null) {
-        throw Exception('User not authenticated');
+        throw Exception('Utilisateur non authentifié. Veuillez vous reconnecter.');
       }
 
       final quote = Quote(
@@ -264,29 +335,61 @@ class _QuoteFormPageState extends State<QuoteFormPage> {
         totalHt: _totalHT,
         totalTva: _totalTVA,
         totalTtc: _totalTTC,
-        notes: _notesController.text,
+        notes: _notesController.text.trim().isEmpty ? null : _notesController.text.trim(),
         status: 'draft',
       );
 
+      print('  - Quote object: ${quote.toJson()}');
+
+      String? quoteId;
       if (_isEditing) {
+        print('  - Updating existing quote: ${quote.id}');
         await SupabaseService.updateQuote(quote.id!, quote);
+        quoteId = quote.id;
+        print('  ✅ Quote updated successfully');
       } else {
-        final newQuoteId = await SupabaseService.createQuote(quote);
+        print('  - Creating new quote...');
+        quoteId = await SupabaseService.createQuote(quote);
+        print('  ✅ Quote created with ID: $quoteId');
+
         // Associate line items with the new quote
-        await SupabaseService.createLineItems(newQuoteId, _lineItems);
+        print('  - Creating ${_lineItems.length} line items...');
+        await SupabaseService.createLineItems(quoteId, _lineItems);
+        print('  ✅ Line items created successfully');
       }
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Devis enregistré avec succès!')),
+          SnackBar(
+            content: const Text('✅ Devis enregistré avec succès!'),
+            backgroundColor: Colors.green,
+            duration: const Duration(seconds: 2),
+          ),
         );
         Navigator.of(context).pop(true); // Return true to indicate success
       }
 
-    } catch (e) {
+    } catch (e, stackTrace) {
+      print('❌ Error saving quote: $e');
+      print('Stack trace: $stackTrace');
+
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Erreur lors de l'enregistrement: ${e.toString()}")),
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Erreur'),
+            content: Text(
+              'Impossible d\'enregistrer le devis.\n\n'
+              'Détails: ${e.toString()}\n\n'
+              'Veuillez vérifier que tous les champs sont correctement remplis.',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('OK'),
+              ),
+            ],
+          ),
         );
       }
     } finally {
