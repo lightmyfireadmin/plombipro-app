@@ -7,10 +7,12 @@ import '../screens/auth/login_page.dart';
 import '../screens/auth/register_page.dart';
 import '../screens/auth/forgot_password_page.dart';
 import '../screens/auth/reset_password_page.dart';
+import '../screens/auth/email_verification_page.dart';
 import '../screens/home/home_page.dart';
 import '../screens/quotes/quotes_list_page.dart';
 import '../screens/quotes/quote_form_page.dart';
 import '../screens/quotes/quote_wizard_page.dart';
+import '../screens/quotes/quote_client_review_page.dart';
 import '../screens/clients/clients_list_page.dart';
 import '../screens/clients/client_form_page.dart';
 import '../screens/clients/add_client_wizard_page.dart';
@@ -23,6 +25,7 @@ import '../screens/ocr/scan_invoice_page.dart';
 import '../screens/payments/payments_list_page.dart';
 import '../screens/payments/payment_form_page.dart';
 import '../screens/profile/user_profile_page.dart';
+import '../screens/profile/enhanced_profile_page.dart';
 import '../screens/company/company_profile_page.dart';
 import '../screens/settings/settings_page.dart';
 import '../screens/settings/invoice_settings_page.dart';
@@ -117,6 +120,13 @@ class AppRouter {
             path: 'new',
             builder: (BuildContext context, GoRouterState state) {
               return const QuoteWizardPage();
+            },
+          ),
+          GoRoute(
+            path: 'review/:id',
+            builder: (BuildContext context, GoRouterState state) {
+              final quoteId = state.pathParameters['id']!;
+              return QuoteClientReviewPage(quoteId: quoteId);
             },
           ),
           GoRoute(
@@ -221,6 +231,12 @@ class AppRouter {
       ),
       GoRoute(
         path: '/profile',
+        builder: (BuildContext context, GoRouterState state) {
+          return const EnhancedProfilePage();
+        },
+      ),
+      GoRoute(
+        path: '/profile-legacy',
         builder: (BuildContext context, GoRouterState state) {
           return const UserProfilePage();
         },
@@ -349,7 +365,8 @@ class AppRouter {
       final bool loggingIn = state.matchedLocation == '/login' ||
                               state.matchedLocation == '/register' ||
                               state.matchedLocation == '/forgot-password' ||
-                              state.matchedLocation == '/reset-password';
+                              state.matchedLocation == '/reset-password' ||
+                              state.matchedLocation == '/email-verification';
       final bool isOnboarding = state.matchedLocation == '/onboarding';
 
       // If not logged in, and not on the login/register/forgot/reset password page, redirect to login

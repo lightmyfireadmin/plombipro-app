@@ -7,7 +7,7 @@ class Product {
   final double? priceBuy;
   final double unitPrice; // price_sell in schema
   final String? unit;
-  final String? photoUrl;
+  final List<String>? imageUrls; // Changed from photoUrl to support multiple images
   final String? category;
   final String? supplier;
   final bool isFavorite;
@@ -16,6 +16,9 @@ class Product {
 
   String? get reference => ref;
   double get sellingPriceHt => unitPrice;
+
+  // Backward compatibility getter - returns first image or null
+  String? get photoUrl => imageUrls?.isNotEmpty == true ? imageUrls!.first : null;
 
   Product({
     this.id,
@@ -26,7 +29,7 @@ class Product {
     this.priceBuy,
     required this.unitPrice,
     this.unit = 'unité',
-    this.photoUrl,
+    this.imageUrls,
     this.category,
     this.supplier,
     this.isFavorite = false,
@@ -42,7 +45,7 @@ class Product {
         'price_buy': priceBuy,
         'price_sell': unitPrice,
         'unit': unit,
-        'photo_url': photoUrl,
+        'image_urls': imageUrls,
         'category': category,
         'supplier': supplier,
         'is_favorite': isFavorite,
@@ -51,6 +54,14 @@ class Product {
       };
 
   factory Product.fromJson(Map<String, dynamic> json) {
+    // Handle both image_urls (array) and photo_url (single string) for backward compatibility
+    List<String>? images;
+    if (json['image_urls'] != null) {
+      images = (json['image_urls'] as List).cast<String>();
+    } else if (json['photo_url'] != null) {
+      images = [json['photo_url'] as String];
+    }
+
     return Product(
       id: json['id'],
       userId: json['user_id'] ?? '',
@@ -60,7 +71,7 @@ class Product {
       priceBuy: (json['price_buy'] as num?)?.toDouble(),
       unitPrice: (json['price_sell'] as num?)?.toDouble() ?? 0,
       unit: json['unit'],
-      photoUrl: json['photo_url'],
+      imageUrls: images,
       category: json['category'],
       supplier: json['supplier'],
       isFavorite: json['is_favorite'] as bool? ?? false,
@@ -71,6 +82,12 @@ class Product {
 
   /// Factory constructor for supplier_products table data
   factory Product.fromSupplierProductJson(Map<String, dynamic> json) {
+    // Handle single image URL from supplier
+    List<String>? images;
+    if (json['image_url'] != null) {
+      images = [json['image_url'] as String];
+    }
+
     return Product(
       id: json['id'],
       userId: json['user_id'] ?? '',
@@ -80,7 +97,7 @@ class Product {
       priceBuy: (json['price'] as num?)?.toDouble(),
       unitPrice: (json['price'] as num?)?.toDouble() ?? 0,
       unit: json['price_unit'] ?? 'unité',
-      photoUrl: json['image_url'],
+      imageUrls: images,
       category: json['category'],
       supplier: json['supplier'],
       isFavorite: false,
@@ -98,7 +115,7 @@ class Product {
     double? priceBuy,
     double? unitPrice,
     String? unit,
-    String? photoUrl,
+    List<String>? imageUrls,
     String? category,
     String? supplier,
     bool? isFavorite,
@@ -114,7 +131,7 @@ class Product {
       priceBuy: priceBuy ?? this.priceBuy,
       unitPrice: unitPrice ?? this.unitPrice,
       unit: unit ?? this.unit,
-      photoUrl: photoUrl ?? this.photoUrl,
+      imageUrls: imageUrls ?? this.imageUrls,
       category: category ?? this.category,
       supplier: supplier ?? this.supplier,
       isFavorite: isFavorite ?? this.isFavorite,

@@ -330,20 +330,30 @@ class SupabaseService {
 
   // ===== QUOTES CRUD =====
 
-  static Future<List<Quote>> fetchQuotes() async {
+  static Future<List<Quote>> fetchQuotes({int? limit, int? offset}) async {
     try {
       final user = _client.auth.currentUser;
       if (user == null) throw Exception('User not authenticated');
 
-      final response = await _client
+      var query = _client
           .from('quotes')
           .select('''
             *,
             quote_items(*),
-            clients(name, email)
+            clients(id, first_name, last_name, company_name, email)
           ''')
           .eq('user_id', user.id)
           .order('created_at', ascending: false);
+
+      if (limit != null) {
+        query = query.limit(limit);
+      }
+
+      if (offset != null) {
+        query = query.range(offset, offset + (limit ?? 20) - 1);
+      }
+
+      final response = await query;
 
       return (response as List)
           .map((item) => Quote.fromJson(item))
@@ -363,7 +373,7 @@ class SupabaseService {
           .select('''
             *,
             quote_items(*),
-            clients(name, email)
+            clients(id, first_name, last_name, company_name, email)
           ''')
           .eq('user_id', user.id)
           .eq('client_id', clientId)
@@ -379,10 +389,14 @@ class SupabaseService {
 
   static Future<Quote?> fetchQuoteById(String quoteId) async {
     try {
+      final user = _client.auth.currentUser;
+      if (user == null) throw Exception('User not authenticated');
+
       final response = await _client
           .from('quotes')
-          .select('*,line_items(*)')
+          .select('*,quote_items(*)')
           .eq('id', quoteId)
+          .eq('user_id', user.id)
           .maybeSingle();
 
       if (response == null) return null;
@@ -424,22 +438,47 @@ class SupabaseService {
     }
   }
 
+  static Future<Quote?> getQuoteById(String quoteId) async {
+    try {
+      final response = await _client
+          .from('quotes')
+          .select('*, clients(*), quote_items(*)')
+          .eq('id', quoteId)
+          .maybeSingle();
+
+      if (response == null) return null;
+      return Quote.fromJson(response);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   // ===== INVOICES CRUD =====
 
-  static Future<List<Invoice>> fetchInvoices() async {
+  static Future<List<Invoice>> fetchInvoices({int? limit, int? offset}) async {
     try {
       final user = _client.auth.currentUser;
       if (user == null) throw Exception('User not authenticated');
 
-      final response = await _client
+      var query = _client
           .from('invoices')
           .select('''
             *,
-            line_items(*),
-            clients(name, email)
+            invoice_items(*),
+            clients(id, first_name, last_name, company_name, email)
           ''')
           .eq('user_id', user.id)
           .order('created_at', ascending: false);
+
+      if (limit != null) {
+        query = query.limit(limit);
+      }
+
+      if (offset != null) {
+        query = query.range(offset, offset + (limit ?? 20) - 1);
+      }
+
+      final response = await query;
 
       return (response as List)
           .map((item) => Invoice.fromJson(item))
@@ -458,8 +497,8 @@ class SupabaseService {
           .from('invoices')
           .select('''
             *,
-            line_items(*),
-            clients(name, email)
+            invoice_items(*),
+            clients(id, first_name, last_name, company_name, email)
           ''')
           .eq('user_id', user.id)
           .eq('client_id', clientId)
@@ -507,10 +546,14 @@ class SupabaseService {
 
   static Future<Invoice?> getInvoiceById(String invoiceId) async {
     try {
+      final user = _client.auth.currentUser;
+      if (user == null) throw Exception('User not authenticated');
+
       final response = await _client
           .from('invoices')
-          .select('*,line_items(*)')
+          .select('*,invoice_items(*)')
           .eq('id', invoiceId)
+          .eq('user_id', user.id)
           .maybeSingle();
 
       if (response == null) return null;
@@ -557,16 +600,26 @@ class SupabaseService {
 
   // ===== CLIENTS CRUD =====
 
-  static Future<List<Client>> fetchClients() async {
+  static Future<List<Client>> fetchClients({int? limit, int? offset}) async {
     try {
       final user = _client.auth.currentUser;
       if (user == null) throw Exception('User not authenticated');
 
-      final response = await _client
+      var query = _client
           .from('clients')
           .select('*')
           .eq('user_id', user.id)
           .order('created_at', ascending: false);
+
+      if (limit != null) {
+        query = query.limit(limit);
+      }
+
+      if (offset != null) {
+        query = query.range(offset, offset + (limit ?? 20) - 1);
+      }
+
+      final response = await query;
 
       return (response as List)
           .map((item) => Client.fromJson(item))
@@ -610,10 +663,14 @@ class SupabaseService {
 
   static Future<Client?> getClientById(String clientId) async {
     try {
+      final user = _client.auth.currentUser;
+      if (user == null) throw Exception('User not authenticated');
+
       final response = await _client
           .from('clients')
           .select('*')
           .eq('id', clientId)
+          .eq('user_id', user.id)
           .maybeSingle();
 
       if (response == null) return null;
@@ -755,10 +812,14 @@ class SupabaseService {
 
   static Future<Product?> getProductById(String productId) async {
     try {
+      final user = _client.auth.currentUser;
+      if (user == null) throw Exception('User not authenticated');
+
       final response = await _client
           .from('products')
           .select('*')
           .eq('id', productId)
+          .eq('user_id', user.id)
           .single();
       return Product.fromJson(response);
     } catch (e) {
@@ -825,10 +886,14 @@ class SupabaseService {
 
   static Future<Payment?> getPaymentById(String paymentId) async {
     try {
+      final user = _client.auth.currentUser;
+      if (user == null) throw Exception('User not authenticated');
+
       final response = await _client
           .from('payments')
           .select('*')
           .eq('id', paymentId)
+          .eq('user_id', user.id)
           .single();
       return Payment.fromJson(response);
     } catch (e) {
@@ -1429,6 +1494,93 @@ class SupabaseService {
       }
 
       await _client.from('job_site_notes').delete().eq('id', noteId);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  // ===== JOB SITE DOCUMENTS CRUD =====
+
+  static Future<List<Map<String, dynamic>>> getJobSiteDocuments(String jobSiteId) async {
+    try {
+      final user = _client.auth.currentUser;
+      if (user == null) throw Exception('User not authenticated');
+
+      // Verify user owns the job site
+      final jobSite = await _client
+          .from('job_sites')
+          .select('user_id')
+          .eq('id', jobSiteId)
+          .single();
+
+      if (jobSite['user_id'] != user.id) {
+        throw Exception('User does not own this job site');
+      }
+
+      final response = await _client
+          .from('job_site_documents')
+          .select('*')
+          .eq('job_site_id', jobSiteId)
+          .order('created_at', ascending: false);
+
+      return (response as List).cast<Map<String, dynamic>>();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<String> addJobSiteDocument(Map<String, dynamic> documentData) async {
+    try {
+      final user = _client.auth.currentUser;
+      if (user == null) throw Exception('User not authenticated');
+
+      // Verify user owns the job site
+      final jobSiteId = documentData['job_site_id'];
+      final jobSite = await _client
+          .from('job_sites')
+          .select('user_id')
+          .eq('id', jobSiteId)
+          .single();
+
+      if (jobSite['user_id'] != user.id) {
+        throw Exception('User does not own this job site');
+      }
+
+      final response = await _client
+          .from('job_site_documents')
+          .insert(documentData)
+          .select()
+          .single();
+
+      return response['id'] as String;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<void> deleteJobSiteDocument(String documentId) async {
+    try {
+      final user = _client.auth.currentUser;
+      if (user == null) throw Exception('User not authenticated');
+
+      // Verify user owns the document's job site
+      final existingDocument = await _client
+          .from('job_site_documents')
+          .select('job_site_id')
+          .eq('id', documentId)
+          .single();
+
+      final jobSite = await _client
+          .from('job_sites')
+          .select('user_id')
+          .eq('id', existingDocument['job_site_id'])
+          .single();
+
+      if (jobSite['user_id'] != user.id) {
+        throw Exception('User does not own this document');
+      }
+
+      await _client.from('job_site_documents').delete().eq('id', documentId);
     } catch (e) {
       rethrow;
     }

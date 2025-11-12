@@ -106,19 +106,18 @@ class _RegisterPageState extends State<RegisterPage> {
     });
 
     try {
-      await SupabaseService.signUp(
-        email: _emailController.text,
+      final response = await SupabaseService.signUp(
+        email: _emailController.text.trim(),
         password: _passwordController.text,
-        fullName: _fullNameController.text,
-        companyName: _companyNameController.text,
-        siret: _siretController.text,
-        phone: _phoneController.text,
+        fullName: _fullNameController.text.trim(),
+        companyName: _companyNameController.text.trim(),
+        siret: _siretController.text.trim(),
+        phone: _phoneController.text.trim(),
       );
+
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Inscription réussie! Veuillez vérifier votre email.')),
-        );
-        context.go('/login');
+        // Navigate to email verification page
+        context.go('/email-verification?email=${Uri.encodeComponent(_emailController.text.trim())}');
       }
     } on AuthException catch (e) {
       if (mounted) {

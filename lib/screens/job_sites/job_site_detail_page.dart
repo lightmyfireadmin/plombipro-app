@@ -11,16 +11,18 @@ import '../../models/job_site_document.dart';
 import '../../services/supabase_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:file_picker/file_picker.dart';
+import 'widgets/job_site_timeline_widget.dart';
 
 /// Enhanced Job Site Detail Page with full functionality
 ///
 /// Features:
-/// - 7 tabs: Overview, Financial, Tasks, Photos, Documents, Notes, Time Tracking
+/// - 8 tabs: Overview, Timeline, Financial, Tasks, Photos, Documents, Notes, Time Tracking
 /// - Photo upload (camera/gallery)
 /// - Task completion tracking
 /// - Time tracking timer (start/stop/pause)
 /// - Financial calculations (labor, materials, profit/loss)
 /// - Progress percentage tracking
+/// - Visual timeline of all events
 class JobSiteDetailPage extends StatefulWidget {
   final String jobSiteId;
 
@@ -58,7 +60,7 @@ class _JobSiteDetailPageState extends State<JobSiteDetailPage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 7, vsync: this);
+    _tabController = TabController(length: 8, vsync: this);
     _fetchAllData();
   }
 
@@ -444,6 +446,7 @@ class _JobSiteDetailPageState extends State<JobSiteDetailPage>
           isScrollable: true,
           tabs: const [
             Tab(icon: Icon(Icons.info), text: 'Aperçu'),
+            Tab(icon: Icon(Icons.timeline), text: 'Timeline'),
             Tab(icon: Icon(Icons.euro), text: 'Finances'),
             Tab(icon: Icon(Icons.checklist), text: 'Tâches'),
             Tab(icon: Icon(Icons.photo), text: 'Photos'),
@@ -459,6 +462,7 @@ class _JobSiteDetailPageState extends State<JobSiteDetailPage>
               controller: _tabController,
               children: [
                 _buildOverviewTab(),
+                _buildTimelineTab(),
                 _buildFinancialTab(),
                 _buildTasksTab(),
                 _buildPhotosTab(),
@@ -583,6 +587,20 @@ class _JobSiteDetailPageState extends State<JobSiteDetailPage>
         ),
         Text(label, style: const TextStyle(color: Colors.grey)),
       ],
+    );
+  }
+
+  Widget _buildTimelineTab() {
+    if (_jobSite == null) {
+      return const Center(child: Text('Aucun détail disponible'));
+    }
+
+    return JobSiteTimelineWidget(
+      jobSite: _jobSite!,
+      tasks: _tasks,
+      notes: _notes,
+      photos: _photos,
+      timeLogs: _timeLogs,
     );
   }
 
@@ -1166,6 +1184,18 @@ class _JobSiteDetailPageState extends State<JobSiteDetailPage>
       });
     } catch (e) {
       _showError('Erreur de chargement des documents: $e');
+    }
+  }
+
+  /// Load notes from database
+  Future<void> _loadNotes() async {
+    try {
+      final data = await SupabaseService.getNotesForJobSite(widget.jobSiteId);
+      setState(() {
+        _notes = data;
+      });
+    } catch (e) {
+      _showError('Erreur de chargement des notes: $e');
     }
   }
 }

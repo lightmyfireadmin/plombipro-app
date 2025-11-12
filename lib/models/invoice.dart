@@ -22,6 +22,13 @@ class Invoice {
   final Client? client;
   final List<LineItem> items;
 
+  // New fields for business logic
+  final String? relatedQuoteId;
+  final int? paymentTerms;
+  final String? legalMentions;
+  final String? pdfUrl;
+  final DateTime? paidAt;
+
   Invoice({
     this.id,
     required this.userId,
@@ -42,6 +49,11 @@ class Invoice {
     this.paymentMethod,
     this.isElectronic,
     this.xmlUrl,
+    this.relatedQuoteId,
+    this.paymentTerms,
+    this.legalMentions,
+    this.pdfUrl,
+    this.paidAt,
   });
 
   factory Invoice.fromJson(Map<String, dynamic> json) {
@@ -67,6 +79,11 @@ class Invoice {
       isElectronic: json['is_electronic'],
       xmlUrl: json['xml_url'],
       client: json['clients'] != null ? Client.fromJson(json['clients']) : null,
+      relatedQuoteId: json['related_quote_id'],
+      paymentTerms: json['payment_terms'] as int?,
+      legalMentions: json['legal_mentions'],
+      pdfUrl: json['pdf_url'],
+      paidAt: json['paid_at'] != null ? DateTime.parse(json['paid_at']) : null,
     );
   }
 
@@ -118,6 +135,11 @@ class Invoice {
     String? xmlUrl,
     Client? client,
     List<LineItem>? items,
+    String? relatedQuoteId,
+    int? paymentTerms,
+    String? legalMentions,
+    String? pdfUrl,
+    DateTime? paidAt,
   }) {
     return Invoice(
       id: id ?? this.id,
@@ -138,6 +160,11 @@ class Invoice {
       xmlUrl: xmlUrl ?? this.xmlUrl,
       client: client ?? this.client,
       items: items ?? this.items,
+      relatedQuoteId: relatedQuoteId ?? this.relatedQuoteId,
+      paymentTerms: paymentTerms ?? this.paymentTerms,
+      legalMentions: legalMentions ?? this.legalMentions,
+      pdfUrl: pdfUrl ?? this.pdfUrl,
+      paidAt: paidAt ?? this.paidAt,
     );
   }
 }
