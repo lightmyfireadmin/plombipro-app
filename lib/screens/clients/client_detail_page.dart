@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -8,10 +9,12 @@ import '../../models/payment.dart';
 import '../../services/supabase_service.dart';
 import '../../services/error_handler.dart';
 import '../../services/invoice_calculator.dart';
-import '../../widgets/app_drawer.dart';
+import '../../config/plombipro_colors.dart';
+import '../../config/plombipro_text_styles.dart';
+import '../../config/plombipro_spacing.dart';
+import '../../widgets/glassmorphic/glass_card.dart';
 
-/// Beautiful client detail page with summary, operations, and history
-/// Implements the design from Phase 3 requirements
+/// Beautiful glassmorphic client detail page with summary, operations, and history
 class ClientDetailPage extends StatefulWidget {
   final String clientId;
 
@@ -24,8 +27,12 @@ class ClientDetailPage extends StatefulWidget {
   State<ClientDetailPage> createState() => _ClientDetailPageState();
 }
 
-class _ClientDetailPageState extends State<ClientDetailPage> with SingleTickerProviderStateMixin {
+class _ClientDetailPageState extends State<ClientDetailPage>
+    with TickerProviderStateMixin {
   late TabController _tabController;
+  late AnimationController _fadeController;
+  late Animation<double> _fadeAnimation;
+
   bool _isLoading = true;
   Client? _client;
   List<Quote> _quotes = [];
@@ -41,12 +48,23 @@ class _ClientDetailPageState extends State<ClientDetailPage> with SingleTickerPr
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+
+    // Fade animation
+    _fadeController = AnimationController(
+      duration: const Duration(milliseconds: 600),
+      vsync: this,
+    );
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _fadeController, curve: Curves.easeInOut),
+    );
+
     _fetchClientData();
   }
 
   @override
   void dispose() {
     _tabController.dispose();
+    _fadeController.dispose();
     super.dispose();
   }
 
@@ -56,7 +74,8 @@ class _ClientDetailPageState extends State<ClientDetailPage> with SingleTickerPr
     try {
       final client = await SupabaseService.getClientById(widget.clientId);
       final quotes = await SupabaseService.fetchQuotesByClient(widget.clientId);
-      final invoices = await SupabaseService.fetchInvoicesByClient(widget.clientId);
+      final invoices =
+          await SupabaseService.fetchInvoicesByClient(widget.clientId);
 
       // Calculate statistics
       double totalRev = 0;
@@ -86,6 +105,7 @@ class _ClientDetailPageState extends State<ClientDetailPage> with SingleTickerPr
           _activeQuotes = active;
           _isLoading = false;
         });
+        _fadeController.forward();
       }
     } catch (e) {
       if (mounted) {
@@ -127,55 +147,138 @@ class _ClientDetailPageState extends State<ClientDetailPage> with SingleTickerPr
 
     showModalBottomSheet(
       context: context,
-      builder: (context) => _buildEmailOptionsSheet(),
+      backgroundColor: Colors.transparent,
+      builder: (context) => _buildGlassEmailOptionsSheet(),
     );
   }
 
-  Widget _buildEmailOptionsSheet() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(
-            leading: const Icon(Icons.email),
-            title: const Text('Envoyer un email'),
-            subtitle: const Text('Ouvrir votre client email'),
-            onTap: () async {
-              Navigator.pop(context);
-              final Uri emailUri = Uri.parse('mailto:${_client!.email}');
-              try {
-                if (await canLaunchUrl(emailUri)) {
-                  await launchUrl(emailUri);
-                } else {
-                  if (mounted) {
-                    context.showError('Impossible d\'ouvrir l\'email');
+  Widget _buildGlassEmailOptionsSheet() {
+    return ClipRRect(
+      borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: Container(
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            color: PlombiProColors.backgroundDark.withOpacity(0.95),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Handle bar
+              Container(
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              const SizedBox(height: 24),
+
+              // Email option
+              _buildGlassListTile(
+                icon: Icons.email,
+                title: 'Envoyer un email',
+                subtitle: 'Ouvrir votre client email',
+                onTap: () async {
+                  Navigator.pop(context);
+                  final Uri emailUri = Uri.parse('mailto:${_client!.email}');
+                  try {
+                    if (await canLaunchUrl(emailUri)) {
+                      await launchUrl(emailUri);
+                    } else {
+                      if (mounted) {
+                        context.showError('Impossible d\'ouvrir l\'email');
+                      }
+                    }
+                  } catch (e) {
+                    if (mounted) {
+                      context.showError('Erreur lors de l\'ouverture de l\'email');
+                    }
                   }
-                }
-              } catch (e) {
-                if (mounted) {
-                  context.showError('Erreur lors de l\'ouverture de l\'email');
-                }
-              }
-            },
+                },
+              ),
+              const SizedBox(height: 12),
+
+              // Quote option
+              _buildGlassListTile(
+                icon: Icons.description,
+                title: 'Envoyer un devis',
+                subtitle: 'Créer et envoyer un nouveau devis',
+                onTap: () {
+                  Navigator.pop(context);
+                  context.push('/quotes/new', extra: widget.clientId);
+                },
+              ),
+              const SizedBox(height: 12),
+
+              // Invoice option
+              _buildGlassListTile(
+                icon: Icons.receipt_long,
+                title: 'Envoyer une facture',
+                subtitle: 'Créer et envoyer une nouvelle facture',
+                onTap: () {
+                  Navigator.pop(context);
+                  context.push('/invoices/new', extra: widget.clientId);
+                },
+              ),
+            ],
           ),
-          ListTile(
-            leading: const Icon(Icons.description),
-            title: const Text('Envoyer un devis'),
-            subtitle: const Text('Créer et envoyer un nouveau devis'),
-            onTap: () {
-              Navigator.pop(context);
-              context.push('/quotes/new', extra: widget.clientId);
-            },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildGlassListTile({
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required VoidCallback onTap,
+  }) {
+    return AnimatedGlassContainer(
+      padding: const EdgeInsets.all(16),
+      borderRadius: BorderRadius.circular(16),
+      opacity: 0.15,
+      onTap: onTap,
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: PlombiProColors.primaryBlue.withOpacity(0.3),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, color: Colors.white),
           ),
-          ListTile(
-            leading: const Icon(Icons.receipt_long),
-            title: const Text('Envoyer une facture'),
-            subtitle: const Text('Créer et envoyer une nouvelle facture'),
-            onTap: () {
-              Navigator.pop(context);
-              context.push('/invoices/new', extra: widget.clientId);
-            },
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  subtitle,
+                  style: TextStyle(
+                    color: Colors.white.withOpacity(0.7),
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Icon(
+            Icons.chevron_right,
+            color: Colors.white.withOpacity(0.5),
           ),
         ],
       ),
@@ -185,153 +288,318 @@ class _ClientDetailPageState extends State<ClientDetailPage> with SingleTickerPr
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_client?.name ?? 'Client'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () {
+      body: _isLoading
+          ? _buildLoadingState()
+          : _client == null
+              ? _buildErrorState()
+              : _buildContent(),
+    );
+  }
+
+  Widget _buildLoadingState() {
+    return Stack(
+      children: [
+        _buildGradientBackground(),
+        Center(
+          child: GlassContainer(
+            width: 80,
+            height: 80,
+            padding: const EdgeInsets.all(20),
+            borderRadius: BorderRadius.circular(20),
+            opacity: 0.2,
+            child: const CircularProgressIndicator(
+              strokeWidth: 3,
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildErrorState() {
+    return Stack(
+      children: [
+        _buildGradientBackground(),
+        const Center(
+          child: Text(
+            'Client non trouvé',
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildContent() {
+    return Stack(
+      children: [
+        _buildGradientBackground(),
+        SafeArea(
+          child: RefreshIndicator(
+            onRefresh: _fetchClientData,
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: FadeTransition(
+                opacity: _fadeAnimation,
+                child: Column(
+                  children: [
+                    _buildGlassAppBar(),
+                    _buildClientHeader(),
+                    _buildQuickActions(),
+                    _buildStatistics(),
+                    _buildTabSection(),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildGradientBackground() {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            PlombiProColors.primaryBlue,
+            PlombiProColors.tertiaryTeal,
+            PlombiProColors.primaryBlueDark,
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildGlassAppBar() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        children: [
+          // Back button
+          AnimatedGlassContainer(
+            width: 48,
+            height: 48,
+            padding: const EdgeInsets.all(0),
+            borderRadius: BorderRadius.circular(12),
+            opacity: 0.2,
+            onTap: () => context.pop(),
+            child: const Icon(Icons.arrow_back, color: Colors.white),
+          ),
+          const Spacer(),
+          // Edit button
+          AnimatedGlassContainer(
+            width: 48,
+            height: 48,
+            padding: const EdgeInsets.all(0),
+            borderRadius: BorderRadius.circular(12),
+            opacity: 0.2,
+            onTap: () {
               context.push('/clients/${widget.clientId}');
             },
-            tooltip: 'Modifier',
+            child: const Icon(Icons.edit, color: Colors.white),
           ),
         ],
       ),
-      drawer: const AppDrawer(),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : _client == null
-              ? const Center(child: Text('Client non trouvé'))
-              : RefreshIndicator(
-                  onRefresh: _fetchClientData,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _buildClientHeader(),
-                        _buildQuickActions(),
-                        _buildStatistics(),
-                        _buildTabSection(),
-                      ],
-                    ),
-                  ),
-                ),
     );
   }
 
   Widget _buildClientHeader() {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Theme.of(context).primaryColor,
-            Theme.of(context).primaryColor.withOpacity(0.7),
-          ],
-        ),
-      ),
-      child: Column(
-        children: [
-          CircleAvatar(
-            radius: 40,
-            backgroundColor: Colors.white,
-            child: Text(
-              _client!.name.substring(0, 1).toUpperCase(),
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).primaryColor,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: GlassContainer(
+        padding: const EdgeInsets.all(24),
+        borderRadius: BorderRadius.circular(24),
+        opacity: 0.15,
+        child: Column(
+          children: [
+            // Avatar
+            Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  colors: [
+                    PlombiProColors.secondaryOrange,
+                    PlombiProColors.secondaryOrangeLight,
+                  ],
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: PlombiProColors.secondaryOrange.withOpacity(0.3),
+                    blurRadius: 20,
+                    spreadRadius: 2,
+                  ),
+                ],
+              ),
+              child: Center(
+                child: Text(
+                  _client!.name.substring(0, 1).toUpperCase(),
+                  style: const TextStyle(
+                    fontSize: 36,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            _client!.name,
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          if (_client!.companyName != null) ...[
-            const SizedBox(height: 4),
+            const SizedBox(height: 16),
+
+            // Name
             Text(
-              _client!.companyName!,
+              _client!.name,
               style: const TextStyle(
-                fontSize: 16,
-                color: Colors.white70,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
               ),
               textAlign: TextAlign.center,
             ),
-          ],
-          const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (_client!.phone != null) ...[
-                const Icon(Icons.phone, size: 16, color: Colors.white70),
-                const SizedBox(width: 4),
-                Text(
-                  _client!.phone!,
-                  style: const TextStyle(color: Colors.white70),
+
+            // Company
+            if (_client!.companyName != null) ...[
+              const SizedBox(height: 4),
+              Text(
+                _client!.companyName!,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white.withOpacity(0.7),
                 ),
-                const SizedBox(width: 20),
-              ],
-              if (_client!.email != null) ...[
-                const Icon(Icons.email, size: 16, color: Colors.white70),
-                const SizedBox(width: 4),
-                Flexible(
-                  child: Text(
-                    _client!.email!,
-                    style: const TextStyle(color: Colors.white70),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ],
+                textAlign: TextAlign.center,
+              ),
             ],
-          ),
-        ],
+
+            const SizedBox(height: 16),
+
+            // Contact info
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 20,
+              runSpacing: 8,
+              children: [
+                if (_client!.phone != null)
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.phone,
+                          size: 16, color: Colors.white.withOpacity(0.7)),
+                      const SizedBox(width: 4),
+                      Text(
+                        _client!.phone!,
+                        style: TextStyle(color: Colors.white.withOpacity(0.7)),
+                      ),
+                    ],
+                  ),
+                if (_client!.email != null)
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.email,
+                          size: 16, color: Colors.white.withOpacity(0.7)),
+                      const SizedBox(width: 4),
+                      Flexible(
+                        child: Text(
+                          _client!.email!,
+                          style:
+                              TextStyle(color: Colors.white.withOpacity(0.7)),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildQuickActions() {
-    return Container(
-      padding: const EdgeInsets.all(16),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
       child: Row(
         children: [
+          // Call button
           Expanded(
-            child: ElevatedButton.icon(
-              onPressed: _makePhoneCall,
-              icon: const Icon(Icons.phone),
-              label: const Text('Appeler'),
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 16),
+            child: AnimatedGlassContainer(
+              height: 56,
+              borderRadius: BorderRadius.circular(16),
+              opacity: 0.2,
+              color: PlombiProColors.success,
+              onTap: _makePhoneCall,
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.phone, color: Colors.white, size: 20),
+                  SizedBox(width: 8),
+                  Text(
+                    'Appeler',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
           const SizedBox(width: 12),
+
+          // Email button
           Expanded(
-            child: ElevatedButton.icon(
-              onPressed: _sendEmail,
-              icon: const Icon(Icons.email),
-              label: const Text('Email'),
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 16),
+            child: AnimatedGlassContainer(
+              height: 56,
+              borderRadius: BorderRadius.circular(16),
+              opacity: 0.2,
+              color: PlombiProColors.info,
+              onTap: _sendEmail,
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.email, color: Colors.white, size: 20),
+                  SizedBox(width: 8),
+                  Text(
+                    'Email',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
           const SizedBox(width: 12),
+
+          // New quote button
           Expanded(
-            child: OutlinedButton.icon(
-              onPressed: () {
+            child: AnimatedGlassContainer(
+              height: 56,
+              borderRadius: BorderRadius.circular(16),
+              opacity: 0.2,
+              color: PlombiProColors.secondaryOrange,
+              onTap: () {
                 context.push('/quotes/new', extra: widget.clientId);
               },
-              icon: const Icon(Icons.add),
-              label: const Text('Devis'),
-              style: OutlinedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 16),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.add, color: Colors.white, size: 20),
+                  SizedBox(width: 8),
+                  Text(
+                    'Devis',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -341,34 +609,34 @@ class _ClientDetailPageState extends State<ClientDetailPage> with SingleTickerPr
   }
 
   Widget _buildStatistics() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Row(
         children: [
           Expanded(
-            child: _StatCard(
+            child: _GlassStatCard(
               title: 'CA Total',
               value: InvoiceCalculator.formatCurrency(_totalRevenue),
               icon: Icons.euro,
-              color: Colors.green,
+              color: PlombiProColors.success,
             ),
           ),
           const SizedBox(width: 12),
           Expanded(
-            child: _StatCard(
+            child: _GlassStatCard(
               title: 'Impayés',
               value: InvoiceCalculator.formatCurrency(_unpaidAmount),
               icon: Icons.warning,
-              color: Colors.orange,
+              color: PlombiProColors.warning,
             ),
           ),
           const SizedBox(width: 12),
           Expanded(
-            child: _StatCard(
+            child: _GlassStatCard(
               title: 'Devis actifs',
               value: _activeQuotes.toString(),
               icon: Icons.description,
-              color: Colors.blue,
+              color: PlombiProColors.info,
             ),
           ),
         ],
@@ -377,44 +645,94 @@ class _ClientDetailPageState extends State<ClientDetailPage> with SingleTickerPr
   }
 
   Widget _buildTabSection() {
-    return Column(
-      children: [
-        TabBar(
-          controller: _tabController,
-          tabs: const [
-            Tab(text: 'Devis', icon: Icon(Icons.description)),
-            Tab(text: 'Factures', icon: Icon(Icons.receipt_long)),
-            Tab(text: 'Infos', icon: Icon(Icons.info)),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: GlassContainer(
+        padding: const EdgeInsets.all(0),
+        borderRadius: BorderRadius.circular(24),
+        opacity: 0.15,
+        child: Column(
+          children: [
+            // Glass tab bar
+            Container(
+              padding: const EdgeInsets.all(8),
+              child: TabBar(
+                controller: _tabController,
+                indicator: BoxDecoration(
+                  color: PlombiProColors.secondaryOrange.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                dividerColor: Colors.transparent,
+                labelColor: Colors.white,
+                unselectedLabelColor: Colors.white.withOpacity(0.6),
+                tabs: const [
+                  Tab(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.description, size: 18),
+                        SizedBox(width: 8),
+                        Text('Devis', style: TextStyle(fontSize: 13)),
+                      ],
+                    ),
+                  ),
+                  Tab(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.receipt_long, size: 18),
+                        SizedBox(width: 8),
+                        Text('Factures', style: TextStyle(fontSize: 13)),
+                      ],
+                    ),
+                  ),
+                  Tab(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.info, size: 18),
+                        SizedBox(width: 8),
+                        Text('Infos', style: TextStyle(fontSize: 13)),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // Tab content
+            SizedBox(
+              height: 400,
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  _buildQuotesTab(),
+                  _buildInvoicesTab(),
+                  _buildInfoTab(),
+                ],
+              ),
+            ),
           ],
         ),
-        SizedBox(
-          height: 400,
-          child: TabBarView(
-            controller: _tabController,
-            children: [
-              _buildQuotesTab(),
-              _buildInvoicesTab(),
-              _buildInfoTab(),
-            ],
-          ),
-        ),
-      ],
+      ),
     );
   }
 
   Widget _buildQuotesTab() {
     if (_quotes.isEmpty) {
-      return const Center(
+      return Center(
         child: Padding(
-          padding: EdgeInsets.all(24.0),
+          padding: const EdgeInsets.all(24.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.description, size: 64, color: Colors.grey),
-              SizedBox(height: 16),
+              Icon(Icons.description,
+                  size: 64, color: Colors.white.withOpacity(0.3)),
+              const SizedBox(height: 16),
               Text(
                 'Aucun devis pour ce client',
-                style: TextStyle(color: Colors.grey, fontSize: 16),
+                style: TextStyle(
+                    color: Colors.white.withOpacity(0.7), fontSize: 16),
               ),
             ],
           ),
@@ -427,33 +745,69 @@ class _ClientDetailPageState extends State<ClientDetailPage> with SingleTickerPr
       itemCount: _quotes.length,
       itemBuilder: (context, index) {
         final quote = _quotes[index];
-        return Card(
-          margin: const EdgeInsets.only(bottom: 12),
-          child: ListTile(
-            leading: CircleAvatar(
-              backgroundColor: _getStatusColor(quote.status),
-              child: const Icon(Icons.description, color: Colors.white, size: 20),
-            ),
-            title: Text(quote.quoteNumber),
-            subtitle: Text(
-              '${InvoiceCalculator.formatDate(quote.date)} • ${_getStatusLabel(quote.status)}',
-            ),
-            trailing: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.end,
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 12),
+          child: AnimatedGlassContainer(
+            padding: const EdgeInsets.all(16),
+            borderRadius: BorderRadius.circular(16),
+            opacity: 0.1,
+            onTap: () {
+              context.push('/quotes/${quote.id}');
+            },
+            child: Row(
               children: [
+                // Status icon
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: _getStatusColor(quote.status).withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Icon(
+                    Icons.description,
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                ),
+                const SizedBox(width: 16),
+
+                // Content
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        quote.quoteNumber,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        '${InvoiceCalculator.formatDate(quote.date)} • ${_getStatusLabel(quote.status)}',
+                        style: TextStyle(
+                          color: Colors.white.withOpacity(0.7),
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Amount
                 Text(
                   InvoiceCalculator.formatCurrency(quote.totalTtc),
                   style: const TextStyle(
+                    color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                   ),
                 ),
               ],
             ),
-            onTap: () {
-              context.push('/quotes/${quote.id}');
-            },
           ),
         );
       },
@@ -462,17 +816,19 @@ class _ClientDetailPageState extends State<ClientDetailPage> with SingleTickerPr
 
   Widget _buildInvoicesTab() {
     if (_invoices.isEmpty) {
-      return const Center(
+      return Center(
         child: Padding(
-          padding: EdgeInsets.all(24.0),
+          padding: const EdgeInsets.all(24.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.receipt_long, size: 64, color: Colors.grey),
-              SizedBox(height: 16),
+              Icon(Icons.receipt_long,
+                  size: 64, color: Colors.white.withOpacity(0.3)),
+              const SizedBox(height: 16),
               Text(
                 'Aucune facture pour ce client',
-                style: TextStyle(color: Colors.grey, fontSize: 16),
+                style: TextStyle(
+                    color: Colors.white.withOpacity(0.7), fontSize: 16),
               ),
             ],
           ),
@@ -485,41 +841,83 @@ class _ClientDetailPageState extends State<ClientDetailPage> with SingleTickerPr
       itemCount: _invoices.length,
       itemBuilder: (context, index) {
         final invoice = _invoices[index];
-        return Card(
-          margin: const EdgeInsets.only(bottom: 12),
-          child: ListTile(
-            leading: CircleAvatar(
-              backgroundColor: _getPaymentStatusColor(invoice.paymentStatus),
-              child: const Icon(Icons.receipt_long, color: Colors.white, size: 20),
-            ),
-            title: Text(invoice.number),
-            subtitle: Text(
-              '${InvoiceCalculator.formatDate(invoice.date)} • ${_getPaymentStatusLabel(invoice.paymentStatus)}',
-            ),
-            trailing: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  InvoiceCalculator.formatCurrency(invoice.totalTtc),
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
-                if (invoice.paymentStatus != 'paid')
-                  Text(
-                    'Reste: ${InvoiceCalculator.formatCurrency(invoice.balanceDue)}',
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: Colors.red,
-                    ),
-                  ),
-              ],
-            ),
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 12),
+          child: AnimatedGlassContainer(
+            padding: const EdgeInsets.all(16),
+            borderRadius: BorderRadius.circular(16),
+            opacity: 0.1,
             onTap: () {
               context.push('/invoices/${invoice.id}');
             },
+            child: Row(
+              children: [
+                // Payment status icon
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: _getPaymentStatusColor(invoice.paymentStatus)
+                        .withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Icon(
+                    Icons.receipt_long,
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                ),
+                const SizedBox(width: 16),
+
+                // Content
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        invoice.number,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        '${InvoiceCalculator.formatDate(invoice.date)} • ${_getPaymentStatusLabel(invoice.paymentStatus)}',
+                        style: TextStyle(
+                          color: Colors.white.withOpacity(0.7),
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Amount
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      InvoiceCalculator.formatCurrency(invoice.totalTtc),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    if (invoice.paymentStatus != 'paid')
+                      Text(
+                        'Reste: ${InvoiceCalculator.formatCurrency(invoice.balanceDue)}',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: PlombiProColors.error,
+                        ),
+                      ),
+                  ],
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -533,22 +931,22 @@ class _ClientDetailPageState extends State<ClientDetailPage> with SingleTickerPr
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (_client!.address != null || _client!.city != null) ...[
-            _buildInfoSection('Adresse', Icons.location_on, [
+            _buildGlassInfoSection('Adresse', Icons.location_on, [
               if (_client!.address != null) _client!.address!,
               if (_client!.postalCode != null && _client!.city != null)
                 '${_client!.postalCode} ${_client!.city}',
             ]),
-            const Divider(height: 32),
+            const SizedBox(height: 16),
           ],
           if (_client!.phone != null || _client!.email != null) ...[
-            _buildInfoSection('Contact', Icons.contact_phone, [
+            _buildGlassInfoSection('Contact', Icons.contact_phone, [
               if (_client!.phone != null) 'Tél: ${_client!.phone}',
               if (_client!.email != null) 'Email: ${_client!.email}',
             ]),
-            const Divider(height: 32),
+            const SizedBox(height: 16),
           ],
           if (_client!.companyName != null || _client!.siret != null) ...[
-            _buildInfoSection('Entreprise', Icons.business, [
+            _buildGlassInfoSection('Entreprise', Icons.business, [
               if (_client!.companyName != null) _client!.companyName!,
               if (_client!.siret != null) 'SIRET: ${_client!.siret}',
             ]),
@@ -558,46 +956,64 @@ class _ClientDetailPageState extends State<ClientDetailPage> with SingleTickerPr
     );
   }
 
-  Widget _buildInfoSection(String title, IconData icon, List<String> items) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Icon(icon, color: Theme.of(context).primaryColor),
-            const SizedBox(width: 8),
-            Text(
-              title,
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        ...items.map((item) => Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Text(
-                item,
-                style: const TextStyle(fontSize: 16),
+  Widget _buildGlassInfoSection(
+      String title, IconData icon, List<String> items) {
+    return GlassContainer(
+      padding: const EdgeInsets.all(20),
+      borderRadius: BorderRadius.circular(16),
+      opacity: 0.1,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: PlombiProColors.primaryBlue.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(icon, color: Colors.white, size: 20),
               ),
-            )),
-      ],
+              const SizedBox(width: 12),
+              Text(
+                title,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          ...items.map((item) => Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Text(
+                  item,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white.withOpacity(0.9),
+                  ),
+                ),
+              )),
+        ],
+      ),
     );
   }
 
   Color _getStatusColor(String status) {
     switch (status) {
       case 'draft':
-        return Colors.grey;
+        return PlombiProColors.gray400;
       case 'sent':
-        return Colors.blue;
+        return PlombiProColors.info;
       case 'accepted':
-        return Colors.green;
+        return PlombiProColors.success;
       case 'rejected':
-        return Colors.red;
+        return PlombiProColors.error;
       default:
-        return Colors.orange;
+        return PlombiProColors.warning;
     }
   }
 
@@ -619,14 +1035,14 @@ class _ClientDetailPageState extends State<ClientDetailPage> with SingleTickerPr
   Color _getPaymentStatusColor(String status) {
     switch (status) {
       case 'paid':
-        return Colors.green;
+        return PlombiProColors.success;
       case 'partial':
-        return Colors.orange;
+        return PlombiProColors.warning;
       case 'unpaid':
       case 'overdue':
-        return Colors.red;
+        return PlombiProColors.error;
       default:
-        return Colors.grey;
+        return PlombiProColors.gray400;
     }
   }
 
@@ -646,13 +1062,14 @@ class _ClientDetailPageState extends State<ClientDetailPage> with SingleTickerPr
   }
 }
 
-class _StatCard extends StatelessWidget {
+/// Glass statistics card widget
+class _GlassStatCard extends StatelessWidget {
   final String title;
   final String value;
   final IconData icon;
   final Color color;
 
-  const _StatCard({
+  const _GlassStatCard({
     required this.title,
     required this.value,
     required this.icon,
@@ -661,35 +1078,39 @@ class _StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Icon(icon, color: color, size: 20),
-                Text(
-                  value,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+    return GlassContainer(
+      padding: const EdgeInsets.all(16),
+      borderRadius: BorderRadius.circular(16),
+      opacity: 0.15,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.3),
+              borderRadius: BorderRadius.circular(8),
             ),
-            const SizedBox(height: 4),
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey[600],
-              ),
+            child: Icon(icon, color: Colors.white, size: 20),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
             ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.white.withOpacity(0.7),
+            ),
+          ),
+        ],
       ),
     );
   }
