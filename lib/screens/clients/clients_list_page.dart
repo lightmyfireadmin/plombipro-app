@@ -8,6 +8,7 @@ import '../../config/plombipro_colors.dart';
 import '../../config/plombipro_spacing.dart';
 import '../../config/glassmorphism_theme.dart';
 import '../../widgets/glassmorphic/glass_card.dart';
+import '../../widgets/app_drawer.dart';
 import 'package:animate_do/animate_do.dart';
 
 /// Premium glassmorphic clients list with modern design
@@ -99,6 +100,7 @@ class _ClientsListPageState extends State<ClientsListPage> with SingleTickerProv
       extendBodyBehindAppBar: true,
       backgroundColor: PlombiProColors.backgroundLight,
       appBar: _buildGlassAppBar(),
+      drawer: const AppDrawer(),
       body: Stack(
         children: [
           // Gradient background
