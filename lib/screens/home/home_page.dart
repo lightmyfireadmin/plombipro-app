@@ -182,17 +182,13 @@ class _HomePageState extends State<HomePage> {
       appBar: CustomAppBarWithDrawer(
         title: 'PlombiPro',
         actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (_) => const NotificationsPage()));
-            },
-            icon: const Icon(Icons.notifications_none),
-          ),
+          _buildNotificationBellWithBadge(context),
           IconButton(
             onPressed: () {
               context.go('/settings');
             },
             icon: const Icon(Icons.settings),
+            tooltip: 'Paramètres',
           ),
         ],
       ),
@@ -450,6 +446,54 @@ class _ActivityCard extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildNotificationBellWithBadge(BuildContext context) {
+    // Count unread notifications (for now, we'll use a placeholder)
+    // TODO: Get real unread count from SupabaseService
+    final unreadCount = 0; // Placeholder - will be replaced with actual count
+
+    return Stack(
+      children: [
+        IconButton(
+          onPressed: () async {
+            // Add ripple effect by using InkWell behavior (automatic with IconButton)
+            await Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const NotificationsPage()),
+            );
+            // Refresh dashboard when returning from notifications
+            _fetchDashboardData();
+          },
+          icon: const Icon(Icons.notifications_outlined),
+          tooltip: 'Notifications & Rappels',
+        ),
+        if (unreadCount > 0)
+          Positioned(
+            right: 8,
+            top: 8,
+            child: Container(
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                color: Colors.red,
+                shape: BoxShape.circle,
+              ),
+              constraints: const BoxConstraints(
+                minWidth: 18,
+                minHeight: 18,
+              ),
+              child: Text(
+                unreadCount > 99 ? '99+' : unreadCount.toString(),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+      ],
     );
   }
 }
