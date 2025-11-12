@@ -73,6 +73,16 @@
 -dontwarn com.stripe.android.pushProvisioning.PushProvisioningActivityStarter
 -dontwarn com.stripe.android.pushProvisioning.PushProvisioningEphemeralKeyProvider
 
+# ---- Firebase keep rules ----
+# Keep Firebase Core classes
+-keep class com.google.firebase.** { *; }
+-keepclassmembers class com.google.firebase.** { *; }
+-dontwarn com.google.firebase.**
+
+# Keep Firebase App Distribution
+-keep class com.google.firebase.appdistribution.** { *; }
+-dontwarn com.google.firebase.appdistribution.**
+
 # ---- Supabase keep rules ----
 # Keep all Supabase classes to prevent R8 from breaking initialization
 -keep class io.supabase.** { *; }
