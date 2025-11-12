@@ -73,4 +73,30 @@
 -dontwarn com.stripe.android.pushProvisioning.PushProvisioningActivityStarter
 -dontwarn com.stripe.android.pushProvisioning.PushProvisioningEphemeralKeyProvider
 
+# ---- Supabase keep rules ----
+# Keep all Supabase classes to prevent R8 from breaking initialization
+-keep class io.supabase.** { *; }
+-keepclassmembers class io.supabase.** { *; }
+-dontwarn io.supabase.**
+
+# Keep Gotrue (Supabase Auth) classes
+-keep class io.gotrue.** { *; }
+-keepclassmembers class io.gotrue.** { *; }
+-dontwarn io.gotrue.**
+
+# Keep PostgREST classes
+-keep class io.postgrest.** { *; }
+-keepclassmembers class io.postgrest.** { *; }
+-dontwarn io.postgrest.**
+
+# Keep Realtime classes
+-keep class io.realtime.** { *; }
+-keepclassmembers class io.realtime.** { *; }
+-dontwarn io.realtime.**
+
+# Keep Storage classes
+-keep class io.storage.** { *; }
+-keepclassmembers class io.storage.** { *; }
+-dontwarn io.storage.**
+
 # End of proguard-rules.pro
