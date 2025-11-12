@@ -4,6 +4,7 @@ import '../notifications/notifications_page.dart';
 
 import '../../models/activity.dart';
 import '../../models/appointment.dart';
+import '../../models/client.dart';
 import '../../models/invoice.dart';
 import '../../models/job_site.dart';
 import '../../models/payment.dart';
@@ -36,12 +37,15 @@ class _HomePageState extends State<HomePage> {
   List<Payment> _payments = [];
   List<Activity> _activityFeed = [];
   List<Appointment> _upcomingAppointments = [];
+  List<Client> _clients = [];
 
   // Stats
   double _monthlyRevenue = 0;
   int _pendingQuotesCount = 0;
   double _unpaidInvoicesAmount = 0;
   int _activeJobSitesCount = 0;
+  int _totalClientsCount = 0;
+  int _totalQuotesCount = 0;
 
   @override
   void initState() {
@@ -57,14 +61,23 @@ class _HomePageState extends State<HomePage> {
 
     try {
       final profile = await SupabaseService.fetchUserProfile();
+      final clients = await SupabaseService.fetchClients();
       final quotes = await SupabaseService.fetchQuotes();
       final invoices = await SupabaseService.fetchInvoices();
       final jobSites = await SupabaseService.getJobSites();
       final payments = await SupabaseService.getPayments();
       final appointments = await SupabaseService.fetchUpcomingAppointments();
+
+      print('📊 Dashboard Data Fetched:');
+      print('  - Clients: ${clients.length}');
+      print('  - Quotes: ${quotes.length}');
+      print('  - Invoices: ${invoices.length}');
+      print('  - Job Sites: ${jobSites.length}');
+
       if (mounted) {
         setState(() {
           _profile = profile;
+          _clients = clients;
           _quotes = quotes;
           _invoices = invoices;
           _jobSites = jobSites;
@@ -115,16 +128,31 @@ class _HomePageState extends State<HomePage> {
     double unpaidAmount = 0;
     int activeJobSites = 0;
 
+    // Calculate total clients and quotes
+    int totalClients = _clients.length;
+    int totalQuotes = _quotes.length;
+
+    print('📈 Calculating Stats:');
+    print('  - Total Clients: $totalClients');
+    print('  - Total Quotes: $totalQuotes');
+
     for (final quote in _quotes) {
+      print('    Quote: ${quote.quoteNumber}, Status: ${quote.status}, Date: ${quote.date}');
+
       // Monthly revenue from accepted quotes this month
       if (quote.status == 'accepted' && quote.date.month == currentMonth && quote.date.year == currentYear) {
         monthlyRev += quote.totalTtc;
+        print('      ✓ Added to monthly revenue: ${quote.totalTtc}');
       }
-      // Pending quotes
-      if (quote.status == 'sent') {
+      // Pending quotes - count 'sent', 'pending', or 'draft' status
+      if (quote.status == 'sent' || quote.status == 'pending' || quote.status == 'draft') {
         pendingCount++;
+        print('      ✓ Counted as pending');
       }
     }
+
+    print('  - Monthly Revenue: $monthlyRev');
+    print('  - Pending Quotes: $pendingCount');
 
     for (final invoice in _invoices) {
       if (invoice.paymentStatus != 'paid') {
@@ -143,6 +171,8 @@ class _HomePageState extends State<HomePage> {
       _pendingQuotesCount = pendingCount;
       _unpaidInvoicesAmount = unpaidAmount;
       _activeJobSitesCount = activeJobSites;
+      _totalClientsCount = totalClients;
+      _totalQuotesCount = totalQuotes;
     });
   }
 
@@ -245,10 +275,12 @@ class _HomePageState extends State<HomePage> {
       mainAxisSpacing: 12,
       childAspectRatio: 1.8,
       children: [
+        _StatCard(title: 'Total Clients', value: _totalClientsCount.toString(), icon: Icons.people, color: Colors.blue),
+        _StatCard(title: 'Total Devis', value: _totalQuotesCount.toString(), icon: Icons.request_quote, color: Colors.purple),
         _StatCard(title: 'CA du mois', value: InvoiceCalculator.formatCurrency(_monthlyRevenue), icon: Icons.euro, color: Colors.green),
         _StatCard(title: 'Factures impayées', value: InvoiceCalculator.formatCurrency(_unpaidInvoicesAmount), icon: Icons.receipt_long, color: Colors.red),
         _StatCard(title: 'Devis en attente', value: _pendingQuotesCount.toString(), icon: Icons.hourglass_empty, color: Colors.orange),
-        _StatCard(title: "Chantiers actifs", value: _activeJobSitesCount.toString(), icon: Icons.construction, color: Colors.blue),
+        _StatCard(title: "Chantiers actifs", value: _activeJobSitesCount.toString(), icon: Icons.construction, color: Colors.teal),
       ],
     );
   }
