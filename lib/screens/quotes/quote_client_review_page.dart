@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../models/quote.dart';
@@ -5,17 +6,11 @@ import '../../models/line_item.dart';
 import '../../services/supabase_service.dart';
 import '../../services/invoice_calculator.dart';
 import '../../services/error_handler.dart';
+import '../../config/plombipro_colors.dart';
+import '../../widgets/glassmorphic/glass_card.dart';
 import 'package:intl/intl.dart';
 
-/// Client-facing Quote Review Page (Phase 11)
-///
-/// Features:
-/// - Beautiful quote presentation for clients
-/// - Accept/Reject buttons with workflow
-/// - Optional rejection comments
-/// - Status tracking and visual feedback
-/// - Responsive design for mobile/tablet
-/// - Shareable link capability
+/// Beautiful glassmorphic client-facing Quote Review Page
 class QuoteClientReviewPage extends StatefulWidget {
   final String quoteId;
 
@@ -25,16 +20,32 @@ class QuoteClientReviewPage extends StatefulWidget {
   State<QuoteClientReviewPage> createState() => _QuoteClientReviewPageState();
 }
 
-class _QuoteClientReviewPageState extends State<QuoteClientReviewPage> {
+class _QuoteClientReviewPageState extends State<QuoteClientReviewPage>
+    with SingleTickerProviderStateMixin {
   Quote? _quote;
   bool _isLoading = true;
   bool _isProcessing = false;
-  String? _rejectionComment;
+
+  late AnimationController _fadeController;
+  late Animation<double> _fadeAnimation;
 
   @override
   void initState() {
     super.initState();
+    _fadeController = AnimationController(
+      duration: const Duration(milliseconds: 600),
+      vsync: this,
+    );
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _fadeController, curve: Curves.easeInOut),
+    );
     _fetchQuote();
+  }
+
+  @override
+  void dispose() {
+    _fadeController.dispose();
+    super.dispose();
   }
 
   Future<void> _fetchQuote() async {
@@ -47,6 +58,7 @@ class _QuoteClientReviewPageState extends State<QuoteClientReviewPage> {
           _quote = quote;
           _isLoading = false;
         });
+        _fadeController.forward();
       }
     } catch (e) {
       if (mounted) {
@@ -57,34 +69,13 @@ class _QuoteClientReviewPageState extends State<QuoteClientReviewPage> {
   }
 
   Future<void> _acceptQuote() async {
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Row(
-          children: [
-            Icon(Icons.check_circle, color: Colors.green, size: 28),
-            SizedBox(width: 12),
-            Text('Accepter le devis?'),
-          ],
-        ),
-        content: const Text(
-          'En acceptant ce devis, vous confirmez votre accord avec les termes et conditions proposés.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Annuler'),
-          ),
-          ElevatedButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.green,
-              foregroundColor: Colors.white,
-            ),
-            child: const Text('Accepter'),
-          ),
-        ],
-      ),
+    final confirmed = await _showGlassDialog(
+      title: 'Accepter le devis?',
+      content: 'En acceptant ce devis, vous confirmez votre accord avec les termes et conditions proposés.',
+      icon: Icons.check_circle,
+      iconColor: PlombiProColors.success,
+      confirmText: 'Accepter',
+      confirmColor: PlombiProColors.success,
     );
 
     if (confirmed == true) {
@@ -98,7 +89,7 @@ class _QuoteClientReviewPageState extends State<QuoteClientReviewPage> {
           clientId: _quote!.clientId,
           date: _quote!.date,
           expiryDate: _quote!.expiryDate,
-          status: 'accepté',
+          status: 'accepted',
           totalHt: _quote!.totalHt,
           totalTva: _quote!.totalTva,
           totalTtc: _quote!.totalTtc,
@@ -110,7 +101,7 @@ class _QuoteClientReviewPageState extends State<QuoteClientReviewPage> {
 
         if (mounted) {
           context.showSuccess('Devis accepté avec succès!');
-          await _fetchQuote(); // Refresh to show new status
+          await _fetchQuote();
         }
       } catch (e) {
         if (mounted) {
@@ -125,69 +116,20 @@ class _QuoteClientReviewPageState extends State<QuoteClientReviewPage> {
   }
 
   Future<void> _rejectQuote() async {
-    final result = await showDialog<Map<String, dynamic>>(
+    final commentController = TextEditingController();
+    final result = await showDialog<bool>(
       context: context,
-      builder: (context) {
-        final commentController = TextEditingController();
-
-        return AlertDialog(
-          title: const Row(
-            children: [
-              Icon(Icons.cancel, color: Colors.red, size: 28),
-              SizedBox(width: 12),
-              Text('Refuser le devis?'),
-            ],
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Veuillez indiquer la raison du refus (optionnel):',
-                style: TextStyle(fontWeight: FontWeight.w500),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: commentController,
-                decoration: const InputDecoration(
-                  hintText: 'Exemple: Budget trop élevé, délai trop long...',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.comment),
-                ),
-                maxLines: 3,
-                maxLength: 500,
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Annuler'),
-            ),
-            ElevatedButton(
-              onPressed: () => Navigator.of(context).pop({
-                'confirmed': true,
-                'comment': commentController.text.trim(),
-              }),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-                foregroundColor: Colors.white,
-              ),
-              child: const Text('Refuser'),
-            ),
-          ],
-        );
-      },
+      builder: (context) => _buildRejectDialog(commentController),
     );
 
-    if (result != null && result['confirmed'] == true) {
+    if (result == true) {
       setState(() => _isProcessing = true);
 
       try {
-        final comment = result['comment'] as String;
-        final notesWithComment = comment.isNotEmpty
-            ? '${_quote!.notes ?? ''}\n\n[Rejeté par client] $comment'
-            : _quote!.notes;
+        final comment = commentController.text.trim();
+        final notesWithComment = _quote!.notes != null && _quote!.notes!.isNotEmpty
+            ? '${_quote!.notes}\n\n--- Client Rejection Reason ---\n$comment'
+            : '--- Client Rejection Reason ---\n$comment';
 
         final updatedQuote = Quote(
           id: _quote!.id,
@@ -196,7 +138,7 @@ class _QuoteClientReviewPageState extends State<QuoteClientReviewPage> {
           clientId: _quote!.clientId,
           date: _quote!.date,
           expiryDate: _quote!.expiryDate,
-          status: 'rejeté',
+          status: 'rejected',
           totalHt: _quote!.totalHt,
           totalTva: _quote!.totalTva,
           totalTtc: _quote!.totalTtc,
@@ -208,7 +150,7 @@ class _QuoteClientReviewPageState extends State<QuoteClientReviewPage> {
 
         if (mounted) {
           context.showSuccess('Votre réponse a été enregistrée');
-          await _fetchQuote(); // Refresh to show new status
+          await _fetchQuote();
         }
       } catch (e) {
         if (mounted) {
@@ -220,20 +162,165 @@ class _QuoteClientReviewPageState extends State<QuoteClientReviewPage> {
         }
       }
     }
+    commentController.dispose();
+  }
+
+  Future<bool?> _showGlassDialog({
+    required String title,
+    required String content,
+    required IconData icon,
+    required Color iconColor,
+    required String confirmText,
+    required Color confirmColor,
+  }) {
+    return showDialog<bool>(
+      context: context,
+      builder: (context) => ClipRRect(
+        borderRadius: BorderRadius.circular(24),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: AlertDialog(
+            backgroundColor: PlombiProColors.backgroundDark.withOpacity(0.95),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+            title: Row(
+              children: [
+                Icon(icon, color: iconColor, size: 28),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(title, style: const TextStyle(color: Colors.white)),
+                ),
+              ],
+            ),
+            content: Text(content, style: TextStyle(color: Colors.white.withOpacity(0.9))),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: Text('Annuler', style: TextStyle(color: PlombiProColors.gray300)),
+              ),
+              ElevatedButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: confirmColor,
+                  foregroundColor: Colors.white,
+                ),
+                child: Text(confirmText),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRejectDialog(TextEditingController controller) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(24),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: AlertDialog(
+          backgroundColor: PlombiProColors.backgroundDark.withOpacity(0.95),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+          title: Row(
+            children: [
+              Icon(Icons.cancel, color: PlombiProColors.error, size: 28),
+              const SizedBox(width: 12),
+              const Text('Refuser le devis?', style: TextStyle(color: Colors.white)),
+            ],
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Veuillez indiquer la raison du refus (optionnel):',
+                style: TextStyle(color: Colors.white.withOpacity(0.9), fontWeight: FontWeight.w500),
+              ),
+              const SizedBox(height: 16),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.white.withOpacity(0.2)),
+                ),
+                child: TextField(
+                  controller: controller,
+                  maxLines: 3,
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    hintText: 'Votre commentaire...',
+                    hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
+                    border: InputBorder.none,
+                    contentPadding: const EdgeInsets.all(12),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: Text('Annuler', style: TextStyle(color: PlombiProColors.gray300)),
+            ),
+            ElevatedButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: PlombiProColors.error,
+                foregroundColor: Colors.white,
+              ),
+              child: const Text('Refuser'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Détails du devis'),
-        centerTitle: true,
+      body: Stack(
+        children: [
+          // Gradient background
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  PlombiProColors.primaryBlue,
+                  PlombiProColors.tertiaryTeal,
+                  PlombiProColors.primaryBlueDark,
+                ],
+              ),
+            ),
+          ),
+
+          // Content
+          SafeArea(
+            child: _isLoading
+                ? _buildLoadingState()
+                : _quote == null
+                    ? _buildErrorState()
+                    : _buildQuoteContent(),
+          ),
+        ],
       ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : _quote == null
-              ? _buildErrorState()
-              : _buildQuoteContent(),
+    );
+  }
+
+  Widget _buildLoadingState() {
+    return Center(
+      child: GlassContainer(
+        width: 80,
+        height: 80,
+        padding: const EdgeInsets.all(20),
+        borderRadius: BorderRadius.circular(20),
+        opacity: 0.2,
+        child: const CircularProgressIndicator(
+          strokeWidth: 3,
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+        ),
+      ),
     );
   }
 
@@ -241,167 +328,149 @@ class _QuoteClientReviewPageState extends State<QuoteClientReviewPage> {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.error_outline,
-              size: 80,
-              color: Colors.grey[400],
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'Devis introuvable',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Le devis demandé n\'existe pas ou a été supprimé',
-              style: TextStyle(color: Colors.grey[600]),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 24),
-            ElevatedButton.icon(
-              onPressed: () => context.go('/'),
-              icon: const Icon(Icons.home),
-              label: const Text('Retour à l\'accueil'),
-            ),
-          ],
+        child: GlassContainer(
+          padding: const EdgeInsets.all(32),
+          borderRadius: BorderRadius.circular(24),
+          opacity: 0.15,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.error_outline, size: 80, color: Colors.white.withOpacity(0.7)),
+              const SizedBox(height: 16),
+              const Text('Devis introuvable', style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 8),
+              Text(
+                'Le devis demandé n\'existe pas ou a été supprimé',
+                style: TextStyle(color: Colors.white.withOpacity(0.7)),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 24),
+              AnimatedGlassContainer(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                borderRadius: BorderRadius.circular(12),
+                opacity: 0.25,
+                color: PlombiProColors.primaryBlue,
+                onTap: () => context.go('/'),
+                child: const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.home, color: Colors.white),
+                    SizedBox(width: 8),
+                    Text('Retour à l\'accueil', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget _buildQuoteContent() {
-    return SingleChildScrollView(
+    final canRespond = _quote!.status != 'accepted' && _quote!.status != 'rejected';
+
+    return FadeTransition(
+      opacity: _fadeAnimation,
       child: Column(
         children: [
-          _buildHeader(),
-          _buildStatusBanner(),
-          _buildQuoteDetails(),
-          _buildLineItems(),
-          _buildTotals(),
-          _buildNotes(),
-          _buildActionButtons(),
-          const SizedBox(height: 32),
+          _buildGlassAppBar(),
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  _buildStatusBanner(),
+                  const SizedBox(height: 16),
+                  _buildQuoteHeader(),
+                  const SizedBox(height: 16),
+                  _buildLineItems(),
+                  const SizedBox(height: 16),
+                  _buildTotals(),
+                  if (_quote!.notes != null && _quote!.notes!.isNotEmpty) ...[
+                    const SizedBox(height: 16),
+                    _buildNotes(),
+                  ],
+                  if (canRespond) ...[
+                    const SizedBox(height: 24),
+                    _buildActionButtons(),
+                  ],
+                  const SizedBox(height: 32),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildHeader() {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Theme.of(context).primaryColor,
-            Theme.of(context).primaryColor.withOpacity(0.7),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
-      padding: const EdgeInsets.all(24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _buildGlassAppBar() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
         children: [
-          Text(
-            'DEVIS',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: Colors.white.withOpacity(0.9),
-              letterSpacing: 2,
+          AnimatedGlassContainer(
+            width: 48,
+            height: 48,
+            padding: const EdgeInsets.all(0),
+            borderRadius: BorderRadius.circular(12),
+            opacity: 0.2,
+            onTap: () => context.pop(),
+            child: const Icon(Icons.arrow_back, color: Colors.white),
+          ),
+          const SizedBox(width: 16),
+          const Expanded(
+            child: Text(
+              'Détails du devis',
+              style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
-          const SizedBox(height: 8),
-          Text(
-            _quote!.quoteNumber,
-            style: const TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              const Icon(Icons.calendar_today, color: Colors.white, size: 16),
-              const SizedBox(width: 8),
-              Text(
-                'Date: ${DateFormat('dd/MM/yyyy').format(_quote!.date)}',
-                style: const TextStyle(color: Colors.white, fontSize: 14),
-              ),
-            ],
-          ),
-          if (_quote!.expiryDate != null) ...[
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                const Icon(Icons.event_busy, color: Colors.white, size: 16),
-                const SizedBox(width: 8),
-                Text(
-                  'Valid until: ${DateFormat('dd/MM/yyyy').format(_quote!.expiryDate!)}',
-                  style: const TextStyle(color: Colors.white, fontSize: 14),
-                ),
-              ],
-            ),
-          ],
         ],
       ),
     );
   }
 
   Widget _buildStatusBanner() {
-    final status = _quote!.status.toLowerCase();
-    Color backgroundColor;
-    Color textColor;
-    IconData icon;
-    String message;
+    Color statusColor;
+    String statusText;
+    IconData statusIcon;
 
-    switch (status) {
-      case 'accepté':
-        backgroundColor = Colors.green.shade50;
-        textColor = Colors.green.shade700;
-        icon = Icons.check_circle;
-        message = 'Ce devis a été accepté';
+    switch (_quote!.status) {
+      case 'accepted':
+        statusColor = PlombiProColors.success;
+        statusText = 'Devis accepté';
+        statusIcon = Icons.check_circle;
         break;
-      case 'rejeté':
-        backgroundColor = Colors.red.shade50;
-        textColor = Colors.red.shade700;
-        icon = Icons.cancel;
-        message = 'Ce devis a été refusé';
+      case 'rejected':
+        statusColor = PlombiProColors.error;
+        statusText = 'Devis refusé';
+        statusIcon = Icons.cancel;
         break;
-      case 'envoyé':
-        backgroundColor = Colors.blue.shade50;
-        textColor = Colors.blue.shade700;
-        icon = Icons.pending;
-        message = 'En attente de votre réponse';
+      case 'sent':
+        statusColor = PlombiProColors.info;
+        statusText = 'En attente de réponse';
+        statusIcon = Icons.schedule;
         break;
       default:
-        backgroundColor = Colors.grey.shade50;
-        textColor = Colors.grey.shade700;
-        icon = Icons.info;
-        message = 'Statut: ${_quote!.status}';
+        statusColor = PlombiProColors.warning;
+        statusText = 'Brouillon';
+        statusIcon = Icons.edit;
     }
 
-    return Container(
-      width: double.infinity,
+    return GlassContainer(
       padding: const EdgeInsets.all(16),
-      color: backgroundColor,
+      borderRadius: BorderRadius.circular(16),
+      opacity: 0.2,
+      color: statusColor,
       child: Row(
         children: [
-          Icon(icon, color: textColor, size: 24),
+          Icon(statusIcon, color: Colors.white, size: 24),
           const SizedBox(width: 12),
           Expanded(
             child: Text(
-              message,
-              style: TextStyle(
-                color: textColor,
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
+              statusText,
+              style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
             ),
           ),
         ],
@@ -409,186 +478,157 @@ class _QuoteClientReviewPageState extends State<QuoteClientReviewPage> {
     );
   }
 
-  Widget _buildQuoteDetails() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Card(
-        elevation: 2,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _buildQuoteHeader() {
+    return GlassContainer(
+      padding: const EdgeInsets.all(20),
+      borderRadius: BorderRadius.circular(20),
+      opacity: 0.15,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
             children: [
-              Text(
-                'Informations client',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: PlombiProColors.primaryBlue.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Icon(Icons.description, color: Colors.white, size: 24),
               ),
-              const Divider(height: 24),
-              if (_quote!.client != null) ...[
-                _buildDetailRow('Nom', _quote!.client!.name),
-                if (_quote!.client!.email.isNotEmpty)
-                  _buildDetailRow('Email', _quote!.client!.email),
-                if (_quote!.client!.phone.isNotEmpty)
-                  _buildDetailRow('Téléphone', _quote!.client!.phone),
-                if (_quote!.client!.address != null && _quote!.client!.address!.isNotEmpty)
-                  _buildDetailRow('Adresse', _quote!.client!.address!),
-              ],
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Devis', style: TextStyle(color: Colors.white70, fontSize: 14)),
+                    Text(_quote!.quoteNumber, style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+                  ],
+                ),
+              ),
             ],
           ),
-        ),
+          const SizedBox(height: 16),
+          _buildInfoRow(Icons.calendar_today, 'Date', InvoiceCalculator.formatDate(_quote!.date)),
+          if (_quote!.expiryDate != null)
+            _buildInfoRow(Icons.event_busy, 'Expire le', InvoiceCalculator.formatDate(_quote!.expiryDate!)),
+        ],
       ),
     );
   }
 
-  Widget _buildDetailRow(String label, String value) {
+  Widget _buildInfoRow(IconData icon, String label, String value) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12.0),
+      padding: const EdgeInsets.only(top: 8.0),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: 100,
-            child: Text(
-              label,
-              style: TextStyle(
-                color: Colors.grey[600],
-                fontSize: 14,
-              ),
-            ),
-          ),
-          Expanded(
-            child: Text(
-              value,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
+          Icon(icon, size: 16, color: Colors.white70),
+          const SizedBox(width: 8),
+          Text('$label: ', style: TextStyle(color: Colors.white70, fontSize: 14)),
+          Text(value, style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w600)),
         ],
       ),
     );
   }
 
   Widget _buildLineItems() {
-    if (_quote!.items.isEmpty) {
-      return const SizedBox.shrink();
-    }
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Card(
-        elevation: 2,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Détail des prestations',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              const Divider(height: 24),
-              ..._ quote!.items.map((item) => _buildLineItem(item)),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildLineItem(LineItem item) {
-    final total = item.quantity * item.unitPrice;
-
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.grey[50],
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey[200]!),
-      ),
+    return GlassContainer(
+      padding: const EdgeInsets.all(20),
+      borderRadius: BorderRadius.circular(20),
+      opacity: 0.15,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            item.description,
-            style: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Quantité: ${item.quantity} × ${InvoiceCalculator.formatCurrency(item.unitPrice)}',
-                style: TextStyle(
-                  fontSize: 13,
-                  color: Colors.grey[700],
+          const Text('Articles', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 16),
+          ..._quote!.items.asMap().entries.map((entry) {
+            final item = entry.value;
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.05),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            item.description,
+                            style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        Text(
+                          InvoiceCalculator.formatCurrency(item.lineTotal),
+                          style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Text(
+                          'Qté: ${item.quantity}',
+                          style: TextStyle(color: Colors.white70, fontSize: 13),
+                        ),
+                        const SizedBox(width: 16),
+                        Text(
+                          'Prix unitaire: ${InvoiceCalculator.formatCurrency(item.unitPrice)}',
+                          style: TextStyle(color: Colors.white70, fontSize: 13),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-              Text(
-                InvoiceCalculator.formatCurrency(total),
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
+            );
+          }),
         ],
       ),
     );
   }
 
   Widget _buildTotals() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Card(
-        elevation: 4,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        color: Theme.of(context).primaryColor.withOpacity(0.05),
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              _buildTotalRow('Sous-total HT', _quote!.totalHt, false),
-              const SizedBox(height: 8),
-              _buildTotalRow('TVA', _quote!.totalTva, false),
-              const Divider(height: 24, thickness: 2),
-              _buildTotalRow('Total TTC', _quote!.totalTtc, true),
-            ],
-          ),
-        ),
+    return GlassContainer(
+      padding: const EdgeInsets.all(20),
+      borderRadius: BorderRadius.circular(20),
+      opacity: 0.2,
+      color: PlombiProColors.primaryBlue,
+      child: Column(
+        children: [
+          _buildTotalRow('Sous-total HT', InvoiceCalculator.formatCurrency(_quote!.totalHt), false),
+          const SizedBox(height: 8),
+          _buildTotalRow('TVA (20%)', InvoiceCalculator.formatCurrency(_quote!.totalTva), false),
+          const Divider(color: Colors.white30, height: 24),
+          _buildTotalRow('Total TTC', InvoiceCalculator.formatCurrency(_quote!.totalTtc), true),
+        ],
       ),
     );
   }
 
-  Widget _buildTotalRow(String label, double amount, bool isTotal) {
+  Widget _buildTotalRow(String label, String value, bool isTotal) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           label,
           style: TextStyle(
+            color: Colors.white,
             fontSize: isTotal ? 18 : 15,
-            fontWeight: isTotal ? FontWeight.bold : FontWeight.w500,
+            fontWeight: isTotal ? FontWeight.bold : FontWeight.normal,
           ),
         ),
         Text(
-          InvoiceCalculator.formatCurrency(amount),
+          value,
           style: TextStyle(
-            fontSize: isTotal ? 22 : 16,
+            color: Colors.white,
+            fontSize: isTotal ? 20 : 15,
             fontWeight: FontWeight.bold,
-            color: isTotal ? Theme.of(context).primaryColor : Colors.black87,
           ),
         ),
       ],
@@ -596,120 +636,82 @@ class _QuoteClientReviewPageState extends State<QuoteClientReviewPage> {
   }
 
   Widget _buildNotes() {
-    if (_quote!.notes == null || _quote!.notes!.trim().isEmpty) {
-      return const SizedBox.shrink();
-    }
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Card(
-        elevation: 2,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return GlassContainer(
+      padding: const EdgeInsets.all(20),
+      borderRadius: BorderRadius.circular(20),
+      opacity: 0.15,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
             children: [
-              Row(
-                children: [
-                  Icon(Icons.note, color: Theme.of(context).primaryColor, size: 20),
-                  const SizedBox(width: 8),
-                  Text(
-                    'Notes',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                ],
-              ),
-              const Divider(height: 16),
-              Text(
-                _quote!.notes!,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey[700],
-                  height: 1.5,
-                ),
-              ),
+              Icon(Icons.notes, color: Colors.white70, size: 20),
+              const SizedBox(width: 8),
+              const Text('Notes', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
             ],
           ),
-        ),
+          const SizedBox(height: 12),
+          Text(_quote!.notes!, style: TextStyle(color: Colors.white.withOpacity(0.9), fontSize: 14, height: 1.5)),
+        ],
       ),
     );
   }
 
   Widget _buildActionButtons() {
-    final status = _quote!.status.toLowerCase();
-
-    // Only show action buttons if quote is in 'envoyé' status
-    if (status != 'envoyé') {
-      return const SizedBox.shrink();
+    if (_isProcessing) {
+      return Center(
+        child: GlassContainer(
+          width: 60,
+          height: 60,
+          padding: const EdgeInsets.all(16),
+          borderRadius: BorderRadius.circular(15),
+          opacity: 0.2,
+          child: const CircularProgressIndicator(
+            strokeWidth: 3,
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+          ),
+        ),
+      );
     }
 
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          const SizedBox(height: 16),
-          Text(
-            'Que souhaitez-vous faire?',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-          ),
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              Expanded(
-                child: ElevatedButton.icon(
-                  onPressed: _isProcessing ? null : _rejectQuote,
-                  icon: const Icon(Icons.cancel),
-                  label: const Text('Refuser'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: ElevatedButton.icon(
-                  onPressed: _isProcessing ? null : _acceptQuote,
-                  icon: const Icon(Icons.check_circle),
-                  label: const Text('Accepter'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          if (_isProcessing) ...[
-            const SizedBox(height: 16),
-            const Row(
+    return Row(
+      children: [
+        Expanded(
+          child: AnimatedGlassContainer(
+            height: 56,
+            borderRadius: BorderRadius.circular(16),
+            opacity: 0.25,
+            color: PlombiProColors.error,
+            onTap: _rejectQuote,
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: CircularProgressIndicator(strokeWidth: 2),
-                ),
+                Icon(Icons.close, color: Colors.white, size: 24),
                 SizedBox(width: 12),
-                Text('Traitement en cours...'),
+                Text('Refuser', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
               ],
             ),
-          ],
-        ],
-      ),
+          ),
+        ),
+        const SizedBox(width: 16),
+        Expanded(
+          child: AnimatedGlassContainer(
+            height: 56,
+            borderRadius: BorderRadius.circular(16),
+            opacity: 0.25,
+            color: PlombiProColors.success,
+            onTap: _acceptQuote,
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.check, color: Colors.white, size: 24),
+                SizedBox(width: 12),
+                Text('Accepter', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
