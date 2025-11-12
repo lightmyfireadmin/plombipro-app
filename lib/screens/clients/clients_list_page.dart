@@ -9,6 +9,7 @@ import '../../config/plombipro_spacing.dart';
 import '../../config/glassmorphism_theme.dart';
 import '../../widgets/glassmorphic/glass_card.dart';
 import '../../widgets/app_drawer.dart';
+import '../../widgets/app_bottom_nav.dart';
 import 'package:animate_do/animate_do.dart';
 
 /// Premium glassmorphic clients list with modern design
@@ -133,6 +134,7 @@ class _ClientsListPageState extends State<ClientsListPage> with SingleTickerProv
         ],
       ),
       floatingActionButton: _buildGlassFAB(),
+      bottomNavigationBar: const AppBottomNav(currentIndex: 1),
     );
   }
 

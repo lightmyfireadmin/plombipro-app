@@ -13,6 +13,7 @@ import '../../config/plombipro_colors.dart';
 import '../../config/glassmorphism_theme.dart';
 import '../../widgets/glassmorphic/glass_card.dart';
 import '../../widgets/app_drawer.dart';
+import '../../widgets/app_bottom_nav.dart';
 import 'package:animate_do/animate_do.dart';
 
 /// Premium glassmorphic invoices list with modern design
@@ -394,6 +395,7 @@ class _InvoicesListPageState extends State<InvoicesListPage> with SingleTickerPr
         ],
       ),
       floatingActionButton: _isSelectionMode ? null : _buildGlassFAB(),
+      bottomNavigationBar: const AppBottomNav(currentIndex: 3),
     );
   }
 

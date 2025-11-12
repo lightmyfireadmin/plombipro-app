@@ -16,6 +16,7 @@ import '../../services/error_handler.dart';
 import '../../widgets/section_header.dart';
 import '../../widgets/app_drawer.dart';
 import '../../widgets/custom_app_bar.dart';
+import '../../widgets/app_bottom_nav.dart';
 import '../clients/client_form_page.dart';
 import '../quotes/quote_form_page.dart';
 import '../quotes/quotes_list_page.dart';
@@ -230,6 +231,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
+      bottomNavigationBar: const AppBottomNav(currentIndex: 0),
     );
   }
 
