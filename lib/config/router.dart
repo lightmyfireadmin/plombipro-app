@@ -46,6 +46,7 @@ import '../screens/auth/register_step_by_step_screen.dart';
 import '../screens/home/home_screen_enhanced.dart';
 import '../screens/reports/advanced_reports_page.dart';
 import '../screens/tools/tools_page.dart';
+import '../screens/notifications/notifications_page.dart';
 import '../services/onboarding_service.dart';
 
 class AppRouter {
@@ -317,6 +318,12 @@ class AppRouter {
         path: '/analytics',
         builder: (BuildContext context, GoRouterState state) {
           return const AnalyticsDashboardPage();
+        },
+      ),
+      GoRoute(
+        path: '/notifications',
+        builder: (BuildContext context, GoRouterState state) {
+          return const NotificationsPage();
         },
       ),
       GoRoute(

@@ -142,6 +142,14 @@ class _AppDrawerState extends State<AppDrawer> {
               Navigator.pop(context);
             },
           ),
+          ListTile(
+            leading: const Icon(Icons.notifications),
+            title: const Text('Notifications & Rappels'),
+            onTap: () {
+              context.go('/notifications');
+              Navigator.pop(context);
+            },
+          ),
           const Divider(),
           ListTile(
             leading: const Icon(Icons.settings),
