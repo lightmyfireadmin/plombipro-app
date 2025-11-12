@@ -12,6 +12,7 @@ import '../screens/home/home_page.dart';
 import '../screens/quotes/quotes_list_page.dart';
 import '../screens/quotes/quote_form_page.dart';
 import '../screens/quotes/quote_wizard_page.dart';
+import '../screens/quotes/quote_client_review_page.dart';
 import '../screens/clients/clients_list_page.dart';
 import '../screens/clients/client_form_page.dart';
 import '../screens/clients/add_client_wizard_page.dart';
@@ -123,6 +124,13 @@ class AppRouter {
             path: 'new',
             builder: (BuildContext context, GoRouterState state) {
               return const QuoteWizardPage();
+            },
+          ),
+          GoRoute(
+            path: 'review/:id',
+            builder: (BuildContext context, GoRouterState state) {
+              final quoteId = state.pathParameters['id']!;
+              return QuoteClientReviewPage(quoteId: quoteId);
             },
           ),
           GoRoute(

@@ -424,6 +424,21 @@ class SupabaseService {
     }
   }
 
+  static Future<Quote?> getQuoteById(String quoteId) async {
+    try {
+      final response = await _client
+          .from('quotes')
+          .select('*, clients(*), quote_items(*)')
+          .eq('id', quoteId)
+          .maybeSingle();
+
+      if (response == null) return null;
+      return Quote.fromJson(response);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   // ===== INVOICES CRUD =====
 
   static Future<List<Invoice>> fetchInvoices() async {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:open_filex/open_filex.dart';
@@ -981,6 +982,7 @@ class _GlassQuoteCard extends StatelessWidget {
                       onSelected: (value) => _handleMenuSelection(value, context),
                       itemBuilder: (context) => [
                         _buildMenuItem('edit', Icons.edit_rounded, 'Éditer'),
+                        _buildMenuItem('share', Icons.share_rounded, 'Partager avec client'),
                         _buildMenuItem('create_invoice', Icons.receipt_long_rounded, 'Créer facture'),
                         _buildMenuItem('download', Icons.download_rounded, 'Télécharger PDF'),
                         const PopupMenuDivider(),
@@ -1082,6 +1084,9 @@ class _GlassQuoteCard extends StatelessWidget {
       case 'edit':
         final result = await context.push('/quotes/${quote.id}', extra: quote);
         if (result == true) onActionSelected();
+        break;
+      case 'share':
+        _shareQuoteWithClient(quote, context);
         break;
       case 'create_invoice':
         try {
@@ -1268,6 +1273,111 @@ class _GlassQuoteCard extends StatelessWidget {
           }
         }
         break;
+    }
+  }
+
+  void _shareQuoteWithClient(Quote quote, BuildContext context) async {
+    try {
+      // Update quote status to 'envoyé' if it's still 'brouillon'
+      if (quote.status.toLowerCase() == 'brouillon') {
+        final updatedQuote = Quote(
+          id: quote.id,
+          userId: quote.userId,
+          quoteNumber: quote.quoteNumber,
+          clientId: quote.clientId,
+          date: quote.date,
+          expiryDate: quote.expiryDate,
+          status: 'envoyé',
+          totalHt: quote.totalHt,
+          totalTva: quote.totalTva,
+          totalTtc: quote.totalTtc,
+          notes: quote.notes,
+          items: quote.items,
+        );
+
+        await SupabaseService.updateQuote(quote.id!, updatedQuote);
+      }
+
+      // Generate shareable link
+      final shareableLink = 'http://localhost:3000/quotes/review/${quote.id}';
+
+      // Copy to clipboard
+      await Clipboard.setData(ClipboardData(text: shareableLink));
+
+      if (context.mounted) {
+        // Show success dialog with the link
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Row(
+              children: [
+                Icon(Icons.share, color: Colors.blue),
+                SizedBox(width: 12),
+                Text('Lien de partage'),
+              ],
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Le lien a été copié dans le presse-papiers!',
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                ),
+                const SizedBox(height: 16),
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[100],
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.grey[300]!),
+                  ),
+                  child: SelectableText(
+                    shareableLink,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontFamily: 'monospace',
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'Partagez ce lien avec votre client ${quote.client?.name ?? ''} pour qu\'il puisse consulter et répondre au devis.',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey[700],
+                  ),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Fermer'),
+              ),
+              ElevatedButton.icon(
+                onPressed: () async {
+                  await Clipboard.setData(ClipboardData(text: shareableLink));
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Lien copié à nouveau!')),
+                    );
+                  }
+                },
+                icon: const Icon(Icons.copy),
+                label: const Text('Copier'),
+              ),
+            ],
+          ),
+        );
+
+        // Refresh the list to show updated status
+        _fetchQuotes();
+      }
+    } catch (e) {
+      if (context.mounted) {
+        context.handleError(e, customMessage: 'Erreur lors du partage');
+      }
     }
   }
 }
