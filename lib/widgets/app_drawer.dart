@@ -50,7 +50,7 @@ class _AppDrawerState extends State<AppDrawer> {
             leading: const Icon(Icons.dashboard),
             title: const Text('Tableau de bord'),
             onTap: () {
-              context.go('/home');
+              context.go('/home-enhanced');
               Navigator.pop(context);
             },
           ),

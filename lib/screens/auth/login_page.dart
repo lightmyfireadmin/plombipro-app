@@ -60,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
           password: credentials['password']!,
         );
         if (mounted) {
-          context.go('/home');
+          context.go('/home-enhanced');
         }
       } catch (e) {
         // Silently fail biometric auto-login
@@ -99,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
 
       if (mounted) {
         context.showSuccess('Connexion réussie!');
-        context.go('/home');
+        context.go('/home-enhanced');
       }
     } catch (e) {
       if (mounted) {
@@ -126,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
         );
         if (mounted) {
           context.showSuccess('Connexion réussie!');
-          context.go('/home');
+          context.go('/home-enhanced');
         }
       } catch (e) {
         if (mounted) {

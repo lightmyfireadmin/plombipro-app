@@ -15,7 +15,7 @@ class AppBottomNav extends StatelessWidget {
   void _onItemTapped(BuildContext context, int index) {
     switch (index) {
       case 0:
-        context.go('/home');
+        context.go('/home-enhanced');
         break;
       case 1:
         context.go('/clients');

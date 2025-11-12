@@ -182,7 +182,7 @@ class _RegisterStepByStepScreenState extends State<RegisterStepByStepScreen>
           // Show success and navigate
           _showSuccess('Compte créé avec succès!');
           await Future.delayed(const Duration(seconds: 2));
-          context.go('/home');
+          context.go('/home-enhanced');
         }
       }
     } catch (e) {
