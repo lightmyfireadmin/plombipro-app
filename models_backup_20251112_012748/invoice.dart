@@ -3,7 +3,6 @@ import 'line_item.dart';
 
 class Invoice {
   final String? id;
-  final String userId;
   final String number;
   final String clientId;
   final DateTime date;
@@ -24,7 +23,6 @@ class Invoice {
 
   Invoice({
     this.id,
-    required this.userId,
     required this.number,
     required this.clientId,
     required this.date,
@@ -47,7 +45,6 @@ class Invoice {
   factory Invoice.fromJson(Map<String, dynamic> json) {
     return Invoice(
       id: json['id'],
-      userId: json['user_id'] ?? '',
       number: json['invoice_number'] ?? '',
       clientId: json['client_id'] ?? '',
       date: DateTime.parse(json['invoice_date'] ?? DateTime.now().toIso8601String()),
@@ -71,7 +68,6 @@ class Invoice {
   }
 
   Map<String, dynamic> toJson() => {
-      'user_id': userId,
         'id': id,
         'invoice_number': number,
         'client_id': clientId,
@@ -82,8 +78,7 @@ class Invoice {
         'total_ttc': totalTtc,
         'amount_paid': amountPaid,
         'balance_due': balanceDue,
-        'status': status,
-      'payment_status': paymentStatus,
+        'payment_status': paymentStatus,
         'notes': notes,
         'payment_method': paymentMethod,
         'is_electronic': isElectronic,
@@ -93,7 +88,6 @@ class Invoice {
 
   Invoice copyWith({
     String? id,
-    String? userId,
     String? number,
     String? clientId,
     DateTime? date,
@@ -113,7 +107,6 @@ class Invoice {
   }) {
     return Invoice(
       id: id ?? this.id,
-      userId: userId ?? this.userId,
       number: number ?? this.number,
       clientId: clientId ?? this.clientId,
       date: date ?? this.date,

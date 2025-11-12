@@ -1,6 +1,5 @@
 class Product {
   final String? id;
-  final String userId;
   final String? ref;
   final String name;
   final String? description;
@@ -19,7 +18,6 @@ class Product {
 
   Product({
     this.id,
-    required this.userId,
     this.ref,
     required this.name,
     this.description,
@@ -35,7 +33,6 @@ class Product {
   });
 
   Map<String, dynamic> toJson() => {
-      'user_id': userId,
         'ref': ref,
         'name': name,
         'description': description,
@@ -53,7 +50,6 @@ class Product {
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
       id: json['id'],
-      userId: json['user_id'] ?? '',
       ref: json['ref'],
       name: json['name'] ?? '',
       description: json['description'],
@@ -73,7 +69,6 @@ class Product {
   factory Product.fromSupplierProductJson(Map<String, dynamic> json) {
     return Product(
       id: json['id'],
-      userId: json['user_id'] ?? '',
       ref: json['reference'],
       name: json['name'] ?? '',
       description: json['description'],
@@ -91,7 +86,6 @@ class Product {
 
   Product copyWith({
     String? id,
-    String? userId,
     String? ref,
     String? name,
     String? description,
@@ -107,7 +101,6 @@ class Product {
   }) {
     return Product(
       id: id ?? this.id,
-      userId: userId ?? this.userId,
       ref: ref ?? this.ref,
       name: name ?? this.name,
       description: description ?? this.description,

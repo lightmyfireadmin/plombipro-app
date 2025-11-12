@@ -304,13 +304,13 @@ class _HomePageState extends State<HomePage> {
       runSpacing: 12,
       children: [
         _ActionButton(title: '+ Nouveau Devis', icon: Icons.add, onTap: () {
-           Navigator.of(context).push(MaterialPageRoute(builder: (_) => const QuoteFormPage()));
+           context.go('/quotes/new');
         }),
         _ActionButton(title: '+ Nv. Facture', icon: Icons.receipt_long, onTap: () {
           context.go('/invoices/new');
         }),
         _ActionButton(title: '+ Nouveau Client', icon: Icons.person_add, onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ClientFormPage()));
+          context.go('/clients/new');
         }),
         _ActionButton(title: 'Scanner', icon: Icons.qr_code_scanner, onTap: () {
           context.go('/scan-invoice');

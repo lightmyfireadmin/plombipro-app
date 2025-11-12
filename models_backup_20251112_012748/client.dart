@@ -45,40 +45,29 @@ class Client {
     this.notes,
   });
 
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{
-      'user_id': userId,
-      'client_type': clientType,
-      'salutation': salutation,
-      'first_name': firstName,
-      'email': email,
-      'phone': phone,
-      'mobile_phone': mobilePhone,
-      'address': address,
-      'postal_code': postalCode,
-      'city': city,
-      'country': country,
-      'billing_address': billingAddress,
-      'siret': siret,
-      'vat_number': vatNumber,
-      'default_payment_terms': defaultPaymentTerms,
-      'default_discount': defaultDiscount,
-      'tags': tags,
-      'is_favorite': isFavorite,
-      'notes': notes,
-    };
-
-    // Conditionally add company_name OR last_name based on type
-    if (clientType == 'company') {
-      json['company_name'] = name;
-      json['last_name'] = null;
-    } else {
-      json['last_name'] = name;
-      json['company_name'] = null;
-    }
-
-    return json;
-  }
+  Map<String, dynamic> toJson() => {
+        'user_id': userId,
+        'client_type': clientType,
+        'salutation': salutation,
+        'first_name': firstName,
+        'company_name': name, // Using name for company_name for simplicity
+        'last_name': name, // Or handle based on clientType
+        'email': email,
+        'phone': phone,
+        'mobile_phone': mobilePhone,
+        'address': address,
+        'postal_code': postalCode,
+        'city': city,
+        'country': country,
+        'billing_address': billingAddress,
+        'siret': siret,
+        'vat_number': vatNumber,
+        'default_payment_terms': defaultPaymentTerms,
+        'default_discount': defaultDiscount,
+        'tags': tags,
+        'is_favorite': isFavorite,
+        'notes': notes,
+      };
 
   factory Client.fromJson(Map<String, dynamic> json) {
     return Client(

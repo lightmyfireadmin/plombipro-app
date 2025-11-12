@@ -308,8 +308,14 @@ Garantie décennale et responsabilité civile professionnelle''';
     setState(() => _isSaving = true);
 
     try {
+      final userId = Supabase.instance.client.auth.currentUser?.id;
+      if (userId == null) {
+        throw Exception('User not authenticated');
+      }
+
       final invoice = Invoice(
         id: _invoice?.id,
+        userId: userId,
         number: _invoiceNumberController.text,
         clientId: _selectedClient!.id!,
         date: _invoiceDate,

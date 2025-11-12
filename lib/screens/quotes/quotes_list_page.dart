@@ -4,6 +4,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:open_filex/open_filex.dart';
 import 'dart:io';
 import 'dart:ui';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../models/quote.dart';
 import '../../models/invoice.dart';
@@ -1084,10 +1085,16 @@ class _GlassQuoteCard extends StatelessWidget {
         break;
       case 'create_invoice':
         try {
+          final userId = Supabase.instance.client.auth.currentUser?.id;
+          if (userId == null) {
+            throw Exception('User not authenticated');
+          }
+
           final now = DateTime.now();
           final invoiceNumber = InvoiceCalculator.generateInvoiceNumber(1);
 
           final newInvoice = Invoice(
+            userId: userId,
             number: invoiceNumber,
             clientId: quote.clientId,
             date: now,

@@ -9,6 +9,7 @@ import '../../models/client.dart';
 import '../../models/line_item.dart';
 import '../../models/product.dart';
 import '../../models/quote.dart';
+import '../../models/profile.dart';
 import '../../services/invoice_calculator.dart';
 import '../../services/supabase_service.dart';
 import '../../services/template_service.dart';
@@ -35,6 +36,7 @@ class _QuoteWizardPageState extends State<QuoteWizardPage>
   int _currentStep = 0;
   bool get _isEditing => widget.quoteId != null;
   Quote? _quote;
+  Profile? _profile;
 
   // Animation controllers
   late AnimationController _backgroundController;
@@ -128,6 +130,7 @@ class _QuoteWizardPageState extends State<QuoteWizardPage>
         SupabaseService.fetchClients(),
         SupabaseService.fetchProducts(),
         TemplateService.getTemplatesList(),
+        SupabaseService.fetchUserProfile(),
       ]);
 
       setState(() {
@@ -135,6 +138,7 @@ class _QuoteWizardPageState extends State<QuoteWizardPage>
         _filteredClients = _clients;
         _products = results[1] as List<Product>;
         _availableTemplates = results[2] as List<TemplateInfo>;
+        _profile = results[3] as Profile?;
 
         if (_isEditing && _quote != null) {
           _populateExistingQuote();
@@ -228,8 +232,14 @@ class _QuoteWizardPageState extends State<QuoteWizardPage>
     setState(() => _isSaving = true);
 
     try {
+      final userId = Supabase.instance.client.auth.currentUser?.id;
+      if (userId == null) {
+        throw Exception('User not authenticated');
+      }
+
       final quote = Quote(
         id: _quote?.id,
+        userId: userId,
         quoteNumber: _quote?.quoteNumber ?? 'DRAFT',
         clientId: _selectedClient!.id!,
         date: _date,
@@ -1762,6 +1772,54 @@ class _QuoteWizardPageState extends State<QuoteWizardPage>
                 ],
               ),
             ),
+            // IBAN Warning if missing
+            if (_profile?.iban == null || _profile!.iban!.isEmpty) ...[
+              const SizedBox(height: 12),
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: PlombiProColors.warning.withOpacity(0.15),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: PlombiProColors.warning.withOpacity(0.5),
+                    width: 1,
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.warning_amber_rounded,
+                      color: PlombiProColors.warning,
+                      size: 28,
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'IBAN manquant',
+                            style: TextStyle(
+                              color: PlombiProColors.warning,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            'Ajoutez vos coordonnées bancaires dans les paramètres de l\'entreprise pour qu\'elles apparaissent sur les devis PDF',
+                            style: TextStyle(
+                              color: Colors.white.withOpacity(0.9),
+                              fontSize: 13,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ],
         ),
       ),

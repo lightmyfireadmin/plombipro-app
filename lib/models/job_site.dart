@@ -10,6 +10,8 @@ class JobSite {
   final String jobName;
   final String? referenceNumber;
   final String? address;
+  final String? city;
+  final String? postalCode;
   final String? contactPerson;
   final String? contactPhone;
   final String? description;
@@ -33,6 +35,8 @@ class JobSite {
     required this.jobName,
     this.referenceNumber,
     this.address,
+    this.city,
+    this.postalCode,
     this.contactPerson,
     this.contactPhone,
     this.description,
@@ -60,6 +64,8 @@ class JobSite {
     String? jobName,
     String? referenceNumber,
     String? address,
+    String? city,
+    String? postalCode,
     String? contactPerson,
     String? contactPhone,
     String? description,
@@ -83,6 +89,8 @@ class JobSite {
       jobName: jobName ?? this.jobName,
       referenceNumber: referenceNumber ?? this.referenceNumber,
       address: address ?? this.address,
+      city: city ?? this.city,
+      postalCode: postalCode ?? this.postalCode,
       contactPerson: contactPerson ?? this.contactPerson,
       contactPhone: contactPhone ?? this.contactPhone,
       description: description ?? this.description,

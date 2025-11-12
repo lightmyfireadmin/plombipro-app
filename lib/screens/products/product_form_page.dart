@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../models/product.dart';
 import '../../services/supabase_service.dart';
 
@@ -107,8 +108,14 @@ class _ProductFormPageState extends State<ProductFormPage> {
     setState(() { _isSaving = true; });
 
     try {
+      final userId = Supabase.instance.client.auth.currentUser?.id;
+      if (userId == null) {
+        throw Exception('User not authenticated');
+      }
+
       final productData = Product(
         id: _product?.id,
+        userId: userId,
         ref: _refController.text.isEmpty ? null : _refController.text,
         name: _nameController.text,
         description: _descriptionController.text.isEmpty ? null : _descriptionController.text,

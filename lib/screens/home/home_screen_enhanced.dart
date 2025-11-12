@@ -56,16 +56,45 @@ class _HomeScreenEnhancedState extends State<HomeScreenEnhanced>
   }
 
   Future<void> _loadDashboardData() async {
-    // Simulate loading data - replace with actual Supabase calls
-    await Future.delayed(const Duration(milliseconds: 500));
-    if (mounted) {
-      setState(() {
-        _totalClients = 24;
-        _pendingQuotes = 5;
-        _unpaidInvoices = 3;
-        _activeJobSites = 7;
-        _monthlyRevenue = 12450.00;
-      });
+    try {
+      // Fetch real data from Supabase
+      final quotes = await SupabaseService.fetchQuotes();
+      final invoices = await SupabaseService.fetchInvoices();
+      final clients = await SupabaseService.fetchClients();
+      final jobSites = await SupabaseService.getJobSites();
+
+      if (mounted) {
+        setState(() {
+          _totalClients = clients.length;
+          _pendingQuotes = quotes.where((q) => q.status == 'sent').length;
+          _unpaidInvoices = invoices.where((i) => i.paymentStatus != 'paid').length;
+          _activeJobSites = jobSites.where((j) => j.status == 'in_progress').length;
+
+          // Calculate monthly revenue from accepted quotes this month
+          final now = DateTime.now();
+          _monthlyRevenue = quotes
+              .where((q) =>
+                  q.status == 'accepted' &&
+                  q.date.month == now.month &&
+                  q.date.year == now.year)
+              .fold(0.0, (sum, q) => sum + q.totalTtc);
+        });
+      }
+    } catch (e) {
+      // Handle error gracefully
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Erreur de chargement des données: ${e.toString()}'),
+            backgroundColor: PlombiProColors.error,
+            action: SnackBarAction(
+              label: 'Réessayer',
+              textColor: Colors.white,
+              onPressed: _loadDashboardData,
+            ),
+          ),
+        );
+      }
     }
   }
 

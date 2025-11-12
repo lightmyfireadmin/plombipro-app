@@ -99,12 +99,14 @@ class AppRouter {
           return const ResetPasswordPage();
         },
       ),
-      GoRoute(
-        path: '/home',
-        builder: (BuildContext context, GoRouterState state) {
-          return const HomePage();
-        },
-      ),
+      // DEPRECATED: Use /home-enhanced instead (new glassmorphism UI)
+      // Kept commented for reference only
+      // GoRoute(
+      //   path: '/home',
+      //   builder: (BuildContext context, GoRouterState state) {
+      //     return const HomePage();
+      //   },
+      // ),
       GoRoute(
         path: '/quotes',
         builder: (BuildContext context, GoRouterState state) {

@@ -43,7 +43,7 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
             _companyName = _profile!.companyName ?? '';
             _address = _profile!.address ?? '';
             _siret = _profile!.siret ?? '';
-            _tvaNumber = _profile!.tvaNumber ?? '';
+            _tvaNumber = _profile!.vatNumber ?? '';
             _iban = _profile!.iban ?? '';
           });
         }
@@ -75,7 +75,7 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
           companyName: _companyName,
           address: _address,
           siret: _siret,
-          tvaNumber: _tvaNumber,
+          vatNumber: _tvaNumber,
           iban: _iban,
         );
 

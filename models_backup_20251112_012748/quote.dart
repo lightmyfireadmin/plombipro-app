@@ -3,7 +3,6 @@ import 'line_item.dart';
 
 class Quote {
   final String? id;
-  final String userId;
   final String quoteNumber;
   final String clientId;
   final DateTime date;
@@ -18,7 +17,6 @@ class Quote {
 
   Quote({
     this.id,
-    required this.userId,
     required this.quoteNumber,
     required this.clientId,
     required this.date,
@@ -35,7 +33,6 @@ class Quote {
   factory Quote.fromJson(Map<String, dynamic> json) {
     return Quote(
       id: json['id'],
-      userId: json['user_id'] ?? '',
       quoteNumber: json['quote_number'] ?? '',
       clientId: json['client_id'] ?? '',
       date: DateTime.parse(json['quote_date'] ?? DateTime.now().toIso8601String()),
@@ -53,7 +50,6 @@ class Quote {
   }
 
   Map<String, dynamic> toJson() => {
-      'user_id': userId,
         'quote_number': quoteNumber,
         'client_id': clientId,
         'quote_date': date.toIso8601String(),
