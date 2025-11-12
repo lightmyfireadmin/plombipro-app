@@ -330,12 +330,12 @@ class SupabaseService {
 
   // ===== QUOTES CRUD =====
 
-  static Future<List<Quote>> fetchQuotes() async {
+  static Future<List<Quote>> fetchQuotes({int? limit, int? offset}) async {
     try {
       final user = _client.auth.currentUser;
       if (user == null) throw Exception('User not authenticated');
 
-      final response = await _client
+      var query = _client
           .from('quotes')
           .select('''
             *,
@@ -344,6 +344,16 @@ class SupabaseService {
           ''')
           .eq('user_id', user.id)
           .order('created_at', ascending: false);
+
+      if (limit != null) {
+        query = query.limit(limit);
+      }
+
+      if (offset != null) {
+        query = query.range(offset, offset + (limit ?? 20) - 1);
+      }
+
+      final response = await query;
 
       return (response as List)
           .map((item) => Quote.fromJson(item))
@@ -441,12 +451,12 @@ class SupabaseService {
 
   // ===== INVOICES CRUD =====
 
-  static Future<List<Invoice>> fetchInvoices() async {
+  static Future<List<Invoice>> fetchInvoices({int? limit, int? offset}) async {
     try {
       final user = _client.auth.currentUser;
       if (user == null) throw Exception('User not authenticated');
 
-      final response = await _client
+      var query = _client
           .from('invoices')
           .select('''
             *,
@@ -455,6 +465,16 @@ class SupabaseService {
           ''')
           .eq('user_id', user.id)
           .order('created_at', ascending: false);
+
+      if (limit != null) {
+        query = query.limit(limit);
+      }
+
+      if (offset != null) {
+        query = query.range(offset, offset + (limit ?? 20) - 1);
+      }
+
+      final response = await query;
 
       return (response as List)
           .map((item) => Invoice.fromJson(item))
@@ -572,16 +592,26 @@ class SupabaseService {
 
   // ===== CLIENTS CRUD =====
 
-  static Future<List<Client>> fetchClients() async {
+  static Future<List<Client>> fetchClients({int? limit, int? offset}) async {
     try {
       final user = _client.auth.currentUser;
       if (user == null) throw Exception('User not authenticated');
 
-      final response = await _client
+      var query = _client
           .from('clients')
           .select('*')
           .eq('user_id', user.id)
           .order('created_at', ascending: false);
+
+      if (limit != null) {
+        query = query.limit(limit);
+      }
+
+      if (offset != null) {
+        query = query.range(offset, offset + (limit ?? 20) - 1);
+      }
+
+      final response = await query;
 
       return (response as List)
           .map((item) => Client.fromJson(item))
