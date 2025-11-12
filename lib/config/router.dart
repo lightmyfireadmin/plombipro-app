@@ -7,6 +7,7 @@ import '../screens/auth/login_page.dart';
 import '../screens/auth/register_page.dart';
 import '../screens/auth/forgot_password_page.dart';
 import '../screens/auth/reset_password_page.dart';
+import '../screens/auth/email_verification_page.dart';
 import '../screens/home/home_page.dart';
 import '../screens/quotes/quotes_list_page.dart';
 import '../screens/quotes/quote_form_page.dart';
@@ -23,6 +24,7 @@ import '../screens/ocr/scan_invoice_page.dart';
 import '../screens/payments/payments_list_page.dart';
 import '../screens/payments/payment_form_page.dart';
 import '../screens/profile/user_profile_page.dart';
+import '../screens/profile/enhanced_profile_page.dart';
 import '../screens/company/company_profile_page.dart';
 import '../screens/settings/settings_page.dart';
 import '../screens/settings/invoice_settings_page.dart';
@@ -99,14 +101,18 @@ class AppRouter {
           return const ResetPasswordPage();
         },
       ),
-      // DEPRECATED: Use /home-enhanced instead (new glassmorphism UI)
-      // Kept commented for reference only
-      // GoRoute(
-      //   path: '/home',
-      //   builder: (BuildContext context, GoRouterState state) {
-      //     return const HomePage();
-      //   },
-      // ),
+      GoRoute(
+        path: '/email-verification',
+        builder: (BuildContext context, GoRouterState state) {
+          final email = state.uri.queryParameters['email'] ?? '';
+          return EmailVerificationPage(email: email);
+        },
+      ),
+      // Redirect /home to /home-enhanced for backward compatibility
+      GoRoute(
+        path: '/home',
+        redirect: (context, state) => '/home-enhanced',
+      ),
       GoRoute(
         path: '/quotes',
         builder: (BuildContext context, GoRouterState state) {
@@ -221,6 +227,12 @@ class AppRouter {
       ),
       GoRoute(
         path: '/profile',
+        builder: (BuildContext context, GoRouterState state) {
+          return const EnhancedProfilePage();
+        },
+      ),
+      GoRoute(
+        path: '/profile-legacy',
         builder: (BuildContext context, GoRouterState state) {
           return const UserProfilePage();
         },
@@ -343,7 +355,8 @@ class AppRouter {
       final bool loggingIn = state.matchedLocation == '/login' ||
                               state.matchedLocation == '/register' ||
                               state.matchedLocation == '/forgot-password' ||
-                              state.matchedLocation == '/reset-password';
+                              state.matchedLocation == '/reset-password' ||
+                              state.matchedLocation == '/email-verification';
       final bool isOnboarding = state.matchedLocation == '/onboarding';
 
       // If not logged in, and not on the login/register/forgot/reset password page, redirect to login
