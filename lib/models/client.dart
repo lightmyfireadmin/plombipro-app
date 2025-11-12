@@ -68,13 +68,18 @@ class Client {
       'notes': notes,
     };
 
+    // Include id if it exists (for updates)
+    if (id != null) {
+      json['id'] = id;
+    }
+
     // Conditionally add company_name OR last_name based on type
     if (clientType == 'company') {
       json['company_name'] = name;
-      json['last_name'] = null;
+      // Don't set last_name to null - just omit it
     } else {
       json['last_name'] = name;
-      json['company_name'] = null;
+      // Don't set company_name to null - just omit it
     }
 
     return json;
