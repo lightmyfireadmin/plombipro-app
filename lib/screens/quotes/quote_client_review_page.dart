@@ -429,10 +429,10 @@ class _QuoteClientReviewPageState extends State<QuoteClientReviewPage> {
               const Divider(height: 24),
               if (_quote!.client != null) ...[
                 _buildDetailRow('Nom', _quote!.client!.name),
-                if (_quote!.client!.email.isNotEmpty)
-                  _buildDetailRow('Email', _quote!.client!.email),
-                if (_quote!.client!.phone.isNotEmpty)
-                  _buildDetailRow('Téléphone', _quote!.client!.phone),
+                if (_quote!.client!.email != null && _quote!.client!.email!.isNotEmpty)
+                  _buildDetailRow('Email', _quote!.client!.email!),
+                if (_quote!.client!.phone != null && _quote!.client!.phone!.isNotEmpty)
+                  _buildDetailRow('Téléphone', _quote!.client!.phone!),
                 if (_quote!.client!.address != null && _quote!.client!.address!.isNotEmpty)
                   _buildDetailRow('Adresse', _quote!.client!.address!),
               ],
@@ -495,7 +495,7 @@ class _QuoteClientReviewPageState extends State<QuoteClientReviewPage> {
                     ),
               ),
               const Divider(height: 24),
-              ..._ quote!.items.map((item) => _buildLineItem(item)),
+              ..._quote!.items.map((item) => _buildLineItem(item)),
             ],
           ),
         ),

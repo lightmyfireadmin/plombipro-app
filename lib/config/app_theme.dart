@@ -123,6 +123,11 @@ class AppTheme {
       filled: true,
       fillColor: Colors.white, // Changed from grey[50] to pure white for better visibility
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      // CRITICAL: Force black text in input fields to prevent white-on-white
+      // This style applies to the text the user types, not labels/hints
+      floatingLabelStyle: const TextStyle(color: primaryBlue),
+      // Ensure input text is always black, regardless of device theme
+      hoverColor: Colors.transparent,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
         borderSide: BorderSide(color: Colors.grey[300]!),

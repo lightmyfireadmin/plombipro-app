@@ -31,10 +31,11 @@ class ErrorHandler {
                 )
               : null,
           duration: const Duration(seconds: 4),
-          margin: const EdgeInsets.only(
+          // Position at top below AppBar - use large bottom margin to push up
+          margin: EdgeInsets.only(
             left: 16.0,
             right: 16.0,
-            top: 16.0, // Show at top below AppBar instead of bottom
+            bottom: MediaQuery.of(context).size.height - 160,
           ),
         ),
       );
@@ -56,10 +57,11 @@ class ErrorHandler {
           backgroundColor: Colors.green.shade700,
           behavior: SnackBarBehavior.floating,
           duration: const Duration(seconds: 3),
-          margin: const EdgeInsets.only(
+          // Position at top below AppBar - use large bottom margin to push up
+          margin: EdgeInsets.only(
             left: 16.0,
             right: 16.0,
-            top: 16.0, // Show at top below AppBar instead of bottom
+            bottom: MediaQuery.of(context).size.height - 160,
           ),
         ),
       );
@@ -78,10 +80,11 @@ class ErrorHandler {
           backgroundColor: Colors.blue.shade700,
           behavior: SnackBarBehavior.floating,
           duration: const Duration(seconds: 3),
-          margin: const EdgeInsets.only(
+          // Position at top below AppBar - use large bottom margin to push up
+          margin: EdgeInsets.only(
             left: 16.0,
             right: 16.0,
-            top: 16.0, // Show at top below AppBar instead of bottom
+            bottom: MediaQuery.of(context).size.height - 160,
           ),
         ),
       );
@@ -100,10 +103,11 @@ class ErrorHandler {
           backgroundColor: Colors.orange.shade700,
           behavior: SnackBarBehavior.floating,
           duration: const Duration(seconds: 4),
-          margin: const EdgeInsets.only(
+          // Position at top below AppBar - use large bottom margin to push up
+          margin: EdgeInsets.only(
             left: 16.0,
             right: 16.0,
-            top: 16.0, // Show at top below AppBar instead of bottom
+            bottom: MediaQuery.of(context).size.height - 160,
           ),
         ),
       );

@@ -191,7 +191,7 @@ class _ClientDetailPageState extends State<ClientDetailPage> with SingleTickerPr
           IconButton(
             icon: const Icon(Icons.edit),
             onPressed: () {
-              context.push('/clients/${widget.clientId}');
+              context.push('/clients/${widget.clientId}/edit');
             },
             tooltip: 'Modifier',
           ),

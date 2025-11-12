@@ -1376,7 +1376,7 @@ class _GlassQuoteCard extends StatelessWidget {
         );
 
         // Refresh the list to show updated status
-        _fetchQuotes();
+        onActionSelected();
       }
     } catch (e) {
       if (context.mounted) {

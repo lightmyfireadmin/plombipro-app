@@ -175,9 +175,11 @@ class MyApp extends StatelessWidget {
       // Configure go_router
       routerConfig: AppRouter.router,
 
+      // CRITICAL: Force light theme only to prevent white-on-white text fields
+      // Some devices ignore themeMode and try to apply dark theme when darkTheme is provided
+      // By only providing theme (not darkTheme), we ensure consistent light theme always
       theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.light, // Default to light theme
+      themeMode: ThemeMode.light,
 
       // Set up localization for French
       localizationsDelegates: const [

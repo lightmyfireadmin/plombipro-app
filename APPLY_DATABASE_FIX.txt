@@ -1,0 +1,65 @@
+═══════════════════════════════════════════════════
+  PLOMBIPRO DATABASE FIX - QUICK REFERENCE
+═══════════════════════════════════════════════════
+
+🎯 WHAT TO DO NOW (3 simple steps):
+
+STEP 1: Apply Migration to Database
+────────────────────────────────────
+1. Open: https://app.supabase.com/project/itugqculhbghypclhyfb/sql
+2. Click "New Query"
+3. Open file: supabase/migrations/20251112_fix_rls_policies.sql
+4. Copy ENTIRE contents
+5. Paste into SQL editor
+6. Click "Run" button
+7. Wait for "Success ✅" message
+
+STEP 2: Test in App
+──────────────────
+flutter run
+
+# Then navigate to: /database-diagnostic
+# Or add to settings menu temporarily
+
+STEP 3: Verify Everything Works
+────────────────────────────────
+✓ Dashboard shows 11 clients (not 0)
+✓ Can create new client
+✓ Can view client list
+✓ Can edit client
+✓ Can delete client
+
+═══════════════════════════════════════════════════
+
+📁 FILES CREATED:
+
+NEW FILES:
+  ✅ supabase/migrations/20251112_fix_rls_policies.sql
+  ✅ lib/services/database_diagnostic.dart
+  ✅ lib/screens/debug/database_diagnostic_page.dart
+  ✅ DATABASE_FIX_GUIDE.md (full instructions)
+  ✅ DATABASE_FIX_SUMMARY.md (overview)
+
+UPDATED FILES:
+  ✅ lib/config/router.dart (added diagnostic route)
+
+═══════════════════════════════════════════════════
+
+⚠️ CRITICAL:
+You MUST apply the migration first!
+Nothing will work until RLS policies are fixed in the database.
+
+═══════════════════════════════════════════════════
+
+🔍 DIAGNOSTIC TOOL:
+Route: /database-diagnostic
+Shows: Auth status, connection, RLS policies, data counts
+Tests: Full CRUD operations
+
+═══════════════════════════════════════════════════
+
+📞 NEED HELP?
+Read: DATABASE_FIX_GUIDE.md for detailed instructions
+Check: Troubleshooting section if issues persist
+
+═══════════════════════════════════════════════════

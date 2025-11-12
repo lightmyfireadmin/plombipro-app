@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../../config/glassmorphism_theme.dart';
 import '../../config/plombipro_colors.dart';
 import '../../widgets/glassmorphic/glass_card.dart';
+import '../../widgets/app_drawer.dart';
 import '../../services/onboarding_service_enhanced.dart';
 import '../../services/supabase_service.dart';
 import 'dart:ui';
@@ -107,6 +108,7 @@ class _HomeScreenEnhancedState extends State<HomeScreenEnhanced>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const AppDrawer(),
       body: Stack(
         children: [
           // Animated gradient background
@@ -186,6 +188,25 @@ class _HomeScreenEnhancedState extends State<HomeScreenEnhanced>
             // Logo and title
             Row(
               children: [
+                // Burger menu button
+                Builder(
+                  builder: (context) => AnimatedGlassContainer(
+                    width: 50,
+                    height: 50,
+                    padding: const EdgeInsets.all(0),
+                    borderRadius: BorderRadius.circular(15),
+                    opacity: 0.2,
+                    onTap: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                    child: const Icon(
+                      Icons.menu,
+                      color: Colors.white,
+                      size: 24,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
                 GlassContainer(
                   width: 50,
                   height: 50,
@@ -232,7 +253,7 @@ class _HomeScreenEnhancedState extends State<HomeScreenEnhanced>
                   borderRadius: BorderRadius.circular(15),
                   opacity: 0.2,
                   onTap: () {
-                    // Show notifications
+                    context.push('/notifications');
                   },
                   child: Stack(
                     children: [
