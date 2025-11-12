@@ -58,6 +58,11 @@ dependencies:
   tutorial_coach_mark: ^1.2.11
   cached_network_image: ^3.3.1
 
+  # Offline storage (Phase 10)
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  connectivity_plus: ^5.0.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
