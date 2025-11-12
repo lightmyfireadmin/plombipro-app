@@ -15,11 +15,11 @@ void main() async {
   // Read environment variables from dart-define with fallback defaults
   const supabaseUrl = String.fromEnvironment(
     'SUPABASE_URL',
-    defaultValue: 'https://prcwgkdstoegcjncnfqh.supabase.co',
+    defaultValue: 'https://itugqculhbghypclhyfb.supabase.co',
   );
   const supabaseAnonKey = String.fromEnvironment(
     'SUPABASE_ANON_KEY',
-    defaultValue: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InByY3dna2RzdG9lZ2NqbmNuZnFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkzNDM4MDIsImV4cCI6MjA3NDkxOTgwMn0.BhbdgV4XZPJE3nsWg9qs67S9PNJqwjfCIdVJpMm9BvI',
+    defaultValue: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml0dWdxY3VsaGJnaHlwY2xoeWZiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI3MTAxODEsImV4cCI6MjA3ODI4NjE4MX0.eSNzgh3pMHaPYCkzJ8L1UcoqzMSgHTJvg4c9IOGv4eI',
   );
   const sentryDsn = String.fromEnvironment('SENTRY_DSN', defaultValue: '');
 

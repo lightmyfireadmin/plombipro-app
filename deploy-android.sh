@@ -22,8 +22,8 @@ BUILD_TYPE="debug"
 RELEASE_NOTES_FILE=""
 
 # Supabase credentials (read from project or environment)
-SUPABASE_URL="${SUPABASE_URL:-https://prcwgkdstoegcjncnfqh.supabase.co}"
-SUPABASE_ANON_KEY="${SUPABASE_ANON_KEY:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InByY3dna2RzdG9lZ2NqbmNuZnFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkzNDM4MDIsImV4cCI6MjA3NDkxOTgwMn0.BhbdgV4XZPJE3nsWg9qs67S9PNJqwjfCIdVJpMm9BvI}"
+SUPABASE_URL="${SUPABASE_URL:-https://itugqculhbghypclhyfb.supabase.co}"
+SUPABASE_ANON_KEY="${SUPABASE_ANON_KEY:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml0dWdxY3VsaGJnaHlwY2xoeWZiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI3MTAxODEsImV4cCI6MjA3ODI4NjE4MX0.eSNzgh3pMHaPYCkzJ8L1UcoqzMSgHTJvg4c9IOGv4eI}"
 
 ################################################################################
 # Functions
