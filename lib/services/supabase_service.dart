@@ -1499,6 +1499,93 @@ class SupabaseService {
     }
   }
 
+  // ===== JOB SITE DOCUMENTS CRUD =====
+
+  static Future<List<Map<String, dynamic>>> getJobSiteDocuments(String jobSiteId) async {
+    try {
+      final user = _client.auth.currentUser;
+      if (user == null) throw Exception('User not authenticated');
+
+      // Verify user owns the job site
+      final jobSite = await _client
+          .from('job_sites')
+          .select('user_id')
+          .eq('id', jobSiteId)
+          .single();
+
+      if (jobSite['user_id'] != user.id) {
+        throw Exception('User does not own this job site');
+      }
+
+      final response = await _client
+          .from('job_site_documents')
+          .select('*')
+          .eq('job_site_id', jobSiteId)
+          .order('created_at', ascending: false);
+
+      return (response as List).cast<Map<String, dynamic>>();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<String> addJobSiteDocument(Map<String, dynamic> documentData) async {
+    try {
+      final user = _client.auth.currentUser;
+      if (user == null) throw Exception('User not authenticated');
+
+      // Verify user owns the job site
+      final jobSiteId = documentData['job_site_id'];
+      final jobSite = await _client
+          .from('job_sites')
+          .select('user_id')
+          .eq('id', jobSiteId)
+          .single();
+
+      if (jobSite['user_id'] != user.id) {
+        throw Exception('User does not own this job site');
+      }
+
+      final response = await _client
+          .from('job_site_documents')
+          .insert(documentData)
+          .select()
+          .single();
+
+      return response['id'] as String;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<void> deleteJobSiteDocument(String documentId) async {
+    try {
+      final user = _client.auth.currentUser;
+      if (user == null) throw Exception('User not authenticated');
+
+      // Verify user owns the document's job site
+      final existingDocument = await _client
+          .from('job_site_documents')
+          .select('job_site_id')
+          .eq('id', documentId)
+          .single();
+
+      final jobSite = await _client
+          .from('job_sites')
+          .select('user_id')
+          .eq('id', existingDocument['job_site_id'])
+          .single();
+
+      if (jobSite['user_id'] != user.id) {
+        throw Exception('User does not own this document');
+      }
+
+      await _client.from('job_site_documents').delete().eq('id', documentId);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   // ===== CATEGORIES CRUD =====
 
   static Future<String> addCategory(Category category) async {

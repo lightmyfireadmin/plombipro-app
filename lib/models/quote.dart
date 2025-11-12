@@ -16,6 +16,15 @@ class Quote {
   final Client? client;
   final List<LineItem> items;
 
+  // New fields for business logic
+  final String? convertedToInvoiceId;
+  final int? paymentTerms;
+  final String? pdfUrl;
+  final double? depositPercentage;
+  final double? depositAmount;
+  final String? signatureUrl;
+  final DateTime? signedAt;
+
   Quote({
     this.id,
     required this.userId,
@@ -30,6 +39,13 @@ class Quote {
     this.items = const [],
     this.notes,
     this.client,
+    this.convertedToInvoiceId,
+    this.paymentTerms,
+    this.pdfUrl,
+    this.depositPercentage,
+    this.depositAmount,
+    this.signatureUrl,
+    this.signedAt,
   });
 
   factory Quote.fromJson(Map<String, dynamic> json) {
@@ -49,6 +65,13 @@ class Quote {
           : [],
       notes: json['notes'],
       client: json['clients'] != null ? Client.fromJson(json['clients']) : null,
+      convertedToInvoiceId: json['converted_to_invoice_id'],
+      paymentTerms: json['payment_terms'] as int?,
+      pdfUrl: json['pdf_url'],
+      depositPercentage: (json['deposit_percentage'] as num?)?.toDouble(),
+      depositAmount: (json['deposit_amount'] as num?)?.toDouble(),
+      signatureUrl: json['signature_url'],
+      signedAt: json['signed_at'] != null ? DateTime.parse(json['signed_at']) : null,
     );
   }
 
@@ -63,6 +86,13 @@ class Quote {
         'total_vat': totalTva,
         'total_ttc': totalTtc,
         'notes': notes,
+        'converted_to_invoice_id': convertedToInvoiceId,
+        'payment_terms': paymentTerms,
+        'pdf_url': pdfUrl,
+        'deposit_percentage': depositPercentage,
+        'deposit_amount': depositAmount,
+        'signature_url': signatureUrl,
+        'signed_at': signedAt?.toIso8601String(),
       };
 }
 
