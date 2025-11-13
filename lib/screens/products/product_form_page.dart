@@ -122,7 +122,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
         priceBuy: double.tryParse(_priceBuyController.text),
         unitPrice: double.tryParse(_unitPriceController.text) ?? 0.0,
         unit: _unitController.text.isEmpty ? null : _unitController.text,
-        photoUrl: _photoUrlController.text.isEmpty ? null : _photoUrlController.text,
+        imageUrls: _photoUrlController.text.isEmpty ? null : [_photoUrlController.text],
         category: _categoryController.text.isEmpty ? null : _categoryController.text,
         supplier: _supplierController.text.isEmpty ? null : _supplierController.text,
         isFavorite: _isFavorite,

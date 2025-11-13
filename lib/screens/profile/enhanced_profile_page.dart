@@ -91,7 +91,7 @@ class _EnhancedProfilePageState extends State<EnhancedProfilePage> with SingleTi
           _cityController.text = profile.city ?? '';
           _ibanController.text = profile.iban ?? '';
           _bicController.text = profile.bic ?? '';
-          _avatarUrl = profile.avatarUrl;
+          _avatarUrl = null; // Avatar URL not yet implemented in Profile model
           _logoUrl = profile.logoUrl;
         });
       }

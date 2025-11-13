@@ -288,6 +288,19 @@ class _ClientDetailPageState extends State<ClientDetailPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(_client?.name ?? 'Client'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.edit),
+            onPressed: () {
+              context.push('/clients/${widget.clientId}/edit');
+            },
+            tooltip: 'Modifier',
+          ),
+        ],
+      ),
+      drawer: const AppDrawer(),
       body: _isLoading
           ? _buildLoadingState()
           : _client == null

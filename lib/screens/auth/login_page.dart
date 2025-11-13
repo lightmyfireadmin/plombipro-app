@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:go_router/go_router.dart';
 import '../../services/supabase_service.dart';
+import '../../services/auth_service.dart';
 import '../../services/biometric_auth_service.dart';
 import '../../services/error_handler.dart';
 import '../../config/glassmorphism_theme.dart';
@@ -111,6 +112,19 @@ class _LoginPageState extends State<LoginPage>
         email: _emailController.text.trim(),
         password: _passwordController.text,
       );
+
+      // CRITICAL: Verify auth state after login
+      print('🔍 === POST-LOGIN AUTH VERIFICATION ===');
+      final authState = await AuthService.debugAuthState();
+      print('Auth state after login:');
+      authState.forEach((key, value) {
+        print('  $key: $value');
+      });
+
+      if (!AuthService.isAuthenticated) {
+        throw Exception('Login succeeded but session not established. Please try again.');
+      }
+      print('✅ Authentication verified successfully');
 
       // Save credentials for biometric login if enabled
       if (_enableBiometricLogin && _isBiometricAvailable) {

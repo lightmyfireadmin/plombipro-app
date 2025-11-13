@@ -506,6 +506,16 @@ class _QuoteClientReviewPageState extends State<QuoteClientReviewPage>
                   ],
                 ),
               ),
+              const Divider(height: 24),
+              if (_quote!.client != null) ...[
+                _buildDetailRow('Nom', _quote!.client!.name),
+                if (_quote!.client!.email != null && _quote!.client!.email!.isNotEmpty)
+                  _buildDetailRow('Email', _quote!.client!.email!),
+                if (_quote!.client!.phone != null && _quote!.client!.phone!.isNotEmpty)
+                  _buildDetailRow('Téléphone', _quote!.client!.phone!),
+                if (_quote!.client!.address != null && _quote!.client!.address!.isNotEmpty)
+                  _buildDetailRow('Adresse', _quote!.client!.address!),
+              ],
             ],
           ),
           const SizedBox(height: 16),
@@ -536,6 +546,46 @@ class _QuoteClientReviewPageState extends State<QuoteClientReviewPage>
       padding: const EdgeInsets.all(20),
       borderRadius: BorderRadius.circular(20),
       opacity: 0.15,
+    if (_quote!.items.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Card(
+        elevation: 2,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Détail des prestations',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              const Divider(height: 24),
+              ..._quote!.items.map((item) => _buildLineItem(item)),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLineItem(LineItem item) {
+    final total = item.quantity * item.unitPrice;
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.grey[50],
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.grey[200]!),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

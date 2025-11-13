@@ -10,7 +10,11 @@ class RevenueChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final monthlyData = _calculateMonthlyRevenue();
-    final maxY = (monthlyData.values.reduce((a, b) => a > b ? a : b) * 1.2).toDouble();
+    // Handle empty data or all-zeros case to prevent crashes and rendering issues
+    final maxValue = monthlyData.values.isEmpty
+        ? 0.0
+        : monthlyData.values.reduce((a, b) => a > b ? a : b);
+    final maxY = (maxValue == 0 ? 100.0 : maxValue * 1.2).toDouble();
 
     return AspectRatio(
       aspectRatio: 1.7,

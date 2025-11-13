@@ -15,6 +15,7 @@ import '../screens/quotes/quote_wizard_page.dart';
 import '../screens/quotes/quote_client_review_page.dart';
 import '../screens/clients/clients_list_page.dart';
 import '../screens/clients/client_form_page.dart';
+import '../screens/clients/client_detail_page.dart';
 import '../screens/clients/add_client_wizard_page.dart';
 import '../screens/invoices/invoices_list_page.dart';
 import '../screens/invoices/invoice_form_page.dart';
@@ -50,6 +51,7 @@ import '../screens/home/home_screen_enhanced.dart';
 import '../screens/reports/advanced_reports_page.dart';
 import '../screens/tools/tools_page.dart';
 import '../screens/notifications/notifications_page.dart';
+import '../screens/debug/database_diagnostic_page.dart';
 import '../services/onboarding_service.dart';
 
 class AppRouter {
@@ -103,11 +105,11 @@ class AppRouter {
           return const ResetPasswordPage();
         },
       ),
-      // Standard home page route (accessible from all places that reference /home)
+      // Redirect /home to /home-enhanced for consistency
       GoRoute(
         path: '/home',
-        builder: (BuildContext context, GoRouterState state) {
-          return const HomePage();
+        redirect: (BuildContext context, GoRouterState state) {
+          return '/home-enhanced';
         },
       ),
       GoRoute(
@@ -154,8 +156,17 @@ class AppRouter {
             path: ':id',
             builder: (BuildContext context, GoRouterState state) {
               final clientId = state.pathParameters['id']!;
-              return ClientFormPage(clientId: clientId);
+              return ClientDetailPage(clientId: clientId);
             },
+            routes: [
+              GoRoute(
+                path: 'edit',
+                builder: (BuildContext context, GoRouterState state) {
+                  final clientId = state.pathParameters['id']!;
+                  return ClientFormPage(clientId: clientId);
+                },
+              ),
+            ],
           ),
         ],
       ),
@@ -357,6 +368,12 @@ class AppRouter {
         path: '/tools',
         builder: (BuildContext context, GoRouterState state) {
           return const ToolsPage();
+        },
+      ),
+      GoRoute(
+        path: '/database-diagnostic',
+        builder: (BuildContext context, GoRouterState state) {
+          return const DatabaseDiagnosticPage();
         },
       ),
     ],

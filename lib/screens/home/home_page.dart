@@ -12,6 +12,8 @@ import '../../models/profile.dart';
 import '../../models/quote.dart';
 import '../../services/invoice_calculator.dart';
 import '../../services/supabase_service.dart';
+import '../../services/supabase_service_enhanced.dart';
+import '../../services/auth_service.dart';
 import '../../services/error_handler.dart';
 import '../../widgets/section_header.dart';
 import '../../widgets/app_drawer.dart';
@@ -61,10 +63,14 @@ class _HomePageState extends State<HomePage> {
     });
 
     try {
+      // Debug: Print auth state before fetching data
+      print('🔍 === DASHBOARD DATA FETCH ===');
+      await SupabaseServiceEnhanced.printAuthState();
+
       final profile = await SupabaseService.fetchUserProfile();
-      final clients = await SupabaseService.fetchClients();
-      final quotes = await SupabaseService.fetchQuotes();
-      final invoices = await SupabaseService.fetchInvoices();
+      final clients = await SupabaseServiceEnhanced.fetchClients();
+      final quotes = await SupabaseServiceEnhanced.fetchQuotes();
+      final invoices = await SupabaseServiceEnhanced.fetchInvoices();
       final jobSites = await SupabaseService.getJobSites();
       final payments = await SupabaseService.getPayments();
       final appointments = await SupabaseService.fetchUpcomingAppointments();
@@ -353,6 +359,54 @@ class _HomePageState extends State<HomePage> {
       ],
     );
   }
+
+  Widget _buildNotificationBellWithBadge(BuildContext context) {
+    // Count unread notifications (for now, we'll use a placeholder)
+    // TODO: Get real unread count from SupabaseService
+    final unreadCount = 0; // Placeholder - will be replaced with actual count
+
+    return Stack(
+      children: [
+        IconButton(
+          onPressed: () async {
+            // Add ripple effect by using InkWell behavior (automatic with IconButton)
+            await Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const NotificationsPage()),
+            );
+            // Refresh dashboard when returning from notifications
+            _fetchDashboardData();
+          },
+          icon: const Icon(Icons.notifications_outlined),
+          tooltip: 'Notifications & Rappels',
+        ),
+        if (unreadCount > 0)
+          Positioned(
+            right: 8,
+            top: 8,
+            child: Container(
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                color: Colors.red,
+                shape: BoxShape.circle,
+              ),
+              constraints: const BoxConstraints(
+                minWidth: 18,
+                minHeight: 18,
+              ),
+              child: Text(
+                unreadCount > 99 ? '99+' : unreadCount.toString(),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+      ],
+    );
+  }
 }
 
 // Internal helper widgets for the dashboard
@@ -386,7 +440,7 @@ class _StatCard extends StatelessWidget {
   }
 }
 
-class _ActivityCard extends StatelessWidget {
+class _ActivityCard extends StatelessWidget{
   final Activity activity;
 
   const _ActivityCard({required this.activity});
@@ -448,54 +502,6 @@ class _ActivityCard extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildNotificationBellWithBadge(BuildContext context) {
-    // Count unread notifications (for now, we'll use a placeholder)
-    // TODO: Get real unread count from SupabaseService
-    final unreadCount = 0; // Placeholder - will be replaced with actual count
-
-    return Stack(
-      children: [
-        IconButton(
-          onPressed: () async {
-            // Add ripple effect by using InkWell behavior (automatic with IconButton)
-            await Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const NotificationsPage()),
-            );
-            // Refresh dashboard when returning from notifications
-            _fetchDashboardData();
-          },
-          icon: const Icon(Icons.notifications_outlined),
-          tooltip: 'Notifications & Rappels',
-        ),
-        if (unreadCount > 0)
-          Positioned(
-            right: 8,
-            top: 8,
-            child: Container(
-              padding: const EdgeInsets.all(4),
-              decoration: BoxDecoration(
-                color: Colors.red,
-                shape: BoxShape.circle,
-              ),
-              constraints: const BoxConstraints(
-                minWidth: 18,
-                minHeight: 18,
-              ),
-              child: Text(
-                unreadCount > 99 ? '99+' : unreadCount.toString(),
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 10,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
-      ],
     );
   }
 }

@@ -183,7 +183,7 @@ class _OnboardingWizardPageState extends State<OnboardingWizardPage> {
       ErrorService.showSuccess(
           context, 'Bienvenue dans PlombiPro! 🎉',
           duration: const Duration(seconds: 2));
-      context.go('/home');
+      context.go('/home-enhanced');
     }
   }
 
@@ -211,7 +211,7 @@ class _OnboardingWizardPageState extends State<OnboardingWizardPage> {
     if (confirmed == true) {
       await OnboardingService.skipOnboarding();
       if (mounted) {
-        context.go('/home');
+        context.go('/home-enhanced');
       }
     }
   }
